@@ -1,0 +1,25 @@
+﻿<dxr:DXRibbonWindow x:Class="ZtxFrameWork.UI.MainWindow"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:Views="clr-namespace:ZtxFrameWork.UI.Views"
+                    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+                    xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+                    Title="{Binding Title,
+                                    Source={StaticResource ResourceKey=AppSet}}"
+                    Width="525"
+                    Height="650"
+                    Icon="{Binding IcoPath,
+                                   Source={StaticResource ResourceKey=AppSet}}"
+                    WindowState="Maximized">
+
+
+
+
+
+
+    <Views:NavMain />
+
+
+
+</dxr:DXRibbonWindow>

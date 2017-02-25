@@ -1,0 +1,92 @@
+﻿<Window x:Class="efTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:efTest"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="MainWindow"
+        Width="670.482"
+        Height="679.443"
+        mc:Ignorable="d">
+    <Grid>
+        <DataGrid x:Name="dataGrid"
+                  Width="417"
+                  Height="234"
+                  Margin="51,45,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding PO}"
+                                    Header="po" />
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding ProductID}"
+                                    Header="ProductID" />
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding Product.Des}"
+                                    Header="Product.Des" />
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding Product.Color.ColorDes}"
+                                    Header="Product.Color" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="button"
+                Width="116"
+                Height="29"
+                Margin="352,9,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="button_Click"
+                Content="Button" />
+        <Button x:Name="button1"
+                Width="121"
+                Height="32"
+                Margin="158,11,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="button1_Click"
+                Content="Button" />
+        <DataGrid x:Name="dataGrid1"
+                  Width="403"
+                  Height="241"
+                  Margin="55,365,0,0"
+                  HorizontalAlignment="Left"
+                  VerticalAlignment="Top">
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding Name}"
+                                    Header="Product.Des" />
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding FullName}"
+                                    Header="Product.Color" />
+                <DataGridTextColumn Width="90"
+                                    Binding="{Binding FDF}"
+                                    Header="Product.Color" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="button2"
+                Width="111"
+                Height="59"
+                Margin="515,462,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="button2_Click"
+                Content="Button" />
+        <Button x:Name="button3"
+                Width="110"
+                Height="48"
+                Margin="504,555,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Click="button3_Click"
+                Content="Button" />
+        <Button x:Name="button4" Content="Button" HorizontalAlignment="Left" Height="51" Margin="525,163,0,0" VerticalAlignment="Top" Width="102" Click="button4_Click"/>
+        <Button x:Name="button5" Content="Button" HorizontalAlignment="Left" Height="26" Margin="525,231,0,0" VerticalAlignment="Top" Width="109" Click="button5_Click"/>
+        <Button x:Name="button6" Content="Button" HorizontalAlignment="Left" Height="41" Margin="532,275,0,0" VerticalAlignment="Top" Width="119" Click="button6_Click"/>
+        <Button x:Name="button7" Content="Button" HorizontalAlignment="Left" Height="26" Margin="529,124,0,0" VerticalAlignment="Top" Width="80" Click="button7_Click"/>
+        <Button x:Name="button8" Content="Button" HorizontalAlignment="Left" Height="12" Margin="531,68,0,0" VerticalAlignment="Top" Width="56" Click="button8_Click"/>
+
+    </Grid>
+</Window>

@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{04393B33-6ACC-4557-A39E-F643835733EC}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZtxFrameWork.UI</RootNamespace>
+    <AssemblyName>ZtxFrameWork.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\arpa.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Images.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v16.2" />
+    <Reference Include="DevExpress.Data.v16.2">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v16.2.Core" />
+    <Reference Include="DevExpress.Mvvm.v16.2" />
+    <Reference Include="DevExpress.Xpf.Docking.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Grid.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Grid.v16.2.Core, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Layout.v16.2.Core, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.LayoutControl.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.NavBar.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Ribbon.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v16.2, Version=16.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v16.2" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Comm\DataModel\DbExceptionsConverter.cs" />
+    <Compile Include="Conerters\MoudleInfoToImageConerter.cs" />
+    <Compile Include="Controls\CollectionMenu.xaml.cs">
+      <DependentUpon>CollectionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SingleMenu.xaml.cs">
+      <DependentUpon>SingleMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\SplashScreenHelper.cs" />
+    <Compile Include="Helpers\SplashWindow.xaml.cs">
+      <DependentUpon>SplashWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\ApplicationSet.cs" />
+    <Compile Include="ViewModels\LoginWindowViewModel.cs" />
+    <Compile Include="ViewModels\ModuleCollectionViewModel.cs" />
+    <Compile Include="ViewModels\ModuleViewModel.cs" />
+    <Compile Include="ViewModels\NavMainViewModel.cs" />
+    <Compile Include="ViewModels\会员CollectionViewModel.cs" />
+    <Compile Include="ViewModels\会员ViewModel.cs" />
+    <Compile Include="ViewModels\供应商CollectionViewModel.cs" />
+    <Compile Include="ViewModels\供应商ViewModel.cs" />
+    <Compile Include="ViewModels\分店CollectionViewModel.cs" />
+    <Compile Include="ViewModels\分店ViewModel.cs" />
+    <Compile Include="ViewModels\单位CollectionViewModel.cs" />
+    <Compile Include="ViewModels\单位ViewModel.cs" />
+    <Compile Include="ViewModels\材质CollectionViewModel.cs" />
+    <Compile Include="ViewModels\材质ViewModel.cs" />
+    <Compile Include="ViewModels\重量单位CollectionViewModel.cs" />
+    <Compile Include="ViewModels\重量单位ViewModel.cs" />
+    <Compile Include="ViewModels\饰品CollectionViewModel.cs" />
+    <Compile Include="ViewModels\饰品ViewModel.cs" />
+    <Compile Include="ViewModels\饰品提成CollectionViewModel.cs" />
+    <Compile Include="ViewModels\饰品提成ViewModel.cs" />
+    <Compile Include="ViewModels\饰品类别CollectionViewModel.cs" />
+    <Compile Include="ViewModels\饰品类别ViewModel.cs" />
+    <Compile Include="ViewModels\饰品类型CollectionViewModel.cs" />
+    <Compile Include="ViewModels\饰品类型ViewModel.cs" />
+    <Compile Include="ViewModels\黄金种类CollectionViewModel.cs" />
+    <Compile Include="ViewModels\黄金种类ViewModel.cs" />
+    <Compile Include="Views\LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModuleCollectionView.xaml.cs">
+      <DependentUpon>ModuleCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ModuleView.xaml.cs">
+      <DependentUpon>ModuleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NavMain.xaml.cs">
+      <DependentUpon>NavMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\会员CollectionView.xaml.cs">
+      <DependentUpon>会员CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\会员View.xaml.cs">
+      <DependentUpon>会员View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\供应商CollectionView.xaml.cs">
+      <DependentUpon>供应商CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\供应商View.xaml.cs">
+      <DependentUpon>供应商View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\分店CollectionView.xaml.cs">
+      <DependentUpon>分店CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\分店View.xaml.cs">
+      <DependentUpon>分店View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\单位CollectionView.xaml.cs">
+      <DependentUpon>单位CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\单位View.xaml.cs">
+      <DependentUpon>单位View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\材质CollectionView.xaml.cs">
+      <DependentUpon>材质CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\材质View.xaml.cs">
+      <DependentUpon>材质View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\重量单位CollectionView.xaml.cs">
+      <DependentUpon>重量单位CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\重量单位View.xaml.cs">
+      <DependentUpon>重量单位View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品CollectionView.xaml.cs">
+      <DependentUpon>饰品CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品View.xaml.cs">
+      <DependentUpon>饰品View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品提成CollectionView.xaml.cs">
+      <DependentUpon>饰品提成CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品提成View.xaml.cs">
+      <DependentUpon>饰品提成View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品类别CollectionView.xaml.cs">
+      <DependentUpon>饰品类别CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品类别View.xaml.cs">
+      <DependentUpon>饰品类别View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品类型CollectionView.xaml.cs">
+      <DependentUpon>饰品类型CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\饰品类型View.xaml.cs">
+      <DependentUpon>饰品类型View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\黄金种类CollectionView.xaml.cs">
+      <DependentUpon>黄金种类CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\黄金种类View.xaml.cs">
+      <DependentUpon>黄金种类View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window1.xaml.cs">
+      <DependentUpon>Window1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Window2.xaml.cs">
+      <DependentUpon>Window2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="订单View.xaml.cs">
+      <DependentUpon>订单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="订单ViewModel.cs" />
+    <Page Include="Controls\CollectionMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SingleMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\SplashWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Comm\CommonResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CommonResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Comm\DataModel\DbExceptions.cs" />
+    <Compile Include="Comm\DataModel\DbFactory.cs" />
+    <Compile Include="Comm\DbSetExtensions.cs" />
+    <Compile Include="Comm\Utils\ExpressionHelper.cs" />
+    <Compile Include="Comm\ViewModel\CollectionViewModel.cs" />
+    <Compile Include="Comm\ViewModel\EntitiesViewModel.cs" />
+    <Compile Include="Comm\ViewModel\ISingleObjectViewModel.cs" />
+    <Compile Include="Comm\ViewModel\Messages.cs" />
+    <Compile Include="Comm\ViewModel\ReadOnlyCollectionViewModel.cs" />
+    <Compile Include="Comm\ViewModel\SingleObjectViewModel.cs" />
+    <Compile Include="MainViewModel.cs" />
+    <Compile Include="MainWindow1.xaml.cs">
+      <DependentUpon>MainWindow1.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Styles\AppSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModuleCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModuleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NavMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\会员CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\会员View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\供应商CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\供应商View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\分店CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\分店View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\单位CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\单位View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\材质CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\材质View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\重量单位CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\重量单位View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品提成CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品提成View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品类别CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品类别View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品类型CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\饰品类型View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\黄金种类CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\黄金种类View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Window2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="订单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Comm\CommonResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CommonResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZtxFrameWork.Data\ZtxFrameWork.Data.csproj">
+      <Project>{68cee4a4-1724-4198-b5c0-2b9a21758b0f}</Project>
+      <Name>ZtxFrameWork.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZtxFrameWork.Utilities\ZtxFrameWork.Utilities.csproj">
+      <Project>{7e9f7576-ce90-4d70-a2e4-72f18104b034}</Project>
+      <Name>ZtxFrameWork.Utilities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\back.png" />
+    <Resource Include="Images\icon-about-32.png" />
+    <Resource Include="Images\icon-close-32.png" />
+    <Resource Include="Images\icon-delete-32.png" />
+    <Resource Include="Images\icon-edit-32.png" />
+    <Resource Include="Images\icon-filter-32.png" />
+    <Resource Include="Images\icon-markcomplete-32.png" />
+    <Resource Include="Images\icon-news-32.png" />
+    <Resource Include="Images\icon-print-32.png" />
+    <Resource Include="Images\icon-reset-changes-32.png" />
+    <Resource Include="Images\icon-revers-sort-32.png" />
+    <Resource Include="Images\icon-save-32.png" />
+    <Resource Include="Images\icon-save-close-32.png" />
+    <Resource Include="Images\icon-walking-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\edit.png" />
+    <Resource Include="Images\refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\moudle.png" />
+    <Resource Include="Images\moudleSubGroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\moudleGroup.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\arpa.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

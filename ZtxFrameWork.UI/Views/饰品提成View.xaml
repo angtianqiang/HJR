@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.Views.饰品提成View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
+             xmlns:controls="clr-namespace:ZtxFrameWork.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="500"
+             d:DesignWidth="300"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:饰品提成ViewModel}"
+             mc:Ignorable="d">
+    <DockPanel>
+        <controls:SingleMenu DockPanel.Dock="Top" />
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="饰品">
+                        <dxg:LookUpEdit x:Name="billCategory"
+                                        DisplayMember="编号"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding Entity.饰品ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 饰品Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID">
+                            <dxg:LookUpEdit.StyleSettings>
+                                <dxg:SearchLookUpEditStyleSettings />
+                            </dxg:LookUpEdit.StyleSettings>
+                        </dxg:LookUpEdit>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="饰品品名">
+                        <dxe:TextEdit MinWidth="116"
+                                      EditValue="{Binding Entity.饰品.名称,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      IsEnabled="False" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="饰品款号">
+                        <dxe:TextEdit MinWidth="116"
+                                      EditValue="{Binding Entity.饰品.名称,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      IsEnabled="False"
+                                      IsReadOnly="True" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem Label="是否按比例">
+                        <dxe:CheckEdit MinWidth="116"
+                                       EditValue="{Binding Entity.是否按比例,
+                                                           NotifyOnSourceUpdated=True,
+                                                           UpdateSourceTrigger=PropertyChanged,
+                                                           ValidatesOnDataErrors=True}"
+                                       IsEnabled="False" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="比例">
+                        <dxe:SpinEdit MinWidth="116"
+                                      EditValue="{Binding Entity.比例,
+                                                          NotifyOnSourceUpdated=True,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True}"
+                                      Increment="0.1"
+                                      Mask="p0"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="固定金额">
+                        <dxe:SpinEdit MinWidth="116"
+                                      EditValue="{Binding Entity.固定金额,
+                                                          NotifyOnSourceUpdated=True,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True}"
+                                      Mask="n0"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="备注">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.备注, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+            </dxlc:LayoutGroup>
+
+
+
+
+
+
+        </dxlc:LayoutControl>
+    </DockPanel>
+</UserControl>

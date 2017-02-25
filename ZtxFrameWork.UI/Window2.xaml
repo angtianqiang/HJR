@@ -1,0 +1,16 @@
+﻿<Window x:Class="ZtxFrameWork.UI.Window2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZtxFrameWork.UI"
+        mc:Ignorable="d"
+        Title="Window2" Height="300" Width="300">
+    <Grid>
+        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Height="39" Margin="86,165,0,0" VerticalAlignment="Top" Width="94" Click="button_Click"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="35" Margin="103,63,0,0" TextWrapping="Wrap" Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="131"/>
+        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="29" Margin="101,118,0,0" TextWrapping="Wrap" Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="117"/>
+        <Button x:Name="button1" Content="Button" HorizontalAlignment="Left" Height="43" Margin="42,216,0,0" VerticalAlignment="Top" Width="114" Click="button1_Click"/>
+
+    </Grid>
+</Window>

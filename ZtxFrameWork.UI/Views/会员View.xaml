@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.Views.会员View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
+             xmlns:controls="clr-namespace:ZtxFrameWork.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="600"
+             d:DesignWidth="400"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:会员ViewModel}"
+             mc:Ignorable="d">
+    <DockPanel>
+        <controls:SingleMenu DockPanel.Dock="Top" />
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="编号">
+                        <dxe:TextEdit EditValue="{Binding Entity.编号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="姓名">
+                        <dxe:TextEdit EditValue="{Binding Entity.姓名, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="性别">
+                        <dxe:ComboBoxEdit EditValue="{Binding Entity.性别, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}">
+                            <dxe:ComboBoxEditItem>男</dxe:ComboBoxEditItem>
+                            <dxe:ComboBoxEditItem>女</dxe:ComboBoxEditItem>
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="折扣">
+                        <dxe:SpinEdit EditValue="{Binding Entity.折扣,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      Mask="p0"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="初始积分">
+                        <dxe:SpinEdit EditValue="{Binding Entity.初始积分,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      Mask="n0"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="销费金额">
+                        <dxe:TextEdit EditValue="{Binding Entity.销费金额,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      IsEnabled="False"
+                                      Mask="n2"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="手机号">
+                        <dxe:TextEdit EditValue="{Binding Entity.手机号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="固定电话">
+                        <dxe:TextEdit EditValue="{Binding Entity.固定电话, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="QQ">
+                        <dxe:TextEdit EditValue="{Binding Entity.QQ, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="WeiXin">
+                        <dxe:TextEdit EditValue="{Binding Entity.WeiXin, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="Mail">
+                        <dxe:TextEdit EditValue="{Binding Entity.Mail, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="是否停用">
+                        <dxe:CheckEdit EditValue="{Binding Entity.是否停用, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="总积分">
+                        <dxe:TextEdit EditValue="{Binding Entity.总积分,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      IsEnabled="False"
+                                      Mask="n0"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="已用积分">
+                        <dxe:TextEdit EditValue="{Binding Entity.已用积分,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True,
+                                                          NotifyOnSourceUpdated=True}"
+                                      IsEnabled="False"
+                                      Mask="n0"
+                                      MaskUseAsDisplayFormat="True" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="备注">
+                        <dxe:TextEdit EditValue="{Binding Entity.备注, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+            </dxlc:LayoutGroup>
+
+
+
+
+
+
+        </dxlc:LayoutControl>
+    </DockPanel>
+</UserControl>

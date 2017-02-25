@@ -1,0 +1,85 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.Views.ModuleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:ZtxFrameWork.UI.Controls"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:ModuleViewModel}"
+             mc:Ignorable="d">
+    <DockPanel>
+        <controls:SingleMenu DockPanel.Dock="Top"></controls:SingleMenu>
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="所属分组">
+
+                        <dxg:LookUpEdit AutoPopulateColumns="False"
+                                        DisplayMember="ModuleTitle"
+                                        EditValue="{Binding Entity.ParentID,
+                                                            UpdateSourceTrigger=PropertyChanged,
+                                                            ValidatesOnDataErrors=True,
+                                                            NotifyOnSourceUpdated=True}"
+                                        ItemsSource="{Binding ModuleGroup}"
+                                        ValueMember="ID">
+                            <dxg:LookUpEdit.PopupContentTemplate>
+                                <ControlTemplate>
+                                    <dxg:GridControl x:Name="PART_GridControl"
+                                                     AutoGenerateColumns="None"
+                                                     EnableSmartColumnsGeneration="True">
+                                        <dxg:GridControl.Columns>
+                                            <dxg:GridColumn FieldName="ModuleTitle" Header="模块名称" />
+
+                                        </dxg:GridControl.Columns>
+                                        <dxg:GridControl.View>
+                                            <dxg:TreeListView Name="treeListView1"
+                                                              AutoExpandAllNodes="True"
+                                                              AutoWidth="True"
+                                                              KeyFieldName="ID"
+                                                              NavigationStyle="Row"
+                                                              ParentFieldName="ParentID"
+                                                              ShowIndicator="False"
+                                                              TreeDerivationMode="Selfreference" />
+                                        </dxg:GridControl.View>
+                                    </dxg:GridControl>
+                                </ControlTemplate>
+                            </dxg:LookUpEdit.PopupContentTemplate>
+                        </dxg:LookUpEdit>
+
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="模块类别">
+                        <dxe:ComboBoxEdit EditValue="{Binding Entity.ModuleInfo, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" ItemsSource="{dxe:EnumItemsSource EnumType={x:Type entity:ModuleInfo}}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="模块名称">
+                        <dxe:TextEdit EditValue="{Binding Entity.ModuleTitle, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="模块页面">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.DocumentType, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="排序号">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.SortNo, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+            </dxlc:LayoutGroup>
+
+
+
+
+
+
+        </dxlc:LayoutControl>
+    </DockPanel>
+
+</UserControl>
