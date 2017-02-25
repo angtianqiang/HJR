@@ -12,7 +12,7 @@ using ZtxFrameWork.UI.Views;
 namespace ZtxFrameWork.UI
 {
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// 工工工
     /// </summary>
     public partial class App : Application
     {
