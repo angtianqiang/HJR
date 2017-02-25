@@ -12,7 +12,7 @@ using ZtxFrameWork.UI.Views;
 namespace ZtxFrameWork.UI
 {
     /// <summary>
-    /// 工工工
+    /// BBBBBBBBBBBBBB
     /// </summary>
     public partial class App : Application
     {
