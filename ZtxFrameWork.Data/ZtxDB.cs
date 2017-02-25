@@ -58,7 +58,8 @@ namespace ZtxFrameWork.Data
                 context.Modules.Add(new Model.Module() { DocumentType = "饰品提成CollectionView", Parent = p, ModuleTitle = "饰品提成", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 context.Modules.Add(new Model.Module() { DocumentType = "会员CollectionView", Parent = p, ModuleTitle = "会员", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 context.Modules.Add(new Model.Module() { DocumentType = "供应商CollectionView", Parent = p, ModuleTitle = "供应商", ModuleInfo = Model.ModuleInfo.MoudleAction });
-               // context.Modules.Add(new Model.Module() { DocumentType = "CollectionView", Parent = p, ModuleTitle = "单位", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                context.Modules.Add(new Model.Module() { DocumentType = "入库单CollectionView", Parent = p, ModuleTitle = "采购入库单", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                // context.Modules.Add(new Model.Module() { DocumentType = "CollectionView", Parent = p, ModuleTitle = "单位", ModuleInfo = Model.ModuleInfo.MoudleAction });
             }
             context.SaveChanges();
 

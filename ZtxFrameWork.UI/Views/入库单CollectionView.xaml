@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZtxFrameWork.UI.Views.会员CollectionView"
+﻿<UserControl x:Class="ZtxFrameWork.UI.Views.入库单CollectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
@@ -16,7 +16,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:会员CollectionViewModel}"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:入库单CollectionViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
         <dx:DXMessageBoxService x:Name="CommMessageBox" />
