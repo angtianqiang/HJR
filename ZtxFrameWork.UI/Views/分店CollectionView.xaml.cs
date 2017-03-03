@@ -22,6 +22,7 @@ namespace ZtxFrameWork.UI.Views
         public 分店CollectionView()
         {
             InitializeComponent();
+         
         }
     }
 }

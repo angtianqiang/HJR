@@ -1,0 +1,23 @@
+﻿//数据库不能删除
+USE MASTER    
+GO    
+     
+DECLARE @dbname SYSNAME    
+SET @dbname = 'ztxFrameWork2' --这个是要删除的数据库库名    
+     
+DECLARE @s NVARCHAR(1000)    
+DECLARE tb CURSOR LOCAL   
+FOR  
+    SELECT s = 'kill   ' + CAST(spid AS VARCHAR)  
+    FROM   MASTER..sysprocesses  
+    WHERE  dbid = DB_ID(@dbname)    
+     
+OPEN   tb      
+FETCH   NEXT   FROM   tb   INTO   @s    
+WHILE @@fetch_status = 0  
+BEGIN  
+    EXEC (@s)   
+    FETCH NEXT FROM tb INTO @s  
+END    
+CLOSE   tb    
+DEALLOCATE   tb    

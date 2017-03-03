@@ -22,6 +22,7 @@ namespace ZtxFrameWork.UI.Views
         public 黄金种类CollectionView()
         {
             InitializeComponent();
+         
         }
     }
 }

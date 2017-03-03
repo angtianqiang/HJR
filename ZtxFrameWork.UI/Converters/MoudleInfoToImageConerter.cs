@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using ZtxFrameWork.Data.Model;
 
-namespace ZtxFrameWork.UI.Conerters
+namespace ZtxFrameWork.UI.Converters
 {
     public class MoudleInfoToImageConerter : IValueConverter
     {

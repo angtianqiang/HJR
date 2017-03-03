@@ -19,7 +19,13 @@ namespace ZtxFrameWork.UI
         public static User CurrentUser = null;
         protected override void OnStartup(StartupEventArgs e)
         {
-     //  new Window2().ShowDialog();
+    //   new DXWindow1().ShowDialog();
+
+            //new Window2().ShowDialog();
+            //        return;
+
+
+
             this.DispatcherUnhandledException += App_DispatcherUnhandledException;
 
             SplashScreenHelper.Instance.ShowSplashScreen();
@@ -75,8 +81,8 @@ namespace ZtxFrameWork.UI
                 errorMessage += System.Environment.NewLine + originalException.Message;
             }
             MessageBox.Show(errorMessage);// + System.Environment.NewLine + e.Exception.StackTrace);
-          
-          //  App.Current.Shutdown();
+
+            Environment.Exit(0);
         }
 
     

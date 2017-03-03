@@ -7,9 +7,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ZtxFrameWork.UI.Comm.DataModel;
+using ZtxFrameWork.UI.Comm.Utils;
 
 namespace ZtxFrameWork.UI.Comm.ViewModel
 {
@@ -21,7 +24,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
     /// <typeparam name="TPrimaryKey">A primary key value type.</typeparam>
     /// <typeparam name="TUnitOfWork">A unit of work type.</typeparam>
     public partial class CollectionViewModel<TEntity, TDbContext, TPrimaryKey> : CollectionViewModel<TEntity, TEntity, TDbContext, TPrimaryKey>
-        where TEntity : class   
+        where TEntity : class
         where TDbContext : DbContext
     {
 
@@ -41,7 +44,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Action<TEntity> newEntityInitializer = null,
    bool ignoreSelectEntityMessage = false)
         {
-            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection,getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage));
+            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage));
         }
 
         /// <summary>
@@ -60,7 +63,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
    bool ignoreSelectEntityMessage = false
-            ) : base(dbFactory, getDbSetFunc, projection,getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage)
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage)
         {
         }
     }
@@ -95,7 +98,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Action<TEntity> newEntityInitializer = null,
             bool ignoreSelectEntityMessage = false)
         {
-            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection,getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage));
+            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage));
         }
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
             bool ignoreSelectEntityMessage = false
-            ) : base(dbFactory, getDbSetFunc, projection,getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage)
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage)
         {
         }
     }
@@ -135,7 +138,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         EntitiesChangeTracker<TPrimaryKey> ChangeTrackerWithKey { get { return (EntitiesChangeTracker<TPrimaryKey>)ChangeTracker; } }
         readonly Action<TEntity> newEntityInitializer;
-       // IRepository<TEntity, TPrimaryKey> Repository { get { return (IRepository<TEntity, TPrimaryKey>)ReadOnlyRepository; } }
+        // IRepository<TEntity, TPrimaryKey> Repository { get { return (IRepository<TEntity, TPrimaryKey>)ReadOnlyRepository; } }
 
         /// <summary>
         /// Initializes a new instance of the CollectionViewModelBase class.
@@ -150,9 +153,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<TDbContext, DbSet<TEntity>> getDbSetFunc,
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
-            Action<TEntity> newEntityInitializer ,
-            bool ignoreSelectEntityMessage 
-            ) : base(dbFactory, getDbSetFunc, projection,getPrimaryKeyExpression)
+            Action<TEntity> newEntityInitializer,
+            bool ignoreSelectEntityMessage
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression)
         {
             VerifyProjectionType();
             this.newEntityInitializer = newEntityInitializer;
@@ -167,6 +170,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// </summary>
         public virtual void New()
         {
+          Mouse.OverrideCursor = Cursors.Wait;
             GetDocumentManagerService().ShowNewEntityDocument(this, newEntityInitializer);
         }
 
@@ -179,6 +183,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         {
             if (this.IsDetached(projectionEntity))
                 return;
+            Mouse.OverrideCursor = Cursors.Wait;
             TPrimaryKey primaryKey = this.GetProjectionPrimaryKey(projectionEntity);
             int index = Entities.IndexOf(projectionEntity);
             projectionEntity = ChangeTrackerWithKey.FindActualProjectionByKey(primaryKey);
@@ -239,11 +244,11 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                 TEntity entity = DbSet.Find(primaryKey);
                 if (entity != null)
                 {
-                 
+
                     OnBeforeEntityDeleted(primaryKey, entity);
-                  
+
                     DB.Entry(entity).State = EntityState.Deleted;
-                   DB.SaveChanges();
+                    DB.SaveChanges();
                     OnEntityDeleted(primaryKey, entity);
                 }
 
@@ -447,6 +452,54 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             SelectedEntity = projectionEntity;
         }
         #endregion
+
+
+
+        #region 20170227生成最新的单号
+        static public string GetNewCode(string prefix, IDbFactory<TDbContext> dbFactory,
+              Func<TDbContext, DbSet<TEntity>> getDbSetFunc, Expression<Func<TEntity, string>> getCodeKeyExpression)
+        {
+            string str = prefix + DateTime.Now.ToString("yyyyMMdd");
+            var columnName = ExpressionHelper.GetPropertyName(getCodeKeyExpression);
+            var fun = getCodeKeyExpression.Compile();
+            int k = 1;
+            //   Expression<Func<Expression<Func<TEntity, string>>, bool>> dd = null;
+            PropertyInfo propertyInfo = typeof(TEntity).GetProperty(columnName);
+            //try
+            //{
+            var dbSet = getDbSetFunc(dbFactory.CreateDbContext());
+            var list = ETForStartsWith<TEntity>(dbSet, str, propertyInfo).ToList();
+            if (list != null && list.Count > 0)
+            {
+                k = list.Select(t => Convert.ToInt32(fun(t).Substring(10, 3))).Max() + 1;
+            }
+            //}
+            //catch (Exception ex)
+            //{
+
+            //}
+            return str + k.ToString().PadLeft(3, '0');
+
+        }
+
+
+        static public IQueryable<TEntity> ETForStartsWith<TEntity>(DbSet<TEntity> query, string propertyValue, PropertyInfo propertyInfo) where TEntity : class
+        {
+            ParameterExpression e = Expression.Parameter(typeof(TEntity), "e");
+            MemberExpression m = Expression.MakeMemberAccess(e, propertyInfo);
+            ConstantExpression c = Expression.Constant(propertyValue, typeof(string));
+            MethodInfo mi = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
+            Expression call = Expression.Call(m, mi, c);
+
+            Expression<Func<TEntity, bool>> lambda = Expression.Lambda<Func<TEntity, bool>>(call, e);
+            return query.Where(lambda);
+        }
+        #endregion
+
+
+        #region 消息管理器的令牌 20170302
+        public virtual string Token { get; set; } = Guid.NewGuid().ToString();
+        #endregion
     }
 
     /// <summary>
@@ -507,5 +560,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                 return null;
             return documentManagerService.CreateDocument(typeof(TEntity).Name + "View", parameter, parentViewModel);
         }
+
+
+
+
     }
 }

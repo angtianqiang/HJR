@@ -26,12 +26,13 @@ namespace ZtxFrameWork.Data.Model
             set { Set<string>(() => this.CreateBy, ref _createBy, value); }
         }
 
-        private DateTime _createOn;
-        [Display(Name = "建立时间", AutoGenerateField = false, Description = "")]
-        public DateTime CreateOn
+        private DateTime? _createOn;
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd hh:mm:ss", ApplyFormatInEditMode =true, NullDisplayText ="")]
+        [Display(Name = "建立时间",  AutoGenerateField = false, Description = "")]
+        public DateTime? CreateOn
         {
             get { return _createOn; }
-            set { Set<DateTime>(() => this.CreateOn, ref _createOn, value); }
+            set { Set<DateTime?>(() => this.CreateOn, ref _createOn, value); }
         }
         private string _modifiedBy;
         [Display(Name = "最后更改人", AutoGenerateField = false, Description = "")]
@@ -40,12 +41,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _modifiedBy; }
             set { Set<string>(() => this.ModifiedBy, ref _modifiedBy, value); }
         }
-        private DateTime _modifiedOn;
+        private DateTime? _modifiedOn;
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd hh:mm:ss", ApplyFormatInEditMode =true, NullDisplayText ="")]
         [Display(Name = "最后更改时间", AutoGenerateField = false, Description = "")]
-        public DateTime ModifiedOn
+        public DateTime? ModifiedOn
         {
             get { return _modifiedOn; }
-            set { Set<DateTime>(() => this.ModifiedOn, ref _modifiedOn, value); }
+            set { Set<DateTime?>(() => this.ModifiedOn, ref _modifiedOn, value); }
         }
 
 

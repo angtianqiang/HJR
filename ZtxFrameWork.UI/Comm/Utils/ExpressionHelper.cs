@@ -39,6 +39,7 @@ namespace ZtxFrameWork.UI.Comm.Utils
         /// <param name="constant">A constant value to compare with entity property value.</param>
         public static Expression<Func<TPropertyOwner, bool>> GetValueEqualsExpression<TPropertyOwner, TProperty>(Expression<Func<TPropertyOwner, TProperty>> getPropertyExpression, TProperty constant)
         {
+           
             Expression equalExpression = Expression.Equal(getPropertyExpression.Body, Expression.Convert(Expression.Field(Expression.Constant(new ValueHolder<TProperty>(constant)), "value"), getPropertyExpression.Body.Type));
             return Expression.Lambda<Func<TPropertyOwner, bool>>(equalExpression, getPropertyExpression.Parameters.Single());
         }

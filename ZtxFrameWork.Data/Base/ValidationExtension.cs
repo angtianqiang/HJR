@@ -23,6 +23,10 @@ namespace ZtxFrameWork.Data
             {
                 return string.Empty;
             }
+            if (propertyName.Contains("."))//20170228 如果是一个关系类的属性，如订单.分店
+            {
+                return string.Empty;
+            }
             var targetType = obj.GetType();
             if (targetType != metadatatype)
             {

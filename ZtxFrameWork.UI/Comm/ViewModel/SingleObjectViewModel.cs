@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
+using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.Utils;
 
@@ -34,7 +35,7 @@ where TDbContext: DbContext
         Action<TEntity> entityInitializer;
         bool isEntityNewAndUnmodified;
         readonly Dictionary<string, IDocumentContent> lookUpViewModels = new Dictionary<string, IDocumentContent>();
-        readonly TDbContext DB = null;
+      protected  readonly TDbContext DB = null;
     //  readonly Uri IcoPath = null;
         /// <summary>
         /// Initializes a new instance of the SingleObjectViewModelBase class.
@@ -329,6 +330,7 @@ where TDbContext: DbContext
             var entity = CreateEntity();
             if (this.entityInitializer != null)
                 this.entityInitializer(entity);
+            this.RaisePropertyChanged(t => t.IsAddModel);//20170303 是否显示“保存并新建"
             Entity = entity;
             isEntityNewAndUnmodified = true;
         }
@@ -512,9 +514,22 @@ where TDbContext: DbContext
         #endregion
 
         #region 20170209
-         
 
-      protected     bool HasPrimaryKey(TEntity Entity) {
+        #region 消息管理器的令牌 20170302
+        public virtual string Token { get; set; } = Guid.NewGuid().ToString();
+        #endregion
+
+        #region 20170303 添加一个字段来标识是不是新增模式，是否显示菜单项“保存并新建”
+        public virtual bool IsAddModel
+        {
+            get { return this.entityInitializer != null; }
+        }
+        #endregion
+        public virtual User CurrentUser { get; set; } = User.CurrentUser;
+
+
+
+        protected     bool HasPrimaryKey(TEntity Entity) {
         return    ExpressionHelper. GetHasValueFunctionExpression(getPrimaryKeyExpression).Compile()(Entity);
         }
         protected  void SetPrimaryKey(TEntity Entity,TPrimaryKey PrimaryKey)

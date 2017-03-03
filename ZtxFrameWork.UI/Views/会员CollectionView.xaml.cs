@@ -22,6 +22,7 @@ namespace ZtxFrameWork.UI.Views
         public 会员CollectionView()
         {
             InitializeComponent();
+         
         }
     }
 }

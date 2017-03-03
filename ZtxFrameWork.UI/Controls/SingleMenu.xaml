@@ -9,49 +9,43 @@
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
-    <Grid>
-        <dxr:RibbonControl x:Name="ribbonControl"
-                           RibbonStyle="Office2010"
-                           ShowApplicationButton="False"
-                           ToolbarShowMode="Hide">
 
-
-
-            <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
-                <dxr:RibbonPage Caption="操作">
-                    <dxr:RibbonPageGroup Caption="">
-                        <dxb:BarButtonItem Command="{Binding SaveCommand}"
-                                           Content="保存"
-                                           KeyGesture="CTRL+S"
-                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/icon-save-32.png"
-                                           ToolTip="CTRL+S" />
-                        <dxb:BarButtonItem Command="{Binding SaveAndCloseCommand}"
-                                           Content="保存并关闭"
-                                           KeyGesture="CTRL+SHIFT+S"
-                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/icon-save-close-32.png"
-                                           ToolTip="CTRL+SHIFT+S" />
-                        <dxb:BarButtonItem Command="{Binding DeleteCommand}"
-                                           Content="删除"
-                                           KeyGesture="CTRL+D"
-                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/icon-delete-32.png"
-                                           ToolTip="CTRL+D" />
-                        <dxb:BarButtonItem Command="{Binding ResetCommand}"
-                                           Content="重置更改"
-                                           KeyGesture="CTRL+R"
-                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/Reset.png"
-                                           ToolTip="CTRL+R" />
-                    </dxr:RibbonPageGroup>
-                    <dxr:RibbonPageGroup Caption="">
-                        <dxb:BarButtonItem Command="{Binding CloseCommand}"
-                                           Content="关闭"
-                                           KeyGesture="CTRL+W"
-                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/back.png"
-                                           ToolTip="CTRL+W" />
-                    </dxr:RibbonPageGroup>
-
-                </dxr:RibbonPage>
-            </dxr:RibbonDefaultPageCategory>
-        </dxr:RibbonControl>
-
-    </Grid>
+    <dxr:RibbonControl x:Name="ribbonControl"
+                       RibbonStyle="Office2010"
+                       ShowApplicationButton="False"
+                       ToolbarShowMode="Hide">
+        <dxr:RibbonDefaultPageCategory Caption="defaultCategory">
+            <dxr:RibbonPage Caption="操作">
+                <dxr:RibbonPageGroup Caption="">
+                    <dxb:BarButtonItem Command="{Binding SaveCommand}"
+                                       Content="保存"
+                                       KeyGesture="CTRL+S"
+                                       LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/Save.png"
+                                       ToolTip="CTRL+S" />
+                    <dxb:BarButtonItem Command="{Binding SaveAndCloseCommand}"
+                                       Content="保存并关闭"
+                                       KeyGesture="CTRL+SHIFT+S"
+                                       LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/SaveColse.png"
+                                       ToolTip="CTRL+SHIFT+S" />
+                    <dxb:BarButtonItem Command="{Binding DeleteCommand}"
+                                       Content="删除"
+                                       KeyGesture="CTRL+D"
+                                       LargeGlyph="/ZtxFrameWork.UI;component/Images/icon-delete-32.png"
+                                       ToolTip="CTRL+D" />
+                    <dxb:BarButtonItem Command="{Binding ResetCommand}"
+                                       Content="重置更改"
+                                       KeyGesture="CTRL+R"
+                                       LargeGlyph="/ZtxFrameWork.UI;component/Images/Reset.png"
+                                       ToolTip="CTRL+R" />
+                </dxr:RibbonPageGroup>
+                <dxr:RibbonPageGroup Caption="">
+                    <dxb:BarButtonItem Command="{Binding CloseCommand}"
+                                       Content="关闭"
+                                       KeyGesture="CTRL+W"
+                                       LargeGlyph="/ZtxFrameWork.UI;component/Images/back.png"
+                                       ToolTip="CTRL+W" />
+                </dxr:RibbonPageGroup>
+            </dxr:RibbonPage>
+        </dxr:RibbonDefaultPageCategory>
+    </dxr:RibbonControl>
 </UserControl>

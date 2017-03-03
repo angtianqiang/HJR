@@ -1,6 +1,11 @@
-﻿using System;
+﻿using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.POCO;
+using DevExpress.Xpf.Editors;
+using DevExpress.Xpf.Grid;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,9 +29,10 @@ namespace ZtxFrameWork.UI
         public Window2()
         {
             InitializeComponent();
+            
             user = new ZtxDB().Users.First();
 
-           // user = new User();
+            // user = new User();
             this.DataContext = user;
             user.UserName = "DFDF";
         }
@@ -45,5 +51,46 @@ namespace ZtxFrameWork.UI
                 System.IO.File.Delete(item);
             }
         }
+
+        private void button3_Click(object sender, RoutedEventArgs e)
+        {
+            var aa = new ZtxFrameWork.Data.ZtxDB().入库单s.Include("分店").ToList();
+            this.db.ItemsSource = aa;
+        }
+
+        private void ButtonEditSettings_DefaultButtonClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("ok");
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            this.DataContext = ViewModelSource.Create(() => new WindowViewModel());
+        }
+
+        private void ButtonEditSettings_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            MessageBox.Show("Sho");
+        }
+
+        private void view_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+          
+         
+        }
+    }
+    [POCOViewModel]
+    public class WindowViewModel
+    {
+        public void Show(object str)
+        {
+            MessageBox.Show("Show" + SelectEntity.分店.名称 + "   " + str?.ToString()?? "");
+        }
+
+        public virtual List<入库单> list { get; set; } = new ZtxFrameWork.Data.ZtxDB().入库单s.Include("分店").ToList();
+        public virtual 入库单 SelectEntity { get; set; }
+
     }
 }
+
+

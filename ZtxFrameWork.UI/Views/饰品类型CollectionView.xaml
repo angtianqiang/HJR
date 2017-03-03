@@ -80,7 +80,9 @@
                                                    ShowTotalSummary="True" />
                                 </dxg:GridControl.View>
 
-
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn  FieldName="饰品类别.名称" Header="饰品类别"/>
+                                </dxg:GridControl.Columns>
                             </dxg:GridControl>
 
                         </dxlc:LayoutGroup>

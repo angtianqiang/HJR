@@ -170,7 +170,7 @@ namespace ZtxFrameWork.Data
             string propertyName = GetPropertyName<T>(propertyExpression);
             return Set<T>(propertyName, ref propertyField, newValue,changedCallback);
         }
-     
+
 
         protected static string GetPropertyName<T>(Expression<Func<T>> propertyExpression)
         {

@@ -65,21 +65,22 @@ namespace ZtxFrameWork.UI.ViewModels
 
             if (module == null || DocumentManagerService == null || string.IsNullOrEmpty(module.DocumentType)|| module.ModuleInfo!= ModuleInfo.MoudleAction)
                 return;
-            Mouse.OverrideCursor = Cursors.Wait;
-            // IDocument document = DocumentManagerService.FindDocumentByIdOrCreate(module, x => CreateDocument(module));
+         
+     IDocument document = DocumentManagerService.FindDocumentByIdOrCreate(module, x => CreateDocument(module));
 
-            // IDocument document = SignleObjectDocumentManagerService.FindDocumentByIdOrCreate(module, x => CreateDocument(module));
-            IDocument document = CreateDocument(module);
-            Mouse.OverrideCursor = null;
+      //   IDocument document = SignleObjectDocumentManagerService.FindDocumentByIdOrCreate(module, x => CreateDocument(module));
+         //   IDocument document = CreateDocument(module);
+        
             document.Show();
-
+         //   Mouse.OverrideCursor = null;
         }
         IDocument CreateDocument(Module module)
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             var document = DocumentManagerService.CreateDocument(module.DocumentType, module.ModuleTitle, this);
             // var document = SignleObjectDocumentManagerService.CreateDocument(module.DocumentType, null, this);
             document.Title = GetModuleTitle(module);
-            document.DestroyOnClose = false;
+            document.DestroyOnClose = true;
             return document;
         }
 

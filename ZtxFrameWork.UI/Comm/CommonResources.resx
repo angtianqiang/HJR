@@ -139,10 +139,10 @@
     <value>数据层请求出错</value>
   </data>
   <data name="Exception_UpdateErrorCaption" xml:space="preserve">
-    <value>更新出错</value>
+    <value>数据保存出错</value>
   </data>
   <data name="Exception_ValidationErrorCaption" xml:space="preserve">
-    <value>验证出错</value>
+    <value>数据验证出错</value>
   </data>
   <data name="Warning_Caption" xml:space="preserve">
     <value>等待</value>

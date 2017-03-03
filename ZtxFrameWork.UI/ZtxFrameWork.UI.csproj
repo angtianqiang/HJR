@@ -91,14 +91,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\UserControlDefaultLoad.cs" />
     <Compile Include="Comm\DataModel\DbExceptionsConverter.cs" />
-    <Compile Include="Conerters\MoudleInfoToImageConerter.cs" />
+    <Compile Include="Comm\UI\CommQueryListView.xaml.cs">
+      <DependentUpon>CommQueryListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Comm\UI\CommQueryListViewModel.cs" />
+    <Compile Include="Controls\SingleStatusBar.xaml.cs">
+      <DependentUpon>SingleStatusBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Converters\CommObjectConverter.cs" />
+    <Compile Include="Converters\MoudleInfoToImageConerter.cs" />
     <Compile Include="Controls\CollectionMenu.xaml.cs">
       <DependentUpon>CollectionMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SingleMenu.xaml.cs">
       <DependentUpon>SingleMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Helpers\SplashScreenHelper.cs" />
     <Compile Include="Helpers\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
@@ -106,7 +116,9 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\GridRowIndicatorConerter.cs" />
     <Compile Include="Utils\ApplicationSet.cs" />
+    <Compile Include="Utils\CommandHelper.cs" />
     <Compile Include="ViewModels\LoginWindowViewModel.cs" />
     <Compile Include="ViewModels\ModuleCollectionViewModel.cs" />
     <Compile Include="ViewModels\ModuleViewModel.cs" />
@@ -229,11 +241,19 @@
       <DependentUpon>订单View.xaml</DependentUpon>
     </Compile>
     <Compile Include="订单ViewModel.cs" />
+    <Page Include="Comm\UI\CommQueryListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\CollectionMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SingleMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SingleStatusBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -476,7 +496,28 @@
   <ItemGroup>
     <Resource Include="Images\arpa.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="日志.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Confirm.png" />
+    <Resource Include="Images\confirm2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Save.png" />
+    <Resource Include="Images\SaveColse.png" />
+    <Resource Include="Images\UnConfirm.png" />
+    <Resource Include="Images\Unconfirm2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\AddRow.png" />
+    <Resource Include="Images\DeleteRow.png" />
+    <Resource Include="Images\Preview.png" />
+    <Resource Include="Images\Printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\SaveAndNew.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

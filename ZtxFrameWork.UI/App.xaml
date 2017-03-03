@@ -1,12 +1,13 @@
 ﻿<Application x:Class="ZtxFrameWork.UI.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-              Startup="OnAppStartup_UpdateThemeName">
+             Startup="OnAppStartup_UpdateThemeName">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+
                 <ResourceDictionary Source="Styles/AppSet.xaml" />
-               
+
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>

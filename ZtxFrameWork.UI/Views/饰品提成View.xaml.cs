@@ -22,6 +22,7 @@ namespace ZtxFrameWork.UI.Views
         public 饰品提成View()
         {
             InitializeComponent();
+         
         }
     }
 }

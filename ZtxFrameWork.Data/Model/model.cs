@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
@@ -182,13 +183,15 @@ namespace ZtxFrameWork.Data.Model
         }
 
         private long _类别ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 类别ID
         {
             get { return _类别ID; }
             set { Set<long>(() => this.类别ID, ref _类别ID, value); }
         }
-        public 饰品类别 饰品类别 { get; set; }
-
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
+        public virtual 饰品类别 饰品类别 { get; set; }
+       
         public virtual ICollection<饰品> 饰品s { get; set; }
 
     }
@@ -970,39 +973,51 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 入库单 : ModelBase
     {
+        public 入库单()
+        {
+            this.入库单明细s = new VHObjectList<入库单明细>();
+          
+        }
         private String _编号;
         public String 编号
         {
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        [DisplayFormat(DataFormatString ="yyyy-MM-dd")]
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "分店", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long? _供应商ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public long? 供应商ID
         {
             get { return _供应商ID; }
             set { Set<long?>(() => this.供应商ID, ref _供应商ID, value); }
         }
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public virtual 供应商 供应商 { get; set; }
 
         private long _操作员ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
         private decimal _总金额;
         public decimal 总金额
@@ -1022,41 +1037,60 @@ namespace ZtxFrameWork.Data.Model
             get { return _未付金额; }
             set { Set<decimal>(() => this.未付金额, ref _未付金额, value); }
         }
+        private String _状态;
+        public String 状态
+        {
+            get { return _状态; }
+            set { Set<String>(() => this.状态, ref _状态, value); }
+        }
         private String _备注;
         public String 备注
         {
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
-        private ICollection<入库单明细> _入库单明细s;
-        public virtual ICollection<入库单明细> 入库单明细s
+        private VHObjectList<入库单明细> _入库单明细s;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual VHObjectList<入库单明细> 入库单明细s
         {
             get { return _入库单明细s; }
-            set { Set<ICollection<入库单明细>>(() => this.入库单明细s, ref _入库单明细s, value); }
+            set { Set<VHObjectList<入库单明细>>(() => this.入库单明细s, ref _入库单明细s, value); }
         }
     }
     public class 入库单明细 : ModelBase
     {
         private long _入库单ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public long 入库单ID
         {
             get { return _入库单ID; }
             set { Set<long>(() => this.入库单ID, ref _入库单ID, value); }
         }
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public virtual 入库单 入库单 { get; set; }
         private Int32 _序号;
+        [DisplayFormat(DataFormatString = "000")]
         public Int32 序号
         {
             get { return _序号; }
             set { Set<Int32>(() => this.序号, ref _序号, value); }
         }
         private long _饰品ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public long 饰品ID
         {
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
+        private 饰品 _饰品;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品 饰品
+        {
+            get { return _饰品; }
+            set { Set<饰品>(() => this.饰品, ref _饰品, value,()=> { this.饰品编号 = 饰品?.编号 ?? ""; }); }
+        }
+      
+      
         private Int32 _数量;
         public Int32 数量
         {
@@ -1064,12 +1098,33 @@ namespace ZtxFrameWork.Data.Model
             set { Set<Int32>(() => this.数量, ref _数量, value); }
         }
         private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
         public decimal 重量
         {
             get { return _重量; }
             set { Set<decimal>(() => this.重量, ref _重量, value); }
         }
+
+        private decimal _单价;
+
+
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 单价
+        {
+            get { return _单价; }
+            set { Set<decimal>(() => this.单价, ref _单价, value); }
+        }
+        private string  _计价方式;
+        public string  计价方式
+        {
+            get { return _计价方式; }
+            set { Set<string >(() => this.计价方式, ref _计价方式, value); }
+        }
+
+
         private decimal _金额;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        [Editable(false)]
         public decimal 金额
         {
             get { return _金额; }
@@ -1081,6 +1136,21 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+
+
+
+
+
+
+        private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string 饰品编号
+        {
+            get { return _饰品编号; }
+            set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
+        }
+
+
     }
     public class 退库单 : ModelBase
     {
@@ -1090,11 +1160,12 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
         public long 分店ID
@@ -1134,6 +1205,12 @@ namespace ZtxFrameWork.Data.Model
         {
             get { return _未收金额; }
             set { Set<decimal>(() => this.未收金额, ref _未收金额, value); }
+        }
+        private String _状态;
+        public String 状态
+        {
+            get { return _状态; }
+            set { Set<String>(() => this.状态, ref _状态, value); }
         }
         private String _备注;
         public String 备注
@@ -1183,6 +1260,20 @@ namespace ZtxFrameWork.Data.Model
             get { return _重量; }
             set { Set<decimal>(() => this.重量, ref _重量, value); }
         }
+
+        private Decimal _单价;
+        public Decimal 单价
+        {
+            get { return _单价; }
+            set { Set<Decimal>(() => this.单价, ref _单价, value); }
+        }
+        private string _计价方式;
+        public string 计价方式
+        {
+            get { return _计价方式; }
+            set { Set<string>(() => this.计价方式, ref _计价方式, value); }
+        }
+
         private decimal _金额;
         public decimal 金额
         {

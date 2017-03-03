@@ -22,6 +22,7 @@ namespace ZtxFrameWork.UI.Views
         public ModuleCollectionView()
         {
             InitializeComponent();
+         
         }
     }
 }

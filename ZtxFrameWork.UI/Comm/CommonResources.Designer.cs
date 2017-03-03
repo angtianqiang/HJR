@@ -124,7 +124,7 @@ namespace ZtxFrameWork.UI.Comm {
         }
         
         /// <summary>
-        ///   查找类似 更新出错 的本地化字符串。
+        ///   查找类似 数据保存出错 的本地化字符串。
         /// </summary>
         internal static string Exception_UpdateErrorCaption {
             get {
@@ -133,7 +133,7 @@ namespace ZtxFrameWork.UI.Comm {
         }
         
         /// <summary>
-        ///   查找类似 验证出错 的本地化字符串。
+        ///   查找类似 数据验证出错 的本地化字符串。
         /// </summary>
         internal static string Exception_ValidationErrorCaption {
             get {

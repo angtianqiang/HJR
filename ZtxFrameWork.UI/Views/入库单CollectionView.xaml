@@ -14,8 +14,8 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignHeight="600"
+             d:DesignWidth="600"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:入库单CollectionViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
@@ -41,8 +41,8 @@
                 <Style TargetType="{x:Type dx:DXWindow}">
                     <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
                     <Setter Property="Icon" Value="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
-                    <Setter Property="Width" Value="400" />
-                    <Setter Property="Height" Value="320" />
+                    <Setter Property="Width" Value="800" />
+                    <Setter Property="Height" Value="580" />
                 </Style>
             </dx:WindowedDocumentUIService.WindowStyle>
         </dx:WindowedDocumentUIService>
@@ -79,6 +79,19 @@
                                                    NavigationStyle="Row"
                                                    ShowTotalSummary="True" />
                                 </dxg:GridControl.View>
+                                <dxg:GridControl.Columns>
+                                    <dxg:GridColumn FieldName="分店.名称"
+                                                    Header="分店"
+                                                    IsSmart="True" />
+                                    <dxg:GridColumn FieldName="供应商.简称"
+                                                    Header="供应商"
+                                                    IsSmart="True" />
+                                    <dxg:GridColumn FieldName="操作员.DispalyName"
+                                                    Header="操作员"
+                                                    IsSmart="True" />
+                                </dxg:GridControl.Columns>
+
+
 
 
                             </dxg:GridControl>
