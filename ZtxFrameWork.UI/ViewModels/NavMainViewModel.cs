@@ -7,7 +7,10 @@ using System.Windows.Input;
 using System.Linq;
 using DevExpress.Mvvm.POCO;
 using ZtxFrameWork.UI.Comm.DataModel;
-
+using System.ComponentModel;
+using DevExpress.Xpf.Core;
+using System.Windows.Data;
+using DevExpress.Xpf.Bars;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -25,6 +28,18 @@ namespace ZtxFrameWork.UI.ViewModels
             Messenger.Default.Register<Module>(this, x => Show(x));
         
 
+        }
+        
+             public object ThemeCollection
+        {
+            get
+            {
+
+                ICollectionView view = CollectionViewSource.GetDefaultView(Theme.Themes.Where(t => !object.Equals(t, Theme.TouchlineDark)&& (t.Category!= Theme.Office2013Category) && (t.Category!=Theme.Office2016Category)).Select(t => new ThemeViewModel(t)).ToArray());
+                view.GroupDescriptions.Add(new PropertyGroupDescription("Theme.Category"));
+                return view;
+
+            }
         }
 
         public virtual User CurrentUser { get; set; } = User.CurrentUser;

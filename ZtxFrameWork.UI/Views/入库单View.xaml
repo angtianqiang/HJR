@@ -105,6 +105,23 @@
                                            ToolTip="F5" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="">
+                        <dxb:BarButtonItem Command="{Binding ReportPrintCommand}"
+                                           Content="打印"
+                                           KeyGesture="CTRL+P"
+                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/Printer.png"
+                                           ToolTip="CTRL+P" />
+                        <dxb:BarButtonItem Command="{Binding ReportPreviewCommand}"
+                                           Content="预览"
+                                           KeyGesture="CTRL+SHIFT+P"
+                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/Preview.png"
+                                           ToolTip="CTRL+SHIFT+P" />
+                        <dxb:BarButtonItem Command="{Binding ReportDesignerCommand}"
+                                           Content="设计"
+                                           KeyGesture="CTRL+SHIFT+O"
+                                           LargeGlyph="/ZtxFrameWork.UI;component/Images/Designer.png"
+                                           ToolTip="CTRL+P" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="">
                         <dxb:BarButtonItem Command="{Binding CloseCommand}"
                                            Content="关闭"
                                            KeyGesture="CTRL+W"

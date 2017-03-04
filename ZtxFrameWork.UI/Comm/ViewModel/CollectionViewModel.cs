@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.POCO;
+using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -499,6 +500,91 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         #region 消息管理器的令牌 20170302
         public virtual string Token { get; set; } = Guid.NewGuid().ToString();
+        #endregion
+
+
+        #region 20170304 打印 打印预览 报表设计
+         
+
+        protected virtual string GetReportPath()
+        {
+            return System.Environment.CurrentDirectory + @"\Reports\" + (typeof(TEntity).Name) + "Report.repx";
+        }
+        protected XtraReport CreateReport()
+        {
+            var path = GetReportPath();
+            return System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+
+        }
+        protected void SetReportDataSource(XtraReport report)
+        {
+            report.DataSource = this.Entities;
+        }
+        public virtual void ReportPrint()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            var report = CreateReport();
+            SetReportDataSource(report);
+            report.CreateDocument();
+            report.Print();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanReportPrint()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return !IsLoading;
+        }
+        public virtual void ReportPreview()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            var report = CreateReport();
+            SetReportDataSource(report);
+            report.CreateDocument();
+
+            //DevExpress.LookAndFeel.UserLookAndFeel defaultLF = new DevExpress.LookAndFeel.UserLookAndFeel(null);
+            //defaultLF.SkinName = "MetropolisDark";
+            //defaultLF.Style= DevExpress.LookAndFeel.LookAndFeelStyle.Skin;
+            //defaultLF.SetDefaultStyle();
+
+            // DevExpress.UserSkins.BonusSkins.Register();
+            //DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName;
+            //  DevExpress.Skins.SkinManager.EnableFormSkins();
+            //DevExpress.LookAndFeel.LookAndFeelHelper.ForceDefaultLookAndFeelChanged();
+            //report.ShowPreview(defaultLF);
+            // DevExpress.LookAndFeel.UserLookAndFeel.Default.UseDefaultLookAndFeel = true;
+            //   DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName;
+            report.ShowPreview();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanReportPreview()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return !IsLoading;
+        }
+        public virtual void ReportDesigner()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            var report = CreateReport();
+            SetReportDataSource(report);
+            // report.CreateDocument();
+         
+            report.ShowDesigner();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanReportDesigner()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return !IsLoading;
+        }
         #endregion
     }
 

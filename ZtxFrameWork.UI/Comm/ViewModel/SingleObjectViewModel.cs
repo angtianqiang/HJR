@@ -1,6 +1,7 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using DevExpress.XtraReports.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -444,6 +445,8 @@ where TDbContext: DbContext
 
         protected virtual string GetTitle()
         {
+
+       
             return (typeof(TEntity).Name + " - " + Convert.ToString(getEntityDisplayNameFunc != null ? getEntityDisplayNameFunc(Entity) : PrimaryKey))
    .Split(new string[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
         }
@@ -515,16 +518,9 @@ where TDbContext: DbContext
 
         #region 20170209
 
-        #region 消息管理器的令牌 20170302
-        public virtual string Token { get; set; } = Guid.NewGuid().ToString();
-        #endregion
+       
 
-        #region 20170303 添加一个字段来标识是不是新增模式，是否显示菜单项“保存并新建”
-        public virtual bool IsAddModel
-        {
-            get { return this.entityInitializer != null; }
-        }
-        #endregion
+       
         public virtual User CurrentUser { get; set; } = User.CurrentUser;
 
 
@@ -539,6 +535,88 @@ where TDbContext: DbContext
         protected  TPrimaryKey GetPrimaryKey(TEntity Entity) {
 
             return   getPrimaryKeyExpression.Compile()(Entity);
+        }
+        #endregion
+        #region 消息管理器的令牌 20170302
+        public virtual string Token { get; set; } = Guid.NewGuid().ToString();
+        #endregion
+        #region 20170303 添加一个字段来标识是不是新增模式，是否显示菜单项“保存并新建”
+        public virtual bool IsAddModel
+        {
+            get { return this.entityInitializer != null; }
+        }
+        #endregion
+
+        #region 20170304 打印 打印预览 报表设计
+
+        protected virtual string GetReportPath()
+        {
+          return  System.Environment.CurrentDirectory + @"\Reports\" + (typeof(TEntity).Name) + "Report.repx";
+        }
+        protected XtraReport CreateReport()
+        {
+            var path = GetReportPath();
+            return System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+           
+        }
+        protected void SetReportDataSource(XtraReport report)
+        {
+            DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource();
+            objectDataSource.DataSource = this.Entity;
+            report.DataSource = objectDataSource;
+        }
+        public virtual void ReportPrint()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            var report = CreateReport();
+            SetReportDataSource(report);
+            report.CreateDocument();
+            report.Print();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanReportPrint()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return true;
+        }
+        public virtual void ReportPreview()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            var report = CreateReport();
+            SetReportDataSource(report);
+            report.CreateDocument();
+           
+            report.ShowPreview();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanReportPreview()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return true;
+        }
+        public virtual void ReportDesigner()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            var report = CreateReport();
+            SetReportDataSource(report);
+            // report.CreateDocument();
+          
+            report.ShowDesigner();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanReportDesigner()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return true;
         }
         #endregion
     }

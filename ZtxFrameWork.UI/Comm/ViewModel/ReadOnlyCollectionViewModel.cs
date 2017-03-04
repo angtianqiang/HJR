@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using ZtxFrameWork.UI.Comm.DataModel;
 
 namespace ZtxFrameWork.UI.Comm.ViewModel
@@ -147,7 +148,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// </summary>
         public virtual void Refresh()
         {
+            Mouse.OverrideCursor = Cursors.Wait;
             LoadEntities(false);
+            Mouse.OverrideCursor = null;
         }
 
         /// <summary>

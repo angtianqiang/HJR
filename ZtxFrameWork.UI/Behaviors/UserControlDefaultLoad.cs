@@ -26,6 +26,7 @@ namespace ZtxFrameWork.UI.Behaviors
         }
         private void AssociatedObject_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
+
             System.Windows.Input.Mouse.OverrideCursor = null;
             string Token = ((dynamic)AssociatedObject.DataContext).Token;
 

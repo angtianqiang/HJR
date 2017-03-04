@@ -253,7 +253,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         CancellationTokenSource LoadCore()
         {
-            Mouse.OverrideCursor = Cursors.Wait;
+          //  Mouse.OverrideCursor = Cursors.Wait;
             IsLoading = true;
             var cancellationTokenSource = new CancellationTokenSource();
             var selectedEntityCallback = GetSelectedEntityCallback();
@@ -294,7 +294,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                     OnEntitiesAssigned(selectedEntityCallback);
                 }
                 IsLoading = false;
-                Mouse.OverrideCursor = null;
+           //     Mouse.OverrideCursor = null;
             }, cancellationTokenSource.Token, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
             return cancellationTokenSource;
         }

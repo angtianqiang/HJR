@@ -45,7 +45,7 @@
                                 <dxb:Gallery RowCount="4" />
                             </dxr:RibbonGalleryBarItem.DropDownGallery>
                             <dxmvvm:Interaction.Behaviors>
-                                <dxr:RibbonGalleryItemThemeSelectorBehavior />
+                                <dxr:RibbonGalleryItemThemeSelectorBehavior ThemesCollection="{Binding DataContext.ThemeCollection, RelativeSource={RelativeSource AncestorType=dxr:RibbonControl}}" />
                             </dxmvvm:Interaction.Behaviors>
                         </dxr:RibbonGalleryBarItem>
                     </dxr:RibbonPageGroup>
