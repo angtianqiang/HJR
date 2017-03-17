@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using ZtxFrameWork.UI.Comm.DataModel;
 using DevExpress.Mvvm.POCO;
 using System.Linq;
+using System.Data.Entity;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -18,7 +19,8 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 单位ViewModel());
         }
-        protected 单位ViewModel() : base(DbFactory.Instance, x => x.单位s, x=>x.ID, x => x.名称)
+        public DbSet<单位> 单位s { get; set; }
+        protected 单位ViewModel() : base(DbFactory.Instance, x => x.单位s, x=>x.ID, x => x.名称, "单位")
         {
           
 

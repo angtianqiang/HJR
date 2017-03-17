@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 重量单位ViewModel());
         }
-        protected 重量单位ViewModel() : base(DbFactory.Instance, x => x.重量单位s, x=>x.ID, x => x.名称)
+        protected 重量单位ViewModel() : base(DbFactory.Instance, x => x.重量单位s, x=>x.ID, x => x.名称, "重量单位")
         {
 
 

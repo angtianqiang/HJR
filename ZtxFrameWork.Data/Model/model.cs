@@ -198,6 +198,7 @@ namespace ZtxFrameWork.Data.Model
     public class 饰品 : ModelBase
     {
         private string _编号;
+        [Required(ErrorMessage ="必输值...")]
         public string 编号
         {
             get { return _编号; }
@@ -211,11 +212,13 @@ namespace ZtxFrameWork.Data.Model
         }
         private long _类型ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        [RangeAttribute(1,long.MaxValue)]
         public long 类型ID
         {
             get { return _类型ID; }
             set { Set<long>(() => this.类型ID, ref _类型ID, value); }
         }
+      
         public 饰品类型 饰品类型 { get; set; }
         private string _品名;
         public string 品名
@@ -225,25 +228,29 @@ namespace ZtxFrameWork.Data.Model
         }
         private long _单位ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        [RangeAttribute(1, long.MaxValue)]
         public long 单位ID
         {
             get { return _单位ID; }
             set { Set<long>(() => this.单位ID, ref _单位ID, value); }
         }
+        
         public virtual 单位 单位 { get; set; }
         private long _重量单位ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        [RangeAttribute(1, long.MaxValue)]
         public long 重量单位ID
         {
             get { return _重量单位ID; }
             set { Set<long>(() => this.重量单位ID, ref _重量单位ID, value); }
         }
+      
         public virtual 重量单位 重量单位 { get; set; }
-        private decimal _货重;
-        public decimal 货重
+        private decimal _单重;
+        public decimal 单重
         {
-            get { return _货重; }
-            set { Set<decimal>(() => this.货重, ref _货重, value); }
+            get { return _单重; }
+            set { Set<decimal>(() => this.单重, ref _单重, value); }
         }
         private decimal _金重;
         public decimal 金重
@@ -259,18 +266,18 @@ namespace ZtxFrameWork.Data.Model
             set { Set<long>(() => this.黄金种类ID, ref _黄金种类ID, value); }
         }
         public virtual 黄金种类 黄金种类 { get; set; }
-        private string _款号;
-        public string 款号
+        private string _尺寸;
+        public string 尺寸
         {
-            get { return _款号; }
-            set { Set<string>(() => this.款号, ref _款号, value); }
+            get { return _尺寸; }
+            set { Set<string>(() => this.尺寸, ref _尺寸, value); }
         }
 
-        private string _证书号;
-        public string 证书号
+        private string _柜号;
+        public string 柜号
         {
-            get { return _证书号; }
-            set { Set<string>(() => this.证书号, ref _证书号, value); }
+            get { return _柜号; }
+            set { Set<string>(() => this.柜号, ref _柜号, value); }
         }
         private long _材质ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
@@ -280,48 +287,37 @@ namespace ZtxFrameWork.Data.Model
             set { Set<long>(() => this.材质ID, ref _材质ID, value); }
         }
         public virtual 材质 材质 { get; set; }
-        private string _工费计法;
-        public string 工费计法
+        private 工费计法 _工费计法;
+        public 工费计法 工费计法
         {
             get { return _工费计法; }
-            set { Set<string>(() => this.工费计法, ref _工费计法, value); }
+            set { Set<工费计法>(() => this.工费计法, ref _工费计法, value); }
         }
-        private decimal _按件工费;
-        public decimal 按件工费
+        private decimal _成本工费;
+        public decimal 成本工费
         {
-            get { return _按件工费; }
-            set { Set<decimal>(() => this.按件工费, ref _按件工费, value); }
+            get { return _成本工费; }
+            set { Set<decimal>(() => this.成本工费, ref _成本工费, value); }
         }
-        private decimal _按重工费;
-        public decimal 按重工费
+        private decimal _批发工费;
+        public decimal 批发工费
         {
-            get { return _按重工费; }
-            set { Set<decimal>(() => this.按重工费, ref _按重工费, value); }
+            get { return _批发工费; }
+            set { Set<decimal>(() => this.批发工费, ref _批发工费, value); }
         }
-        private decimal _按件销售价;
-        public decimal 按件销售价
+        private decimal _按件批发价;
+        public decimal 按件批发价
         {
-            get { return _按件销售价; }
-            set { Set<decimal>(() => this.按件销售价, ref _按件销售价, value); }
+            get { return _按件批发价; }
+            set { Set<decimal>(() => this.按件批发价, ref _按件批发价, value); }
         }
-        private decimal _按重销售价;
-        public decimal 按重销售价
+        private decimal _按重批发价;
+        public decimal 按重批发价
         {
-            get { return _按重销售价; }
-            set { Set<decimal>(() => this.按重销售价, ref _按重销售价, value); }
+            get { return _按重批发价; }
+            set { Set<decimal>(() => this.按重批发价, ref _按重批发价, value); }
         }
-        private decimal _按件利率;
-        public decimal 按件利率
-        {
-            get { return _按件利率; }
-            set { Set<decimal>(() => this.按件利率, ref _按件利率, value); }
-        }
-        private decimal _按重利率;
-        public decimal 按重利率
-        {
-            get { return _按重利率; }
-            set { Set<decimal>(() => this.按重利率, ref _按重利率, value); }
-        }
+     
         private decimal _按件成本价;
         public decimal 按件成本价
         {
@@ -346,9 +342,60 @@ namespace ZtxFrameWork.Data.Model
             get { return _库存下限; }
             set { Set<Int32>(() => this.库存下限, ref _库存下限, value); }
         }
+
+        private decimal _账面成本小计;
+        public decimal 账面成本小计
+        {
+            get { return _账面成本小计; }
+            set { Set<decimal>(() => this.账面成本小计, ref _账面成本小计, value); }
+        }
+        private Int32 _库存数量;
+        public Int32 库存数量
+        {
+            get { return _库存数量; }
+            set { Set<Int32>(() => this.库存数量, ref _库存数量, value); }
+        }
+        private decimal _库存重量;
+        public decimal 库存重量
+        {
+            get { return _库存重量; }
+            set { Set<decimal>(() => this.库存重量, ref _库存重量, value); }
+        }
+
+
         public virtual   ICollection< 饰品提成> 饰品提成s { get; set; }
 
+
+        private long? _饰品图片ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public long? 饰品图片ID
+        {
+            get { return _饰品图片ID; }
+            set { Set<long?>(() => this.饰品图片ID, ref _饰品图片ID, value); }
+        }
+
+        private 饰品图片 _饰品图片;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品图片 饰品图片
+        {
+            get { return _饰品图片; }
+            set { Set<饰品图片>(() => this.饰品图片, ref _饰品图片, value); }
+        }
+
+
+
     }
+    public class 饰品图片 : ModelBase
+    {
+        private byte[] _图片;
+        public byte[] 图片
+        {
+            get { return _图片; }
+            set { Set<byte[]>(() => this.图片, ref _图片, value); }
+        }
+
+    }
+
     public class 饰品提成 : ModelBase
     {
 
@@ -588,11 +635,11 @@ namespace ZtxFrameWork.Data.Model
             get { return _积分系数; }
             set { Set<decimal>(() => this.积分系数, ref _积分系数, value); }
         }
-        private Int32 _本数积分;
-        public Int32 本数积分
+        private Int32 _本次积分;
+        public Int32 本次积分
         {
-            get { return _本数积分; }
-            set { Set<Int32>(() => this.本数积分, ref _本数积分, value); }
+            get { return _本次积分; }
+            set { Set<Int32>(() => this.本次积分, ref _本次积分, value); }
         }
         private String _状态;
         public String 状态
@@ -614,7 +661,12 @@ namespace ZtxFrameWork.Data.Model
             set { Set<ICollection<销售单明细>>(() => this.销售单明细s, ref _销售单明细s, value); }
         }
 
-
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
+        }
     }
     public class 销售单明细 : ModelBase
     {
@@ -755,11 +807,11 @@ namespace ZtxFrameWork.Data.Model
             get { return _积分系数; }
             set { Set<decimal>(() => this.积分系数, ref _积分系数, value); }
         }
-        private Int32 _本数积分;
-        public Int32 本数积分
+        private Int32 _本次积分;
+        public Int32 本次积分
         {
-            get { return _本数积分; }
-            set { Set<Int32>(() => this.本数积分, ref _本数积分, value); }
+            get { return _本次积分; }
+            set { Set<Int32>(() => this.本次积分, ref _本次积分, value); }
         }
         private String _状态;
         public String 状态
@@ -779,6 +831,14 @@ namespace ZtxFrameWork.Data.Model
         {
             get { return _销售退货单明细s; }
             set { Set<ICollection<销售退货单明细>>(() => this.销售退货单明细s, ref _销售退货单明细s, value); }
+        }
+
+
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
         }
     }
     public class 销售退货单明细 : ModelBase
@@ -1056,6 +1116,14 @@ namespace ZtxFrameWork.Data.Model
             get { return _入库单明细s; }
             set { Set<VHObjectList<入库单明细>>(() => this.入库单明细s, ref _入库单明细s, value); }
         }
+
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
+        }
+
     }
     public class 入库单明细 : ModelBase
     {
@@ -1223,6 +1291,14 @@ namespace ZtxFrameWork.Data.Model
         {
             get { return _退库单明细s; }
             set { Set<ICollection<退库单明细>>(() => this.退库单明细s, ref _退库单明细s, value); }
+        }
+
+
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
         }
 
     }

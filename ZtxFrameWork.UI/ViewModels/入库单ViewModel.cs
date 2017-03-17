@@ -21,7 +21,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 入库单ViewModel());
         }
-        protected 入库单ViewModel() : base(DbFactory.Instance, x => x.入库单s, x=>x.ID, x => x.编号)
+        protected 入库单ViewModel() : base(DbFactory.Instance, x => x.入库单s, x=>x.ID, x => x.编号, "采购入库单")
         {
             if (this.IsInDesignMode()) return;
 
@@ -186,34 +186,7 @@ namespace ZtxFrameWork.UI.ViewModels
             }
             return Entity != null && Entity.状态 == "N" && Entity.入库单明细s.Count > 0 && SelectChildEntity != null;
         }
-        public virtual void  Confirm()
-        {
-            Entity.状态 = "Y";
-            base.Save();
-            UpdateCommands();
-        }
-        public virtual bool CanConfirm()
-        {
-            if (this.IsInDesignMode())
-            {
-                return true;
-            }
-            return !DB.ChangeTracker.HasChanges() && Entity.状态 == "N";
-        }
-        public virtual void UnConfirm()
-        {
-            Entity.状态 = "N";
-            base.Save();
-            UpdateCommands();
-        }
-        public virtual bool CanUnConfirm()
-        {
-            if (this.IsInDesignMode())
-            {
-                return true;
-            }
-            return !DB.ChangeTracker.HasChanges() && Entity.状态 == "Y";
-        }
+      
 
     }
 }

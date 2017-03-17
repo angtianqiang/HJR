@@ -10,6 +10,24 @@ using System.Data.Entity.ModelConfiguration.Configuration;
 
 namespace ZtxFrameWork.Data.Mapping
 {
+    public class AuthorityModuleUserAuthorityModuleMappingMap : ZtxEntityTypeConfiguration<UserAuthorityModuleMapping>
+    {
+        public AuthorityModuleUserAuthorityModuleMappingMap()
+        {
+            this.HasKey(a => a.ID);
+            this.Require(t => t.User, t => t.UserAuthorityModuleMappings, t => t.UserID);
+            this.Require(t => t.AuthorityModule, t => t.UserAuthorityModuleMappings, t => t.AuthorityModuleID);
+        }
+    }
+    public class AuthorityModuleMap : ZtxEntityTypeConfiguration<AuthorityModule>
+    {
+        public AuthorityModuleMap()
+        {
+            this.HasKey(a => a.ID);
+            this.Property(t => t.ViewTitle).IsRequired().HasMaxLength(120)
+                .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_AuthorityModule_ViewTitle") { IsUnique = true }));
+        }
+    }
     public class 分店Map : ZtxEntityTypeConfiguration<分店>
     {
         public 分店Map()
@@ -89,6 +107,9 @@ namespace ZtxFrameWork.Data.Mapping
             this.Property(t => t.条码).HasMaxLength(60)
      .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_饰品_条码") { IsUnique = true }));
 
+
+            this.HasOptional(t => t.饰品图片).WithMany().HasForeignKey(t => t.饰品图片ID).WillCascadeOnDelete(false);
+         
             this.Require(t => t.饰品类型, t => t.饰品s, t => t.类型ID);
             this.Require(t => t.单位, t => t.饰品s, t => t.单位ID);
             this.Require(t => t.重量单位, t => t.饰品s, t => t.重量单位ID);

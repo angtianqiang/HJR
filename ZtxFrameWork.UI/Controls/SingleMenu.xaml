@@ -27,6 +27,12 @@
                                        KeyGesture="CTRL+SHIFT+S"
                                        LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/SaveColse.png"
                                        ToolTip="CTRL+SHIFT+S" />
+                    <dxb:BarButtonItem Command="{Binding SaveAndNewCommand}"
+                                           Content="保存并新建"
+                                           IsVisible="{Binding IsAddModel}"
+                                           KeyGesture="CTRL+SHIFT+N"
+                                           LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/SaveAndNew.png"
+                                           ToolTip="CTRL+SHIFT+N" />
                     <dxb:BarButtonItem Command="{Binding DeleteCommand}"
                                        Content="删除"
                                        KeyGesture="CTRL+D"

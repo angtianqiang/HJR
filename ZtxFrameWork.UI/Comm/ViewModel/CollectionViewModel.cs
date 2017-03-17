@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
 using DevExpress.XtraReports.UI;
 using System;
@@ -11,7 +12,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Input;
+using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.Utils;
 
@@ -43,9 +46,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TEntity>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-   bool ignoreSelectEntityMessage = false)
+   bool ignoreSelectEntityMessage = false, string permissionTitle = "")
         {
-            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage));
+            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle));
         }
 
         /// <summary>
@@ -63,8 +66,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TEntity>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-   bool ignoreSelectEntityMessage = false
-            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage)
+   bool ignoreSelectEntityMessage = false,string permissionTitle=""
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle)
         {
         }
     }
@@ -97,9 +100,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-            bool ignoreSelectEntityMessage = false)
+            bool ignoreSelectEntityMessage = false, string permissionTitle = "")
         {
-            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage));
+            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle));
         }
 
         /// <summary>
@@ -117,8 +120,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-            bool ignoreSelectEntityMessage = false
-            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage)
+            bool ignoreSelectEntityMessage = false, string permissionTitle = ""
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle)
         {
         }
     }
@@ -155,12 +158,13 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer,
-            bool ignoreSelectEntityMessage
+            bool ignoreSelectEntityMessage, string permissionTitle 
             ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression)
         {
             VerifyProjectionType();
             this.newEntityInitializer = newEntityInitializer;
             this.ignoreSelectEntityMessage = ignoreSelectEntityMessage;
+            PermissionTitle = permissionTitle;
             if (!this.IsInDesignMode())
                 RegisterSelectEntityMessage();
         }
@@ -171,10 +175,15 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// </summary>
         public virtual void New()
         {
-          Mouse.OverrideCursor = Cursors.Wait;
+          Mouse.OverrideCursor = Cursors.Wait; 
             GetDocumentManagerService().ShowNewEntityDocument(this, newEntityInitializer);
         }
+       
+ public virtual bool CanNew()
+        {
+            if (this.IsInDesignMode()) return true;
 
+            return User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle ).Add; }
         /// <summary>
         /// Creates and shows a document that contains a single object view model for the existing entity.
         /// Since CollectionViewModelBase is a POCO view model, an the instance of this class will also expose the EditCommand property that can be used as a binding source in views.
@@ -210,7 +219,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// <param name="projectionEntity">An entity to edit.</param>
         public virtual bool CanEdit(TProjection projectionEntity)
         {
-            return projectionEntity != null && !IsLoading;
+            if (this.IsInDesignMode()) return true;
+
+            return projectionEntity != null && !IsLoading && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Edit;
         }
 
         /// <summary>
@@ -239,18 +250,24 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
                 Entities.Remove(projectionEntity);
                 TPrimaryKey primaryKey = this.GetProjectionPrimaryKey(projectionEntity);
-                var DB = dbFactory.CreateDbContext();
-                var DbSet = getDbSetFunc(DB);
+                var newDB = dbFactory.CreateDbContext();
+                var newDbSet = getDbSetFunc(newDB);
 
-                TEntity entity = DbSet.Find(primaryKey);
+                TEntity entity = newDbSet.Find(primaryKey);
                 if (entity != null)
                 {
+                    using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                    {
+                       
+                        OnBeforeEntityDeleted(newDB,primaryKey, entity);
 
-                    OnBeforeEntityDeleted(primaryKey, entity);
+                        DB.Entry(entity).State = EntityState.Deleted;
+                        DB.SaveChanges();
+                        OnEntityDeleted(newDB,primaryKey, entity);
 
-                    DB.Entry(entity).State = EntityState.Deleted;
-                    DB.SaveChanges();
-                    OnEntityDeleted(primaryKey, entity);
+                        ts.Complete();
+                    }
+                      
                 }
 
 
@@ -269,7 +286,15 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// <param name="projectionEntity">An entity to edit.</param>
         public virtual bool CanDelete(TProjection projectionEntity)
         {
-            return projectionEntity != null && !IsLoading;
+            if (this.IsInDesignMode()) return true;
+
+            bool temp = projectionEntity != null && !IsLoading && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Delete;
+            try
+            {
+                temp = temp && ((dynamic)projectionEntity).状态 == "N";
+            }
+            catch { }
+            return temp;
         }
 
         /// <summary>
@@ -303,7 +328,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// <param name="projectionEntity">An entity to save.</param>
         public virtual bool CanSave(TProjection projectionEntity)
         {
-            return projectionEntity != null && !IsLoading;
+            if (this.IsInDesignMode()) return true;
+
+            return projectionEntity != null && !IsLoading && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Edit;
         }
 
         /// <summary>
@@ -324,16 +351,26 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         public void Close()
         {
             if (DocumentOwner != null)
-                DocumentOwner.Close(this);
+                Mouse.OverrideCursor = Cursors.Wait;
+
+            DocumentOwner.Close(this);
+            Mouse.OverrideCursor = null;
+
         }
 
         protected IMessageBoxService MessageBoxService { get { return this.GetRequiredService<IMessageBoxService>(); } }
 
-        protected virtual IDocumentManagerService GetDocumentManagerService() { return this.GetService<IDocumentManagerService>(); }
+        protected virtual IDocumentManagerService GetDocumentManagerService()
+        {
 
-        protected virtual void OnBeforeEntityDeleted(TPrimaryKey primaryKey, TEntity entity) { }
 
-        protected virtual void OnEntityDeleted(TPrimaryKey primaryKey, TEntity entity)
+
+            var tokenValue = App.SystemConfigs.Where(t => t.Token == "ViewOpenMode").Single().TokenValue;
+            return tokenValue == "0" ? this.GetService<IDocumentManagerService>() : this.GetService<IDocumentManagerService>("TabbedDocumentManagerService");
+        }
+        protected virtual void OnBeforeEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
+
+        protected virtual void OnEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
             Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Deleted));
         }
@@ -508,7 +545,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         protected virtual string GetReportPath()
         {
-            return System.Environment.CurrentDirectory + @"\Reports\" + (typeof(TEntity).Name) + "Report.repx";
+            return System.Environment.CurrentDirectory + @"\Reports\" + PermissionTitle  + "Collection" + "Report.repx";
         }
         protected XtraReport CreateReport()
         {
@@ -531,11 +568,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         }
         public virtual bool CanReportPrint()
         {
-            if (this.IsInDesignMode())
-            {
-                return true;
-            }
-            return !IsLoading;
+            if (this.IsInDesignMode()) return true;
+
+            return !IsLoading && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Print;
         }
         public virtual void ReportPreview()
         {
@@ -561,11 +596,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         }
         public virtual bool CanReportPreview()
         {
-            if (this.IsInDesignMode())
-            {
-                return true;
-            }
-            return !IsLoading;
+            if (this.IsInDesignMode()) return true;
+
+            return !IsLoading&& User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Preview;
         }
         public virtual void ReportDesigner()
         {
@@ -579,13 +612,51 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         }
         public virtual bool CanReportDesigner()
         {
-            if (this.IsInDesignMode())
-            {
-                return true;
-            }
-            return !IsLoading;
+            if (this.IsInDesignMode()) return true;
+
+            return !IsLoading&& User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Design;
         }
         #endregion
+
+        #region 20170311  权限标识
+        public virtual string PermissionTitle { get; set; }//权限标识
+        #endregion
+        #region 20170315 表格导出
+
+       
+
+        [Command(CanExecuteMethodName = "CanExport")]
+        public virtual void   ExportToXls(DevExpress.Xpf.Grid.DataViewBase view)
+        {
+            if (view == null) return;
+            new Helpers.ExportHelper(view).ExportToXls();
+        }
+        [Command(CanExecuteMethodName = "CanExport")]
+        public virtual void ExportToXlsx(DevExpress.Xpf.Grid.DataViewBase view)
+        {
+            if (view == null) return;
+            new Helpers.ExportHelper(view).ExportToXlsx();
+        }
+        [Command(CanExecuteMethodName = "CanExport")]
+        public virtual void ExportToPdf(DevExpress.Xpf.Grid.DataViewBase view)
+        {
+            if (view == null) return;
+            new Helpers.ExportHelper(view).ExportToPdf();
+        }
+        [Command(CanExecuteMethodName = "CanExport")]
+        public virtual void ExportToImage(DevExpress.Xpf.Grid.DataViewBase view)
+        {
+            if (view == null) return;
+            new Helpers.ExportHelper(view).ExportToImage();
+        }
+        public virtual bool CanExport(DevExpress.Xpf.Grid.DataViewBase view)
+        {
+            if (this.IsInDesignMode()) return true;
+
+            return !IsLoading && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Export;
+        }
+        #endregion
+
     }
 
     /// <summary>
@@ -644,7 +715,12 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         {
             if (documentManagerService == null)
                 return null;
-            return documentManagerService.CreateDocument(typeof(TEntity).Name + "View", parameter, parentViewModel);
+          var document = documentManagerService.CreateDocument(typeof(TEntity).Name + "View", parameter, parentViewModel);
+            if (App.SystemConfigs.Where(t => t.Token == "DestroyOnClose").Single().TokenValue == "1")
+            {
+                document.DestroyOnClose = true;
+            }
+            return document;
         }
 
 

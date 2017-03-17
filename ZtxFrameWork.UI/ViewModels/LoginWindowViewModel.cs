@@ -4,6 +4,8 @@ using DevExpress.Mvvm;
 using ZtxFrameWork.Data.Model;
 using System.Linq;
 using System.Windows.Input;
+using System.Data.Entity;
+using ZtxFrameWork.UI.Comm.DataModel;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -26,10 +28,10 @@ namespace ZtxFrameWork.UI.ViewModels
                 return;
             }
             Mouse.OverrideCursor = Cursors.Wait;
-            var db = new ZtxFrameWork.Data.ZtxDB();
+            var db = DbFactory.Instance.CreateDbContext();
             var passWord = ZtxFrameWork.Utilities.SecretUtil.md5(PassWord);
        
-            User userInfo = db.Users.Where(x => x.UserName == UserName && x.PassWord == passWord&& x.IsFrozen==false).FirstOrDefault();
+            User userInfo = db.Users.Include(t=>t.UserAuthorityModuleMappings).Where(x => x.UserName == UserName && x.PassWord == passWord&& x.IsFrozen==false).FirstOrDefault();
             if (userInfo == null)
             {
                 Mouse.OverrideCursor = null;

@@ -17,7 +17,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 饰品ViewModel());
         }
-        protected 饰品ViewModel() : base(DbFactory.Instance, x => x.饰品s, x=>x.ID, x => x.品名)
+        protected 饰品ViewModel() : base(DbFactory.Instance, x => x.饰品s, x=>x.ID, x => x.品名, "饰品")
         {
 
             var db = dbFactory.CreateDbContext();

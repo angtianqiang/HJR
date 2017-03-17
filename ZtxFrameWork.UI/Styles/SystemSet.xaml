@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils;assembly=ZtxFrameWork.UI">
+
+
+
+    <utils:ApplicationSet x:Key="AppSet"
+                          Title="xx拓邦螺丝物流管理系统"
+                          IcoPath="Images/arpa.ico" />
+
+</ResourceDictionary>

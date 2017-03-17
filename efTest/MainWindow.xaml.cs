@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Data.Entity;
 using System.Collections.ObjectModel;
 using ZtxFrameWork.Data.Model;
+using ZtxFrameWork.UI.Comm.DataModel;
 
 namespace efTest
 {
@@ -98,7 +99,7 @@ namespace efTest
 
         private void button4_Click(object sender, RoutedEventArgs e)
         {
-            ZtxFrameWork.Data.ZtxDB db = new ZtxFrameWork.Data.ZtxDB();
+            ZtxFrameWork.Data.ZtxDB db = DbFactory.Instance.CreateDbContext();
             订单 order = new 订单()
             {
                 客户名称 = "abb",
@@ -116,7 +117,7 @@ namespace efTest
         private void button5_Click(object sender, RoutedEventArgs e)
         {
 
-            ZtxFrameWork.Data.ZtxDB db = new ZtxFrameWork.Data.ZtxDB();
+            ZtxFrameWork.Data.ZtxDB db = DbFactory.Instance.CreateDbContext();
             订单 order = db.订单s.Where(t => t.客户名称 == "abb").FirstOrDefault();
             order.订单明细[0].产品.颜色.颜色内容 = order.订单明细[0].产品.颜色.颜色内容 + "ooooooo";
             this.Title = db.Entry(order).State.ToString();
@@ -127,7 +128,7 @@ namespace efTest
 
         private void button6_Click(object sender, RoutedEventArgs e)
         {
-            ZtxFrameWork.Data.ZtxDB db = new ZtxFrameWork.Data.ZtxDB();
+            ZtxFrameWork.Data.ZtxDB db = DbFactory.Instance.CreateDbContext();
             订单 order = db.订单s.Where(t => t.客户名称 == "abb").FirstOrDefault();
             db.订单明细s.RemoveRange(order.订单明细);
             db.订单s.Remove(order);
@@ -137,7 +138,7 @@ namespace efTest
         private void button7_Click(object sender, RoutedEventArgs e)
         {
 
-            ZtxFrameWork.Data.ZtxDB db = new ZtxFrameWork.Data.ZtxDB();
+            ZtxFrameWork.Data.ZtxDB db = DbFactory.Instance.CreateDbContext();
             订单 order = new 订单()
             {
                 客户名称 = "abb",
@@ -156,7 +157,7 @@ namespace efTest
 
         private void button8_Click(object sender, RoutedEventArgs e)
         {
-            ZtxFrameWork.Data.ZtxDB db = new ZtxFrameWork.Data.ZtxDB();
+            ZtxFrameWork.Data.ZtxDB db = DbFactory.Instance.CreateDbContext();
             订单 order = db.订单s.Where(t => t.客户名称 == "abb").FirstOrDefault();
             // order.订单明细[0].序号 = 1001;
             var item = order.订单明细[2];

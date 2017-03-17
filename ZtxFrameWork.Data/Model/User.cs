@@ -12,7 +12,16 @@ namespace ZtxFrameWork.Data.Model
  public   class User:VHObject
     {
         public static User CurrentUser = null;
-
+        public  UserAuthorityModuleMapping GetUserAuthorityModuleMapping(string ViewTitle)
+        {
+        return  UserAuthorityModuleMappings.Where(t => t.AuthorityModule.ViewTitle == ViewTitle).FirstOrDefault();
+           
+        }
+           
+        public User()
+        {
+            UserAuthorityModuleMappings = new VHObjectList<UserAuthorityModuleMapping>();
+        }
         private long id;
         public long ID
         {
@@ -92,5 +101,8 @@ namespace ZtxFrameWork.Data.Model
         {
             return "xxxxds" + displayName;
         }
+
+
+        public virtual VHObjectList<UserAuthorityModuleMapping> UserAuthorityModuleMappings { get; set; }
     }
 }

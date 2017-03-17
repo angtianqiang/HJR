@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.Data.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -62,16 +68,18 @@
     <Compile Include="Mapping\UserMap.cs" />
     <Compile Include="Mapping\产品.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\AuthorityModule.cs" />
     <Compile Include="Model\Enums.cs" />
     <Compile Include="Model\model.cs" />
     <Compile Include="Model\ModelBase.cs" />
     <Compile Include="Model\Module.cs" />
+    <Compile Include="Model\SystemConfiguration.cs" />
     <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserAuthorityModuleMapping.cs" />
     <Compile Include="Model\订单.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ZtxDB.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

@@ -18,6 +18,9 @@
              d:DesignWidth="300"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NavMainViewModel}"
              mc:Ignorable="d">
+    <dxmvvm:Interaction.Behaviors>
+        <dx:DXMessageBoxService x:Name="CommMessageBox" />
+    </dxmvvm:Interaction.Behaviors>
     <DockPanel>
         <dxr:RibbonControl DockPanel.Dock="Top"
                            RibbonStyle="Office2010"
@@ -70,10 +73,13 @@
             </dxb:BarStaticItem>
         </dxb:StatusBarControl>
         <Grid>
-            <dxdo:DockLayoutManager>
+            <dxdo:DockLayoutManager ClosedPanelsBarVisibility="Auto">
                 <dxdo:LayoutGroup>
                     <dxdo:LayoutPanel AllowClose="False"
+                                      AllowContextMenu="False"
+                                      AllowFloat="False"
                                       Caption="功能菜单"
+                                      FloatOnDoubleClick="False"
                                       ItemWidth="250"
                                       ShowBorder="True"
                                       ShowCaption="True">
@@ -81,6 +87,7 @@
                             <dxn:NavBarControl.Resources>
                                 <conerters:MoudleInfoToImageConerter x:Key="converter" />
                             </dxn:NavBarControl.Resources>
+
                             <dxn:NavBarControl.ItemTemplate>
                                 <DataTemplate>
                                     <ContentControl>
@@ -88,6 +95,10 @@
                                                          Header="{Binding ModuleTitle}"
                                                          ImageSource="{Binding ModuleInfo,
                                                                                Converter={StaticResource ResourceKey=converter}}">
+                                            <dxn:NavBarGroup.ImageSettings>
+                                                <dxn:ImageSettings Width="24" Height="24" />
+                                            </dxn:NavBarGroup.ImageSettings>
+
                                             <dxn:NavBarGroup.Content>
                                                 <Canvas Background="White">
                                                     <TreeView Margin="0"
@@ -100,6 +111,8 @@
                                                         <TreeView.ItemContainerStyle>
                                                             <Style TargetType="TreeViewItem">
                                                                 <Setter Property="IsExpanded" Value="True" />
+                                                                <Setter Property="Padding" Value="0" />
+                                                                <Setter Property="Height" Value="24" />                                                                
                                                                 <Style.Triggers>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -107,22 +120,27 @@
                                                                             <Condition Property="IsSelected" Value="True" />
                                                                         </MultiTrigger.Conditions>
                                                                         <Setter Property="FontWeight" Value="Bold" />
+                                                                        <Setter Property="Foreground" Value="#FF1C83CB" />
                                                                     </MultiTrigger>
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </TreeView.ItemContainerStyle>
                                                         <TreeView.ItemTemplate>
                                                             <HierarchicalDataTemplate ItemsSource="{Binding ChildModules}">
-                                                                <StackPanel Margin="1,1,0,1"
+                                                                <StackPanel Margin="0"
+                                                                            VerticalAlignment="Center"
                                                                             Mouse.PreviewMouseDown="StackPanel_PreviewMouseDown"
                                                                             Orientation="Horizontal">
 
-                                                                    <Image Width="16"
-                                                                           Height="16"
-                                                                           Margin="0,0,2,0"
+                                                                    <Image Width="24"
+                                                                           Height="24"
+                                                                           Margin="0,0,0,0"
                                                                            Source="{Binding ModuleInfo,
                                                                                             Converter={StaticResource ResourceKey=converter}}" />
-                                                                    <TextBlock Text="{Binding ModuleTitle}" />
+
+                                                                    <TextBlock Margin="0,5,5,0" Text="{Binding ModuleTitle}" />
+
+
                                                                 </StackPanel>
                                                             </HierarchicalDataTemplate>
                                                         </TreeView.ItemTemplate>
@@ -142,9 +160,27 @@
                         <dxdo:DocumentPanel Caption="Document">
                             <Grid />
                         </dxdo:DocumentPanel>
+
+                        <dxdo:DocumentGroup.ItemStyle>
+                            <Style TargetType="dxdo:DocumentPanel">
+                                <Setter Property="AllowContextMenu" Value="False" />
+                                <Setter Property="FloatOnDoubleClick" Value="False" />
+                                <Setter Property="AllowFloat" Value="False" />
+                                <Setter Property="AllowClose" Value="True" />
+                            </Style>
+                        </dxdo:DocumentGroup.ItemStyle>
                     </dxdo:DocumentGroup>
                     <dxmvvm:Interaction.Behaviors>
-                        <dxdo:TabbedDocumentUIService x:Name="TabbedDocumentManagerService" DocumentGroup="{Binding ElementName=documnetGroup}" />
+                        <dxdo:TabbedDocumentUIService x:Name="TabbedDocumentManagerService" DocumentGroup="{Binding ElementName=documnetGroup}">
+                            <dxdo:TabbedDocumentUIService.DocumentPanelStyle>
+                                <Style TargetType="dxdo:DocumentPanel">
+                                    <Setter Property="AllowContextMenu" Value="False" />
+                                    <Setter Property="FloatOnDoubleClick" Value="False" />
+                                    <Setter Property="AllowFloat" Value="False" />
+                                    <Setter Property="AllowClose" Value="True" />
+                                </Style>
+                            </dxdo:TabbedDocumentUIService.DocumentPanelStyle>
+                        </dxdo:TabbedDocumentUIService>
 
                     </dxmvvm:Interaction.Behaviors>
                 </dxdo:LayoutGroup>

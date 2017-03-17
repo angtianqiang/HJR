@@ -61,11 +61,29 @@ namespace ZtxFrameWork.UI.Comm {
         }
         
         /// <summary>
+        ///   查找类似 确认要审核 {0}? 的本地化字符串。
+        /// </summary>
+        internal static string Confirmation_Audit {
+            get {
+                return ResourceManager.GetString("Confirmation_Audit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 确认 的本地化字符串。
         /// </summary>
         internal static string Confirmation_Caption {
             get {
                 return ResourceManager.GetString("Confirmation_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确认要生效 {0}? 的本地化字符串。
+        /// </summary>
+        internal static string Confirmation_Confirm {
+            get {
+                return ResourceManager.GetString("Confirmation_Confirm", resourceCulture);
             }
         }
         
@@ -93,6 +111,24 @@ namespace ZtxFrameWork.UI.Comm {
         internal static string Confirmation_Save {
             get {
                 return ResourceManager.GetString("Confirmation_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确认要取消审核 {0}? 的本地化字符串。
+        /// </summary>
+        internal static string Confirmation_UnAudit {
+            get {
+                return ResourceManager.GetString("Confirmation_UnAudit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 确认要失效 {0}? 的本地化字符串。
+        /// </summary>
+        internal static string Confirmation_UnConfirm {
+            get {
+                return ResourceManager.GetString("Confirmation_UnConfirm", resourceCulture);
             }
         }
         

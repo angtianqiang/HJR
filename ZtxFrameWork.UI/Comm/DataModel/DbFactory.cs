@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZtxFrameWork.Data;
-
+using DevExpress.Mvvm.POCO;
 namespace ZtxFrameWork.UI.Comm.DataModel
 {
     public class DbFactory : IDbFactory<ZtxDB>
@@ -16,7 +16,7 @@ namespace ZtxFrameWork.UI.Comm.DataModel
         public  static ZtxDB db = null;
          static  DbFactory()
         {
-            db = new ZtxDB();
+          //  db = new ZtxDB();
 
 
           //  db.Configuration.AutoDetectChangesEnabled = false;
@@ -28,7 +28,7 @@ namespace ZtxFrameWork.UI.Comm.DataModel
             //  return db;
             Qty++;
             System.Diagnostics.Debug.WriteLine(Qty.ToString());
-            return new ZtxDB();
+            return  this.IsInDesignMode()?  new ZtxDB("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork2;Integrated Security=True") : new ZtxDB("conn1");
 
         }
     }

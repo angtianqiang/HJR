@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Confirmation_Audit" xml:space="preserve">
+    <value>确认要审核 {0}?</value>
+  </data>
   <data name="Confirmation_Caption" xml:space="preserve">
     <value>确认</value>
+  </data>
+  <data name="Confirmation_Confirm" xml:space="preserve">
+    <value>确认要生效 {0}?</value>
   </data>
   <data name="Confirmation_Delete" xml:space="preserve">
     <value>确认要删除 {0}?</value>
@@ -128,6 +134,12 @@
   </data>
   <data name="Confirmation_Save" xml:space="preserve">
     <value>需要保存更改吗?</value>
+  </data>
+  <data name="Confirmation_UnAudit" xml:space="preserve">
+    <value>确认要取消审核 {0}?</value>
+  </data>
+  <data name="Confirmation_UnConfirm" xml:space="preserve">
+    <value>确认要失效 {0}?</value>
   </data>
   <data name="Entity_Changed" xml:space="preserve">
     <value> *</value>

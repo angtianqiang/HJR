@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 黄金种类ViewModel());
         }
-        protected 黄金种类ViewModel() : base(DbFactory.Instance, x => x.黄金种类s, x=>x.ID, x => x.名称)
+        protected 黄金种类ViewModel() : base(DbFactory.Instance, x => x.黄金种类s, x=>x.ID, x => x.名称, "黄金种类")
         {
 
 

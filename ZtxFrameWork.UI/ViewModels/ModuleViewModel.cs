@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new ModuleViewModel());
         }
-        protected ModuleViewModel() : base(DbFactory.Instance, x => x.Modules,x=>x.ID, x => x.ModuleTitle)
+        protected ModuleViewModel() : base(DbFactory.Instance, x => x.Modules,x=>x.ID, x => x.ModuleTitle,"系统模块")
         {
             var db = dbFactory.CreateDbContext();
             ModuleGroup = db.Modules.Where(x => x.ModuleInfo != ModuleInfo.MoudleAction).ToList(); 

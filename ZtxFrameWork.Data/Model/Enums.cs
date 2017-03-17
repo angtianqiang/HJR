@@ -16,4 +16,12 @@ namespace ZtxFrameWork.Data.Model
         [Display(Name = "模块")]
         MoudleAction
     }
+
+    public enum 工费计法
+    {
+        [Display(Name = "按件", AutoGenerateField = true, Description = "",Order =1)]
+        按件,
+        [Display(Name = "按重", AutoGenerateField = true, Description = "", Order = 1)]
+        按重
+    }
 }

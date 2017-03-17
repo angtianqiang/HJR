@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 会员ViewModel());
         }
-        protected 会员ViewModel() : base(DbFactory.Instance, x => x.会员s, x=>x.ID, x => x.姓名)
+        protected 会员ViewModel() : base(DbFactory.Instance, x => x.会员s, x=>x.ID, x => x.姓名, "会员")
         {
 
 

@@ -51,7 +51,7 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <DockPanel>
-            <controls:CollectionMenu DockPanel.Dock="Top" />
+           <controls:CollectionMenu DataView="{Binding ElementName=View}" DockPanel.Dock="Top" />
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 

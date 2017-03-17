@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 入库单CollectionViewModel());
         }
-        protected 入库单CollectionViewModel() : base(DbFactory.Instance, x => x.入库单s, query => query.OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t))
+        protected 入库单CollectionViewModel() : base(DbFactory.Instance, x => x.入库单s, query => query.OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "采购入库单")
         {
 
         }

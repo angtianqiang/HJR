@@ -17,9 +17,11 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 单位CollectionViewModel());
         }
-        protected 单位CollectionViewModel() : base(DbFactory.Instance, x => x.单位s, query => query.OrderBy(x=>x.排序号), x => x.ID)
+        protected 单位CollectionViewModel() : base(DbFactory.Instance, x => x.单位s, query => query.OrderBy(x=>x.排序号), x => x.ID, t => InitEntity(t), permissionTitle: "单位")
         {
 
         }
+        static public void InitEntity(单位 NewEntity)
+        { }
     }
 }

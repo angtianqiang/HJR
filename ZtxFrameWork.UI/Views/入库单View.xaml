@@ -132,7 +132,7 @@
             </dxr:RibbonDefaultPageCategory>
         </dxr:RibbonControl>
         <controls:SingleStatusBar DockPanel.Dock="Bottom" />
-
+        <controls:BillState DockPanel.Dock="Bottom" />
         <dxlc:LayoutControl ItemSpace="10"
                             Orientation="Vertical"
                             ScrollBars="Auto">
@@ -316,23 +316,9 @@
                 </dxlc:LayoutGroup>
 
             </dxlc:LayoutGroup>
-            <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                <dxlc:LayoutItem Label="状态">
-                    <dxe:TextEdit EditValue="{Binding Entity.状态, Mode=OneWay}" />
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="建立人">
-                    <dxe:TextEdit EditValue="{Binding Entity.CreateBy, Mode=OneWay}" />
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="建立时间">
-                    <dxe:TextEdit EditValue="{Binding Entity.CreateOn, Mode=OneWay}" />
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="最后更改人">
-                    <dxe:TextEdit EditValue="{Binding Entity.ModifiedBy, Mode=OneWay}" />
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="最后更改时间">
-                    <dxe:TextEdit EditValue="{Binding Entity.ModifiedOn, Mode=OneWay}" />
-                </dxlc:LayoutItem>
-            </dxlc:LayoutGroup>
+
+
+
 
 
         </dxlc:LayoutControl>

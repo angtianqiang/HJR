@@ -18,9 +18,11 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 重量单位CollectionViewModel());
         }
-        protected 重量单位CollectionViewModel() : base(DbFactory.Instance, x => x.重量单位s, query => query.OrderBy(x=>x.排序号), x => x.ID)
+        protected 重量单位CollectionViewModel() : base(DbFactory.Instance, x => x.重量单位s, query => query.OrderBy(x=>x.排序号), x => x.ID, t => InitEntity(t), permissionTitle: "重量单位")
         {
 
         }
+        static public void InitEntity(重量单位 NewEntity)
+        { }
     }
 }

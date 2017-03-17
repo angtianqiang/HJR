@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.Views.AuthorityModuleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.2"
+             xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
+             xmlns:behaviors="clr-namespace:ZtxFrameWork.UI.Behaviors"
+             xmlns:controls="clr-namespace:ZtxFrameWork.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="900"
+             d:DesignWidth="600"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:AuthorityModuleViewModel}"
+             mc:Ignorable="d">
+    <dxmvvm:Interaction.Behaviors>
+        <behaviors:UserControlDefaultLoad />
+    </dxmvvm:Interaction.Behaviors>
+    <DockPanel>
+        <controls:SingleMenu DockPanel.Dock="Top" />
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup Orientation="Vertical">
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="页面名称">
+                        <dxe:TextEdit EditValue="{Binding Entity.ViewTitle, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="描述">
+                        <dxe:TextEdit EditValue="{Binding Entity.Des, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="模块组">
+                        <dxe:TextEdit EditValue="{Binding Entity.Category, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="备注">
+                        <dxe:TextEdit EditValue="{Binding Entity.Remark, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+
+
+
+
+
+
+                <dxlc:LayoutGroup Header="可用权限集"
+                                  Orientation="Horizontal"
+                                  View="GroupBox">
+                    <dxlc:LayoutItem Label="导航">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Navigate, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="新建">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Add, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="编辑">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Edit, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="删除">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Delete, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="打印">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Print, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="预览">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Preview, Mode=TwoWay}" />
+
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="设计">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Design, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="生效">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Confirm, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="失效">
+                        <dxe:CheckEdit EditValue="{Binding Entity.UnConfirm, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="审核">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Audit, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="反审">
+                        <dxe:CheckEdit EditValue="{Binding Entity.UnAudit, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+
+                </dxlc:LayoutGroup>
+            </dxlc:LayoutGroup>
+
+
+
+
+
+
+
+        </dxlc:LayoutControl>
+    </DockPanel>
+</UserControl>

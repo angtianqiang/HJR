@@ -17,7 +17,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 材质ViewModel());
         }
-        protected 材质ViewModel() : base(DbFactory.Instance, x => x.材质s, x=>x.ID, x => x.名称)
+        protected 材质ViewModel() : base(DbFactory.Instance, x => x.材质s, x=>x.ID, x => x.名称, "材质")
         {
 
 

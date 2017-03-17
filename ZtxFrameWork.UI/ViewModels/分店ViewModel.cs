@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 分店ViewModel());
         }
-        protected 分店ViewModel() : base(DbFactory.Instance, x => x.分店s, x=>x.ID, x => x.名称)
+        protected 分店ViewModel() : base(DbFactory.Instance, x => x.分店s, x=>x.ID, x => x.名称, "分店")
         {
 
 

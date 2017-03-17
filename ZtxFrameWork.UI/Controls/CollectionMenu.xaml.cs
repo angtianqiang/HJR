@@ -11,7 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using DevExpress.Xpf.Grid;
 namespace ZtxFrameWork.UI.Controls
 {
     /// <summary>
@@ -23,5 +23,23 @@ namespace ZtxFrameWork.UI.Controls
         {
             InitializeComponent();
         }
+
+
+
+
+
+        public DataViewBase DataView
+        {
+            get { return (DataViewBase)GetValue(DataViewProperty); }
+            set { SetValue(DataViewProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DataView.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DataViewProperty =
+            DependencyProperty.Register("DataView", typeof(DataViewBase), typeof(CollectionMenu), new PropertyMetadata(null));
+
+
+
+
     }
 }

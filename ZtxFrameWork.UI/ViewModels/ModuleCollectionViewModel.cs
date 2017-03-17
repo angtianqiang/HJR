@@ -16,9 +16,11 @@ namespace ZtxFrameWork.UI.ViewModels
     {
         return ViewModelSource.Create(() => new ModuleCollectionViewModel());
     }
-    protected ModuleCollectionViewModel():base(DbFactory.Instance, x => x.Modules, x => x, x => x.ID)
+    protected ModuleCollectionViewModel():base(DbFactory.Instance, x => x.Modules, x => x, x => x.ID, permissionTitle: "系统模块")
         {
 
     }
-}
+        static public void InitEntity(Module NewEntity)
+        { }
+    }
 }

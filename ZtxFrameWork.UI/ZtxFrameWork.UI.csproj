@@ -68,6 +68,9 @@
     <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevExpress.Xpf.Themes.Office2013.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
@@ -89,7 +92,9 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -107,15 +112,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\EntityExpressionUserControlDefaultLoad.cs" />
+    <Compile Include="Behaviors\RibbonControlMergeBehavior.cs" />
+    <Compile Include="Behaviors\ShowCheckBoxSelectorColumn.cs" />
     <Compile Include="Behaviors\UserControlDefaultLoad.cs" />
     <Compile Include="Comm\DataModel\DbExceptionsConverter.cs" />
     <Compile Include="Comm\UI\CommQueryListView.xaml.cs">
       <DependentUpon>CommQueryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Comm\UI\CommQueryListViewModel.cs" />
+    <Compile Include="Comm\Utils\PredicateExtensions.cs" />
+    <Compile Include="Comm\ViewModel\DynamicQueryCollectionViewModel.cs" />
+    <Compile Include="Comm\ViewModel\EntityExpressionBuilder.cs" />
+    <Compile Include="Controls\BillState.xaml.cs">
+      <DependentUpon>BillState.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DynamicQueryCollectionMenu.xaml.cs">
+      <DependentUpon>DynamicQueryCollectionMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SingleStatusBar.xaml.cs">
       <DependentUpon>SingleStatusBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BoolToVisbiltyConverter.cs" />
     <Compile Include="Converters\CommObjectConverter.cs" />
     <Compile Include="Converters\MoudleInfoToImageConerter.cs" />
     <Compile Include="Controls\CollectionMenu.xaml.cs">
@@ -125,6 +143,9 @@
       <DependentUpon>SingleMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Helpers\DataDirectoryHelper.cs" />
+    <Compile Include="Helpers\ExceptionHelper.cs" />
+    <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Helpers\SplashScreenHelper.cs" />
     <Compile Include="Helpers\SplashWindow.xaml.cs">
       <DependentUpon>SplashWindow.xaml</DependentUpon>
@@ -133,12 +154,64 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\GridRowIndicatorConerter.cs" />
+    <Compile Include="QueryList\采购入库单明细表View.xaml.cs">
+      <DependentUpon>采购入库单明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\采购入库单明细表ViewModel.cs" />
+    <Compile Include="QueryList\采购入库单明细表_ExpressionView.xaml.cs">
+      <DependentUpon>采购入库单明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\采购入库单明细表_ExpressionViewModel.cs" />
     <Compile Include="Utils\ApplicationSet.cs" />
     <Compile Include="Utils\CommandHelper.cs" />
+    <Compile Include="Utils\TreeHelper.cs" />
+    <Compile Include="Helpers\ViewExportHelper.cs" />
+    <Compile Include="ViewModels\AuthorityModuleCollectionViewModel.cs" />
+    <Compile Include="ViewModels\AuthorityModuleViewModel.cs" />
+    <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
     <Compile Include="ViewModels\LoginWindowViewModel.cs" />
     <Compile Include="ViewModels\ModuleCollectionViewModel.cs" />
     <Compile Include="ViewModels\ModuleViewModel.cs" />
     <Compile Include="ViewModels\NavMainViewModel.cs" />
+    <Compile Include="ViewModels\SystemConfigurationCollectionViewModel.cs" />
+    <Compile Include="ViewModels\SystemConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\UserAuthorityModuleMappingCollectionViewModel.cs" />
+    <Compile Include="ViewModels\UserCollectionViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\收款单CollectionViewModel.cs" />
+    <Compile Include="ViewModels\收款单ViewModel.cs" />
+    <Compile Include="Views\AuthorityModuleCollectionView.xaml.cs">
+      <DependentUpon>AuthorityModuleCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AuthorityModuleView.xaml.cs">
+      <DependentUpon>AuthorityModuleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ChangePasswordView.xaml.cs">
+      <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemConfigurationCollectionView.xaml.cs">
+      <DependentUpon>SystemConfigurationCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SystemConfigurationView.xaml.cs">
+      <DependentUpon>SystemConfigurationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserAuthorityModuleMappingCollectionView.xaml.cs">
+      <DependentUpon>UserAuthorityModuleMappingCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserCollectionView.xaml.cs">
+      <DependentUpon>UserCollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\付款单CollectionView.xaml.cs">
+      <DependentUpon>付款单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\付款单CollectionViewModel.cs" />
+    <Compile Include="Views\付款单View.xaml.cs">
+      <DependentUpon>付款单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\付款单ViewModel.cs" />
     <Compile Include="ViewModels\会员CollectionViewModel.cs" />
     <Compile Include="ViewModels\会员ViewModel.cs" />
     <Compile Include="ViewModels\供应商CollectionViewModel.cs" />
@@ -151,8 +224,32 @@
     <Compile Include="ViewModels\单位ViewModel.cs" />
     <Compile Include="ViewModels\材质CollectionViewModel.cs" />
     <Compile Include="ViewModels\材质ViewModel.cs" />
+    <Compile Include="ViewModels\盈亏单CollectionViewModel.cs" />
+    <Compile Include="ViewModels\盈亏单ViewModel.cs" />
+    <Compile Include="ViewModels\盘点表CollectionViewModel.cs" />
+    <Compile Include="ViewModels\盘点表ViewModel.cs" />
+    <Compile Include="Views\收款单CollectionView.xaml.cs">
+      <DependentUpon>收款单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\收款单View.xaml.cs">
+      <DependentUpon>收款单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\调拨单CollectionView.xaml.cs">
+      <DependentUpon>调拨单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\调拨单CollectionViewModel.cs" />
+    <Compile Include="Views\调拨单View.xaml.cs">
+      <DependentUpon>调拨单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\调拨单ViewModel.cs" />
+    <Compile Include="ViewModels\退库单CollectionViewModel.cs" />
+    <Compile Include="ViewModels\退库单ViewModel.cs" />
+    <Compile Include="ViewModels\销售退货单CollectionViewModel.cs" />
+    <Compile Include="ViewModels\销售退货单ViewModel.cs" />
     <Compile Include="ViewModels\重量单位CollectionViewModel.cs" />
     <Compile Include="ViewModels\重量单位ViewModel.cs" />
+    <Compile Include="ViewModels\销售单CollectionViewModel.cs" />
+    <Compile Include="ViewModels\销售单ViewModel.cs" />
     <Compile Include="ViewModels\饰品CollectionViewModel.cs" />
     <Compile Include="ViewModels\饰品ViewModel.cs" />
     <Compile Include="ViewModels\饰品提成CollectionViewModel.cs" />
@@ -211,11 +308,41 @@
     <Compile Include="Views\材质View.xaml.cs">
       <DependentUpon>材质View.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\盈亏单CollectionView.xaml.cs">
+      <DependentUpon>盈亏单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\盈亏单View.xaml.cs">
+      <DependentUpon>盈亏单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\盘点表CollectionView.xaml.cs">
+      <DependentUpon>盘点表CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\盘点表View.xaml.cs">
+      <DependentUpon>盘点表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\退库单CollectionView.xaml.cs">
+      <DependentUpon>退库单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\退库单View.xaml.cs">
+      <DependentUpon>退库单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\销售退货单CollectionView.xaml.cs">
+      <DependentUpon>销售退货单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\销售退货单View.xaml.cs">
+      <DependentUpon>销售退货单View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\重量单位CollectionView.xaml.cs">
       <DependentUpon>重量单位CollectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\重量单位View.xaml.cs">
       <DependentUpon>重量单位View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\销售单CollectionView.xaml.cs">
+      <DependentUpon>销售单CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\销售单View.xaml.cs">
+      <DependentUpon>销售单View.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\饰品CollectionView.xaml.cs">
       <DependentUpon>饰品CollectionView.xaml</DependentUpon>
@@ -247,21 +374,22 @@
     <Compile Include="Views\黄金种类View.xaml.cs">
       <DependentUpon>黄金种类View.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Window2.xaml.cs">
       <DependentUpon>Window2.xaml</DependentUpon>
     </Compile>
-    <Compile Include="订单View.xaml.cs">
-      <DependentUpon>订单View.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="订单ViewModel.cs" />
     <Page Include="Comm\UI\CommQueryListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\BillState.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\CollectionMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DynamicQueryCollectionMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,7 +437,76 @@
       <DependentUpon>MainWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="QueryList\采购入库单明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\采购入库单明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\AppSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Styles\SystemSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Page Include="Views\AuthorityModuleCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AuthorityModuleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ChangePasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemConfigurationCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SystemConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserAuthorityModuleMappingCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\付款单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\付款单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\收款单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\收款单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\调拨单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\调拨单View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -377,11 +574,51 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\盈亏单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\盈亏单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\盘点表CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\盘点表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\退库单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\退库单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\销售退货单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\销售退货单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\重量单位CollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\重量单位View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\销售单CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\销售单View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -425,15 +662,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Window1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Window2.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="订单View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -456,7 +685,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -468,6 +696,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Reports\采购入库单明细表Report.repx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZtxFrameWork.Data\ZtxFrameWork.Data.csproj">
@@ -534,11 +765,265 @@
   <ItemGroup>
     <Resource Include="Images\SaveAndNew.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reports\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Designer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\export.png" />
+    <Resource Include="Images\ExportToIMG_16x16.png" />
+    <Resource Include="Images\ExportToPDF_16x16.png" />
+    <Resource Include="Images\ExportToXLSX_16x16.png" />
+    <Resource Include="Images\ExportToXLS_16x16.png" />
+    <Content Include="zh-Hans\DevExpress.Charts.Designer.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Dashboard.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Dashboard.v16.2.Web.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Dashboard.v16.2.Win.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Data.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.DataAccess.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.DataAccess.v16.2.UI.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Diagram.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.HtmlPropertyEditor.Win.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.PivotChart.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Reports.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Scheduler.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Scheduler.Web.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Security.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Validation.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Web.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.ExpressApp.Win.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Map.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Office.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Pdf.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.PivotGrid.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Printing.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.RichEdit.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Snap.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Snap.v16.2.Extensions.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Snap.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Sparkline.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Spreadsheet.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Utils.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Utils.v16.2.UI.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.ASPxHtmlEditor.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.ASPxRichEdit.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.ASPxScheduler.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.ASPxSpellChecker.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.ASPxSpreadsheet.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.ASPxTreeList.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Web.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Charts.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Controls.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Core.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Docking.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.DocumentViewer.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Gauges.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Grid.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.LayoutControl.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.NavBar.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.PdfViewer.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Printing.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.PropertyGrid.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.ReportDesigner.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Ribbon.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.RichEdit.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Scheduler.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.SpellChecker.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpf.Spreadsheet.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.Xpo.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraBars.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraCharts.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraCharts.v16.2.Wizard.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraEditors.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraGauges.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraGauges.v16.2.Presets.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraGrid.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraLayout.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraNavBar.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraPdfViewer.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraPivotGrid.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraPrinting.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraReports.v16.2.Extensions.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraReports.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraReports.v16.2.Web.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraRichEdit.v16.2.Extensions.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraRichEdit.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraScheduler.v16.2.Core.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraScheduler.v16.2.Extensions.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraScheduler.v16.2.Reporting.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraScheduler.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraSpellChecker.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraSpreadsheet.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraTreeList.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraVerticalGrid.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="zh-Hans\DevExpress.XtraWizard.v16.2.resources.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

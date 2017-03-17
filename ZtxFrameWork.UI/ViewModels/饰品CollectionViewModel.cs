@@ -18,9 +18,14 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 饰品CollectionViewModel());
         }
-        protected 饰品CollectionViewModel() : base(DbFactory.Instance, x => x.饰品s, query => query.OrderBy(x=>x.品名), x => x.ID)
+        protected 饰品CollectionViewModel() : base(DbFactory.Instance, x => x.饰品s, query => query.OrderBy(x=>x.品名), x => x.ID,t=>InitEntity(t), permissionTitle: "饰品")
         {
 
+        }
+        static public void InitEntity(饰品 NewEntity)
+        {
+            NewEntity.饰品图片 = new 饰品图片();
+          
         }
     }
 }
