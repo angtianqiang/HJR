@@ -136,6 +136,9 @@
         <dxlc:LayoutControl ItemSpace="10"
                             Orientation="Vertical"
                             ScrollBars="Auto">
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand Command="{Binding UpdateCommand}" Event="{x:Static Binding.SourceUpdatedEvent}" />
+            </dxmvvm:Interaction.Behaviors>
             <dxlc:LayoutGroup Header="入库单" View="GroupBox">
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="编号">
@@ -225,7 +228,7 @@
                         <dxg:GridControl x:Name="DetailGrid"
                                          AutoGenerateColumns="AddNew"
                                          EnableSmartColumnsGeneration="True"
-                                         ItemsSource="{Binding Entity.入库单明细s}"
+                                         ItemsSource="{Binding Entity.退库单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
@@ -258,8 +261,8 @@
                                             Header="序号"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="120"
-                                            FieldName="饰品编号"
-                                            Header="饰品编号">
+                                            FieldName="入库单号"
+                                            Header="入库单号">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:ButtonEditSettings AllowDefaultButton="True">
                                         <dxmvvm:Interaction.Behaviors>
@@ -273,7 +276,7 @@
                             </dxg:GridColumn>
 
                             <dxg:GridColumn Width="80"
-                                            FieldName="饰品.品名"
+                                            FieldName="入库单明细.饰品.品名"
                                             Header="品名"
                                             ReadOnly="True" />
                             <dxg:GridColumn Width="50" FieldName="数量">

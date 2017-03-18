@@ -265,7 +265,7 @@ namespace ZtxFrameWork.Data.Mapping
 
             this.HasRequired(t => t.退库单).WithMany(t => t.退库单明细s).HasForeignKey(t => t.退库单ID).WillCascadeOnDelete(false);
 
-            this.HasRequired(t => t.饰品).WithMany().HasForeignKey(t => t.饰品ID).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.入库单明细).WithMany().HasForeignKey(t => t.入库单明细ID).WillCascadeOnDelete(false);
         }
     }
     public class 盈亏单Map : ZtxEntityTypeConfiguration<盈亏单>

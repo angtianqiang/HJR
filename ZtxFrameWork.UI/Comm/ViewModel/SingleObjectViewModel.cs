@@ -157,14 +157,14 @@ where TDbContext : DbContext
 
             return NeedReset();
         }
-
+        public virtual string EntityDisplayName { get { return EntityDisplayNameHelper.GetEntityDisplayName(typeof(TEntity)); } }
         /// <summary>
         /// Deletes the entity, save changes and closes the corresponding view if confirmed by a user.
         /// Since SingleObjectViewModelBase is a POCO view model, an instance of this class will also expose the DeleteCommand property that can be used as a binding source in views.
         /// </summary>
         public virtual void Delete()
         {
-            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Delete, typeof(TEntity).Name), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
+            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Delete, EntityDisplayName), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
                 return;
             try
             {
@@ -445,7 +445,7 @@ where TDbContext : DbContext
             this.RaiseCanExecuteChanged(x => x.UnConfirm());
             this.RaiseCanExecuteChanged(x => x.Audit());
             this.RaiseCanExecuteChanged(x => x.UnAudit());
-
+            UpdateIsReadOnly();
         }
 
         protected IDocumentOwner DocumentOwner { get; private set; }
@@ -696,7 +696,7 @@ where TDbContext : DbContext
         #region 20170310 生效审核权限实现
         public virtual void Confirm()
         {
-            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Confirm, typeof(TEntity).Name), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
+            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Confirm, EntityDisplayName), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
                 return;
             bool IsRunOK = false;
             try
@@ -707,18 +707,21 @@ where TDbContext : DbContext
                 {
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
-                    OnBeforeEntityConfirmed(newDB, PrimaryKey, Entity);
-                    ((dynamic)Entity).状态 = "Y";
-                    DB.Entry(Entity).State = EntityState.Modified;
-                    DB.SaveChanges();
-                    PrimaryKey = this.GetPrimaryKey(Entity);
-                    LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityConfirmed(newDB, PrimaryKey, Entity);
+                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);
+                    ((dynamic)newEntity).状态 = "Y";
+                    newDB.Entry(newEntity).State = EntityState.Modified;
+                    newDB.SaveChanges();
+                 //   PrimaryKey = this.GetPrimaryKey(newEntity);
+                   // LoadEntityByKey(PrimaryKey);
+                    OnEntityEntityConfirmed(newDB, PrimaryKey, newEntity);
                     IsRunOK = true;
                     ts.Complete();
 
                 }
+                LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
+                MessageBoxService.ShowMessage("生效成功！");
                 Mouse.OverrideCursor = null;
             }
             catch (DbException e)
@@ -766,7 +769,7 @@ where TDbContext : DbContext
         }
         public virtual void UnConfirm()
         {
-            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_UnConfirm, typeof(TEntity).Name), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
+            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_UnConfirm, EntityDisplayName), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
                 return;
             bool IsRunOK = false;
             try
@@ -777,17 +780,20 @@ where TDbContext : DbContext
                 {
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
-                    OnBeforeEntityUnConfirmed(newDB, PrimaryKey, Entity);
-                    ((dynamic)Entity).状态 = "N";
-                    DB.Entry(Entity).State = EntityState.Modified;
-                    DB.SaveChanges();
-                    PrimaryKey = this.GetPrimaryKey(Entity);
-                    LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityUnConfirmed(newDB, PrimaryKey, Entity);
+                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    OnBeforeEntityUnConfirmed(newDB, PrimaryKey, newEntity);
+                    ((dynamic)newEntity).状态 = "N";
+                    newDB.Entry(newEntity).State = EntityState.Modified;
+                    newDB.SaveChanges();
+                  //  PrimaryKey = this.GetPrimaryKey(newEntity);
+                 //   LoadEntityByKey(PrimaryKey);
+                    OnEntityEntityUnConfirmed(newDB, PrimaryKey, newEntity);
                     IsRunOK = true;
                     ts.Complete();
                 }
+                LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
+                MessageBoxService.ShowMessage("失效成功！");
                 Mouse.OverrideCursor = null;
             }
             catch (DbException e)
@@ -833,7 +839,7 @@ where TDbContext : DbContext
         }
         public virtual void Audit()
         {
-            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Audit, typeof(TEntity).Name), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
+            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Audit, EntityDisplayName), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
                 return;
             bool IsRunOK = false;
             try
@@ -844,17 +850,20 @@ where TDbContext : DbContext
                 {
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
-                    OnBeforeEntityAudited(newDB, PrimaryKey, Entity);
-                    ((dynamic)Entity).状态 = "Z";
-                    DB.Entry(Entity).State = EntityState.Modified;
-                    DB.SaveChanges();
-                    PrimaryKey = this.GetPrimaryKey(Entity);
-                    LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityAudited(newDB, PrimaryKey, Entity);
+                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    OnBeforeEntityAudited(newDB, PrimaryKey, newEntity);
+                    ((dynamic)newEntity).状态 = "Z";
+                    newDB.Entry(newEntity).State = EntityState.Modified;
+                    newDB.SaveChanges();
+                   // PrimaryKey = this.GetPrimaryKey(newEntity);
+                 //   LoadEntityByKey(PrimaryKey);
+                    OnEntityEntityAudited(newDB, PrimaryKey, newEntity);
                     IsRunOK = true;
                     ts.Complete();
                 }
+                LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
+                MessageBoxService.ShowMessage("审核成功！");
                 Mouse.OverrideCursor = null;
             }
             catch (DbException e)
@@ -900,7 +909,7 @@ where TDbContext : DbContext
         }
         public virtual void UnAudit()
         {
-            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_UnAudit, typeof(TEntity).Name), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
+            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_UnAudit, EntityDisplayName), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
                 return;
             bool IsRunOK = false;
             try
@@ -911,17 +920,20 @@ where TDbContext : DbContext
                 {
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
-                    OnBeforeEntityUnAudited(newDB, PrimaryKey, Entity);
-                    ((dynamic)Entity).状态 = "Y";
-                    DB.Entry(Entity).State = EntityState.Modified;
-                    DB.SaveChanges();
-                    PrimaryKey = this.GetPrimaryKey(Entity);
-                    LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityUnAudited(newDB, PrimaryKey, Entity);
+                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    OnBeforeEntityUnAudited(newDB, PrimaryKey, newEntity);
+                    ((dynamic)newEntity).状态 = "Y";
+                    newDB.Entry(newEntity).State = EntityState.Modified;
+                    newDB.SaveChanges();
+                   // PrimaryKey = this.GetPrimaryKey(newEntity);
+                  //  LoadEntityByKey(PrimaryKey);
+                    OnEntityEntityUnAudited(newDB, PrimaryKey, newEntity);
                     IsRunOK = true;
                     ts.Complete();
                 }
+                LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
+                MessageBoxService.ShowMessage("取消审核成功！");
                 Mouse.OverrideCursor = null;
             }
             catch (DbException e)
@@ -997,5 +1009,34 @@ where TDbContext : DbContext
         #region 20170311  权限标识
         public virtual string PermissionTitle { get; set; }//权限标识
         #endregion
+        #region 20170318 从子类抽象
+
+        public virtual bool IsReadOnly { get; set; }//根据单据的生效状态和权限判断是否可编辑
+        public virtual void UpdateIsReadOnly()
+        {
+            try
+            {
+                if (((dynamic)Entity).状态 == "N")
+                {
+                    IsReadOnly = false;
+                }
+                else
+                {
+                    IsReadOnly = true;
+                }
+            }
+            catch
+            { }
+
+        }
+
+        protected IDocumentManagerService QueryListManagerService { get { return this.GetRequiredService<IDocumentManagerService>("QueryListDocumentManagerService"); } }
+        //colleciton页面的服务  用于打开其它的页面，比如在入库单界面上导航到收款单上
+        protected virtual IDocumentManagerService GetDocumentManagerService() { return this.GetRequiredService<IDocumentManagerService>("SignleObjectDocumentManagerService"); }
+
+
+        #endregion
+
+      
     }
 }

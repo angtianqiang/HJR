@@ -26,7 +26,7 @@ namespace ZtxFrameWork.UI.Views
             InitializeComponent();
             //this.Loaded += (s, e) => { Mouse.OverrideCursor = null; };
             this.Details.CellValueChanging += Details_CellValueChanging;
-            this.Details.ShownEditor += (s, e) => { Dispatcher.BeginInvoke(new Action(() => Details.ActiveEditor.SelectAll())); };
+            this.Details.ShownEditor += (s, e) => { Dispatcher.BeginInvoke(new Action(() => Details.ActiveEditor?.SelectAll())); };
         }
 
         private void Details_CellValueChanging(object sender, DevExpress.Xpf.Grid.CellValueChangedEventArgs e)

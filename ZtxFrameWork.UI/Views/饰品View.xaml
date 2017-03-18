@@ -14,7 +14,7 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"  
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="550"
              d:DesignWidth="600"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:饰品ViewModel}}"
@@ -72,9 +72,9 @@
                         </dxlc:LayoutItem>
 
                         <dxlc:LayoutItem Label="工费计法">
-                            <dxe:ComboBoxEdit EditValue="{Binding Entity.工费计法, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">                          
+                            <dxe:ComboBoxEdit EditValue="{Binding Entity.工费计法, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
                                 <dxmvvm:Interaction.Behaviors>
-                                    <dxmvvm:EnumItemsSourceBehavior EnumType="{x:Type entity:工费计法}"/> 
+                                    <dxmvvm:EnumItemsSourceBehavior EnumType="{x:Type entity:费用计法}" />
                                 </dxmvvm:Interaction.Behaviors>
                             </dxe:ComboBoxEdit>
                         </dxlc:LayoutItem>

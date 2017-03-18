@@ -136,6 +136,9 @@
         <dxlc:LayoutControl ItemSpace="10"
                             Orientation="Vertical"
                             ScrollBars="Auto">
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand Command="{Binding UpdateCommand}" Event="{x:Static Binding.SourceUpdatedEvent}" />
+            </dxmvvm:Interaction.Behaviors>
             <dxlc:LayoutGroup Header="调拨单" View="GroupBox">
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="编号">

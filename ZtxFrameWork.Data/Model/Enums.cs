@@ -17,7 +17,7 @@ namespace ZtxFrameWork.Data.Model
         MoudleAction
     }
 
-    public enum 工费计法
+    public enum 费用计法
     {
         [Display(Name = "按件", AutoGenerateField = true, Description = "",Order =1)]
         按件,

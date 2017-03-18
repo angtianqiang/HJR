@@ -287,11 +287,11 @@ namespace ZtxFrameWork.Data.Model
             set { Set<long>(() => this.材质ID, ref _材质ID, value); }
         }
         public virtual 材质 材质 { get; set; }
-        private 工费计法 _工费计法;
-        public 工费计法 工费计法
+        private 费用计法 _工费计法;
+        public 费用计法 工费计法
         {
             get { return _工费计法; }
-            set { Set<工费计法>(() => this.工费计法, ref _工费计法, value); }
+            set { Set<费用计法>(() => this.工费计法, ref _工费计法, value); }
         }
         private decimal _成本工费;
         public decimal 成本工费
@@ -362,6 +362,12 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.库存重量, ref _库存重量, value); }
         }
 
+        private decimal _库存总金额;
+        public decimal 库存总金额
+        {
+            get { return _库存总金额; }
+            set { Set<decimal>(() => this.库存总金额, ref _库存总金额, value); }
+        }
 
         public virtual   ICollection< 饰品提成> 饰品提成s { get; set; }
 
@@ -578,6 +584,10 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 销售单 : ModelBase
     {
+        public 销售单()
+        {
+            销售单明细s = new VHObjectList<销售单明细>();
+        }
         private String _编号;
         public String 编号
         {
@@ -750,6 +760,10 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 销售退货单 : ModelBase
     {
+        public 销售退货单()
+        {
+            销售退货单明细s = new VHObjectList<销售退货单明细>();
+        }
         private String _编号;
         public String 编号
         {
@@ -1053,6 +1067,7 @@ namespace ZtxFrameWork.Data.Model
         }
         private long _分店ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        [RangeAttribute(1, long.MaxValue)]
         public long 分店ID
         {
             get { return _分店ID; }
@@ -1127,6 +1142,7 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 入库单明细 : ModelBase
     {
+      
         private long _入库单ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public long 入库单ID
@@ -1182,11 +1198,11 @@ namespace ZtxFrameWork.Data.Model
             get { return _单价; }
             set { Set<decimal>(() => this.单价, ref _单价, value); }
         }
-        private string  _计价方式;
-        public string  计价方式
+        private 费用计法 _计价方式;
+        public 费用计法 计价方式
         {
             get { return _计价方式; }
-            set { Set<string >(() => this.计价方式, ref _计价方式, value); }
+            set { Set<费用计法>(() => this.计价方式, ref _计价方式, value); }
         }
 
 
@@ -1208,7 +1224,9 @@ namespace ZtxFrameWork.Data.Model
 
 
 
+        #region 非映射业务字段 主要起导航作用
 
+     
 
         private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
         [NotMapped]
@@ -1217,11 +1235,15 @@ namespace ZtxFrameWork.Data.Model
             get { return _饰品编号; }
             set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
         }
-
+        #endregion
 
     }
     public class 退库单 : ModelBase
     {
+        public 退库单()
+        {
+            退库单明细s = new VHObjectList<退库单明细>();
+        }
         private String _编号;
         public String 编号
         {
@@ -1317,14 +1339,21 @@ namespace ZtxFrameWork.Data.Model
             get { return _序号; }
             set { Set<Int32>(() => this.序号, ref _序号, value); }
         }
-        private long _饰品ID;
-        public long 饰品ID
+        private long _入库单明细ID;
+        public long 入库单明细ID
         {
-            get { return _饰品ID; }
-            set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
+            get { return _入库单明细ID; }
+            set { Set<long>(() => this.入库单明细ID, ref _入库单明细ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
-        private Int32 _数量;
+      
+    private 入库单明细 _入库单明细;    
+    public virtual 入库单明细 入库单明细
+    {
+        get { return _入库单明细; }
+        set { Set<入库单明细>(() => this.入库单明细, ref _入库单明细, value,()=> { this.入库单号 = 入库单明细?.入库单.编号; }); }
+    }
+
+    private Int32 _数量;
         public Int32 数量
         {
             get { return _数量; }
@@ -1343,11 +1372,11 @@ namespace ZtxFrameWork.Data.Model
             get { return _单价; }
             set { Set<Decimal>(() => this.单价, ref _单价, value); }
         }
-        private string _计价方式;
-        public string 计价方式
+        private 费用计法 _计价方式;
+        public 费用计法 计价方式
         {
             get { return _计价方式; }
-            set { Set<string>(() => this.计价方式, ref _计价方式, value); }
+            set { Set<费用计法>(() => this.计价方式, ref _计价方式, value); }
         }
 
         private decimal _金额;
@@ -1362,9 +1391,27 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+
+
+        #region 非映射业务字段 主要起导航作用
+
+
+
+        private string _入库单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string  入库单号
+        {
+            get { return _入库单号; }
+            set { Set<string>(() => this.入库单号, ref _入库单号, value); }
+        }
+        #endregion
     }
     public class 盈亏单 : ModelBase
     {
+        public 盈亏单()
+        {
+            盈亏单明细s = new VHObjectList<盈亏单明细>();
+        }
         private String _编号;
         public String 编号
         {
@@ -1460,6 +1507,10 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 调拨单 : ModelBase
     {
+        public 调拨单()
+        {
+            调拨单明细s = new VHObjectList<调拨单明细>();
+        }
         private string _编号;
         public string 编号
         {
@@ -1678,11 +1729,11 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 库存出入明细 : ModelBase
     {
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private String _相关单据;
         public String 相关单据
@@ -1732,11 +1783,11 @@ namespace ZtxFrameWork.Data.Model
             get { return _加权金额; }
             set { Set<decimal>(() => this.加权金额, ref _加权金额, value); }
         }
-        private String _分店ID;
-        public String 分店ID
+        private long _分店ID;
+        public long 分店ID
         {
             get { return _分店ID; }
-            set { Set<String>(() => this.分店ID, ref _分店ID, value); }
+            set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
         public virtual 分店 分店 { get; set; }
         private long _饰品ID;
@@ -1749,6 +1800,10 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 盘点表 : ModelBase
     {
+        public 盘点表()
+        {
+            盘点表明细s = new VHObjectList<盘点表明细>();
+        }
         private String _编号;
         public String 编号
         {

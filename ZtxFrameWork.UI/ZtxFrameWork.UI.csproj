@@ -124,6 +124,7 @@
     <Compile Include="Comm\Utils\PredicateExtensions.cs" />
     <Compile Include="Comm\ViewModel\DynamicQueryCollectionViewModel.cs" />
     <Compile Include="Comm\ViewModel\EntityExpressionBuilder.cs" />
+    <Compile Include="Comm\ViewModel\Helpers.cs" />
     <Compile Include="Controls\BillState.xaml.cs">
       <DependentUpon>BillState.xaml</DependentUpon>
     </Compile>

@@ -20,7 +20,7 @@
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:CurrentWindowService />
     </dxmvvm:Interaction.Behaviors>
-    <dxg:GridControl AutoGenerateColumns="AddNew"
+    <dxg:GridControl AutoGenerateColumns="AddNew" x:Name="grid"
                      EnableSmartColumnsGeneration="True"
                      ItemsSource="{Binding Entities}"
                      SelectedItem="{Binding SelectEntity,
@@ -35,13 +35,17 @@
             </dxmvvm:EventToCommand>
         </dxmvvm:Interaction.Behaviors>
         <dxg:GridControl.View>
-            <dxg:TableView AllowEditing="False"
+            <dxg:TableView  x:Name="View"
+                            AllowEditing="False"
                            AllowPerPixelScrolling="True"
+                           BestFitMode="DistinctValues"
+                           AllowBestFit="True"
                            NavigationStyle="Row"
                            ShowGroupPanel="False"
                            ShowTotalSummary="False" />
+         
         </dxg:GridControl.View>
-
+        <dxg:GridColumn FieldName="ID" Header="ID" Visible="False"></dxg:GridColumn>
 
     </dxg:GridControl>
 </UserControl>
