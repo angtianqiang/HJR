@@ -169,7 +169,9 @@
                                     TabIndex="0"
                                     ValueMember="ID" />
                 </dxlc:LayoutItem>
-
+                <dxlc:LayoutItem Label="数量">
+                    <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
 
             <dxlc:LayoutItem Label="备注">

@@ -1350,7 +1350,7 @@ namespace ZtxFrameWork.Data.Model
     public virtual 入库单明细 入库单明细
     {
         get { return _入库单明细; }
-        set { Set<入库单明细>(() => this.入库单明细, ref _入库单明细, value,()=> { this.入库单号 = 入库单明细?.入库单.编号; }); }
+        set { Set<入库单明细>(() => this.入库单明细, ref _入库单明细, value); }
     }
 
     private Int32 _数量;
@@ -1393,12 +1393,12 @@ namespace ZtxFrameWork.Data.Model
         }
 
 
-        #region 非映射业务字段 主要起导航作用
+        #region (非)映射业务字段 主要起导航作用
 
 
 
         private string _入库单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
-        [NotMapped]
+     
         public string  入库单号
         {
             get { return _入库单号; }
@@ -1418,13 +1418,15 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        [RangeAttribute(1, long.MaxValue)]
         public long 分店ID
         {
             get { return _分店ID; }
@@ -1449,6 +1451,12 @@ namespace ZtxFrameWork.Data.Model
         {
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
+        }
+        private int _数量;
+        public int 数量
+        {
+            get => _数量;
+            set => Set<int>(() => this.数量, ref _数量, value);
         }
         private ICollection<盈亏单明细> _盈亏单明细s;
         public virtual ICollection<盈亏单明细> 盈亏单明细s
@@ -1479,7 +1487,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
+        private 饰品 _饰品;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品 饰品
+        {
+            get { return _饰品; }
+            set { Set<饰品>(() => this.饰品, ref _饰品, value, () => { this.饰品编号 = 饰品?.编号 ?? ""; }); }
+        }
         private decimal _盈亏金额;
         public decimal 盈亏金额
         {
@@ -1504,6 +1518,20 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+
+
+        #region 非映射业务字段 主要起导航作用
+
+
+
+        private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string 饰品编号
+        {
+            get { return _饰品编号; }
+            set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
+        }
+        #endregion
     }
     public class 调拨单 : ModelBase
     {
@@ -1517,24 +1545,24 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<string>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
-        private long? _源分店ID;
-        public long? 源分店ID
+        private long _源分店ID;
+        public long 源分店ID
         {
             get { return _源分店ID; }
-            set { Set<long?>(() => this.源分店ID, ref _源分店ID, value); }
+            set { Set<long>(() => this.源分店ID, ref _源分店ID, value); }
         }
         public virtual 分店 源分店 { get; set; }
-        private long? _目标分店ID;
-        public long? 目标分店ID
+        private long _目标分店ID;
+        public long 目标分店ID
         {
             get { return _目标分店ID; }
-            set { Set<long?>(() => this.目标分店ID, ref _目标分店ID, value); }
+            set { Set<long>(() => this.目标分店ID, ref _目标分店ID, value); }
         }
         public virtual 分店 目标分店 { get; set; }
         private long? _调拨员ID;
@@ -1564,18 +1592,34 @@ namespace ZtxFrameWork.Data.Model
             get { return _签收状态; }
             set { Set<String>(() => this.签收状态, ref _签收状态, value); }
         }
+        private String _状态;
+        public String 状态
+        {
+            get { return _状态; }
+            set { Set<String>(() => this.状态, ref _状态, value); }
+        }
         private String _备注;
         public String 备注
         {
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+        private int _数量;
+        public int 数量
+        {
+            get =>  _数量;
+            set => Set<int>(() => this.数量, ref _数量, value);
+        }
+
         private ICollection<调拨单明细> _调拨单明细s;
         public virtual ICollection<调拨单明细> 调拨单明细s
         {
             get { return _调拨单明细s; }
             set { Set<ICollection<调拨单明细>>(() => this.调拨单明细s, ref _调拨单明细s, value); }
         }
+
+
+
     }
     public class 调拨单明细 : ModelBase
     {
@@ -1599,13 +1643,14 @@ namespace ZtxFrameWork.Data.Model
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
-        private decimal _金额;
-        public decimal 金额
+        private 饰品 _饰品;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品 饰品
         {
-            get { return _金额; }
-            set { Set<decimal>(() => this.金额, ref _金额, value); }
+            get { return _饰品; }
+            set { Set<饰品>(() => this.饰品, ref _饰品, value, () => { this.饰品编号 = 饰品?.编号 ?? ""; }); }
         }
+      
         private Int32 _数量;
         public Int32 数量
         {
@@ -1624,6 +1669,19 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+
+        #region 非映射业务字段 主要起导航作用
+
+
+
+        private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string 饰品编号
+        {
+            get { return _饰品编号; }
+            set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
+        }
+        #endregion
     }
     public class 付款单 : ModelBase
     {
@@ -1810,17 +1868,17 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
-        private long? _分店ID;
-        public long? 分店ID
+        private long _分店ID;
+        public long 分店ID
         {
             get { return _分店ID; }
-            set { Set<long?>(() => this.分店ID, ref _分店ID, value); }
+            set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
         public virtual 分店 分店 { get; set; }
         private long _操作员ID;
@@ -1851,6 +1909,22 @@ namespace ZtxFrameWork.Data.Model
             get { return _盘点表明细s; }
             set { Set<ICollection<盘点表明细>>(() => this.盘点表明细s, ref _盘点表明细s, value); }
         }
+
+        private long? _盈亏单ID;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public long? 盈亏单ID
+        {
+            get =>  _盈亏单ID;
+            set => Set<long?>(() => this.盈亏单ID, ref _盈亏单ID, value);
+        }
+        private 盈亏单 _盈亏单;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public  virtual 盈亏单 盈亏单
+        {
+            get => _盈亏单;
+            set => Set<盈亏单>(() => this.盈亏单, ref _盈亏单, value);
+        }
+
     }
     public class 盘点表明细 : ModelBase
     {
@@ -1873,7 +1947,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
+        private 饰品 _饰品;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品 饰品
+        {
+            get { return _饰品; }
+            set { Set<饰品>(() => this.饰品, ref _饰品, value, () => { this.饰品编号 = 饰品?.编号 ?? ""; }); }
+        }
         private Int32 _盘点前数量;
         public Int32 盘点前数量
         {
@@ -1916,6 +1996,18 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+        #region 非映射业务字段 主要起导航作用
+
+
+
+        private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string 饰品编号
+        {
+            get { return _饰品编号; }
+            set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
+        }
+        #endregion
     }
 
 

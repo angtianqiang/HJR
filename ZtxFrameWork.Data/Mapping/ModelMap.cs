@@ -299,8 +299,8 @@ namespace ZtxFrameWork.Data.Mapping
             this.HasKey(a => a.ID);
             this.Property(t => t.编号).IsRequired().HasMaxLength(40)
         .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_调拨单_编号") { IsUnique = true }));
-            this.HasOptional(t => t.源分店).WithMany().HasForeignKey(t => t.源分店ID).WillCascadeOnDelete(false);
-            this.HasOptional(t => t.目标分店).WithMany().HasForeignKey(t => t.目标分店ID).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.源分店).WithMany().HasForeignKey(t => t.源分店ID).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.目标分店).WithMany().HasForeignKey(t => t.目标分店ID).WillCascadeOnDelete(false);
             this.HasOptional(t => t.调拨员).WithMany().HasForeignKey(t => t.调拨员ID).WillCascadeOnDelete(false);
             this.HasOptional(t => t.签收员).WithMany().HasForeignKey(t => t.签收员ID).WillCascadeOnDelete(false);
         }
@@ -350,6 +350,10 @@ namespace ZtxFrameWork.Data.Mapping
         {
             this.HasKey(a => a.ID);
             this.HasRequired(t => t.饰品).WithMany().HasForeignKey(t => t.饰品ID).WillCascadeOnDelete(false);
+            this.Property(t => t.单据ID).IsRequired()
+     .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID",1) { IsUnique = true }));
+            this.Property(t => t.单据编号).IsRequired().HasMaxLength(40)
+  .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID", 2) { IsUnique = true }));
         }
     }
     public class 盘点表Map : ZtxEntityTypeConfiguration<盘点表>
@@ -359,7 +363,7 @@ namespace ZtxFrameWork.Data.Mapping
             this.HasKey(a => a.ID);
             this.Property(t => t.编号).IsRequired().HasMaxLength(40)
         .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_盘点表_编号") { IsUnique = true }));
-            this.HasOptional(t => t.分店).WithMany().HasForeignKey(t => t.分店ID).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.分店).WithMany().HasForeignKey(t => t.分店ID).WillCascadeOnDelete(false);
 
             this.HasRequired(t => t.操作员).WithMany().HasForeignKey(t => t.操作员ID).WillCascadeOnDelete(false);
         }

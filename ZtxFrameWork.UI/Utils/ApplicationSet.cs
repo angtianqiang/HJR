@@ -10,4 +10,8 @@ namespace ZtxFrameWork.UI.Utils
         public Uri IcoPath { get; set; }
         public string Title { get; set; }
     }
+    public static class ApplictionConfigValue
+    {
+        public const string  CommQueryListViewName = "CommQueryListView";
+    }
 }

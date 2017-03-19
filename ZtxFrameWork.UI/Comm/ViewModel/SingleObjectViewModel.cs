@@ -721,8 +721,9 @@ where TDbContext : DbContext
                 }
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
-                MessageBoxService.ShowMessage("生效成功！");
                 Mouse.OverrideCursor = null;
+                MessageBoxService.ShowMessage("生效成功！");
+              
             }
             catch (DbException e)
             {
@@ -793,8 +794,9 @@ where TDbContext : DbContext
                 }
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
-                MessageBoxService.ShowMessage("失效成功！");
                 Mouse.OverrideCursor = null;
+                MessageBoxService.ShowMessage("失效成功！");
+              
             }
             catch (DbException e)
             {
@@ -863,8 +865,9 @@ where TDbContext : DbContext
                 }
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
-                MessageBoxService.ShowMessage("审核成功！");
                 Mouse.OverrideCursor = null;
+                MessageBoxService.ShowMessage("审核成功！");
+               
             }
             catch (DbException e)
             {
@@ -933,8 +936,9 @@ where TDbContext : DbContext
                 }
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
-                MessageBoxService.ShowMessage("取消审核成功！");
                 Mouse.OverrideCursor = null;
+                MessageBoxService.ShowMessage("取消审核成功！");
+              
             }
             catch (DbException e)
             {

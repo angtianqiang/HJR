@@ -6,7 +6,13 @@
                      xmlns:converter="clr-namespace:ZtxFrameWork.UI.Converters"
                     xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
 
-
+    <Style TargetType="{x:Type TextElement }">
+        <Setter Property="FontFamily" Value="微软雅黑"/>       
+    </Style>
+    <Style TargetType="{x:Type TextBlock }">
+        <Setter Property="FontFamily" Value="微软雅黑"/>       
+    </Style>
+    
     <converter:GridRowIndicatorConerter x:Key="GridRowIndicatorConerter" />
     <converter:CommObjectConverter x:Key="CommObjectConverter" />
     <converter:BoolToVisbiltyConverter x:Key="BoolToVisbiltyConverter" />

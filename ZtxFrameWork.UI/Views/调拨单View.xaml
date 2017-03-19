@@ -154,6 +154,9 @@
                                         TabIndex="0"
                                         ValueMember="ID" />
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="数量">
+                        <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="日期">
@@ -176,7 +179,7 @@
                                         EditMode="Standalone"
                                         EditValue="{Binding Entity.源分店ID,
                                                             UpdateSourceTrigger=PropertyChanged}"
-                                        ItemsSource="{Binding 分店Source}"
+                                        ItemsSource="{Binding 源分店Source}"
                                         PopupWidth="300"
                                         TabIndex="0"
                                         ValueMember="ID" />
@@ -185,16 +188,20 @@
                         <dxe:DateEdit EditValue="{Binding Entity.签收日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutItem Label="目标分店">
-                    <dxg:LookUpEdit DisplayMember="名称"
-                                    EditMode="Standalone"
-                                    EditValue="{Binding Entity.目标分店ID,
-                                                        UpdateSourceTrigger=PropertyChanged}"
-                                    ItemsSource="{Binding 分店Source}"
-                                    PopupWidth="300"
-                                    TabIndex="0"
-                                    ValueMember="ID" />
-                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="目标分店">
+                        <dxg:LookUpEdit DisplayMember="名称"
+                            EditMode="Standalone"
+                            EditValue="{Binding Entity.目标分店ID, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding 目标分店Source}"
+                            PopupWidth="300"
+                            TabIndex="0"
+                            ValueMember="ID" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="签收状态">
+                        <dxe:TextEdit IsReadOnly="True" EditValue="{Binding Entity.签收状态, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>
 
             <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
@@ -294,10 +301,7 @@
                                             IsSmart="True" />
 
 
-                            <dxg:GridColumn Width="100"
-                                            FieldName="金额"
-                                            Header="金额"
-                                            IsSmart="True" />
+                          
                             <dxg:GridColumn Width="250"
                                             FieldName="备注"
                                             Header="备注" />

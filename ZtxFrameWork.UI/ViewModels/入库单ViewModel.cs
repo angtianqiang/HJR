@@ -1,17 +1,16 @@
-﻿using System;
+﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
-using DevExpress.Mvvm;
-using ZtxFrameWork.UI.Comm.ViewModel;
-using ZtxFrameWork.Data;
-using ZtxFrameWork.Data.Model;
-using System.Collections.Generic;
-using ZtxFrameWork.UI.Comm.DataModel;
 using DevExpress.Mvvm.POCO;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows.Input;
+using ZtxFrameWork.Data;
+using ZtxFrameWork.Data.Model;
+using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.UI;
-using ZtxFrameWork.UI.Extensions;
-using System.Data.Entity;
+using ZtxFrameWork.UI.Comm.ViewModel;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -25,8 +24,6 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 入库单ViewModel() : base(DbFactory.Instance, x => x.入库单s, x => x.ID, x => x.编号, "采购入库单")
         {
             if (this.IsInDesignMode()) return;
-
-
             //  Entity.入库单明细s.AcceTChanges();
 
             var db = dbFactory.CreateDbContext();
@@ -34,14 +31,11 @@ namespace ZtxFrameWork.UI.ViewModels
             分店Source = db.分店s.OrderBy(t => t.名称).ToList();
 
             供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
-
-
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
                 SelectChildEntity.饰品 = null;
             });
-
             Messenger.Default.Register<string>(this, "更新金额" + Token, m =>
             {
                 var item = SelectChildEntity;
@@ -49,13 +43,10 @@ namespace ZtxFrameWork.UI.ViewModels
                 Entity.总金额 = Entity.入库单明细s.Sum(t => t.金额);
                 Entity.数量 = Entity.入库单明细s.Sum(t => t.数量);
             });
-
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
         public virtual List<供应商> 供应商Source { get; set; }
-
-
         #region 明细表操作
 
 
@@ -73,8 +64,6 @@ namespace ZtxFrameWork.UI.ViewModels
 
         public virtual void ShowList(object startCode)
         {
-            var a = GetDocumentManagerService();
-
             string startStr = startCode?.ToString() ?? "";
 
             Keyboard.Focus(null);//更新界面的值
@@ -94,7 +83,7 @@ namespace ZtxFrameWork.UI.ViewModels
             //else
             {
                 CommQueryListViewModel VM = ViewModelSource.Create<CommQueryListViewModel>(() => new CommQueryListViewModel() { Title = "饰品清单", Entities = list });
-                IDocument doc = QueryListManagerService.CreateDocument("CommQueryListView", VM);
+                IDocument doc = QueryListManagerService.CreateDocument(Utils.ApplictionConfigValue.CommQueryListViewName, VM);
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
@@ -168,33 +157,28 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 入库单 entity)
         {
             base.OnBeforeEntityConfirmed(dbContext, primaryKey, entity);
-            if (entity.入库单明细s.Count <= 0)
-            {
-                throw new Exception("没有单身内容");
-            }
+            if (entity.入库单明细s.Count <= 0)            
+                throw new Exception("没有单身内容");            
             foreach (var item in entity.入库单明细s)
             {
-
-
                 //更新分库库存
                 var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
                 if (temp == null)
                 {
-                    dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.分店ID });
+                  temp =  dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.分店ID });
                 }
-                else
-                {
+               
                     temp.数量 += item.数量;
                     temp.重量 += item.重量;
-                }
+               
                 //更新总库存 
                 var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
                 product.库存数量 += item.数量;
                 product.库存重量 += item.重量;
                 product.库存总金额 += item.金额;
-                // 成本
-                product.按件成本价 = System.Math.Round(product.库存总金额 / product.库存数量, 2);
-                product.按重成本价 = System.Math.Round(product.库存总金额 / product.库存重量, 2);
+                // 成本              
+                product.按件成本价 = product.库存数量 == 0.00m ? 0.00m : System.Math.Round(product.库存总金额 / product.库存数量, 2);
+                product.按重成本价 = product.库存重量 == 0.00m ? 0.00m : System.Math.Round(product.库存总金额 / product.库存重量, 2);
                 //成本小计
                 product.账面成本小计 += item.金额;
                 //写出入明细
@@ -202,7 +186,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 {
                     日期 = DateTime.Now,
                     相关单据 = "入库单",
-                    单据ID = entity.ID,
+                    单据ID = item.ID,
                     单据编号 = entity.编号,
                     出入别 = "I",
                     数量 = item.数量,
@@ -214,9 +198,31 @@ namespace ZtxFrameWork.UI.ViewModels
             }
         }
 
-
-
-
+        protected override void OnBeforeEntityUnConfirmed(ZtxDB dbContext, long primaryKey, 入库单 entity)
+        {
+            base.OnBeforeEntityUnConfirmed(dbContext, primaryKey, entity);
+            foreach (var item in entity.入库单明细s)
+            {
+                //更新分库库存
+                var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).Single();    
+                    temp.数量 -= item.数量;
+                    temp.重量 -= item.重量;
+               
+                //更新总库存 
+                var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
+                product.库存数量 -= item.数量;
+                product.库存重量 -= item.重量;
+                product.库存总金额 -= item.金额;
+                // 成本              
+                product.按件成本价 = product.库存数量 == 0.00m ? 0.00m : System.Math.Round(product.库存总金额 / product.库存数量, 2);
+                product.按重成本价 = product.库存重量 == 0.00m ? 0.00m : System.Math.Round(product.库存总金额 / product.库存重量, 2);
+                //成本小计
+                product.账面成本小计 -= item.金额;
+                //写出入明细
+                var inOutDetails = dbContext.库存出入明细s.Where(t => t.单据ID == item.ID && t.单据编号 == entity.编号).Single();
+                dbContext.Entry(inOutDetails).State = EntityState.Deleted;             
+            }
+        }
         #endregion
     }
 }
