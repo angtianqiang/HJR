@@ -307,15 +307,25 @@ namespace ZtxFrameWork.UI.ViewModels
                 product.账面成本小计 += item.盈亏金额;
                 //写出入明细
 
-                dbContext.Entry(temp).State = EntityState.Deleted;
+              
             }
             entity.盈亏单ID = null;
-           dbContext.SaveChanges();
+            dbContext.盈亏单明细s.RemoveRange(ykd.盈亏单明细s);
+            
+          
             dbContext.Entry(ykd).State = EntityState.Deleted;
           
        dbContext.SaveChanges();
 
         }
-    
+
+        #region 20170320 删除时同时删除子表
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 盘点表 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.盘点表明细s.RemoveRange(entity.盘点表明细s);
+        }
+        #endregion
+
     }
 }

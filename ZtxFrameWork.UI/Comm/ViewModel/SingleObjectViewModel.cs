@@ -180,19 +180,21 @@ where TDbContext : DbContext
                 ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
                 using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
                 {
-                    var newDB = dbFactory.CreateDbContext();
-                    var newDbSet = getDbSetFunc(newDB);
+                //    DB.Entry(Entity).State = EntityState.Detached;
+                 //   var newDB = dbFactory.CreateDbContext();
+                 //   var newDbSet = getDbSetFunc(newDB);
 
-                    OnBeforeEntityDeleted(newDB, PrimaryKey, Entity);
+                    OnBeforeEntityDeleted(DB, PrimaryKey, Entity);
 
                     DB.Entry(Entity).State = EntityState.Deleted;
                     DB.SaveChanges();
                     TPrimaryKey primaryKeyForMessage = PrimaryKey;
                     TEntity entityForMessage = Entity;
                     Entity = null;
-                    OnEntityDeleted(newDB, primaryKeyForMessage, entityForMessage);
+                    OnEntityDeleted(DB, primaryKeyForMessage, entityForMessage);
 
                     ts.Complete();
+                    Close();
                 }
             }
             catch (DbException e)
@@ -267,10 +269,11 @@ where TDbContext : DbContext
                 ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
                 using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
                 {
-                    var newDB = dbFactory.CreateDbContext();
-                    var newDbSet = getDbSetFunc(newDB);
+                   // DB.Entry(Entity).State = EntityState.Detached;
+                 //   var newDB = dbFactory.CreateDbContext();
+                  //  var newDbSet = getDbSetFunc(newDB);
 
-                    OnBeforeEntitySaved(newDB, PrimaryKey, Entity, isNewEntity);
+                    OnBeforeEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
                     if (isNewEntity)
                     {
                         DB.Entry(Entity).State = EntityState.Added;
@@ -283,7 +286,7 @@ where TDbContext : DbContext
                     DB.SaveChanges();
                     PrimaryKey = this.GetPrimaryKey(Entity);
                     LoadEntityByKey(PrimaryKey);
-                    OnEntitySaved(newDB, PrimaryKey, Entity, isNewEntity);
+                    OnEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
 
                     ts.Complete();
                 }
@@ -408,7 +411,7 @@ where TDbContext : DbContext
         protected void LoadEntityByKey(TPrimaryKey primaryKey)
         {
 
-            if (Entity == null)
+            if (Entity == null )
             {
                 Entity = DbSet.Find(primaryKey);
             }
@@ -751,7 +754,7 @@ where TDbContext : DbContext
             finally
             {
 
-                if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
+                //if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
             }
         }
         public virtual bool CanConfirm()
@@ -824,7 +827,7 @@ where TDbContext : DbContext
             finally
             {
 
-                if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
+                //if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
             }
         }
         public virtual bool CanUnConfirm()
@@ -895,7 +898,7 @@ where TDbContext : DbContext
             finally
             {
 
-                if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
+                //if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
             }
         }
         public virtual bool CanAudit()
@@ -966,7 +969,7 @@ where TDbContext : DbContext
             finally
             {
 
-                if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
+                //if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
             }
         }
         public virtual bool CanUnAudit()

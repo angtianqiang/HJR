@@ -32,7 +32,15 @@ namespace ZtxFrameWork.UI.ViewModels
         }
 
 
+        #region 20170320 删除时同时删除子表
 
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 退库单 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.退库单明细s.RemoveRange(entity.退库单明细s);
+        }
+        #endregion
 
     }
+
 }

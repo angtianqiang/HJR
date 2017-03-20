@@ -205,6 +205,14 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
         #endregion
+        #region 20170320 删除时同时删除子表
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 盈亏单 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.盈亏单明细s.RemoveRange(entity.盈亏单明细s);
+        }
+        #endregion
+
 
     }
 }

@@ -261,8 +261,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                        
                         OnBeforeEntityDeleted(newDB,primaryKey, entity);
 
-                        DB.Entry(entity).State = EntityState.Deleted;
-                        DB.SaveChanges();
+                        newDB.Entry(entity).State = EntityState.Deleted;
+                        newDB.SaveChanges();
                         OnEntityDeleted(newDB,primaryKey, entity);
 
                         ts.Complete();

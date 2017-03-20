@@ -222,6 +222,14 @@ namespace ZtxFrameWork.UI.ViewModels
                 var inOutDetails = dbContext.库存出入明细s.Where(t => t.单据ID == item.ID && t.单据编号 == entity.编号).Single();
                 dbContext.Entry(inOutDetails).State = EntityState.Deleted;             
             }
+            dbContext.SaveChanges();
+        }
+        #endregion
+        #region 20170320 删除时同时删除子表
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 入库单 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.入库单明细s.RemoveRange(entity.入库单明细s);
         }
         #endregion
     }
