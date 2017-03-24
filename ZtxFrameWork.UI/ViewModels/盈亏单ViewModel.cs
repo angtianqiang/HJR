@@ -33,7 +33,7 @@ namespace ZtxFrameWork.UI.ViewModels
             });
             Messenger.Default.Register<string>(this, "更新总数量" + Token, m =>
             {
-                Entity.数量 = Entity.盈亏单明细s.Sum(t => t.盈亏数量);
+                UpdateTotal();
             });
 
         }
@@ -41,6 +41,8 @@ namespace ZtxFrameWork.UI.ViewModels
         public virtual List<分店> 分店Source { get; set; }
 
         #region 明细表操作
+        private void UpdateTotal()
+        { Entity.数量 = Entity.盈亏单明细s.Sum(t => t.盈亏数量); }
         protected override void UpdateCommands()
         {
             base.UpdateCommands();
@@ -75,6 +77,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     SelectChildEntity.饰品ID = VM.SelectEntity.ID;
                     this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
+                    UpdateTotal();
                 }
             }
         }
@@ -99,6 +102,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 item.序号 = Entity.盈亏单明细s.Select(t => t.序号).Max() + 1;
             }
             Entity.盈亏单明细s.Add(item);
+            UpdateTotal();
             Mouse.OverrideCursor = null;
         }
         public virtual bool CanAddChildRow()
@@ -115,6 +119,7 @@ namespace ZtxFrameWork.UI.ViewModels
             var temp = SelectChildEntity;
             Entity.盈亏单明细s.Remove(temp);
             DB.盈亏单明细s.Remove(temp);
+            UpdateTotal();
             Mouse.OverrideCursor = null;
         }
 

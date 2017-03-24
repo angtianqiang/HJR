@@ -218,7 +218,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _类型ID; }
             set { Set<long>(() => this.类型ID, ref _类型ID, value); }
         }
-      
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public 饰品类型 饰品类型 { get; set; }
         private string _品名;
         public string 品名
@@ -234,7 +234,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _单位ID; }
             set { Set<long>(() => this.单位ID, ref _单位ID, value); }
         }
-        
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 单位 单位 { get; set; }
         private long _重量单位ID;
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
@@ -244,7 +244,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _重量单位ID; }
             set { Set<long>(() => this.重量单位ID, ref _重量单位ID, value); }
         }
-      
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 重量单位 重量单位 { get; set; }
         private decimal _单重;
         public decimal 单重
@@ -265,6 +265,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _黄金种类ID; }
             set { Set<long>(() => this.黄金种类ID, ref _黄金种类ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 黄金种类 黄金种类 { get; set; }
         private string _尺寸;
         public string 尺寸
@@ -413,7 +414,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
 
         }
-
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 饰品 饰品 { get; set; }
         private bool _是否按比例;
         public bool 是否按比例
@@ -594,32 +595,39 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
+       
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+         [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 会员 会员 { get; set; }
         private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
         private decimal _总金额;
         public decimal 总金额
@@ -699,7 +707,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
+        private 饰品 _饰品;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品 饰品
+        {
+            get { return _饰品; }
+            set { Set<饰品>(() => this.饰品, ref _饰品, value, () => { this.饰品编号 = 饰品?.编号 ?? ""; }); }
+        }
 
 
         private Int32 _数量;
@@ -714,11 +728,11 @@ namespace ZtxFrameWork.Data.Model
             get { return _重量; }
             set { Set<decimal>(() => this.重量, ref _重量, value); }
         }
-        private String _工费计法;
-        public String 工费计法
+        private 费用计法 _工费计法;
+        public 费用计法 工费计法
         {
             get { return _工费计法; }
-            set { Set<String>(() => this.工费计法, ref _工费计法, value); }
+            set { Set<费用计法>(() => this.工费计法, ref _工费计法, value); }
         }
         private decimal _工费;
         public decimal 工费
@@ -732,6 +746,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _销售价; }
             set { Set<decimal>(() => this.销售价, ref _销售价, value); }
         }
+        private decimal _金额;
+        public decimal 金额
+        {
+            get => _金额;
+            set => Set<decimal>(() => this.金额, ref _金额, value);
+        }
+
         private decimal _折扣;
         public decimal 折扣
         {
@@ -756,6 +777,18 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+        #region 非映射业务字段 主要起导航作用
+
+
+
+        private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string 饰品编号
+        {
+            get { return _饰品编号; }
+            set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
+        }
+        #endregion
 
     }
     public class 销售退货单 : ModelBase
@@ -770,32 +803,38 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 会员 会员 { get; set; }
         private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
         private decimal _总金额;
         public decimal 总金额
@@ -876,8 +915,15 @@ namespace ZtxFrameWork.Data.Model
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-        public virtual 饰品 饰品 { get; set; }
+        private 饰品 _饰品;
+        [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
+        public virtual 饰品 饰品
+        {
+            get { return _饰品; }
+            set { Set<饰品>(() => this.饰品, ref _饰品, value, () => { this.饰品编号 = 饰品?.编号 ?? ""; }); }
+        }
 
+    
 
         private Int32 _数量;
         public Int32 数量
@@ -891,11 +937,17 @@ namespace ZtxFrameWork.Data.Model
             get { return _重量; }
             set { Set<decimal>(() => this.重量, ref _重量, value); }
         }
-        private String _工费计法;
-        public String 工费计法
+        private decimal _金额;
+        public decimal 金额
+        {
+            get => _金额;
+            set => Set<decimal>(() => this.金额, ref _金额, value);
+        }
+        private 费用计法 _工费计法;
+        public 费用计法 工费计法
         {
             get { return _工费计法; }
-            set { Set<String>(() => this.工费计法, ref _工费计法, value); }
+            set { Set<费用计法>(() => this.工费计法, ref _工费计法, value); }
         }
         private decimal _工费;
         public decimal 工费
@@ -933,6 +985,18 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+        #region 非映射业务字段 主要起导航作用
+
+
+
+        private string _饰品编号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+        [NotMapped]
+        public string 饰品编号
+        {
+            get { return _饰品编号; }
+            set { Set<string>(() => this.饰品编号, ref _饰品编号, value); }
+        }
+        #endregion
     }
     public class 收款单 : ModelBase
     {
@@ -943,39 +1007,57 @@ namespace ZtxFrameWork.Data.Model
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _收款日期;
-        public String 收款日期
+        private DateTime _收款日期;
+        public DateTime 收款日期
         {
             get { return _收款日期; }
-            set { Set<String>(() => this.收款日期, ref _收款日期, value); }
+            set { Set<DateTime>(() => this.收款日期, ref _收款日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 会员 会员 { get; set; }
+        private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
+        public long 操作员ID
+        {
+            get { return _操作员ID; }
+            set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
+        }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
+        public virtual User 操作员 { get; set; }
+
         private long? _销售单ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 销售单ID
         {
             get { return _销售单ID; }
             set { Set<long?>(() => this.销售单ID, ref _销售单ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 销售单 销售单 { get; set; }
         private long? _销售退货单ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 销售退货单ID
         {
             get { return _销售退货单ID; }
             set { Set<long?>(() => this.销售退货单ID, ref _销售退货单ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 销售退货单 销售退货单 { get; set; }
         private decimal _金额;
         public decimal 金额
@@ -994,18 +1076,22 @@ namespace ZtxFrameWork.Data.Model
     public class 库存 : ModelBase
     {
         private long _饰品ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 饰品ID
         {
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 饰品 饰品 { get; set; }
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private Int32 _数量;
         public Int32 数量
@@ -1258,25 +1344,31 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long? _供应商ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 供应商ID
         {
             get { return _供应商ID; }
             set { Set<long?>(() => this.供应商ID, ref _供应商ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 供应商 供应商 { get; set; }
         private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
         private decimal _总金额;
         public decimal 总金额
@@ -1432,13 +1524,16 @@ namespace ZtxFrameWork.Data.Model
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
         private String _状态;
         public String 状态
@@ -1552,33 +1647,41 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _源分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 源分店ID
         {
             get { return _源分店ID; }
             set { Set<long>(() => this.源分店ID, ref _源分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 源分店 { get; set; }
         private long _目标分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 目标分店ID
         {
             get { return _目标分店ID; }
             set { Set<long>(() => this.目标分店ID, ref _目标分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 目标分店 { get; set; }
         private long? _调拨员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 调拨员ID
         {
             get { return _调拨员ID; }
             set { Set<long?>(() => this.调拨员ID, ref _调拨员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 调拨员 { get; set; }
 
         private long? _签收员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 签收员ID
         {
             get { return _签收员ID; }
             set { Set<long?>(() => this.签收员ID, ref _签收员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 签收员 { get; set; }
         private String _签收日期;
         public String 签收日期
@@ -1685,38 +1788,58 @@ namespace ZtxFrameWork.Data.Model
     }
     public class 付款单 : ModelBase
     {
+        public 付款单()
+        {
+            付款单明细s = new VHObjectList<付款单明细>();
+        }
         private String _编号;
         public String 编号
         {
             get { return _编号; }
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
-        private String _日期;
-        public String 日期
+        private DateTime _日期;
+        public DateTime 日期
         {
             get { return _日期; }
-            set { Set<String>(() => this.日期, ref _日期, value); }
+            set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 会员 会员 { get; set; }
-        private long _供应ID;
-        public long 供应ID
+        private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
+        public long 操作员ID
         {
-            get { return _供应ID; }
-            set { Set<long>(() => this.供应ID, ref _供应ID, value); }
+            get { return _操作员ID; }
+            set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
+        public virtual User 操作员 { get; set; }
+        private long _供应商ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
+        [RangeAttribute(1, long.MaxValue)]
+        public long 供应商ID
+        {
+            get { return _供应商ID; }
+            set { Set<long>(() => this.供应商ID, ref _供应商ID, value); }
+        }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 供应商 供应商 { get; set; }
         private decimal _应付金额;
         public decimal 应付金额
@@ -1729,6 +1852,13 @@ namespace ZtxFrameWork.Data.Model
         {
             get { return _实付金额; }
             set { Set<decimal>(() => this.实付金额, ref _实付金额, value); }
+        }
+
+        private String _状态;
+        public String 状态
+        {
+            get { return _状态; }
+            set { Set<String>(() => this.状态, ref _状态, value); }
         }
         private ICollection<付款单明细> _付款单明细s;
         public virtual ICollection<付款单明细> 付款单明细s
@@ -1784,6 +1914,28 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+
+        #region (非)映射业务字段 主要起导航作用
+
+
+
+        private string _入库单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+
+        public string 入库单号
+        {
+            get { return _入库单号; }
+            set { Set<string>(() => this.入库单号, ref _入库单号, value); }
+        }
+
+        private string _退库单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+
+        public string 退库单号
+        {
+            get { return _退库单号; }
+            set { Set<string>(() => this.退库单号, ref _退库单号, value); }
+        }
+        #endregion
+
     }
     public class 库存出入明细 : ModelBase
     {
@@ -1875,19 +2027,22 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual 分店 分店 { get; set; }
         private long _操作员ID;
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-
+        [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
 
 

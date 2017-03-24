@@ -327,7 +327,7 @@ namespace ZtxFrameWork.Data.Mapping
             this.HasRequired(t => t.分店).WithMany().HasForeignKey(t => t.分店ID).WillCascadeOnDelete(false);
 
             this.HasOptional(t => t.会员).WithMany().HasForeignKey(t => t.会员ID).WillCascadeOnDelete(false);
-            this.HasRequired(t => t.供应商).WithMany().HasForeignKey(t => t.供应ID).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.供应商).WithMany().HasForeignKey(t => t.供应商ID).WillCascadeOnDelete(false);
         }
     }
     public class 付款单明细Map : ZtxEntityTypeConfiguration<付款单明细>

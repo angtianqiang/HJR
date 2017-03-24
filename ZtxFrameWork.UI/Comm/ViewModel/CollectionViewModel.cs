@@ -366,7 +366,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
 
             var tokenValue = App.SystemConfigs.Where(t => t.Token == "ViewOpenMode").Single().TokenValue;
-            return tokenValue == "0" ? this.GetService<IDocumentManagerService>() : this.GetService<IDocumentManagerService>("TabbedDocumentManagerService");
+            return tokenValue == "0" ? this.GetService<IDocumentManagerService>("SignleObjectDocumentManagerService") : this.GetService<IDocumentManagerService>("TabbedDocumentManagerService");
         }
         protected virtual void OnBeforeEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 

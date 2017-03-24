@@ -105,6 +105,18 @@
                                            ToolTip="F5" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="">
+                        <dxb:BarButtonItem Command="{Binding SKCommand}"
+                                           Content="收款"
+                                           KeyGesture="F7"
+                                           LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/sk.png"
+                                           ToolTip="F7" />
+                        <dxb:BarButtonItem Command="{Binding THCommand}"
+                                           Content="退货"
+                                           KeyGesture="F8"
+                                           LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/th.png"
+                                           ToolTip="F8" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="">
                         <dxb:BarButtonItem Command="{Binding ReportPrintCommand}"
                                            Content="打印"
                                            KeyGesture="CTRL+P"
@@ -160,7 +172,7 @@
                         <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="会员">
-                        <dxg:LookUpEdit DisplayMember="DispalyName"
+                        <dxg:LookUpEdit DisplayMember="姓名"
                                         EditMode="Standalone"
                                         EditValue="{Binding Entity.会员ID,
                                                             UpdateSourceTrigger=PropertyChanged}"
@@ -185,16 +197,7 @@
                         <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutItem Label="供应商">
-                    <dxg:LookUpEdit DisplayMember="简称"
-                                    EditMode="Standalone"
-                                    EditValue="{Binding Entity.供应商ID,
-                                                        UpdateSourceTrigger=PropertyChanged}"
-                                    ItemsSource="{Binding 供应商Source}"
-                                    PopupWidth="300"
-                                    TabIndex="0"
-                                    ValueMember="ID" />
-                </dxlc:LayoutItem>
+            
             </dxlc:LayoutGroup>
             <dxlc:LayoutGroup Header="费用信息" View="GroupBox">
                 <dxlc:LayoutItem Label="总金额">
@@ -244,7 +247,7 @@
                         <dxg:GridControl x:Name="DetailGrid"
                                          AutoGenerateColumns="AddNew"
                                          EnableSmartColumnsGeneration="True"
-                                         ItemsSource="{Binding Entity.入库单明细s}"
+                                         ItemsSource="{Binding Entity.销售单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"

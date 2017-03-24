@@ -106,6 +106,13 @@
                                            ToolTip="F5" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="">
+                        <dxb:BarButtonItem Command="{Binding BuidChildCommand}"
+                                           Content="生成明细清单"
+                                           KeyGesture="F7"
+                                           LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/BuidList.png"
+                                           ToolTip="F7" />
+                    </dxr:RibbonPageGroup>
+                    <dxr:RibbonPageGroup Caption="">
                         <dxb:BarButtonItem Command="{Binding ReportPrintCommand}"
                                            Content="打印"
                                            KeyGesture="CTRL+P"
@@ -166,9 +173,7 @@
                                     TabIndex="0"
                                     ValueMember="ID" />
                 </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label=" ">
-                    <Button Command="{Binding BuidChildCommand}" Content="生成盘点清单"/>
-                </dxlc:LayoutItem>
+                
             </dxlc:LayoutGroup>
             <dxlc:LayoutItem Label="备注">
                 <dxe:TextEdit EditValue="{Binding Entity.备注, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />

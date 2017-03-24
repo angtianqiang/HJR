@@ -177,7 +177,7 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         #endregion
         #region 20170318 单据确认操作
-        #endregion
+     
         protected override void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 盘点表 entity)
         {
             base.OnBeforeEntityConfirmed(dbContext, primaryKey, entity);
@@ -318,6 +318,7 @@ namespace ZtxFrameWork.UI.ViewModels
        dbContext.SaveChanges();
 
         }
+        #endregion
 
         #region 20170320 删除时同时删除子表
         protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 盘点表 entity)

@@ -40,8 +40,7 @@ namespace ZtxFrameWork.UI.ViewModels
             {
                 var item = SelectChildEntity;
                 item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
-                Entity.总金额 = Entity.入库单明细s.Sum(t => t.金额);
-                Entity.数量 = Entity.入库单明细s.Sum(t => t.数量);
+                UpdateTotal();
             });
         }
         public virtual List<User> 操作员Source { get; set; }
@@ -49,7 +48,12 @@ namespace ZtxFrameWork.UI.ViewModels
         public virtual List<供应商> 供应商Source { get; set; }
         #region 明细表操作
 
-
+        private void UpdateTotal()
+        {
+            Entity.总金额 = Entity.入库单明细s.Sum(t => t.金额);
+            Entity.数量 = Entity.入库单明细s.Sum(t => t.数量);
+            Entity.未付金额 = Entity.总金额 - Entity.已付金额;
+        }
 
         protected override void UpdateCommands()
         {
@@ -90,6 +94,8 @@ namespace ZtxFrameWork.UI.ViewModels
                     SelectChildEntity.饰品ID = VM.SelectEntity.ID;
                     this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
+                    UpdateTotal();
+
                 }
             }
         }
@@ -117,6 +123,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 item.序号 = Entity.入库单明细s.Select(t => t.序号).Max() + 1;
             }
             Entity.入库单明细s.Add(item);
+            UpdateTotal();
             Mouse.OverrideCursor = null;
         }
 
@@ -138,6 +145,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Entity.入库单明细s.Remove(temp);
             DB.入库单明细s.Remove(temp);
+            UpdateTotal();
             Mouse.OverrideCursor = null;
 
         }
@@ -194,6 +202,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     金额 = item.金额,
                     分店ID = entity.分店ID,
                     饰品ID = item.饰品ID
+
                 });
             }
         }
@@ -201,6 +210,10 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityUnConfirmed(ZtxDB dbContext, long primaryKey, 入库单 entity)
         {
             base.OnBeforeEntityUnConfirmed(dbContext, primaryKey, entity);
+            if (entity.已付金额!=0)
+            {
+                throw new Exception("已付金额不为0");
+            }
             foreach (var item in entity.入库单明细s)
             {
                 //更新分库库存

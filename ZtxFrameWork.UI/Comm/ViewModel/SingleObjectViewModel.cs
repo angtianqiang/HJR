@@ -711,7 +711,11 @@ where TDbContext : DbContext
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
                     var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                    OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);
+                    if (((dynamic)newEntity).状态 != "N")
+                    {
+                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                    }
+                    OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);                   
                     ((dynamic)newEntity).状态 = "Y";
                     newDB.Entry(newEntity).State = EntityState.Modified;
                     newDB.SaveChanges();
@@ -785,6 +789,10 @@ where TDbContext : DbContext
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
                     var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    if (((dynamic)newEntity).状态 != "Y")
+                    {
+                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                    }
                     OnBeforeEntityUnConfirmed(newDB, PrimaryKey, newEntity);
                     ((dynamic)newEntity).状态 = "N";
                     newDB.Entry(newEntity).State = EntityState.Modified;
@@ -856,6 +864,10 @@ where TDbContext : DbContext
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
                     var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    if (((dynamic)newEntity).状态 != "Y")
+                    {
+                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                    }
                     OnBeforeEntityAudited(newDB, PrimaryKey, newEntity);
                     ((dynamic)newEntity).状态 = "Z";
                     newDB.Entry(newEntity).State = EntityState.Modified;
@@ -927,6 +939,10 @@ where TDbContext : DbContext
                     var newDB = dbFactory.CreateDbContext();
                     var newDbSet = getDbSetFunc(newDB);
                     var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                    if (((dynamic)newEntity).状态 != "Z")
+                    {
+                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                    }
                     OnBeforeEntityUnAudited(newDB, PrimaryKey, newEntity);
                     ((dynamic)newEntity).状态 = "Y";
                     newDB.Entry(newEntity).State = EntityState.Modified;
@@ -1039,7 +1055,13 @@ where TDbContext : DbContext
 
         protected IDocumentManagerService QueryListManagerService { get { return this.GetRequiredService<IDocumentManagerService>("QueryListDocumentManagerService"); } }
         //colleciton页面的服务  用于打开其它的页面，比如在入库单界面上导航到收款单上
-        protected virtual IDocumentManagerService GetDocumentManagerService() { return this.GetRequiredService<IDocumentManagerService>("SignleObjectDocumentManagerService"); }
+        protected virtual IDocumentManagerService GetDocumentManagerService() {
+
+            //return this.GetRequiredService<IDocumentManagerService>("SignleObjectDocumentManagerService");
+
+            var tokenValue = App.SystemConfigs.Where(t => t.Token == "ViewOpenMode").Single().TokenValue;
+            return tokenValue == "0" ? this.GetService<IDocumentManagerService>("SignleObjectDocumentManagerService") : this.GetService<IDocumentManagerService>("TabbedDocumentManagerService");
+        }
 
 
         #endregion

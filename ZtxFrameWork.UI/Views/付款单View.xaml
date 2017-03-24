@@ -142,7 +142,7 @@
                         <dxe:TextEdit EditValue="{Binding Entity.编号, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="会员">
-                        <dxg:LookUpEdit DisplayMember="DispalyName"
+                        <dxg:LookUpEdit DisplayMember="姓名"
                                         EditMode="Standalone"
                                         EditValue="{Binding Entity.会员ID,
                                                             UpdateSourceTrigger=PropertyChanged}"
@@ -155,6 +155,16 @@
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="日期">
                         <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="操作员">
+                        <dxg:LookUpEdit DisplayMember="DispalyName"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding Entity.操作员ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 操作员Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutItem Label="分店">
@@ -253,11 +263,33 @@
                                             Header="序号"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="120"
-                                            FieldName="入库单编号"
-                                            Header="入库单编号" />
+                                            FieldName="入库单号"
+                                            Header="入库单号" >
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:ButtonEditSettings AllowDefaultButton="True">
+                                        <dxmvvm:Interaction.Behaviors>
+                                            <dxmvvm:EventToCommand Command="{Binding ShowListCommand}"
+                                                                   CommandParameter="{Binding ActiveEditor.EditValue,
+                                                                                              ElementName=Details}"
+                                                                   EventName="DefaultButtonClick" />
+                                        </dxmvvm:Interaction.Behaviors>
+                                    </dxe:ButtonEditSettings>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
                             <dxg:GridColumn Width="120"
-                                            FieldName="退库单编号"
-                                            Header="退库单编号" />
+                                            FieldName="退库单号"
+                                            Header="退库单号" >
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:ButtonEditSettings AllowDefaultButton="True">
+                                        <dxmvvm:Interaction.Behaviors>
+                                            <dxmvvm:EventToCommand Command="{Binding ShowList2Command}"
+                                                                   CommandParameter="{Binding ActiveEditor.EditValue,
+                                                                                              ElementName=Details}"
+                                                                   EventName="DefaultButtonClick" />
+                                        </dxmvvm:Interaction.Behaviors>
+                                    </dxe:ButtonEditSettings>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
 
 
 

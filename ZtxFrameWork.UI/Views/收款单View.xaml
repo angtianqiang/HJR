@@ -14,7 +14,7 @@
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             d:DesignHeight="300"
+             d:DesignHeight="600"
              d:DesignWidth="300"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:收款单ViewModel}"
              mc:Ignorable="d">
@@ -22,6 +22,27 @@
         <behaviors:UserControlDefaultLoad />
     </dxmvvm:Interaction.Behaviors>
     <DockPanel>
+        <DockPanel.Resources>
+            <Style TargetType="{x:Type dxe:TextEdit}">
+                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+            </Style>
+            <Style TargetType="{x:Type dxe:DateEdit}">
+                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+            </Style>
+            <Style TargetType="{x:Type dxe:ComboBoxEdit}">
+                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+            </Style>
+            <Style TargetType="{x:Type dxg:LookUpEdit}">
+                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+            </Style>
+            <Style TargetType="{x:Type dxg:GridColumn}">
+                <Setter Property="ReadOnly" Value="{Binding IsReadOnly}" />
+            </Style>
+            <!--<Style TargetType="dxg:TableView">
+            20160802这里不启用，是因为TableView又显示设置了Style属情，导致不启用
+                <Setter Property="AllowEditing"  Value="{Binding BillMenuContent.IsReadOnly, ConverterParameter=False:False:True, Converter={StaticResource ResourceKey=CommObjectConverter}}" />
+            </Style>-->
+        </DockPanel.Resources>
         <controls:SingleMenu DockPanel.Dock="Top" />
         <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
         <dxlc:LayoutControl>
@@ -34,20 +55,24 @@
                         <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.收款日期, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="分店">
-                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.分店, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.分店.名称, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="会员">
-                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.会员, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.会员.姓名, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="操作员">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.操作员.DispalyName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="销售退货单编号">
-                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.销售退货单编号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.销售退货单.编号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="销售单编号">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.销售单.编号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="金额">
-                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.备注, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.金额, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="金额">
-                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.备注, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
-                    </dxlc:LayoutItem>
+                 
                 </dxlc:LayoutGroup>
 
             </dxlc:LayoutGroup>

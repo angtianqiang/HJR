@@ -51,7 +51,7 @@ namespace ZtxFrameWork.Data
                 m = context.Modules.Add(new Model.Module() { DocumentType = "销售退货单CollectionView", Parent = p, ModuleTitle = "销售退货单", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "销售退货单", "销售管理");
                 m = context.Modules.Add(new Model.Module() { DocumentType = "收款单CollectionView", Parent = p, ModuleTitle = "收款单", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "收款单", "销售管理");
+                InitAuthorityModule(context, "收款单", "销售管理",Add:false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
 
             }
             parentMoudle = context.Modules.Where(t => t.ModuleTitle == "库存管理").FirstOrDefault();
@@ -112,8 +112,11 @@ namespace ZtxFrameWork.Data
             if (parentMoudle == null)
             {
                 var p = context.Modules.Add(new Model.Module() { ModuleTitle = "报表管理", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
+                m = context.Modules.Add(new Model.Module() { DocumentType = "库存明细表View", Parent = p, ModuleTitle = "库存明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "库存明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "采购入库单明细表View", Parent = p, ModuleTitle = "采购入库单明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "采购入库单明细表", "报表管理", Add:false, Edit:false,Delete:false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+             
             }
             parentMoudle = context.Modules.Where(t => t.ModuleTitle == "系统管理").FirstOrDefault();
             if (parentMoudle == null)

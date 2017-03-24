@@ -109,6 +109,8 @@ namespace ZtxFrameWork.UI
                 var NewName = DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName;
                 NewName = DevExpress.Xpf.Core.Theme.Themes.Where(t => t.Name == NewName).FirstOrDefault().FullName;
                 DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = NewName;
+              DevExpress.Xpf.Core.ApplicationThemeHelper.SaveApplicationThemeName();
+             
             }
             catch (Exception ex)
             {

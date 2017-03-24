@@ -25,13 +25,19 @@ namespace ZtxFrameWork.UI.ViewModels
         private Action<销售单> b = InitEntity;
         static public void InitEntity(销售单 NewEntity)
         {
-            NewEntity.编号 = GetNewCode("RK", DbFactory.Instance, x => x.销售单s, t => t.编号);
-          //  NewEntity.日期 = DateTime.Now;
+            NewEntity.编号 = GetNewCode("XS", DbFactory.Instance, x => x.销售单s, t => t.编号);
+           NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";
         }
 
-
+        #region 20170320 删除时同时删除子表
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 销售单 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.销售单明细s.RemoveRange(entity.销售单明细s);
+        }
+        #endregion
 
 
     }

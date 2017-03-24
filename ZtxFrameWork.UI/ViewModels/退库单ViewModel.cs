@@ -42,8 +42,7 @@ namespace ZtxFrameWork.UI.ViewModels
             {
                 var item = SelectChildEntity;
                 item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
-                Entity.总金额 = Entity.退库单明细s.Sum(t => t.金额);
-                Entity.数量 = Entity.退库单明细s.Sum(t => t.数量);
+                UpdateTotal();
             });
 
         }
@@ -52,7 +51,12 @@ namespace ZtxFrameWork.UI.ViewModels
         public virtual List<供应商> 供应商Source { get; set; }
         #region 明细表操作
 
-
+        private void UpdateTotal()
+        {
+            Entity.总金额 = Entity.退库单明细s.Sum(t => t.金额);
+            Entity.数量 = Entity.退库单明细s.Sum(t => t.数量);
+            Entity.未收金额 = Entity.总金额 - Entity.已收金额;
+        }
 
         protected override void UpdateCommands()
         {
@@ -99,6 +103,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     SelectChildEntity.数量 = VM.SelectEntity.数量;
                     SelectChildEntity.重量 = VM.SelectEntity.重量;
                     SelectChildEntity.金额 = VM.SelectEntity.金额;
+                    UpdateTotal();
                 }
             }
         }
@@ -125,6 +130,8 @@ namespace ZtxFrameWork.UI.ViewModels
                 item.序号 = Entity.退库单明细s.Select(t => t.序号).Max() + 1;
             }
             Entity.退库单明细s.Add(item);
+            UpdateTotal();
+
             Mouse.OverrideCursor = null;
         }
 
@@ -146,6 +153,8 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Entity.退库单明细s.Remove(temp);
             DB.退库单明细s.Remove(temp);
+            UpdateTotal();
+
             Mouse.OverrideCursor = null;
 
         }
@@ -220,7 +229,10 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityUnConfirmed(ZtxDB dbContext, long primaryKey, 退库单 entity)
         {
             base.OnBeforeEntityUnConfirmed(dbContext, primaryKey, entity);
-
+            if (entity.已收金额 != 0)
+            {
+                throw new Exception("已收金额不为0");
+            }
             //是否有超退的情况
             foreach (var item in entity.退库单明细s)
             {

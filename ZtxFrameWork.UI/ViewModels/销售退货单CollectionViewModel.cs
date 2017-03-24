@@ -25,14 +25,25 @@ namespace ZtxFrameWork.UI.ViewModels
         private Action<销售退货单> b = InitEntity;
         static public void InitEntity(销售退货单 NewEntity)
         {
-            NewEntity.编号 = GetNewCode("RK", DbFactory.Instance, x => x.销售退货单s, t => t.编号);
-          //  NewEntity.日期 = DateTime.Now;
+            NewEntity.编号 = GetNewCode("TH", DbFactory.Instance, x => x.销售退货单s, t => t.编号);
+          NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";
         }
 
-
-
+        #region 20170320 删除时同时删除子表
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 销售退货单 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.销售退货单明细s.RemoveRange(entity.销售退货单明细s);
+        }
+        #endregion
+        //20170321退货单由销售单生成 ，用户不能自己添加
+        //public override bool CanNew()
+        //{
+        //    if (this.IsInDesignMode()) return true;
+        //    return false;
+        //}
 
     }
 }
