@@ -148,6 +148,7 @@
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DataDirectoryHelper.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Helpers\SplashScreenHelper.cs" />
@@ -178,6 +179,14 @@
       <DependentUpon>采购入库单明细表_ExpressionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="QueryList\采购入库单明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\饰品出入明细表View.xaml.cs">
+      <DependentUpon>饰品出入明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品出入明细表ViewModel.cs" />
+    <Compile Include="QueryList\饰品出入明细表_ExpressionView.xaml.cs">
+      <DependentUpon>饰品出入明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品出入明细表_ExpressionViewModel.cs" />
     <Compile Include="Utils\ApplicationSet.cs" />
     <Compile Include="Utils\CommandHelper.cs" />
     <Compile Include="Utils\TreeHelper.cs" />
@@ -470,6 +479,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="QueryList\采购入库单明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品出入明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品出入明细表_ExpressionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

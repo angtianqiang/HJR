@@ -116,7 +116,8 @@ namespace ZtxFrameWork.Data
                 InitAuthorityModule(context, "库存明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "采购入库单明细表View", Parent = p, ModuleTitle = "采购入库单明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "采购入库单明细表", "报表管理", Add:false, Edit:false,Delete:false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
-             
+                m = context.Modules.Add(new Model.Module() { DocumentType = "饰品出入明细表View", Parent = p, ModuleTitle = "饰品出入明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "饰品出入明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
             }
             parentMoudle = context.Modules.Where(t => t.ModuleTitle == "系统管理").FirstOrDefault();
             if (parentMoudle == null)

@@ -28,6 +28,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             EntityType = typeof(TEntity);
             HiddenProperties = hiddenProperties;
             AdditionalProperties = additionalProperties;
+            SetLoadData();
         }
         public virtual Expression<Func<TEntity, bool>> AdvancedExpression { get; set; }
         public virtual CriteriaOperator AdvancedCriteria { get; set; }

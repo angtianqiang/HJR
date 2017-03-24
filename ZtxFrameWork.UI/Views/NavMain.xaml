@@ -73,7 +73,7 @@
             </dxb:BarStaticItem>
         </dxb:StatusBarControl>
         <Grid>
-            <dxdo:DockLayoutManager ClosedPanelsBarVisibility="Auto">
+            <dxdo:DockLayoutManager ClosedPanelsBarVisibility="Never" >
                 <dxdo:LayoutGroup>
                     <dxdo:LayoutPanel AllowClose="False"
                                       AllowContextMenu="False"
@@ -156,8 +156,8 @@
                             </dxn:NavBarControl.View>
                         </dxn:NavBarControl>
                     </dxdo:LayoutPanel>
-                    <dxdo:DocumentGroup x:Name="documnetGroup" ItemWidth="*">
-                        <dxdo:DocumentPanel Caption="Document">
+                    <dxdo:DocumentGroup x:Name="documnetGroup" ItemWidth="*" ClosePageButtonShowMode="InActiveTabPageHeader" >
+                        <dxdo:DocumentPanel Caption="Document" AllowClose="False">
                             <Grid />
                         </dxdo:DocumentPanel>
 

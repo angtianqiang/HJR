@@ -88,7 +88,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 return;
             } 
          
-     IDocument document = DocumentManagerService.FindDocumentByIdOrCreate(module, x => CreateDocument(module));
+     IDocument document = DocumentManagerService.FindDocumentByIdOrCreate(module.DocumentType, x => CreateDocument(module));
 
       //   IDocument document = SignleObjectDocumentManagerService.FindDocumentByIdOrCreate(module, x => CreateDocument(module));
          //   IDocument document = CreateDocument(module);

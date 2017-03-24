@@ -629,6 +629,12 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
+        }
         private decimal _总金额;
         public decimal 总金额
         {
@@ -679,12 +685,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<ICollection<销售单明细>>(() => this.销售单明细s, ref _销售单明细s, value); }
         }
 
-        private Int32 _数量;
-        public Int32 数量
-        {
-            get { return _数量; }
-            set { Set<Int32>(() => this.数量, ref _数量, value); }
-        }
+      
     }
     public class 销售单明细 : ModelBase
     {
@@ -836,6 +837,7 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
+        private Int32 _数量;
         private decimal _总金额;
         public decimal 总金额
         {
@@ -887,7 +889,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
 
-        private Int32 _数量;
+     
         public Int32 数量
         {
             get { return _数量; }
@@ -1180,6 +1182,12 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "外键ID", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
+        }
         private decimal _总金额;
         public decimal 总金额
         {
@@ -1218,12 +1226,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<VHObjectList<入库单明细>>(() => this.入库单明细s, ref _入库单明细s, value); }
         }
 
-        private Int32 _数量;
-        public Int32 数量
-        {
-            get { return _数量; }
-            set { Set<Int32>(() => this.数量, ref _数量, value); }
-        }
+      
 
     }
     public class 入库单明细 : ModelBase
@@ -1370,6 +1373,12 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
+        private Int32 _数量;
+        public Int32 数量
+        {
+            get { return _数量; }
+            set { Set<Int32>(() => this.数量, ref _数量, value); }
+        }
         private decimal _总金额;
         public decimal 总金额
         {
@@ -1408,12 +1417,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
 
-        private Int32 _数量;
-        public Int32 数量
-        {
-            get { return _数量; }
-            set { Set<Int32>(() => this.数量, ref _数量, value); }
-        }
+       
 
     }
     public class 退库单明细 : ModelBase
@@ -1535,6 +1539,12 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "", AutoGenerateField = false, Description = "")]
         public virtual User 操作员 { get; set; }
+        private int _数量;
+        public int 数量
+        {
+            get => _数量;
+            set => Set<int>(() => this.数量, ref _数量, value);
+        }
         private String _状态;
         public String 状态
         {
@@ -1547,12 +1557,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
-        private int _数量;
-        public int 数量
-        {
-            get => _数量;
-            set => Set<int>(() => this.数量, ref _数量, value);
-        }
+   
         private ICollection<盈亏单明细> _盈亏单明细s;
         public virtual ICollection<盈亏单明细> 盈亏单明细s
         {
@@ -1695,6 +1700,12 @@ namespace ZtxFrameWork.Data.Model
             get { return _签收状态; }
             set { Set<String>(() => this.签收状态, ref _签收状态, value); }
         }
+        private int _数量;
+        public int 数量
+        {
+            get => _数量;
+            set => Set<int>(() => this.数量, ref _数量, value);
+        }
         private String _状态;
         public String 状态
         {
@@ -1707,12 +1718,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
-        private int _数量;
-        public int 数量
-        {
-            get =>  _数量;
-            set => Set<int>(() => this.数量, ref _数量, value);
-        }
+      
 
         private ICollection<调拨单明细> _调拨单明细s;
         public virtual ICollection<调拨单明细> 调拨单明细s

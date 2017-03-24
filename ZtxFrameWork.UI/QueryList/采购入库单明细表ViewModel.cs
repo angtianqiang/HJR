@@ -32,6 +32,8 @@ namespace ZtxFrameWork.UI.QueryList
 
         protected override System.Collections.Generic.List<dynamic> GetNewData(Expression<Func<入库单, bool>> AdvancedExpression)
         {
+
+          
             return DbFactory.Instance.CreateDbContext().入库单s
                 .Where(AdvancedExpression)
                 .Select(t=>new {统号=t.编号,供应商=t.供应商.简称,日期=t.日期 })
