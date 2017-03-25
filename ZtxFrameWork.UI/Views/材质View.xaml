@@ -31,6 +31,14 @@
                     <dxlc:LayoutItem Label="名称">
                         <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.名称, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="当前价">
+                        <dxe:SpinEdit EditValue="{Binding Entity.当前价,
+                                                          NotifyOnSourceUpdated=True,
+                                                          UpdateSourceTrigger=PropertyChanged,
+                                                          ValidatesOnDataErrors=True}"
+                                      Mask="n2"
+                                      MaskUseAsDisplayFormat="True" />                     
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="排序号">
                         <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.排序号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>

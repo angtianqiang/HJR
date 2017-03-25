@@ -84,7 +84,7 @@
                                 </dxg:GridControl.View>
 
                                 <dxg:GridColumn FieldName="编号" Header="编号"     GroupIndex="0"></dxg:GridColumn>
-
+                            
                             </dxg:GridControl>
 
                         </dxlc:LayoutGroup>

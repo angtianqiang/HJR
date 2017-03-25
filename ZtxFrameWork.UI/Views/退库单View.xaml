@@ -160,7 +160,7 @@
                         <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="数量">
-                        <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutItem Label="分店">

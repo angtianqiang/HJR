@@ -113,7 +113,7 @@ namespace ZtxFrameWork.Data.Mapping
             this.Require(t => t.饰品类型, t => t.饰品s, t => t.类型ID);
             this.Require(t => t.单位, t => t.饰品s, t => t.单位ID);
             this.Require(t => t.重量单位, t => t.饰品s, t => t.重量单位ID);
-            this.Require(t => t.黄金种类, t => t.饰品s, t => t.黄金种类ID);
+            //this.Require(t => t.黄金种类, t => t.饰品s, t => t.黄金种类ID);
             this.Require(t => t.材质, t => t.饰品s, t => t.材质ID);
         }
     }
@@ -351,9 +351,11 @@ namespace ZtxFrameWork.Data.Mapping
             this.HasKey(a => a.ID);
             this.HasRequired(t => t.饰品).WithMany().HasForeignKey(t => t.饰品ID).WillCascadeOnDelete(false);
             this.Property(t => t.单据ID).IsRequired()
-     .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID",1) { IsUnique = true }));
+     .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID出入别",1) { IsUnique = true }));
             this.Property(t => t.单据编号).IsRequired().HasMaxLength(40)
-  .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID", 2) { IsUnique = true }));
+  .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID出入别", 2) { IsUnique = true }));
+            this.Property(t => t.出入别).IsRequired().HasMaxLength(40)
+.HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_库存出入明细_单据编号单据ID出入别", 3) { IsUnique = true }));
         }
     }
     public class 盘点表Map : ZtxEntityTypeConfiguration<盘点表>

@@ -197,11 +197,7 @@
                     <dxe:TextEdit EditValue="{Binding Entity.实付金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
-            <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                <dxlc:LayoutItem Label="备注">
-                    <dxe:TextEdit EditValue="{Binding Entity.备注, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </dxlc:LayoutItem>
-            </dxlc:LayoutGroup>
+          
 
             <dxlc:LayoutGroup Header="LayoutGroup"
                               Padding="-10"
@@ -278,7 +274,7 @@
                             </dxg:GridColumn>
                             <dxg:GridColumn Width="120"
                                             FieldName="退库单号"
-                                            Header="退库单号" >
+                                            Header="退货单号" >
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:ButtonEditSettings AllowDefaultButton="True">
                                         <dxmvvm:Interaction.Behaviors>

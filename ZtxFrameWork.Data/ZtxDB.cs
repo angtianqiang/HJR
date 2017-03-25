@@ -94,14 +94,14 @@ namespace ZtxFrameWork.Data
                 InitAuthorityModule(context, "重量单位", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "材质CollectionView", Parent = p, ModuleTitle = "材质", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "材质", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
-                m = context.Modules.Add(new Model.Module() { DocumentType = "黄金种类CollectionView", Parent = p, ModuleTitle = "黄金种类", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "黄金种类", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+               // m = context.Modules.Add(new Model.Module() { DocumentType = "黄金种类CollectionView", Parent = p, ModuleTitle = "黄金种类", ModuleInfo = Model.ModuleInfo.MoudleAction });
+              //  InitAuthorityModule(context, "黄金种类", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "饰品类别CollectionView", Parent = p, ModuleTitle = "饰品类别", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "饰品类别", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "饰品类型CollectionView", Parent = p, ModuleTitle = "饰品类型", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "饰品类型", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
-                m = context.Modules.Add(new Model.Module() { DocumentType = "饰品提成CollectionView", Parent = p, ModuleTitle = "饰品提成", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "饰品提成", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                //m = context.Modules.Add(new Model.Module() { DocumentType = "饰品提成CollectionView", Parent = p, ModuleTitle = "饰品提成", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                //InitAuthorityModule(context, "饰品提成", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "会员CollectionView", Parent = p, ModuleTitle = "会员", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "会员", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "供应商CollectionView", Parent = p, ModuleTitle = "供应商", ModuleInfo = Model.ModuleInfo.MoudleAction });

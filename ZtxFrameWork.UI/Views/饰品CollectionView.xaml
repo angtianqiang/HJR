@@ -78,7 +78,13 @@
                                 <dxg:GridControl.View>
                                     <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  />
                                 </dxg:GridControl.View>
-
+                                <dxg:GridColumn FieldName="饰品图片.图片" Header="图片" Visible="True" VisibleIndex="0">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding Path=Value}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" />
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                </dxg:GridColumn>
 
                             </dxg:GridControl>
 

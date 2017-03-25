@@ -39,20 +39,10 @@
                         <dxlc:LayoutItem Label="品名">
                             <dxe:TextEdit EditValue="{Binding Entity.品名, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutItem Label="黄金种类">
-                            <dxg:LookUpEdit DisplayMember="名称"
-                                            EditMode="Standalone"
-                                            EditValue="{Binding Entity.黄金种类ID,
-                                                                UpdateSourceTrigger=PropertyChanged}"
-                                            ItemsSource="{Binding 黄金种类Source}"
-                                            PopupWidth="300"
-                                            TabIndex="0"
-                                            ValueMember="ID" />
-                        </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="柜号">
                             <dxe:TextEdit EditValue="{Binding Entity.柜号, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutItem Label="金重">
+                        <dxlc:LayoutItem Label="净重">
                             <dxe:SpinEdit EditValue="{Binding Entity.金重,
                                                               NotifyOnSourceUpdated=True,
                                                               UpdateSourceTrigger=PropertyChanged,
@@ -153,19 +143,19 @@
                                   Orientation="Vertical"
                                   View="GroupBox">
                     <dxlc:LayoutItem Label="按件批发价">
-                        <dxe:SpinEdit EditValue="{Binding Entity.按件批发价,
+                        <dxe:SpinEdit EditValue="{Binding Entity.QtyPrice, Mode=OneWay,
                                                           NotifyOnSourceUpdated=True,
                                                           UpdateSourceTrigger=PropertyChanged,
                                                           ValidatesOnDataErrors=True}"
-                                      Mask="n2"
-                                      MaskUseAsDisplayFormat="True" />
+                                      Mask="n2" IsEnabled="False"
+                                      MaskUseAsDisplayFormat="True"  />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="按重批发价">
-                        <dxe:SpinEdit EditValue="{Binding Entity.按重批发价,
+                        <dxe:SpinEdit EditValue="{Binding Entity.WeightPrice, Mode=OneWay,
                                                           NotifyOnSourceUpdated=True,
                                                           UpdateSourceTrigger=PropertyChanged,
                                                           ValidatesOnDataErrors=True}"
-                                      Mask="n2"
+                                      Mask="n2" IsEnabled="False"
                                       MaskUseAsDisplayFormat="True" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="批发工费">

@@ -522,14 +522,16 @@ where TDbContext : DbContext
 
         protected virtual string GetTitleForNewEntity()
         {
-            return typeof(TEntity).Name + CommonResources.Entity_New;
+            
+           // return typeof(TEntity).Name + CommonResources.Entity_New;
+           return EntityDisplayName + CommonResources.Entity_New;
         }
 
         protected virtual string GetTitle()
         {
 
 
-            return (typeof(TEntity).Name + " - " + Convert.ToString(getEntityDisplayNameFunc != null ? getEntityDisplayNameFunc(Entity) : PrimaryKey))
+            return (EntityDisplayName + " - " + Convert.ToString(getEntityDisplayNameFunc != null ? getEntityDisplayNameFunc(Entity) : PrimaryKey))
    .Split(new string[] { "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries).FirstOrDefault();
         }
 
@@ -640,7 +642,10 @@ where TDbContext : DbContext
         protected XtraReport CreateReport()
         {
             var path = GetReportPath();
-            return System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+        
+              XtraReport newReport= System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+          newReport.DisplayName=PermissionTitle + "Report.repx";
+            return newReport;
 
         }
         protected void SetReportDataSource(XtraReport report)

@@ -267,7 +267,7 @@ namespace ZtxFrameWork.UI.ViewModels
             var ykd = dbContext.盈亏单s.Where(t => t.ID == entity.盈亏单ID && t.状态 != "N").SingleOrDefault();
             if (ykd == null)
             {
-                new Exception("未找到对应的盈亏单");
+                throw new Exception("未找到对应的盈亏单");
             }
           
 

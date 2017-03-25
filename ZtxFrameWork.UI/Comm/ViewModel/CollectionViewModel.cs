@@ -555,7 +555,10 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         protected XtraReport CreateReport()
         {
             var path = GetReportPath();
-            return System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+
+            XtraReport newReport = System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+            newReport.DisplayName = PermissionTitle + "Collection"+ "Report.repx";
+            return newReport;
 
         }
         protected void SetReportDataSource(XtraReport report)

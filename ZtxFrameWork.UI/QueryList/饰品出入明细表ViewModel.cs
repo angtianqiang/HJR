@@ -39,10 +39,10 @@ namespace ZtxFrameWork.UI.QueryList
         
                
             //}
-            return DbFactory.Instance.CreateDbContext().库存出入明细s.Include(t=>t.饰品)
+            return DbFactory.Instance.CreateDbContext().库存出入明细s.Include(t=>t.饰品).Include(t=>t.分店)
                 .Where(AdvancedExpression)
                 .OrderBy(t=>t.日期)
-                .Select(t => new { 编号 = t.饰品.编号, 品名 = t.饰品.品名, 日期 = t.日期, 出入别 = t.出入别, 单据编号=t.单据编号, 数量=t.数量, 重量=t.重量, 金额=t.金额 })
+                .Select(t => new { 编号 = t.饰品.编号, 品名 = t.饰品.品名, 分店=t.分店.名称, 日期 = t.日期, 出入别 = t.出入别, 单据类型=t.相关单据, 单据编号=t.单据编号, 数量=t.数量, 重量=t.重量, 金额=t.金额 })
                 .ToList<dynamic>();
         }
     }

@@ -46,9 +46,9 @@ namespace ZtxFrameWork.UI.ViewModels
         public void UpdatePrice()
         {
             var item = SelectChildEntity;
-            item.销售价 = item.工费计法 == 费用计法.按件 ? item.饰品.按件批发价 + item.饰品.批发工费 : item.饰品.按重批发价 + item.饰品.批发工费;
+            item.销售价 = item.工费计法 == 费用计法.按件 ? item.饰品.按件批发价  : item.饰品.按重批发价 ;
             item.工费= item.工费计法 == 费用计法.按件 ?item.饰品.批发工费 :  item.饰品.批发工费;
-            item.重量 = item.数量 * item.饰品.单重;
+         //   item.重量 = item.数量 * item.饰品.单重;
             item.金额 = item.工费计法 == 费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价;
             UpdateTotal();
         }

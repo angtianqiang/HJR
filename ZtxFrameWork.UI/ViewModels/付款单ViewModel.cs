@@ -31,12 +31,12 @@ namespace ZtxFrameWork.UI.ViewModels
             供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
             Messenger.Default.Register<string>(this, "入库单号更改" + Token, m =>
             {
-                SelectChildEntity.入库单ID = 0;
+                SelectChildEntity.入库单ID = null;
                 SelectChildEntity.入库单 = null;
             });
             Messenger.Default.Register<string>(this, "入库单号更改" + Token, m =>
             {
-                SelectChildEntity.退库单ID = 0;
+                SelectChildEntity.退库单ID = null;
                 SelectChildEntity.退库单 = null;
             });
             Messenger.Default.Register<string>(this, "本次支付金额更改" + Token, m =>
