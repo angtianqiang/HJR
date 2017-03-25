@@ -75,7 +75,7 @@
                                                    AllowEditing="True"
                                                    AllowPerPixelScrolling="True"
                                                    BestFitMode="VisibleRows"
-                                                   NavigationStyle="Cell"
+                                                   NavigationStyle="Cell"  RowIndicatorContentTemplate="{StaticResource GridRowIndicator}"
                                                    ShowTotalSummary="True">
                                         <dxg:TableView.RowCellMenuCustomizations>
                                             <dxb:BarButtonItem Content="全选" ItemClick="BarButtonItem_ItemClick" />

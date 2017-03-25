@@ -75,11 +75,7 @@
                                     </dxmvvm:EventToCommand>
                                 </dxmvvm:Interaction.Behaviors>
                                 <dxg:GridControl.View>
-                                    <dxg:TableView Name="View"
-                                                   AllowEditing="False"
-                                                   AllowPerPixelScrolling="True"
-                                                   NavigationStyle="Row"
-                                                   ShowTotalSummary="True" />
+                                    <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  />
                                 </dxg:GridControl.View>
                                 <dxg:GridControl.Columns>
 

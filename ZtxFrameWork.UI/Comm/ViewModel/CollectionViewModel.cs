@@ -272,10 +272,15 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
 
             }
-            catch (DataModel.DbException e)
+            catch (DbException e)
             {
                 Refresh();
                 MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
+            }
+            catch (Exception e)
+            {
+                Refresh();
+                MessageBoxService.ShowMessage(App.GetAllError(e), "错误", MessageButton.OK, MessageIcon.Error);
             }
         }
 

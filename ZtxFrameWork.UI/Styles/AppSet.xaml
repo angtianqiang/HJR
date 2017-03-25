@@ -73,6 +73,24 @@
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
+    <!--  导航表细风格  --> 
+    <Style x:Key="CollectionsTableView" TargetType="{x:Type dxg:TableView}">
+        <Setter Property="AllowEditing" Value="False"></Setter>
+        <Setter Property="AllowColumnFiltering" Value="False" />
+        <Setter Property="AllowPerPixelScrolling" Value="True" />
+        <Setter Property="AllowSorting" Value="True" />
+        <Setter Property="AllowGrouping" Value="True" />
+        <Setter Property="ShowTotalSummary" Value="True"></Setter>
+        <Setter Property="IndicatorWidth" Value="40" />
+        <Setter Property="NavigationStyle" Value="Row" />
+        <Setter Property="ShowGroupPanel" Value="True" />
+        <Setter Property="UseLightweightTemplates" Value="All" />
+        <Setter Property="RowIndicatorContentTemplate" Value="{StaticResource ResourceKey=GridRowIndicator}" />
+        <!--<Setter Property="RowStyle" Value="{StaticResource optimizedDirtyStateRow}" />-->
+        <Setter Property="AllowBestFit" Value="True" />
+        <!--<Setter Property="BestFitMode" Value="DistinctValues" />-->
+        <Setter Property="BestFitMode" Value="VisibleRows" />
+    </Style>
     <!--  明细表细风格  -->
     <Style x:Key="DetailsTableView" TargetType="{x:Type dxg:TableView}">
         <Setter Property="AllowColumnFiltering" Value="False" />

@@ -201,6 +201,10 @@ where TDbContext : DbContext
             {
                 MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
             }
+            catch(Exception e)
+            {
+                MessageBoxService.ShowMessage(e.Message+ e.InnerException?.Message??"", "错误", MessageButton.OK, MessageIcon.Error);
+            }
         }
 
         /// <summary>
@@ -319,7 +323,7 @@ where TDbContext : DbContext
             catch (Exception e)
             {
                 Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.Message, CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
+                MessageBoxService.ShowMessage(App.GetAllError(e), CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
                 return false;
             }
             //   finally { Mouse.OverrideCursor = null; }

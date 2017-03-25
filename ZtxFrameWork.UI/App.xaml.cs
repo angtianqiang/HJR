@@ -180,6 +180,18 @@ namespace ZtxFrameWork.UI
         //    //   Environment.Exit(0);
         //}
 
+   public  static      string GetAllError (Exception e)
+        {
+            string errorMessage = e.Message;
+            Exception originalException = e;
+                while (originalException.InnerException != null)
+            {
+                originalException = originalException.InnerException;
+                errorMessage += System.Environment.NewLine + originalException.Message;
+            }
+            return errorMessage;// + System.Environment.NewLine + e.Exception.StackTrace);
 
+            //   Environment.Exit(0);
+        }
     }
 }

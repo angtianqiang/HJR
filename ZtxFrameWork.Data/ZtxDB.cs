@@ -391,7 +391,13 @@ namespace ZtxFrameWork.Data
                     }
                 }
                 //    Logger.Error("SaveChanges.DbEntityValidation", ex.GetAllMessages() + sb);
-                throw;
+                throw new Exception(sb.ToString()) ;
+            }
+          
+            catch (Exception e)
+            {
+
+                throw e;
             }
         }
         public DbSet<User> Users { get; set; }
