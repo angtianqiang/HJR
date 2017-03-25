@@ -112,7 +112,7 @@
                                                             <Style TargetType="TreeViewItem">
                                                                 <Setter Property="IsExpanded" Value="True" />
                                                                 <Setter Property="Padding" Value="0" />
-                                                                <Setter Property="Height" Value="24" />                                                                
+                                                                <Setter Property="Height" Value="28" />                                                                
                                                                 <Style.Triggers>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -127,8 +127,8 @@
                                                         </TreeView.ItemContainerStyle>
                                                         <TreeView.ItemTemplate>
                                                             <HierarchicalDataTemplate ItemsSource="{Binding ChildModules}">
-                                                                <StackPanel Margin="0"
-                                                                            VerticalAlignment="Center"
+                                                                <StackPanel Margin="0"  
+                                                                            VerticalAlignment="Center" 
                                                                             Mouse.PreviewMouseDown="StackPanel_PreviewMouseDown"
                                                                             Orientation="Horizontal">
 
@@ -138,7 +138,7 @@
                                                                            Source="{Binding ModuleInfo,
                                                                                             Converter={StaticResource ResourceKey=converter}}" />
 
-                                                                    <TextBlock Margin="0,5,5,0" Text="{Binding ModuleTitle}" />
+                                                                    <TextBlock Margin="0,5,5,0" Width="120" Text="{Binding ModuleTitle}" />
 
 
                                                                 </StackPanel>

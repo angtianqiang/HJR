@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_UserAuthorityModuleMappings")]
+    [DisplayName("用户权限管理")]
     public  class UserAuthorityModuleMapping : ModelBase
     {
         private long _userID;

@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
-
+using System.ComponentModel;
 namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_SystemConfigurations")]
+    [DisplayName("系统参数配置")]
   public  class SystemConfiguration : ModelBase
     {
         private String  _token;

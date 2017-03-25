@@ -74,7 +74,7 @@
                                                    AllowBestFit="True"
                                                    AllowEditing="True"
                                                    AllowPerPixelScrolling="True"
-                                                   BestFitMode="VisibleRows"
+                                                   BestFitMode="VisibleRows" IndicatorWidth="40"
                                                    NavigationStyle="Cell"  RowIndicatorContentTemplate="{StaticResource GridRowIndicator}"
                                                    ShowTotalSummary="True">
                                         <dxg:TableView.RowCellMenuCustomizations>

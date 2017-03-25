@@ -41,6 +41,8 @@ namespace ZtxFrameWork.Data
             {
                 context.Users.Add(new Model.User() { UserName = "F", PassWord = "35c7b9b6578943f2164bef3eb331acf9", DispalyName = "ZTX", Department = "开发部" });
             }
+            context.SaveChanges();
+
             var parentMoudle = context.Modules.Where(t => t.ModuleTitle == "销售管理").FirstOrDefault();
             Model.Module m = null;
             if (parentMoudle == null)

@@ -9,6 +9,7 @@ using System.Text;
 namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_Users")]
+    [DisplayName("用户管理")]
  public   class User:VHObject
     {
         public static User CurrentUser = null;

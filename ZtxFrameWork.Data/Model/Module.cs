@@ -5,10 +5,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel;
 namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_Modules")]
+    [DisplayName("系统模块")]
     public class Module : ModelBase
     {
         [Required]
