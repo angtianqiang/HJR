@@ -809,6 +809,7 @@ namespace ZtxFrameWork.Data.Model
       
 
         private decimal _折扣;
+        [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="P0")]
         public decimal 折扣
         {
             get { return _折扣; }
@@ -821,6 +822,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.折前价, ref _折前价, value); }
         }
         private decimal _金额;
+        [Editable(false)]
         public decimal 金额
         {
             get => _金额;
@@ -1098,29 +1100,30 @@ namespace ZtxFrameWork.Data.Model
          [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
 
-        private long? _销售单ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
-        public long? 销售单ID
+        private decimal _应收金额;
+        public decimal nh
         {
-            get { return _销售单ID; }
-            set { Set<long?>(() => this.销售单ID, ref _销售单ID, value); }
+            get { return _应收金额; }
+            set { Set<decimal>(() => this.应收金额, ref _应收金额, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
-        public virtual 销售单 销售单 { get; set; }
-        private long? _销售退货单ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
-        public long? 销售退货单ID
+        private decimal _实收金额;
+        public decimal 实收金额
         {
-            get { return _销售退货单ID; }
-            set { Set<long?>(() => this.销售退货单ID, ref _销售退货单ID, value); }
+            get { return _实收金额; }
+            set { Set<decimal>(() => this.实收金额, ref _实收金额, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
-        public virtual 销售退货单 销售退货单 { get; set; }
-        private decimal _金额;
-        public decimal 金额
+
+        private String _状态;
+        public String 状态
         {
-            get { return _金额; }
-            set { Set<decimal>(() => this.金额, ref _金额, value); }
+            get { return _状态; }
+            set { Set<String>(() => this.状态, ref _状态, value); }
+        }
+        private ICollection<收款单明细> _收款单明细s;
+        public virtual ICollection<收款单明细> 收款单明细s
+        {
+            get { return _收款单明细s; }
+            set { Set<ICollection<收款单明细>>(() => this.收款单明细s, ref _收款单明细s, value); }
         }
         private String _备注;
         public String 备注
@@ -1128,6 +1131,94 @@ namespace ZtxFrameWork.Data.Model
             get { return _备注; }
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
+
+       
+       
+
+    }
+    public class 收款单明细 : ModelBase
+    {
+        private Int32 _序号;
+        public Int32 序号
+        {
+            get { return _序号; }
+            set { Set<Int32>(() => this.序号, ref _序号, value); }
+        }
+        private long _收款单ID;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
+        public long 收款单ID
+        {
+            get { return _收款单ID; }
+            set { Set<long>(() => this.收款单ID, ref _收款单ID, value); }
+        }
+        [Display(Name = "外键ID", AutoGenerateField = false)]
+        public virtual 收款单 收款单 { get; set; }
+
+        private long? _销售单ID;
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public long? 销售单ID
+        {
+            get { return _销售单ID; }
+            set { Set<long?>(() => this.销售单ID, ref _销售单ID, value); }
+        }
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public virtual 销售单 销售单 { get; set; }
+        private long? _销售退货单ID;
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public long? 销售退货单ID
+        {
+            get { return _销售退货单ID; }
+            set { Set<long?>(() => this.销售退货单ID, ref _销售退货单ID, value); }
+        }
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public virtual 销售退货单 销售退货单 { get; set; }
+        private decimal _金额;
+        public decimal 金额
+        {
+            get { return _金额; }
+            set { Set<decimal>(() => this.金额, ref _金额, value); }
+        }
+
+        private decimal _应收金额;
+        [Editable(false)]
+        public decimal 应收金额
+        {
+            get { return _应收金额; }
+            set { Set<decimal>(() => this.应收金额, ref _应收金额, value); }
+        }
+        private decimal _本次收入金额;
+        public decimal 本次收入金额
+        {
+            get { return _本次收入金额; }
+            set { Set<decimal>(() => this.本次收入金额, ref _本次收入金额, value); }
+        }
+        private String _备注;
+        public String 备注
+        {
+            get { return _备注; }
+            set { Set<String>(() => this.备注, ref _备注, value); }
+        }
+
+        #region (非)映射业务字段 主要起导航作用
+
+
+
+        private string _销售单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+
+        public string 销售单号
+        {
+            get { return _销售单号; }
+            set { Set<string>(() => this.销售单号, ref _销售单号, value); }
+        }
+
+        private string _销售退货单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
+
+        public string 销售退货单号
+        {
+            get { return _销售退货单号; }
+            set { Set<string>(() => this.销售退货单号, ref _销售退货单号, value); }
+        }
+        #endregion
 
     }
     public class 库存 : ModelBase
@@ -1519,6 +1610,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
         private decimal _金额;
+        [Editable(false)]
         public decimal 金额
         {
             get { return _金额; }
@@ -1897,6 +1989,7 @@ namespace ZtxFrameWork.Data.Model
          [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 供应商 供应商 { get; set; }
         private decimal _应付金额;
+     
         public decimal 应付金额
         {
             get { return _应付金额; }
@@ -1958,6 +2051,7 @@ namespace ZtxFrameWork.Data.Model
         [Display(Name = "外键ID", AutoGenerateField = false)]
         public virtual 退库单 退库单 { get; set; }
         private decimal _应付金额;
+        [Editable(false)]
         public decimal 应付金额
         {
             get { return _应付金额; }
@@ -2179,18 +2273,21 @@ namespace ZtxFrameWork.Data.Model
             set { Set<饰品>(() => this.饰品, ref _饰品, value, () => { this.饰品编号 = 饰品?.编号 ?? ""; }); }
         }
         private Int32 _盘点前数量;
+        [Editable(false)]
         public Int32 盘点前数量
         {
             get { return _盘点前数量; }
             set { Set<Int32>(() => this.盘点前数量, ref _盘点前数量, value); }
         }
         private decimal _盘点前重量;
+        [Editable(false)]
         public decimal 盘点前重量
         {
             get { return _盘点前重量; }
             set { Set<decimal>(() => this.盘点前重量, ref _盘点前重量, value); }
         }
         private decimal _盘点前金额;
+        [Editable(false)]
         public decimal 盘点前金额
         {
             get { return _盘点前金额; }

@@ -49,7 +49,8 @@ namespace ZtxFrameWork.UI.ViewModels
             item.销售价 = item.工费计法 == 费用计法.按件 ? item.饰品.按件批发价  : item.饰品.按重批发价 ;
             item.工费= item.工费计法 == 费用计法.按件 ?item.饰品.批发工费 :  item.饰品.批发工费;
          //   item.重量 = item.数量 * item.饰品.单重;
-            item.金额 = item.工费计法 == 费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价;
+            item.折前价 = item.工费计法 == 费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价;
+            item.金额 = item.折前价 * item.折扣;
             UpdateTotal();
         }
         public virtual List<User> 操作员Source { get; set; }
@@ -129,6 +130,7 @@ namespace ZtxFrameWork.UI.ViewModels
             // item.PropertyChanged += Item_PropertyChanged;
             item.DirtyState = DirtyState.Added;
             item.工费计法 = 费用计法.按重;
+            item.折扣 = 1M;
             //  item.金额 = 12.0M;
             if (Entity.销售单明细s.Count == 0)
             {

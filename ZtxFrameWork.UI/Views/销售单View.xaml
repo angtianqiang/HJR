@@ -209,12 +209,7 @@
                 <dxlc:LayoutItem Label="未收金额">
                     <dxe:TextEdit EditValue="{Binding Entity.未收金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="积分系数">
-                    <dxe:TextEdit EditValue="{Binding Entity.积分系数, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
-                </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="本次积分">
-                    <dxe:TextEdit EditValue="{Binding Entity.本次积分, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
-                </dxlc:LayoutItem>
+                
             </dxlc:LayoutGroup>
             <dxlc:LayoutItem Label="备注">
                 <dxe:TextEdit EditValue="{Binding Entity.备注, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -329,18 +324,8 @@
                                             FieldName="销售价"
                                             Header="销售价"
                                             IsSmart="True" />
-                            <dxg:GridColumn Width="80"
-                                            FieldName="折扣"
-                                            Header="折扣"
-                                            IsSmart="True" />
-                            <dxg:GridColumn Width="100"
-                                            FieldName="折前价"
-                                            Header="折前价"
-                                            IsSmart="True" />
-                            <dxg:GridColumn Width="100"
-                                            FieldName="折后价"
-                                            Header="折后价"
-                                            IsSmart="True" />
+                           
+                           
                             <dxg:GridColumn Width="250"
                                             FieldName="备注"
                                             Header="备注" />

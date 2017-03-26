@@ -204,9 +204,22 @@ namespace ZtxFrameWork.Data.Mapping
         .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_收款单_编号") { IsUnique = true }));
             this.HasRequired(t => t.分店).WithMany().HasForeignKey(t => t.分店ID).WillCascadeOnDelete(false);
             this.HasOptional(t => t.会员).WithMany().HasForeignKey(t => t.会员ID).WillCascadeOnDelete(false);
+            
+
+        }
+    }
+    public class 收款单明细Map : ZtxEntityTypeConfiguration<收款单明细>
+    {
+        public 收款单明细Map()
+        {
+            this.HasKey(a => a.ID);
+
+
+            this.HasRequired(t => t.收款单).WithMany(t => t.收款单明细s).HasForeignKey(t => t.收款单ID).WillCascadeOnDelete(false);
+
+          
             this.HasOptional(t => t.销售单).WithMany().HasForeignKey(t => t.销售单ID).WillCascadeOnDelete(false);
             this.HasOptional(t => t.销售退货单).WithMany().HasForeignKey(t => t.销售退货单ID).WillCascadeOnDelete(false);
-
         }
     }
     public class 库存Map : ZtxEntityTypeConfiguration<库存>
