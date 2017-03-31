@@ -6,6 +6,8 @@ using System.Linq;
 using System.Windows.Input;
 using System.Data.Entity;
 using ZtxFrameWork.UI.Comm.DataModel;
+using System.Data.Entity.Core.Mapping;
+using System.Data.Entity.Core.Metadata.Edm;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -29,17 +31,32 @@ namespace ZtxFrameWork.UI.ViewModels
             }
             Mouse.OverrideCursor = Cursors.Wait;
             var db = DbFactory.Instance.CreateDbContext();
+
+            #region 20170329对EF的MAP进行缓存 提高运行效率  http://www.cnblogs.com/dudu/p/entity-framework-warm-up.html
+
+         
+            var objectContext = ((System.Data.Entity.Infrastructure.IObjectContextAdapter)db).ObjectContext;
+            var mappingCollection = (StorageMappingItemCollection)objectContext.MetadataWorkspace.GetItemCollection(DataSpace.CSSpace);
+            mappingCollection.GenerateViews(new System.Collections.Generic.List<EdmSchemaError>());
+
+
+            #endregion
+            db.Configuration.ProxyCreationEnabled = false;
+            db.Configuration.LazyLoadingEnabled = false;
+
             var passWord = ZtxFrameWork.Utilities.SecretUtil.md5(PassWord);
        
-            User userInfo = db.Users.Include(t=>t.UserAuthorityModuleMappings).Where(x => x.UserName == UserName && x.PassWord == passWord&& x.IsFrozen==false).FirstOrDefault();
+            User userInfo = db.Users.Where(x => x.UserName == UserName && x.PassWord == passWord&& x.IsFrozen==false).FirstOrDefault();
             if (userInfo == null)
             {
                 Mouse.OverrideCursor = null;
                 Messenger.Default.Send<string>("用户名或密码错误！", "Error" + Token);
                 return;
             }
-            //同步数据库服务器时间
+            //取权线
 
+            //同步数据库服务器时间
+            userInfo.UserAuthorityModuleMappings =new Data.VHObjectList<UserAuthorityModuleMapping>( db.UserAuthorityModuleMappings.Include(t=>t.AuthorityModule).Where(t => t.UserID == userInfo.ID).AsEnumerable());
             DateTime dt = db.Database.SqlQuery<DateTime>("SELECT GETDATE()").First();
             Utilities.LocalTimeSync.SyncTime(dt);
             //比较时间一致性 
@@ -50,7 +67,7 @@ namespace ZtxFrameWork.UI.ViewModels
             userInfo.LoginCount++;
             userInfo.LastLoginDate = dt;
             db.SaveChanges();
-
+            db.Dispose();
             //    string sqlWhere = string.Format("where M.[UserID]='{0}'", userInfo.UserID);
             //  App.MenuAuthorityMappings = new Bll.MenuAuthorityMapping().GetMenuAuthorityMappingsList(sqlWhere).ToList();
             Mouse.OverrideCursor = null;

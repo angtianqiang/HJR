@@ -19,8 +19,11 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         protected 饰品ViewModel() : base(DbFactory.Instance, x => x.饰品s, x=>x.ID, x => x.品名, "饰品")
         {
+            DB.Configuration.LazyLoadingEnabled = true;
+            DB.Configuration.ProxyCreationEnabled = true;
 
-            var db = dbFactory.CreateDbContext();
+            var db = DB;
+
             饰品类型Source = db.饰品类型s.OrderBy(t => t.排序号).ToList();
             单位Source = db.单位s.OrderBy(t => t.排序号).ToList();
 

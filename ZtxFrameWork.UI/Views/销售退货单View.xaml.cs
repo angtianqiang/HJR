@@ -44,8 +44,8 @@ namespace ZtxFrameWork.UI.Views
 
             switch (e.Column.FieldName)
             {
-                case "饰品编号":
-                    Messenger.Default.Send<string>("", "饰品编号更改" + this.Tag.ToString());
+                case "销售单号":
+                    Messenger.Default.Send<string>("", "销售单号更改" + this.Tag.ToString());
                     break;
                 case "数量":
                 case "重量":

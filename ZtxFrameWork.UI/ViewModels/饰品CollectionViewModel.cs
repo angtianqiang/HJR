@@ -7,7 +7,7 @@ using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.Data;
 using System.Linq;
-
+using System.Data.Entity;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 饰品CollectionViewModel());
         }
-        protected 饰品CollectionViewModel() : base(DbFactory.Instance, x => x.饰品s, query => query.OrderBy(x=>x.品名), x => x.ID,t=>InitEntity(t), permissionTitle: "饰品")
+        protected 饰品CollectionViewModel() : base(DbFactory.Instance, x => x.饰品s, query => query.Include(t=>t.材质).Include(t=>t.饰品图片).OrderBy(x=>x.品名), x => x.ID,t=>InitEntity(t), permissionTitle: "饰品")
         {
 
         }

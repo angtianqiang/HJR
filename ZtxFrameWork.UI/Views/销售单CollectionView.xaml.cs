@@ -23,5 +23,7 @@ namespace ZtxFrameWork.UI.Views
         {
             InitializeComponent();
         }
+
+      
     }
 }

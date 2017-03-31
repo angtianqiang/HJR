@@ -97,7 +97,7 @@ namespace ZtxFrameWork.UI.Comm {
         }
         
         /// <summary>
-        ///   查找类似 点击OK放弃更改并重新加载数据。点击取消继续编辑数据。 的本地化字符串。
+        ///   查找类似 点击确认放弃更改并重新加载数据。点击取消继续编辑数据。 的本地化字符串。
         /// </summary>
         internal static string Confirmation_Reset {
             get {
@@ -187,7 +187,7 @@ namespace ZtxFrameWork.UI.Comm {
         }
         
         /// <summary>
-        ///   查找类似 包含无效数据。单击OK放弃更改并关闭页面。按取消继续编辑数据。 的本地化字符串。
+        ///   查找类似 包含无效数据。单击确认放弃更改并关闭页面。按取消继续编辑数据。 的本地化字符串。
         /// </summary>
         internal static string Warning_SomeFieldsContainInvalidData {
             get {

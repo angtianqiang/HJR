@@ -17,7 +17,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:饰品类别CollectionViewModel}"
+          DataContext="{dxmvvm:ViewModelSource Type=ViewModels:饰品类别CollectionViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
         <behaviors:UserControlDefaultLoad />

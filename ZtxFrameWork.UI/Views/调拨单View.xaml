@@ -198,9 +198,6 @@
                             TabIndex="0"
                             ValueMember="ID" />
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="签收状态">
-                        <dxe:TextEdit IsReadOnly="True" EditValue="{Binding Entity.签收状态, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>
 

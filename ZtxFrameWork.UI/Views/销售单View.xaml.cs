@@ -52,6 +52,7 @@ namespace ZtxFrameWork.UI.Views
                 case "重量":
                 case "单价":
                 case "工费计法":
+                case "销售价":
                 case "折扣":
                     Messenger.Default.Send<string>("", "更新金额" + this.Tag.ToString());
                     break;

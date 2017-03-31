@@ -26,7 +26,7 @@ namespace ZtxFrameWork.UI.Views
         }
         private void StackPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left && e.ClickCount > 1)
+            if (e.ChangedButton == MouseButton.Left && e.ClickCount >= 1)
             {
                 //  MessageBox.Show(   ((StackPanel)sender).DataContext.ToString());
 

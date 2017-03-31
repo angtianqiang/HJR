@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 盘点表CollectionViewModel());
         }
-        protected 盘点表CollectionViewModel() : base(DbFactory.Instance, x => x.盘点表s, query => query.OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "盘点表")
+        protected 盘点表CollectionViewModel() : base(DbFactory.Instance, x => x.盘点表s, query => query.Include(t => t.分店).Include(t => t.操作员).OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "盘点表")
         {
 
         }

@@ -34,7 +34,7 @@ namespace ZtxFrameWork.UI.QueryList
         {
             return DbFactory.Instance.CreateDbContext().饰品s.Include(t=>t.饰品图片)
                 .Where(AdvancedExpression)
-                .Select(t => new {ID=t.ID, 编号 = t.编号, 品名 = t.品名, 库存数量 = t.库存数量 , 库存重量= t.库存重量, 批发工费 = t.批发工费, 按件批发价 = t.按件批发价, 按重批发价=t.按重批发价, 按重成本价=t.按重成本价, 图片 = t.饰品图片.图片    })
+                .Select(t => new {ID=t.ID, 编号 = t.编号, 品名 = t.品名, 库存数量 = t.库存数量 , 库存重量= t.库存重量, 批发工费 = t.批发工费, 按件批发价 = t.按件批发价, 按重批发价=t.按重批发价, 按件成本价= t.按件成本价, 按重成本价 =t.按重成本价, 图片 = t.饰品图片.图片    })
                 .ToList<dynamic>();
         }
     }

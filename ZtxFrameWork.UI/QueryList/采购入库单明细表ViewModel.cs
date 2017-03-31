@@ -36,7 +36,7 @@ namespace ZtxFrameWork.UI.QueryList
           
             return DbFactory.Instance.CreateDbContext().入库单s
                 .Where(AdvancedExpression)
-                .Select(t=>new {统号=t.编号,供应商=t.供应商.简称,日期=t.日期 })
+                .Select(t=>new {统号=t.编号,供应商=t.供应商.简称,日期=t.日期 ,  数量=t.数量 , 状态 = t.状态, 备注 =t.备注})
                 .ToList<dynamic>();
         }
     }

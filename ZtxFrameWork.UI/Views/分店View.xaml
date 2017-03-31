@@ -55,9 +55,6 @@
                     <dxlc:LayoutItem Label="是否总店">
                         <dxe:CheckEdit EditValue="{Binding Entity.是否总店, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="允许修改今日金价">
-                        <dxe:CheckEdit EditValue="{Binding Entity.是否允许修改今日金价, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="备注">
                         <dxe:TextEdit EditValue="{Binding Entity.备注, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>

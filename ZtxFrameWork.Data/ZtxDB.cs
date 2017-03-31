@@ -17,13 +17,13 @@ using ZtxFrameWork.Data.Model;
 
 namespace ZtxFrameWork.Data
 {
-    public class ZtxDropCreateDatabaseIfModelChanges : DropCreateDatabaseIfModelChanges<ZtxDB>
+    public class ZtxCreateDatabaseIfNotExists :  CreateDatabaseIfNotExists<ZtxDB> // DropCreateDatabaseIfModelChanges<ZtxDB>
     {
         protected override void Seed(ZtxDB context)
         {
             base.Seed(context);
 
-
+            ZtxDB.Init(context);
 
         }
     }
@@ -53,7 +53,7 @@ namespace ZtxFrameWork.Data
                 m = context.Modules.Add(new Model.Module() { DocumentType = "销售退货单CollectionView", Parent = p, ModuleTitle = "销售退货单", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "销售退货单", "销售管理");
                 m = context.Modules.Add(new Model.Module() { DocumentType = "收款单CollectionView", Parent = p, ModuleTitle = "收款单", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "收款单", "销售管理",Add:false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                InitAuthorityModule(context, "收款单", "销售管理");
 
             }
             parentMoudle = context.Modules.Where(t => t.ModuleTitle == "库存管理").FirstOrDefault();
@@ -159,14 +159,18 @@ namespace ZtxFrameWork.Data
             {
                 context.单位s.Add(new 单位() { 名称 = "件", 排序号 = "002" });
             }
-
+            var unit3 = context.重量单位s.Where(t => t.名称 == "g").FirstOrDefault();
+            if (unit3 == null)
+            {
+                context.重量单位s.Add(new 重量单位() { 名称 = "g", 排序号 = "001" });
+            }
             if (context.材质s.Where(T => T.名称 == "银").FirstOrDefault() == null)
             {
-                context.材质s.Add(new 材质() { 名称 = "银", 排序号 = "001" });
+                context.材质s.Add(new 材质() { 名称 = "银", 当前价=5.45m, 排序号 = "001" });
             }
             if (context.材质s.Where(T => T.名称 == "金").FirstOrDefault() == null)
             {
-                context.材质s.Add(new 材质() { 名称 = "金", 排序号 = "002" });
+                context.材质s.Add(new 材质() { 名称 = "金",  当前价=9.385m, 排序号 = "002" });
             }
 
             if (context.分店s.Where(T => T.名称 == "中山总店").FirstOrDefault() == null)
@@ -284,23 +288,24 @@ namespace ZtxFrameWork.Data
 
             base.OnModelCreating(modelBuilder);
         }
-        public ZtxDB() : this("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork2;Integrated Security=True")
-        { }
+        //public ZtxDB() : this("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork2;Integrated Security=True")
+        //{ }
         public ZtxDB(string conn) : base(conn)
         {
             // this.Configuration.ProxyCreationEnabled = true;
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                Database.SetInitializer<ZtxDB>(new ZtxDropCreateDatabaseIfModelChanges());
+                Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
             }
             else
             {
-                Database.SetInitializer<ZtxDB>(null);
+                //    Database.SetInitializer<ZtxDB>(null);
 
+                Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
             }
             //  this.Database.Initialize(true);
         }
-
+        public ZtxDB(DbConnection con) : base(con, contextOwnsConnection: false) { }
         private IList GetModifiedObjects()
         {
             var context = ((IObjectContextAdapter)this).ObjectContext;
@@ -425,6 +430,7 @@ namespace ZtxFrameWork.Data
         public DbSet<销售退货单> 销售退货单s { get; set; }
         public DbSet<销售退货单明细> 销售退货单明细s { get; set; }
         public DbSet<收款单> 收款单s { get; set; }
+        public DbSet<收款单明细> 收款单明细s { get; set; }
         public DbSet<库存> 库存s { get; set; }
         public DbSet<入库单> 入库单s { get; set; }
         public DbSet<入库单明细> 入库单明细s { get; set; }

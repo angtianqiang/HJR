@@ -49,7 +49,7 @@
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="">
                         <dxb:BarButtonItem Command="{Binding FindCommand}"
-                                           Content="查询"
+                                           Content="查询" IsVisible="False"
                                            KeyGesture="CTRL+Q"
                                            LargeGlyph="/ZtxFrameWork.UI;component/Images/icon-filter-32.png"
                                            ToolTip="CTRL+Q" />

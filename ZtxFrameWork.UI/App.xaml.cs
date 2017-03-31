@@ -30,6 +30,11 @@ namespace ZtxFrameWork.UI
 
             Helpers.ExceptionHelper.Initialize();
 
+         //var  db=   DbFactory.Instance.CreateDbContext();
+         //   db.付款单s.Add(new 付款单() { 编号 = "000001", 日期 = DateTime.Now, 供应商ID = 1 , 会员ID=1, 操作员ID=1, 分店ID=1, 状态="N"});
+         //   db.SaveChanges();
+
+
             DataDirectoryHelper.LocalPrefix = "ZtxFrameWork.UI";
             bool exit;
             singleInstanceApplicationGuard = DataDirectoryHelper.SingleInstanceApplicationGuard("DevExpressWpfOutlookInspiredApp", out exit);
@@ -49,7 +54,7 @@ namespace ZtxFrameWork.UI
             application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
 
-            ZtxFrameWork.Data.ZtxDB.Init(DbFactory.Instance.CreateDbContext());
+        //    ZtxFrameWork.Data.ZtxDB.Init(DbFactory.Instance.CreateDbContext());
 
 
 
@@ -63,6 +68,7 @@ namespace ZtxFrameWork.UI
                 if (temp.HasValue && temp.Value == true)
                 {
                     SplashScreenHelper.Instance.ShowSplashScreen();
+             
                     ThemeManager.ApplicationThemeChanged += ThemeManager_ApplicationThemeChanged;
                     App.SystemConfigs = DbFactory.Instance.CreateDbContext().SystemConfigurations.ToList();
                     var mainWindow = new MainWindow();
@@ -105,7 +111,7 @@ namespace ZtxFrameWork.UI
         private void ThemeManager_ApplicationThemeChanged(DependencyObject sender, ThemeChangedRoutedEventArgs e)
         {
             try
-            {
+            { 
                 var NewName = DevExpress.Xpf.Core.ApplicationThemeHelper.ApplicationThemeName;
                 NewName = DevExpress.Xpf.Core.Theme.Themes.Where(t => t.Name == NewName).FirstOrDefault().FullName;
                 DevExpress.LookAndFeel.UserLookAndFeel.Default.SkinName = NewName;

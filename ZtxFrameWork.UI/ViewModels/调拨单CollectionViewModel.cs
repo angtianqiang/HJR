@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 调拨单CollectionViewModel());
         }
-        protected 调拨单CollectionViewModel() : base(DbFactory.Instance, x => x.调拨单s, query => query.OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "调拨单")
+        protected 调拨单CollectionViewModel() : base(DbFactory.Instance, x => x.调拨单s, query => query.Include(t => t.源分店).Include(t => t.目标分店).Include(t => t.调拨员).Include(t=>t.签收员).OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "调拨单")
         {
 
         }
@@ -28,7 +28,7 @@ namespace ZtxFrameWork.UI.ViewModels
             NewEntity.编号 = GetNewCode("DB", DbFactory.Instance, x => x.调拨单s, t => t.编号);
              NewEntity.日期 = DateTime.Now;
             NewEntity.调拨员ID = App.CurrentUser.ID;
-            NewEntity.签收状态 = "未签收";
+       
             NewEntity.状态 = "N";
         }
 

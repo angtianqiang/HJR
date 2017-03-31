@@ -23,7 +23,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 盈亏单ViewModel() : base(DbFactory.Instance, x => x.盈亏单s, x => x.ID, x => x.编号, "盈亏单")
         {
             if (this.IsInDesignMode()) return;
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
             分店Source = db.分店s.OrderBy(t => t.名称).ToList(); 
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
@@ -57,7 +57,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
                   .Where(t => t.编号.StartsWith(startStr))
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })

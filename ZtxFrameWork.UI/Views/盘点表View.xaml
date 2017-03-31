@@ -18,7 +18,7 @@
              xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils"
              xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.2" x:Class="ZtxFrameWork.UI.Views.盘点表View"
              d:DesignHeight="800"
-             d:DesignWidth="800"
+             d:DesignWidth="1000"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:盘点表ViewModel}}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
@@ -185,7 +185,7 @@
                 <dxlc:LayoutGroup Header="盘点表明细" View="Group">
 
                     <DockPanel>
-                        <dxb:ToolBarControl VerticalAlignment="Top"
+                        <dxb:ToolBarControl VerticalAlignment="Top" Visibility="Collapsed"
                                             AllowQuickCustomization="False"
                                             BarItemDisplayMode="ContentAndGlyph"
                                             DockPanel.Dock="Top">
@@ -202,7 +202,7 @@
 
                         </dxb:ToolBarControl>
                         <dxg:GridControl x:Name="DetailGrid"
-                                         AutoGenerateColumns="AddNew"
+                                         AutoGenerateColumns="None"
                                          EnableSmartColumnsGeneration="True"
                                          ItemsSource="{Binding Entity.盘点表明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
@@ -233,26 +233,34 @@
                             <dxg:GridColumn Width="50"
                                             FieldName="序号"
                                             Header="序号"
-                                            IsSmart="True" />
+                                            IsSmart="True" ReadOnly="True"/>
                             <dxg:GridColumn Width="120"
                                             FieldName="饰品编号"
-                                            Header="饰品编号">
-                                <dxg:GridColumn.EditSettings>
-                                    <dxe:ButtonEditSettings AllowDefaultButton="True">
-                                        <dxmvvm:Interaction.Behaviors>
-                                            <dxmvvm:EventToCommand Command="{Binding ShowListCommand}"
-                                                                   CommandParameter="{Binding ActiveEditor.EditValue, ElementName=Details}"
-                                                                   EventName="DefaultButtonClick" />
-                                        </dxmvvm:Interaction.Behaviors>
-                                    </dxe:ButtonEditSettings>
-                                </dxg:GridColumn.EditSettings>
+                                            Header="饰品编号" ReadOnly="True"/>                               
+                          
+
+                            <dxg:GridColumn Width="80"                                          
+                                            Header="品名"  >
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Name="PART_Editor" VerticalAlignment="Center" Text="{Binding RowData.Row.饰品.品名, Mode=TwoWay}"></TextBlock>
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
                             </dxg:GridColumn>
+                            <dxg:GridColumn Width="80"
+                                            FieldName="盘点前数量"
+                                            IsSmart="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="盘点前重量"
+                                            IsSmart="True"  ReadOnly="True"/>
+
+                            <dxg:GridColumn Width="80" FieldName="盘点前金额" ReadOnly="True"/>
+
 
                             <dxg:GridColumn Width="80"
-                                            FieldName="饰品.品名"
-                                            Header="品名"
-                                            ReadOnly="True" />
-                            <dxg:GridColumn Width="50" FieldName="盘点前数量">
+                                            FieldName="实盘数量"
+                                            Header="实盘数量"
+                                            IsSmart="True" >
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings AllowNullInput="False"
                                                           Mask="d"
@@ -260,24 +268,25 @@
                                                           MaskUseAsDisplayFormat="True" />
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
-                            <dxg:GridColumn Width="50"
-                                            FieldName="盘点前重量"
-                                            IsSmart="True" />
+
 
 
                             <dxg:GridColumn Width="80"
-                                            FieldName="实盘数量"
-                                            Header="实盘数量"
-                                            IsSmart="True" />
+                                            FieldName="实盘重量"
+                                            IsSmart="True" >
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings AllowNullInput="False"
+                                                          Mask="n2"
+                                                          MaskType="Numeric"
+                                                          MaskUseAsDisplayFormat="True" />
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
                             <dxg:GridColumn Width="100"
                                             FieldName="实盘金额"
                                             Header="实盘金额"
                                             IsSmart="True" />
-                            <dxg:GridColumn Width="50"
-                                            FieldName="实盘重量"
-                                            IsSmart="True" />
                             <dxg:GridColumn Width="250"
-                                            FieldName="备注"
+                                            FieldName="备注" 
                                             Header="备注" />
                         </dxg:GridControl>
                     </DockPanel>

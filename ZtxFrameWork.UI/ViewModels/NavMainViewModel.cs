@@ -11,6 +11,7 @@ using System.ComponentModel;
 using DevExpress.Xpf.Core;
 using System.Windows.Data;
 using DevExpress.Xpf.Bars;
+using System.Collections.Generic;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -26,16 +27,16 @@ namespace ZtxFrameWork.UI.ViewModels
             if (!this.IsInDesignMode())
                 OnInitializeInRuntime();
             Messenger.Default.Register<Module>(this, x => Show(x));
-        
+
 
         }
-        
-             public object ThemeCollection
+
+        public object ThemeCollection
         {
             get
             {
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(Theme.Themes.Where(t =>  (t.Category== Theme.Office2010Category)).Select(t => new ThemeViewModel(t)).ToArray());
+                ICollectionView view = CollectionViewSource.GetDefaultView(Theme.Themes.Where(t => (t.Category == Theme.Office2010Category)).Select(t => new ThemeViewModel(t)).ToArray());
                 view.GroupDescriptions.Add(new PropertyGroupDescription("Theme.Category"));
                 return view;
 
@@ -49,29 +50,58 @@ namespace ZtxFrameWork.UI.ViewModels
         protected IDocumentManagerService DocumentManagerService { get { return this.GetService<IDocumentManagerService>("TabbedDocumentManagerService"); } }
         public virtual void OnInitializeInRuntime()
         {
-            var db = DbFactory.Instance.CreateDbContext();
+            List<Module> _modules = null;
+            using (var db = DbFactory.Instance.CreateDbContext())
+            {
+                db.Configuration.LazyLoadingEnabled = false;
+                db.Configuration.ProxyCreationEnabled = false;
+
+                _modules = new List<Module>(db.Modules.Where(t => 1 == 1).OrderBy(x => x.SortNo).ToList());
+            }
+           
 
             //   var ztx = new ZtxFrameWorkDB();
 
-            Modules = new ObservableCollection<Module>(db.Modules.Where(t => t.ParentID == null).OrderBy(x => x.SortNo).ToList());
-            foreach (var item in Modules)
+         
+            Modules = new ObservableCollection<Module>();
+            foreach (var item in _modules.Where(t => t.ParentID == null).OrderBy(x => x.SortNo).ToList())
             {
-                InitAndSort(item);
+              InitAndSort(item, _modules);
+                Modules.Add(item);
             }
-        }
-        //加载并排序
-        public void InitAndSort(Module item)
+      }
+
+        public void InitAndSort(Module item, List<Module> _modules)
         {
-            if (item.ChildModules.Count == 0)
+            if (_modules.Where(t=>t.ParentID==item.ID).Count()==0)
             {
                 return;
             }
-            item.ChildModules = item.ChildModules.OrderBy(x => x.SortNo).ToList();
+            item.ChildModules = _modules.Where(t => t.ParentID == item.ID).OrderBy(x => x.SortNo).ToList();
             foreach (var subItem in item.ChildModules)
             {
-                InitAndSort(subItem);
+                InitAndSort(subItem,_modules);
             }
         }
+        //    Modules = new ObservableCollection<Module>(db.Modules.Where(t => t.ParentID == null).OrderBy(x => x.SortNo).ToList());
+        //    foreach (var item in Modules)
+        //    {
+        //        InitAndSort(item);
+        //    }
+        //}
+        ////加载并排序
+        //public void InitAndSort(Module item)
+        //{
+        //    if (item.ChildModules.Count == 0)
+        //    {
+        //        return;
+        //    }
+        //    item.ChildModules = item.ChildModules.OrderBy(x => x.SortNo).ToList();
+        //    foreach (var subItem in item.ChildModules)
+        //    {
+        //        InitAndSort(subItem);
+        //    }
+        //}
 
         public virtual ObservableCollection<Module> Modules { get; set; }
 

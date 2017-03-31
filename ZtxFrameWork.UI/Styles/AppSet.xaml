@@ -4,9 +4,10 @@
                     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
                     xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges"
                      xmlns:converter="clr-namespace:ZtxFrameWork.UI.Converters"
+                
                     xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
 
-
+    <converter:MoudleInfoToImageConerter x:Key="MoudleInfoToImageConerter" />
     <converter:GridRowIndicatorConerter x:Key="GridRowIndicatorConerter" />
     <converter:CommObjectConverter x:Key="CommObjectConverter" />
     <converter:BoolToVisbiltyConverter x:Key="BoolToVisbiltyConverter" />
@@ -73,7 +74,7 @@
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
-    <!--  导航表细风格  --> 
+    <!--  导航表细风格  -->
     <Style x:Key="CollectionsTableView" TargetType="{x:Type dxg:TableView}">
         <Setter Property="AllowEditing" Value="False"></Setter>
         <Setter Property="AllowColumnFiltering" Value="False" />
@@ -134,4 +135,15 @@
     <Style x:Key="GridColumnHeaderCenterAlignment" TargetType="{x:Type dxg:HeaderContentControl}">
         <Setter Property="HorizontalContentAlignment" Value="Center" />
     </Style>
+
+    <!--  生动生成列的属性  -->
+    <Style x:Key="ColorGridColumnStyle" TargetType="dxg:GridColumn">
+        <Setter Property="VisibleIndex" Value="0"></Setter>
+    </Style>
+
+
+  
+
+
+
 </ResourceDictionary>

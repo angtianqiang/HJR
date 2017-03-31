@@ -27,8 +27,16 @@ namespace ZtxFrameWork.UI.Comm.DataModel
         {
             //  return db;
             Qty++;
-            System.Diagnostics.Debug.WriteLine(Qty.ToString());
+            System.Diagnostics.Debug.WriteLine($"数据库上下文ztxDB的实例数为: {Qty.ToString()}");
             return  this.IsInDesignMode()?  new ZtxDB("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork2;Integrated Security=True") : new ZtxDB("conn1");
+
+        }
+        public ZtxDB CreateDbContext(System.Data.Common.DbConnection con)
+        {
+            //  return db;
+            Qty++;
+            System.Diagnostics.Debug.WriteLine($"数据库上下文ztxDB的实例数为: {Qty.ToString()}");
+            return  new ZtxDB(con);
 
         }
     }
@@ -36,5 +44,6 @@ namespace ZtxFrameWork.UI.Comm.DataModel
     public interface IDbFactory<TDbContext> where TDbContext : DbContext
     {
         TDbContext CreateDbContext();
+        TDbContext CreateDbContext(System.Data.Common.DbConnection con);
     }
 }

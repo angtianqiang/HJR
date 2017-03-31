@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
 using ZtxFrameWork.Data.Model;
@@ -24,16 +25,16 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 销售退货单ViewModel() : base(DbFactory.Instance, x => x.销售退货单s, x => x.ID, x => x.编号, "销售退货单")
         {
             if (this.IsInDesignMode()) return;
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
             分店Source = db.分店s.OrderBy(t => t.名称).ToList();
 
        //     供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
             会员Source = db.会员s.OrderBy(t => t.编号).ToList();
-            Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
+            Messenger.Default.Register<string>(this, "销售单号更改" + Token, m =>
             {
-                SelectChildEntity.饰品ID = 0;
-                SelectChildEntity.饰品 = null;
+                SelectChildEntity.销售单明细ID = 0;
+                SelectChildEntity.销售单明细 = null;
             });
             Messenger.Default.Register<string>(this, "更新金额" + Token, m =>
             {
@@ -73,11 +74,13 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-            var db = dbFactory.CreateDbContext();
-            List<dynamic> list = db.销售退货单明细s.Include(t => t.销售退货单).Include(t => t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位)
-                  .Where(t => t.销售退货单.编号.StartsWith(startStr))
-                       .Select(t => new { ID = t.ID, 编号 = t.销售退货单.编号, 品名 = t.饰品.品名, 单位 = t.饰品.单位.名称, 重量单位 = t.饰品.重量单位.名称, 尺寸 = t.饰品.尺寸, 
-                           数量 = t.数量, 重量 = t.重量, 销售价 = t.销售价, 金额=t.金额, 工费计法=t.工费计法, 工费=t.工费             })             
+           var db = DB;
+            List<dynamic> list = db.销售单明细s.Include(t => t.销售单).Include(t => t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位)
+                  .Where(t => t.销售单.编号.StartsWith(startStr) && t.销售单.状态!="N")
+                       .Select(t => new { ID = t.ID, 编号 = t.销售单.编号, 品名 = t.饰品.品名, 单位 = t.饰品.单位.名称, 重量单位 = t.饰品.重量单位.名称, 尺寸 = t.饰品.尺寸, 
+                           数量 = t.数量, 重量 = t.重量, 销售价 = t.销售价, 金额=t.金额, 工费计法=t.工费计法, 工费=t.工费  ,
+                           折扣=t.折扣,
+                           折前价=t.折前价           })             
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -93,16 +96,24 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.饰品ID = VM.SelectEntity.ID;
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
-                    SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
+                    SelectChildEntity.销售单明细ID = VM.SelectEntity.ID;
+                    this.DB.Entry(SelectChildEntity).Reference(t => t.销售单明细).Load();
+                    this.DB.Entry(SelectChildEntity.销售单明细).Reference(t => t.饰品).Load();
+                    SelectChildEntity.销售单号 = VM.SelectEntity.编号;
                     SelectChildEntity.数量 = VM.SelectEntity.数量;
                     SelectChildEntity.重量 = VM.SelectEntity.重量;
                     SelectChildEntity.销售价 = VM.SelectEntity.金额;
                     SelectChildEntity.金额 = VM.SelectEntity.金额;
                     SelectChildEntity.工费计法 = VM.SelectEntity.工费计法;
                     SelectChildEntity.工费 = VM.SelectEntity.工费;
+                    SelectChildEntity.折扣 = VM.SelectEntity.折扣;
+                    SelectChildEntity.折前价 = VM.SelectEntity.折前价;
                     UpdateTotal();
+                    //UIElement element = Keyboard.FocusedElement as UIElement;
+                    //if (element != null)
+                    //{
+                    //    element.MoveFocus(new TraversalRequest(FocusNavigationDirection.Next));
+                    //}
                 }
             }
         }
@@ -177,24 +188,24 @@ namespace ZtxFrameWork.UI.ViewModels
             foreach (var item in entity.销售退货单明细s)
             {
                 //更新分库库存
-                var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
+                var temp = dbContext.库存s.Where(t => t.饰品ID == item.销售单明细.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
                 if (temp == null)
                 {
-                    temp = dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.分店ID });
+                    temp = dbContext.库存s.Add(new 库存() { 饰品ID = item.销售单明细.饰品ID, 分店ID = entity.分店ID });
                 }
 
                 temp.数量 += item.数量;
                 temp.重量 += item.重量;
 
                 //更新总库存 
-                var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
+                var product = dbContext.饰品s.Where(t => t.ID == item.销售单明细.饰品ID).Single();
                 product.库存数量 += item.数量;
                 product.库存重量 += item.重量;
                 //  product.库存总金额 += item.金额;
 
                 //成本小计
-                product.账面成本小计 += item.工费计法 == 费用计法.按件 ? item.饰品.按件成本价 * item.数量 : item.饰品.按重成本价 * item.重量;
-                product.库存总金额 += item.工费计法 == 费用计法.按件 ? item.饰品.按件成本价 * item.数量 : item.饰品.按重成本价 * item.重量;
+                product.账面成本小计 += item.工费计法 == 费用计法.按件 ? item.销售单明细.饰品.按件成本价 * item.数量 : item.销售单明细.饰品.按重成本价 * item.重量;
+                product.库存总金额 += item.工费计法 == 费用计法.按件 ? item.销售单明细.饰品.按件成本价 * item.数量 : item.销售单明细.饰品.按重成本价 * item.重量;
 
                 // 成本              
                 product.按件成本价 = product.库存数量 == 0.00m ? 0.00m : System.Math.Round(product.库存总金额 / product.库存数量, 2);
@@ -209,9 +220,9 @@ namespace ZtxFrameWork.UI.ViewModels
                     出入别 = "I",
                     数量 = item.数量,
                     重量 = item.重量,
-                    金额 = item.工费计法 == 费用计法.按件 ? item.饰品.按件成本价 * item.数量 : item.饰品.按重成本价 * item.重量,
+                    金额 = item.工费计法 == 费用计法.按件 ? item.销售单明细.饰品.按件成本价 * item.数量 : item.销售单明细.饰品.按重成本价 * item.重量,
                     分店ID = entity.分店ID,
-                    饰品ID = item.饰品ID
+                    饰品ID = item.销售单明细.饰品ID
                 });
             }
         }
@@ -226,18 +237,18 @@ namespace ZtxFrameWork.UI.ViewModels
             foreach (var item in entity.销售退货单明细s)
             {
                 //更新分库库存
-                var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).Single();
+                var temp = dbContext.库存s.Where(t => t.饰品ID == item.销售单明细.饰品ID && t.分店ID == entity.分店ID).Single();
                 temp.数量 -= item.数量;
                 temp.重量 -= item.重量;
 
                 //更新总库存 
-                var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
+                var product = dbContext.饰品s.Where(t => t.ID == item.销售单明细.饰品ID).Single();
                 product.库存数量 -= item.数量;
                 product.库存重量 -= item.重量;
                 //  product.库存总金额 -= item.金额;
                 //成本小计
-                product.账面成本小计 -= item.工费计法 == 费用计法.按件 ? item.饰品.按件成本价 * item.数量 : item.饰品.按重成本价 * item.重量;
-                product.库存总金额 -= item.工费计法 == 费用计法.按件 ? item.饰品.按件成本价 * item.数量 : item.饰品.按重成本价 * item.重量;
+                product.账面成本小计 -= item.工费计法 == 费用计法.按件 ? item.销售单明细.饰品.按件成本价 * item.数量 : item.销售单明细.饰品.按重成本价 * item.重量;
+                product.库存总金额 -= item.工费计法 == 费用计法.按件 ? item.销售单明细.饰品.按件成本价 * item.数量 : item.销售单明细.饰品.按重成本价 * item.重量;
 
                 // 成本              
                 product.按件成本价 = product.库存数量 == 0.00m ? 0.00m : System.Math.Round(product.库存总金额 / product.库存数量, 2);
@@ -275,13 +286,28 @@ namespace ZtxFrameWork.UI.ViewModels
                 //  skd.状态 = "Y";//直接生效
                 skd.分店ID = Entity.分店ID;
                 skd.操作员ID = Entity.操作员ID;
-                skd.销售单ID = Entity.ID;
-                skd.金额 = Entity.已付金额* -1m;
-                dbContext.收款单s.Add(skd);
+                //  skd.销售单ID = Entity.ID;
+                // skd.金额 = Entity.已付金额* -1m;
 
-                var temp = dbContext.销售退货单s.Where(t => t.ID == parKey).Single();
-                temp.已付金额 -= Entity.已付金额;
-                temp.未付金额 += temp.总金额 - temp.已付金额;
+                dbContext.收款单s.Add(skd);
+                var temp = new 收款单明细()
+                {
+                    序号 = 1,
+                    应收金额 = Entity.未付金额 * -1m,
+                    本次收入金额 = Entity.未付金额 * -1m,
+                    销售退货单ID = Entity.ID,
+                    销售退货单号 = Entity.编号,
+
+                };
+                dbContext.收款单明细s.Add(temp);
+           skd.收款单明细s.Add(temp);
+
+                skd.实收金额 = skd.收款单明细s.Sum(t => t.本次收入金额);
+                skd.应收金额 = skd.收款单明细s.Sum(t => t.应收金额);
+
+                //var temp = dbContext.销售退货单s.Where(t => t.ID == parKey).Single();
+                //temp.已付金额 -= Entity.已付金额;
+                //temp.未付金额 += temp.总金额 - temp.已付金额;
                 dbContext.SaveChanges();
                 NewKey = skd.ID;
             }
@@ -296,7 +322,12 @@ namespace ZtxFrameWork.UI.ViewModels
             return Entity.已付金额 < Entity.总金额 && ((dynamic)Entity).状态 != "N";
         }
         public virtual void TH()
-        { }
+        {
+
+          
+
+
+        }
         public virtual bool CanTH()
         {
 

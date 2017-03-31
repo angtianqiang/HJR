@@ -20,7 +20,7 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         protected ModuleViewModel() : base(DbFactory.Instance, x => x.Modules,x=>x.ID, x => x.ModuleTitle,"系统模块")
         {
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             ModuleGroup = db.Modules.Where(x => x.ModuleInfo != ModuleInfo.MoudleAction).ToList(); 
 
         }

@@ -17,7 +17,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils"
              d:DesignHeight="600"
-             d:DesignWidth="700"
+             d:DesignWidth="1200"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:销售退货单ViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
@@ -197,11 +197,11 @@
                 <dxlc:LayoutItem Label="总金额">
                     <dxe:TextEdit EditValue="{Binding Entity.总金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="已收金额">
-                    <dxe:TextEdit EditValue="{Binding Entity.已收金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                <dxlc:LayoutItem Label="已付金额">
+                    <dxe:TextEdit EditValue="{Binding Entity.已付金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="未收金额">
-                    <dxe:TextEdit EditValue="{Binding Entity.未收金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                <dxlc:LayoutItem Label="未付金额">
+                    <dxe:TextEdit EditValue="{Binding Entity.未付金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="积分系数">
                     <dxe:TextEdit EditValue="{Binding Entity.积分系数, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
@@ -241,7 +241,7 @@
                         <dxg:GridControl x:Name="DetailGrid"
                                          AutoGenerateColumns="AddNew"
                                          EnableSmartColumnsGeneration="True"
-                                         ItemsSource="{Binding Entity.销售退货明细s}"
+                                         ItemsSource="{Binding Entity.销售退货单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
@@ -274,8 +274,8 @@
                                             Header="序号"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="120"
-                                            FieldName="饰品编号"
-                                            Header="饰品编号">
+                                            FieldName="销售单号"
+                                            Header="销售单号">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:ButtonEditSettings AllowDefaultButton="True">
                                         <dxmvvm:Interaction.Behaviors>
@@ -287,11 +287,16 @@
                                     </dxe:ButtonEditSettings>
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
-
-                            <dxg:GridColumn Width="80"
-                                            FieldName="饰品.品名"
-                                            Header="品名"
-                                            ReadOnly="True" />
+                          
+                           
+                            <dxg:GridColumn Width="80"                                          
+                                            Header="品名"  >
+                                <dxg:GridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Name="PART_Editor" VerticalAlignment="Center" Text="{Binding RowData.Row.销售单明细.饰品.品名, Mode=TwoWay}"></TextBlock>
+                                    </DataTemplate>
+                                </dxg:GridColumn.CellTemplate>
+                            </dxg:GridColumn>
                             <dxg:GridColumn Width="50" FieldName="数量">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings AllowNullInput="False"
@@ -332,8 +337,8 @@
                                             Header="折前价"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="100"
-                                            FieldName="折后价"
-                                            Header="折后价"
+                                            FieldName="金额"
+                                            Header="金额"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="250"
                                             FieldName="备注"

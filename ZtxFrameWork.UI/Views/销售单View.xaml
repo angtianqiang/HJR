@@ -18,10 +18,10 @@
              xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils"
              d:DesignHeight="800"
              d:DesignWidth="800"
-             DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:销售单ViewModel}}"
+           d:DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:销售单ViewModel}}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
-        <behaviors:UserControlDefaultLoad />
+        <behaviors:UserControlDefaultLoad  />
         <dx:WindowedDocumentUIService x:Name="QueryListDocumentManagerService"
                                       DocumentShowMode="Dialog"
                                       WindowType="{x:Type dxr:DXRibbonWindow}">
@@ -112,7 +112,7 @@
                                            ToolTip="F7" />
                         <dxb:BarButtonItem Command="{Binding THCommand}"
                                            Content="退货"
-                                           KeyGesture="F8"
+                                           KeyGesture="F8" IsVisible="False"
                                            LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/th.png"
                                            ToolTip="F8" />
                     </dxr:RibbonPageGroup>
@@ -324,11 +324,19 @@
                                             FieldName="销售价"
                                             Header="销售价"
                                             IsSmart="True" />
-                           
-                           
-                            <dxg:GridColumn Width="250"
-                                            FieldName="备注"
-                                            Header="备注" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="折扣"
+                                            Header="折扣"
+                                            IsSmart="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="折前价"
+                                            Header="折前价"
+                                            IsSmart="True"  ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="金额"
+                                            Header="金额"
+                                            IsSmart="True" ReadOnly="True" />
+
                         </dxg:GridControl>
                     </DockPanel>
                 </dxlc:LayoutGroup>

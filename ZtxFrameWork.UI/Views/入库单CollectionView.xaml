@@ -63,6 +63,7 @@
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
                             <dxg:GridControl AutoGenerateColumns="AddNew"
                                              EnableSmartColumnsGeneration="True"
+                                                 ColumnGeneratorStyle="{StaticResource ColorGridColumnStyle}"
                                              ItemsSource="{Binding Entities}"
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}">
@@ -81,13 +82,16 @@
                                 <dxg:GridControl.Columns>
                                     <dxg:GridColumn FieldName="分店.名称"
                                                     Header="分店"
-                                                    IsSmart="True" />
+                                                    IsSmart="True" VisibleIndex="201"  />
                                     <dxg:GridColumn FieldName="供应商.简称"
                                                     Header="供应商"
-                                                    IsSmart="True" />
+                                                    IsSmart="True" VisibleIndex="202"  />
                                     <dxg:GridColumn FieldName="操作员.DispalyName"
                                                     Header="操作员"
-                                                    IsSmart="True" />
+                                                    IsSmart="True" VisibleIndex="203"  />
+
+
+                                    <dxg:GridColumn Width="140"   FieldName="备注"        Header="备注"  IsSmart="True" VisibleIndex="204"  />
                                 </dxg:GridControl.Columns>
 
 

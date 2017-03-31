@@ -24,10 +24,10 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 付款单ViewModel() : base(DbFactory.Instance, x => x.付款单s, x => x.ID, x => x.编号, "付款单")
         {
             if (this.IsInDesignMode()) return;
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
             分店Source = db.分店s.OrderBy(t => t.名称).ToList();
-            会员Source = db.会员s.OrderBy(t => t.编号).ToList();
+         //   会员Source = db.会员s.OrderBy(t => t.编号).ToList();
             供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
             Messenger.Default.Register<string>(this, "入库单号更改" + Token, m =>
             {
@@ -48,7 +48,7 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
-        public virtual List<会员> 会员Source { get; set; }
+     //   public virtual List<会员> 会员Source { get; set; }
         public virtual List<供应商> 供应商Source { get; set; }
         #region 明细表操作
 
@@ -76,9 +76,9 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             List<dynamic> list = db.入库单s.Include(t =>t.供应商)
-                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID==Entity.供应商ID && t.状态!="N" && t.未付金额>0m)
+                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID==Entity.供应商ID && t.状态!="N" && t.未付金额>0m && t.分店ID==Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.日期, 供应商 = t.供应商.简称, 总金额 = t.总金额, 已付金额 = t.已付金额, 未付金额 = t.未付金额 })
                   .ToList<dynamic>();
             //if (list.Count==1)
@@ -115,9 +115,9 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             List<dynamic> list = db.退库单s.Include(t => t.供应商)
-                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N"&& t.未收金额>0m)
+                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N"&& t.未收金额>0m && t.分店ID == Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.日期, 供应商 = t.供应商.简称, 总金额 = t.总金额, 已收金额 = t.已收金额, 未收金额 = t.未收金额 })
                   .ToList<dynamic>();
             //if (list.Count==1)

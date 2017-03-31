@@ -130,7 +130,7 @@
     <value>确认要删除 {0}?</value>
   </data>
   <data name="Confirmation_Reset" xml:space="preserve">
-    <value>点击OK放弃更改并重新加载数据。点击取消继续编辑数据。</value>
+    <value>点击确认放弃更改并重新加载数据。点击取消继续编辑数据。</value>
   </data>
   <data name="Confirmation_Save" xml:space="preserve">
     <value>需要保存更改吗?</value>
@@ -160,6 +160,6 @@
     <value>等待</value>
   </data>
   <data name="Warning_SomeFieldsContainInvalidData" xml:space="preserve">
-    <value>包含无效数据。单击OK放弃更改并关闭页面。按取消继续编辑数据。</value>
+    <value>包含无效数据。单击确认放弃更改并关闭页面。按取消继续编辑数据。</value>
   </data>
 </root>

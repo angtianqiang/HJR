@@ -25,6 +25,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnEntitySaved(ZtxDB dbContext, long primaryKey, SystemConfiguration entity, bool isNewEntity)
         {
             base.OnEntitySaved(dbContext, primaryKey, entity, isNewEntity);
+
             App.SystemConfigs = DbFactory.Instance.CreateDbContext().SystemConfigurations.ToList();
         }
     }

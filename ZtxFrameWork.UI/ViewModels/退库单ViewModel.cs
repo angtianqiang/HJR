@@ -25,7 +25,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 退库单ViewModel() : base(DbFactory.Instance, x => x.退库单s, x => x.ID, x => x.编号, "采购退货单")
         {
             if (this.IsInDesignMode()) return;
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
             分店Source = db.分店s.OrderBy(t => t.名称).ToList();
 
@@ -77,7 +77,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             List<dynamic> list = db.入库单明细s.Include(t => t.入库单).Include(t => t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位)
                   .Where(t => t.入库单.编号.StartsWith(startStr) && t.入库单.状态!="N" && t.入库单.供应商ID==Entity.供应商ID && t.入库单.分店ID==Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.入库单.编号, 品名 = t.饰品.品名, 单位 = t.饰品.单位.名称, 重量单位 = t.饰品.重量单位.名称, 尺寸 = t.饰品.尺寸, 工费计法 = t.饰品.工费计法, 数量 = t.数量, 重量 = t.重量, 单价=t.单价, 金额 = t.金额 })
@@ -98,7 +98,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 {
                     SelectChildEntity.入库单明细ID = VM.SelectEntity.ID;
                     this.DB.Entry(SelectChildEntity).Reference(t => t.入库单明细).Load();
-
+                    this.DB.Entry(SelectChildEntity.入库单明细).Reference(t => t.饰品).Load();
                     SelectChildEntity.入库单号 = VM.SelectEntity.编号;
                     SelectChildEntity.数量 = VM.SelectEntity.数量;
                     SelectChildEntity.重量 = VM.SelectEntity.重量;

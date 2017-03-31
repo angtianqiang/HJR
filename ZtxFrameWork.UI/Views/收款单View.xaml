@@ -17,7 +17,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils"
              d:DesignHeight="600"
-             d:DesignWidth="300"
+             d:DesignWidth="600"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:收款单ViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
@@ -181,11 +181,11 @@
             </dxlc:LayoutGroup>
             <dxlc:LayoutGroup Header="费用信息" View="GroupBox">
 
-                <dxlc:LayoutItem Label="应nh金额">
-                    <dxe:TextEdit EditValue="{Binding Entity.应付金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                <dxlc:LayoutItem Label="应收金额">
+                    <dxe:TextEdit EditValue="{Binding Entity.应收金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
-                <dxlc:LayoutItem Label="实付金额">
-                    <dxe:TextEdit EditValue="{Binding Entity.实付金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                <dxlc:LayoutItem Label="实收金额">
+                    <dxe:TextEdit EditValue="{Binding Entity.实收金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
 
@@ -194,7 +194,7 @@
                               Padding="-10"
                               View="Tabs">
 
-                <dxlc:LayoutGroup Header="付款单明细" View="Group">
+                <dxlc:LayoutGroup Header="收款单明细" View="Group">
 
                     <DockPanel>
                         <dxb:ToolBarControl VerticalAlignment="Top"
@@ -217,7 +217,7 @@
                         <dxg:GridControl x:Name="DetailGrid"
                                          AutoGenerateColumns="AddNew"
                                          EnableSmartColumnsGeneration="True"
-                                         ItemsSource="{Binding Entity.付款单明细s}"
+                                         ItemsSource="{Binding Entity.收款单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
@@ -250,8 +250,8 @@
                                             Header="序号"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="120"
-                                            FieldName="入库单号"
-                                            Header="入库单号" >
+                                            FieldName="销售单号"
+                                            Header="销售单号" >
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:ButtonEditSettings AllowDefaultButton="True">
                                         <dxmvvm:Interaction.Behaviors>
@@ -264,8 +264,8 @@
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
                             <dxg:GridColumn Width="120"
-                                            FieldName="退库单号"
-                                            Header="退货单号" >
+                                            FieldName="销售退货单号"
+                                            Header="销售退货单号" >
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:ButtonEditSettings AllowDefaultButton="True">
                                         <dxmvvm:Interaction.Behaviors>
@@ -283,12 +283,12 @@
 
 
                             <dxg:GridColumn Width="80"
-                                            FieldName="应付金额"
-                                            Header="应付金额"
+                                            FieldName="应收金额"
+                                            Header="应收金额"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="100"
-                                            FieldName="本次支付金额"
-                                            Header="本次支付金额"
+                                            FieldName="本次收入金额"
+                                            Header="本次收入金额"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="250"
                                             FieldName="备注"

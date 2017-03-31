@@ -24,7 +24,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
 
             if (this.IsInDesignMode()) return;
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             签收员Source= 调拨员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
             源分店Source = 目标分店Source = db.分店s.OrderBy(t => t.名称).ToList();
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
@@ -65,7 +65,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-            var db = dbFactory.CreateDbContext();
+           var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
                   .Where(t => t.编号.StartsWith(startStr))
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })

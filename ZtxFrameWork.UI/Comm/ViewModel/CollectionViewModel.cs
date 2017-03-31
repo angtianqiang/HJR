@@ -256,18 +256,37 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                 TEntity entity = newDbSet.Find(primaryKey);
                 if (entity != null)
                 {
-                    using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
-                    {
+                    //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                    //{
                        
-                        OnBeforeEntityDeleted(newDB,primaryKey, entity);
+                    //    OnBeforeEntityDeleted(newDB,primaryKey, entity);
 
-                        newDB.Entry(entity).State = EntityState.Deleted;
-                        newDB.SaveChanges();
-                        OnEntityDeleted(newDB,primaryKey, entity);
+                    //    newDB.Entry(entity).State = EntityState.Deleted;
+                    //    newDB.SaveChanges();
+                    //    OnEntityDeleted(newDB,primaryKey, entity);
 
-                        ts.Complete();
+                    //    ts.Complete();
+                    //}
+                    //20170330更改事务方试
+                    using (var tran = DB.Database.BeginTransaction())
+                    {
+                        try
+                        {
+                            OnBeforeEntityDeleted(newDB, primaryKey, entity);
+                            newDB.Entry(entity).State = EntityState.Deleted;
+                            newDB.SaveChanges();
+                            OnEntityDeleted(newDB, primaryKey, entity);
+                            tran.Commit();
+                            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Deleted));
+                        }
+                        catch (Exception innerEx)
+                        {
+                            tran.Rollback();
+                            throw innerEx;
+                        }
                     }
-                      
+
+
                 }
 
 
@@ -319,6 +338,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                 OnBeforeEntitySaved(primaryKey, entity);
                 this.DB.SaveChanges();
                 OnEntitySaved(primaryKey, entity);
+                Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
             }
             catch (DbException e)
             {
@@ -377,7 +397,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         protected virtual void OnEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Deleted));
+          
         }
 
         protected override Func<TProjection> GetSelectedEntityCallback()
@@ -396,7 +416,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         protected virtual void OnEntitySaved(TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+        
         }
 
         protected virtual void ApplyProjectionPropertiesToEntity(TProjection projectionEntity, TEntity entity)

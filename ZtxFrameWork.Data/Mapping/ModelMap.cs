@@ -192,7 +192,7 @@ namespace ZtxFrameWork.Data.Mapping
 
             this.HasRequired(t => t.销售退货单).WithMany(t => t.销售退货单明细s).HasForeignKey(t => t.销售退货单ID).WillCascadeOnDelete(false);
 
-            this.HasRequired(t => t.饰品).WithMany().HasForeignKey(t => t.饰品ID).WillCascadeOnDelete(false);
+            this.HasRequired(t => t.销售单明细).WithMany().HasForeignKey(t => t.销售单明细ID).WillCascadeOnDelete(false);
         }
     }
     public class 收款单Map : ZtxEntityTypeConfiguration<收款单>
@@ -339,7 +339,7 @@ namespace ZtxFrameWork.Data.Mapping
         .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_付款单_编号") { IsUnique = true }));
             this.HasRequired(t => t.分店).WithMany().HasForeignKey(t => t.分店ID).WillCascadeOnDelete(false);
 
-            this.HasOptional(t => t.会员).WithMany().HasForeignKey(t => t.会员ID).WillCascadeOnDelete(false);
+        //    this.HasOptional(t => t.会员).WithMany().HasForeignKey(t => t.会员ID).WillCascadeOnDelete(false);
             this.HasRequired(t => t.供应商).WithMany().HasForeignKey(t => t.供应商ID).WillCascadeOnDelete(false);
         }
     }

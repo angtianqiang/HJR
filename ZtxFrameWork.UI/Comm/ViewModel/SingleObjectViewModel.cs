@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -19,7 +20,7 @@ using ZtxFrameWork.Data;
 using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.Utils;
-
+using System.Configuration;
 namespace ZtxFrameWork.UI.Comm.ViewModel
 {
     [POCOViewModel]
@@ -58,9 +59,16 @@ where TDbContext : DbContext
 
 
             if (this.IsInDesignMode())
+            {
                 this.Entity = this.DbSet.FirstOrDefault();
+            }
             else
-                OnInitializeInRuntime();
+                #region 20170329 设置数据不延时加载
+                DB.Configuration.LazyLoadingEnabled = false;
+            DB.Configuration.ProxyCreationEnabled = false;
+            #endregion
+            OnInitializeInRuntime();
+
         }
 
         /// <summary>
@@ -178,32 +186,56 @@ where TDbContext : DbContext
                 //Close();
 
                 ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
-                using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //{
+                //    //    DB.Entry(Entity).State = EntityState.Detached;
+                //    //   var newDB = dbFactory.CreateDbContext();
+                //    //   var newDbSet = getDbSetFunc(newDB);
+
+                //    OnBeforeEntityDeleted(DB, PrimaryKey, Entity);
+
+                //    DB.Entry(Entity).State = EntityState.Deleted;
+                //    DB.SaveChanges();
+                //    TPrimaryKey primaryKeyForMessage = PrimaryKey;
+                //    TEntity entityForMessage = Entity;
+                //    Entity = null;
+                //    OnEntityDeleted(DB, primaryKeyForMessage, entityForMessage);
+
+                //    ts.Complete();
+                //    Close();
+                //}
+
+                //20170330更改事务方试
+                using (var tran = DB.Database.BeginTransaction())
                 {
-                //    DB.Entry(Entity).State = EntityState.Detached;
-                 //   var newDB = dbFactory.CreateDbContext();
-                 //   var newDbSet = getDbSetFunc(newDB);
+                    try
+                    {
+                        OnBeforeEntityDeleted(DB, PrimaryKey, Entity);
 
-                    OnBeforeEntityDeleted(DB, PrimaryKey, Entity);
-
-                    DB.Entry(Entity).State = EntityState.Deleted;
-                    DB.SaveChanges();
-                    TPrimaryKey primaryKeyForMessage = PrimaryKey;
-                    TEntity entityForMessage = Entity;
-                    Entity = null;
-                    OnEntityDeleted(DB, primaryKeyForMessage, entityForMessage);
-
-                    ts.Complete();
-                    Close();
+                        DB.Entry(Entity).State = EntityState.Deleted;
+                        DB.SaveChanges();
+                        TPrimaryKey primaryKeyForMessage = PrimaryKey;
+                        TEntity entityForMessage = Entity;
+                        Entity = null;
+                        OnEntityDeleted(DB, primaryKeyForMessage, entityForMessage);
+                        tran.Commit();
+                        Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, EntityMessageType.Deleted));
+                        Close();
+                    }
+                    catch (Exception innerEx)
+                    {
+                        tran.Rollback();
+                        throw innerEx;
+                    }
                 }
             }
             catch (DbException e)
             {
                 MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                MessageBoxService.ShowMessage(e.Message+ e.InnerException?.Message??"", "错误", MessageButton.OK, MessageIcon.Error);
+                MessageBoxService.ShowMessage(e.Message + e.InnerException?.Message ?? "", "错误", MessageButton.OK, MessageIcon.Error);
             }
         }
 
@@ -214,7 +246,7 @@ where TDbContext : DbContext
         public virtual bool CanDelete()
         {
             if (this.IsInDesignMode()) return true;
-           
+
             bool temp = Entity != null && !IsNew() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Delete;
             try
             {
@@ -252,8 +284,8 @@ where TDbContext : DbContext
                 {
                     var errorText = Data.Common.IDataErrorInfoHelper.GetErrorText(Entity, "");
                     Mouse.OverrideCursor = null;
-                    MessageBoxService.ShowMessage(errorText, CommonResources.Exception_ValidationErrorCaption, MessageButton.OK, MessageIcon.Error);                
-                    return false; 
+                    MessageBoxService.ShowMessage(errorText, CommonResources.Exception_ValidationErrorCaption, MessageButton.OK, MessageIcon.Error);
+                    return false;
                 }
                 bool isNewEntity = IsNew();
                 //if (!isNewEntity)
@@ -270,30 +302,63 @@ where TDbContext : DbContext
                 //Mouse.OverrideCursor = null;
                 //return true;
 
-                ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
-                using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                /////20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
+                //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //{
+                //    // DB.Entry(Entity).State = EntityState.Detached;
+                //    //   var newDB = dbFactory.CreateDbContext();
+                //    //  var newDbSet = getDbSetFunc(newDB);
+
+                //    OnBeforeEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
+                //    if (isNewEntity)
+                //    {
+                //        DB.Entry(Entity).State = EntityState.Added;
+                //    }
+                //    else
+                //    {
+                //        DB.Entry(Entity).State = EntityState.Modified;
+                //    }
+
+                //    DB.SaveChanges();
+                //    PrimaryKey = this.GetPrimaryKey(Entity);
+                //    LoadEntityByKey(PrimaryKey);
+                //    OnEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
+
+                //    ts.Complete();
+                //}
+
+
+
+                //20170330更改事务方试
+                using (var tran = DB.Database.BeginTransaction())
                 {
-                   // DB.Entry(Entity).State = EntityState.Detached;
-                 //   var newDB = dbFactory.CreateDbContext();
-                  //  var newDbSet = getDbSetFunc(newDB);
-
-                    OnBeforeEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
-                    if (isNewEntity)
+                    try
                     {
-                        DB.Entry(Entity).State = EntityState.Added;
+                        OnBeforeEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
+                        if (isNewEntity)
+                        {
+                            DB.Entry(Entity).State = EntityState.Added;
+                        }
+                        else
+                        {
+                            DB.Entry(Entity).State = EntityState.Modified;
+                        }
+
+                        DB.SaveChanges();
+                        PrimaryKey = this.GetPrimaryKey(Entity);
+                        LoadEntityByKey(PrimaryKey);
+                        OnEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
+                        tran.Commit();
+                        Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, isNewEntity ? EntityMessageType.Added : EntityMessageType.Changed));
                     }
-                    else
+                    catch (Exception innerEx)
                     {
-                        DB.Entry(Entity).State = EntityState.Modified;
+                        tran.Rollback();
+                        throw innerEx;
                     }
-
-                    DB.SaveChanges();
-                    PrimaryKey = this.GetPrimaryKey(Entity);
-                    LoadEntityByKey(PrimaryKey);
-                    OnEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
-
-                    ts.Complete();
                 }
+
+
                 Mouse.OverrideCursor = null;
                 return true;
 
@@ -334,16 +399,18 @@ where TDbContext : DbContext
 
         protected virtual void OnEntitySaved(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity, bool isNewEntity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, isNewEntity ? EntityMessageType.Added : EntityMessageType.Changed));
+           
         }
 
         protected virtual void OnBeforeEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Deleted));
+          
         }
+        #region 20170330
 
+        #endregion
         protected virtual void OnInitializeInRuntime()
         {
             Messenger.Default.Register<EntityMessage<TEntity, TPrimaryKey>>(this, x => OnEntityMessage(x));
@@ -376,6 +443,7 @@ where TDbContext : DbContext
 
         protected virtual void OnParameterChanged(object parameter)
         {
+            System.Diagnostics.Debug.WriteLine($"OnParameterChanged(): { System.Threading.Thread.CurrentThread.ManagedThreadId}");
             var initializer = parameter as Action<TEntity>;
             if (initializer != null)
                 CreateAndInitializeEntity(initializer);
@@ -415,7 +483,7 @@ where TDbContext : DbContext
         protected void LoadEntityByKey(TPrimaryKey primaryKey)
         {
 
-            if (Entity == null )
+            if (Entity == null)
             {
                 Entity = DbSet.Find(primaryKey);
             }
@@ -522,9 +590,9 @@ where TDbContext : DbContext
 
         protected virtual string GetTitleForNewEntity()
         {
-            
-           // return typeof(TEntity).Name + CommonResources.Entity_New;
-           return EntityDisplayName + CommonResources.Entity_New;
+
+            // return typeof(TEntity).Name + CommonResources.Entity_New;
+            return EntityDisplayName + CommonResources.Entity_New;
         }
 
         protected virtual string GetTitle()
@@ -604,8 +672,8 @@ where TDbContext : DbContext
 
 
 
-
-        public virtual User CurrentUser { get; set; } = User.CurrentUser;
+        //用于在XAML中绑定当前用户
+      public virtual User CurrentUser { get; set; } = User.CurrentUser;
 
 
 
@@ -642,9 +710,9 @@ where TDbContext : DbContext
         protected XtraReport CreateReport()
         {
             var path = GetReportPath();
-        
-              XtraReport newReport= System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
-          newReport.DisplayName=PermissionTitle + "Report.repx";
+
+            XtraReport newReport = System.IO.File.Exists(path) ? XtraReport.FromFile(path, true) : new XtraReport();
+            newReport.DisplayName = PermissionTitle + "Report.repx";
             return newReport;
 
         }
@@ -714,32 +782,72 @@ where TDbContext : DbContext
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
-                using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
-                {
-                    var newDB = dbFactory.CreateDbContext();
-                    var newDbSet = getDbSetFunc(newDB);
-                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                    if (((dynamic)newEntity).状态 != "N")
-                    {
-                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
-                    }
-                    OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);                   
-                    ((dynamic)newEntity).状态 = "Y";
-                    newDB.Entry(newEntity).State = EntityState.Modified;
-                    newDB.SaveChanges();
-                 //   PrimaryKey = this.GetPrimaryKey(newEntity);
-                   // LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityConfirmed(newDB, PrimaryKey, newEntity);
-                    IsRunOK = true;
-                    ts.Complete();
+                /////20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
+                //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //{
+                //    var newDB = dbFactory.CreateDbContext();
+                //    var newDbSet = getDbSetFunc(newDB);
+                //    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                //    if (((dynamic)newEntity).状态 != "N")
+                //    {
+                //        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                //    }
+                //    OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);
+                //    ((dynamic)newEntity).状态 = "Y";
+                //    newDB.Entry(newEntity).State = EntityState.Modified;
+                //    newDB.SaveChanges();
+                //    //   PrimaryKey = this.GetPrimaryKey(newEntity);
+                //    // LoadEntityByKey(PrimaryKey);
+                //    OnEntityEntityConfirmed(newDB, PrimaryKey, newEntity);
+                //    IsRunOK = true;
+                //    ts.Complete();
 
+                //}
+
+                //20170330更改事务方式
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn1"].ConnectionString))
+                {
+                    con.Open();
+                    using (var SqlTransaction = con.BeginTransaction())
+                    {
+                        try
+                        {
+                            var newDB = dbFactory.CreateDbContext(con);
+                            newDB.Database.UseTransaction(SqlTransaction);
+
+                            var newDbSet = getDbSetFunc(newDB);
+                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            if (((dynamic)newEntity).状态 != "N")
+                            {
+                                throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                            }
+                            OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);
+                            ((dynamic)newEntity).状态 = "Y";
+                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            newDB.SaveChanges();
+                            //   PrimaryKey = this.GetPrimaryKey(newEntity);
+                            // LoadEntityByKey(PrimaryKey);
+                            OnEntityEntityConfirmed(newDB, PrimaryKey, newEntity);
+                            IsRunOK = true;
+
+                            SqlTransaction.Commit();
+                            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, EntityMessageType.Changed));
+                        }
+                        catch (Exception innerEx)
+                        {
+                            SqlTransaction.Rollback();
+                            throw innerEx;
+                        }
+                    }
                 }
+
+
+
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("生效成功！");
-              
+
             }
             catch (DbException e)
             {
@@ -792,31 +900,70 @@ where TDbContext : DbContext
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
-                using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                /////20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
+                //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //{
+                //    var newDB = dbFactory.CreateDbContext();
+                //    var newDbSet = getDbSetFunc(newDB);
+                //    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                //    if (((dynamic)newEntity).状态 != "Y")
+                //    {
+                //        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                //    }
+                //    OnBeforeEntityUnConfirmed(newDB, PrimaryKey, newEntity);
+                //    ((dynamic)newEntity).状态 = "N";
+                //    newDB.Entry(newEntity).State = EntityState.Modified;
+                //    newDB.SaveChanges();
+                //    //  PrimaryKey = this.GetPrimaryKey(newEntity);
+                //    //   LoadEntityByKey(PrimaryKey);
+                //    OnEntityEntityUnConfirmed(newDB, PrimaryKey, newEntity);
+                //    IsRunOK = true;
+                //    ts.Complete();
+                //}
+
+
+                //20170330更改事务方式
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn1"].ConnectionString))
                 {
-                    var newDB = dbFactory.CreateDbContext();
-                    var newDbSet = getDbSetFunc(newDB);
-                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                    if (((dynamic)newEntity).状态 != "Y")
+                    con.Open();
+                    using (var SqlTransaction = con.BeginTransaction())
                     {
-                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                        try
+                        {
+                            var newDB = dbFactory.CreateDbContext(con);
+                            newDB.Database.UseTransaction(SqlTransaction);
+
+                            var newDbSet = getDbSetFunc(newDB);
+                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            if (((dynamic)newEntity).状态 != "Y")
+                            {
+                                throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                            }
+                            OnBeforeEntityUnConfirmed(newDB, PrimaryKey, newEntity);
+                            ((dynamic)newEntity).状态 = "N";
+                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            newDB.SaveChanges();
+                            //  PrimaryKey = this.GetPrimaryKey(newEntity);
+                            //   LoadEntityByKey(PrimaryKey);
+                            OnEntityEntityUnConfirmed(newDB, PrimaryKey, newEntity);
+                            IsRunOK = true;
+
+                            SqlTransaction.Commit();
+                            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, EntityMessageType.Changed));
+                        }
+                        catch (Exception innerEx)
+                        {
+                            SqlTransaction.Rollback();
+                            throw innerEx;
+                        }
                     }
-                    OnBeforeEntityUnConfirmed(newDB, PrimaryKey, newEntity);
-                    ((dynamic)newEntity).状态 = "N";
-                    newDB.Entry(newEntity).State = EntityState.Modified;
-                    newDB.SaveChanges();
-                  //  PrimaryKey = this.GetPrimaryKey(newEntity);
-                 //   LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityUnConfirmed(newDB, PrimaryKey, newEntity);
-                    IsRunOK = true;
-                    ts.Complete();
                 }
+
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("失效成功！");
-              
+
             }
             catch (DbException e)
             {
@@ -867,31 +1014,69 @@ where TDbContext : DbContext
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
-                using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                /////20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
+                //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //{
+                //    var newDB = dbFactory.CreateDbContext();
+                //    var newDbSet = getDbSetFunc(newDB);
+                //    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                //    if (((dynamic)newEntity).状态 != "Y")
+                //    {
+                //        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                //    }
+                //    OnBeforeEntityAudited(newDB, PrimaryKey, newEntity);
+                //    ((dynamic)newEntity).状态 = "Z";
+                //    newDB.Entry(newEntity).State = EntityState.Modified;
+                //    newDB.SaveChanges();
+                //    // PrimaryKey = this.GetPrimaryKey(newEntity);
+                //    //   LoadEntityByKey(PrimaryKey);
+                //    OnEntityEntityAudited(newDB, PrimaryKey, newEntity);
+                //    IsRunOK = true;
+                //    ts.Complete();
+                //}
+
+                //20170330更改事务方式
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn1"].ConnectionString))
                 {
-                    var newDB = dbFactory.CreateDbContext();
-                    var newDbSet = getDbSetFunc(newDB);
-                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                    if (((dynamic)newEntity).状态 != "Y")
+                    con.Open();
+                    using (var SqlTransaction = con.BeginTransaction())
                     {
-                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                        try
+                        {
+                            var newDB = dbFactory.CreateDbContext(con);
+                            newDB.Database.UseTransaction(SqlTransaction);
+
+                            var newDbSet = getDbSetFunc(newDB);
+                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            if (((dynamic)newEntity).状态 != "Y")
+                            {
+                                throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                            }
+                            OnBeforeEntityAudited(newDB, PrimaryKey, newEntity);
+                            ((dynamic)newEntity).状态 = "Z";
+                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            newDB.SaveChanges();
+                            // PrimaryKey = this.GetPrimaryKey(newEntity);
+                            //   LoadEntityByKey(PrimaryKey);
+                            OnEntityEntityAudited(newDB, PrimaryKey, newEntity);
+                            IsRunOK = true;
+
+                            SqlTransaction.Commit();
+                            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, EntityMessageType.Changed));
+                        }
+                        catch (Exception innerEx)
+                        {
+                            SqlTransaction.Rollback();
+                            throw innerEx;
+                        }
                     }
-                    OnBeforeEntityAudited(newDB, PrimaryKey, newEntity);
-                    ((dynamic)newEntity).状态 = "Z";
-                    newDB.Entry(newEntity).State = EntityState.Modified;
-                    newDB.SaveChanges();
-                   // PrimaryKey = this.GetPrimaryKey(newEntity);
-                 //   LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityAudited(newDB, PrimaryKey, newEntity);
-                    IsRunOK = true;
-                    ts.Complete();
                 }
+
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("审核成功！");
-               
+
             }
             catch (DbException e)
             {
@@ -942,31 +1127,69 @@ where TDbContext : DbContext
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
-                ///20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
-                using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                /////20170310 在新的CreateDbContext中执行，以支持事务，可在子类写关联表的操作
+                //using (var ts = new System.Transactions.TransactionScope(TransactionScopeOption.Required))
+                //{
+                //    var newDB = dbFactory.CreateDbContext();
+                //    var newDbSet = getDbSetFunc(newDB);
+                //    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                //    if (((dynamic)newEntity).状态 != "Z")
+                //    {
+                //        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                //    }
+                //    OnBeforeEntityUnAudited(newDB, PrimaryKey, newEntity);
+                //    ((dynamic)newEntity).状态 = "Y";
+                //    newDB.Entry(newEntity).State = EntityState.Modified;
+                //    newDB.SaveChanges();
+                //    // PrimaryKey = this.GetPrimaryKey(newEntity);
+                //    //  LoadEntityByKey(PrimaryKey);
+                //    OnEntityEntityUnAudited(newDB, PrimaryKey, newEntity);
+                //    IsRunOK = true;
+                //    ts.Complete();
+                //}
+
+                //20170330更改事务方式
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["conn1"].ConnectionString))
                 {
-                    var newDB = dbFactory.CreateDbContext();
-                    var newDbSet = getDbSetFunc(newDB);
-                    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                    if (((dynamic)newEntity).状态 != "Z")
+                    con.Open();
+                    using (var SqlTransaction = con.BeginTransaction())
                     {
-                        throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                        try
+                        {
+                            var newDB = dbFactory.CreateDbContext(con);
+                            newDB.Database.UseTransaction(SqlTransaction);
+                   
+                            var newDbSet = getDbSetFunc(newDB);
+                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            if (((dynamic)newEntity).状态 != "Z")
+                            {
+                                throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
+                            }
+                            OnBeforeEntityUnAudited(newDB, PrimaryKey, newEntity);
+                            ((dynamic)newEntity).状态 = "Y";
+                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            newDB.SaveChanges();
+                            // PrimaryKey = this.GetPrimaryKey(newEntity);
+                            //  LoadEntityByKey(PrimaryKey);
+                            OnEntityEntityUnAudited(newDB, PrimaryKey, newEntity);
+                            IsRunOK = true;
+
+                            SqlTransaction.Commit();
+                            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, EntityMessageType.Changed));
+                        }
+                        catch (Exception innerEx)
+                        {
+                            SqlTransaction.Rollback();
+                            throw innerEx;
+                        }
                     }
-                    OnBeforeEntityUnAudited(newDB, PrimaryKey, newEntity);
-                    ((dynamic)newEntity).状态 = "Y";
-                    newDB.Entry(newEntity).State = EntityState.Modified;
-                    newDB.SaveChanges();
-                   // PrimaryKey = this.GetPrimaryKey(newEntity);
-                  //  LoadEntityByKey(PrimaryKey);
-                    OnEntityEntityUnAudited(newDB, PrimaryKey, newEntity);
-                    IsRunOK = true;
-                    ts.Complete();
                 }
+
                 LoadEntityByKey(PrimaryKey);
                 UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("取消审核成功！");
-              
+
             }
             catch (DbException e)
             {
@@ -1015,25 +1238,25 @@ where TDbContext : DbContext
 
         protected virtual void OnEntityEntityConfirmed(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
         protected virtual void OnBeforeEntityUnConfirmed(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityEntityUnConfirmed(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
         protected virtual void OnBeforeEntityAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityEntityAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
         protected virtual void OnBeforeEntityUnAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityEntityUnAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-            Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
 
         #endregion
@@ -1064,7 +1287,8 @@ where TDbContext : DbContext
 
         protected IDocumentManagerService QueryListManagerService { get { return this.GetRequiredService<IDocumentManagerService>("QueryListDocumentManagerService"); } }
         //colleciton页面的服务  用于打开其它的页面，比如在入库单界面上导航到收款单上
-        protected virtual IDocumentManagerService GetDocumentManagerService() {
+        protected virtual IDocumentManagerService GetDocumentManagerService()
+        {
 
             //return this.GetRequiredService<IDocumentManagerService>("SignleObjectDocumentManagerService");
 
@@ -1075,6 +1299,6 @@ where TDbContext : DbContext
 
         #endregion
 
-      
+
     }
 }

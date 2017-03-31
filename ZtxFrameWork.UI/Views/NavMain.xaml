@@ -12,6 +12,7 @@
              xmlns:dxnt="http://schemas.devexpress.com/winfx/2008/xaml/navbar/themekeys"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
+                 xmlns:model="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="300"
@@ -22,6 +23,23 @@
         <dx:DXMessageBoxService x:Name="CommMessageBox" />
     </dxmvvm:Interaction.Behaviors>
     <DockPanel>
+        <DockPanel.Resources>
+            <HierarchicalDataTemplate x:Key="TreeItemDataTemplate" DataType="{x:Type model:Module}" ItemsSource="{Binding ChildModules}">
+                <StackPanel Margin="0"    Orientation="Horizontal" VerticalAlignment="Center"  Cursor="Hand"    >
+                    <Image Width="24"  Height="24"  Margin="0,0,0,0"  Source="{Binding ModuleInfo,
+                                                                                            Converter={StaticResource ResourceKey=MoudleInfoToImageConerter}}" />
+
+                    <TextBlock Margin="0,5,5,0" Width="120" Text="{Binding ModuleTitle}" />
+
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <EventSetter Event="Mouse.PreviewMouseDown" Handler="StackPanel_PreviewMouseDown"></EventSetter>
+                        </Style>
+                    </StackPanel.Style>
+                </StackPanel>
+
+            </HierarchicalDataTemplate>
+        </DockPanel.Resources>
         <dxr:RibbonControl DockPanel.Dock="Top"
                            RibbonStyle="Office2010"
                            ToolbarShowMode="Hide">
@@ -56,22 +74,30 @@
             </dxr:RibbonDefaultPageCategory>
 
         </dxr:RibbonControl>
-        <dxb:StatusBarControl x:Name="statusBar" DockPanel.Dock="Bottom">
+        <dxr:RibbonStatusBarControl x:Name="statusBar" DockPanel.Dock="Bottom">
+            <dxr:RibbonStatusBarControl.RightItems>
+                <dxb:BarStaticItem Content="技术支持：思益信息技术有限公司" />
+            </dxr:RibbonStatusBarControl.RightItems>
+            <dxr:RibbonStatusBarControl.LeftItems>
+                <dxb:BarStaticItem>
+                    <dxb:BarStaticItem.ContentTemplate>
+                        <DataTemplate>
 
-            <dxb:BarStaticItem CustomizationContent="Caret Position" ShowBorder="False">
-                <dxb:BarStaticItem.ContentTemplate>
-                    <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
 
-                        <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Path=DataContext.CurrentUser.DispalyName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='当前用户:{0}'}" />
 
-                            <TextBlock Text="{Binding Path=DataContext.CurrentUser.DispalyName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='当前用户:{0}'}" />
+                            </StackPanel>
 
-                        </StackPanel>
+                        </DataTemplate>
+                    </dxb:BarStaticItem.ContentTemplate>
+                </dxb:BarStaticItem>
 
-                    </DataTemplate>
-                </dxb:BarStaticItem.ContentTemplate>
-            </dxb:BarStaticItem>
-        </dxb:StatusBarControl>
+
+
+
+            </dxr:RibbonStatusBarControl.LeftItems>
+        </dxr:RibbonStatusBarControl>
         <Grid>
             <dxdo:DockLayoutManager ClosedPanelsBarVisibility="Never" >
                 <dxdo:LayoutGroup>
@@ -84,9 +110,9 @@
                                       ShowBorder="True"
                                       ShowCaption="True">
                         <dxn:NavBarControl ItemsSource="{Binding Modules}">
-                            <dxn:NavBarControl.Resources>
-                                <conerters:MoudleInfoToImageConerter x:Key="converter" />
-                            </dxn:NavBarControl.Resources>
+                          
+                            
+                         
 
                             <dxn:NavBarControl.ItemTemplate>
                                 <DataTemplate>
@@ -94,7 +120,7 @@
                                         <dxn:NavBarGroup DisplaySource="Content"
                                                          Header="{Binding ModuleTitle}"
                                                          ImageSource="{Binding ModuleInfo,
-                                                                               Converter={StaticResource ResourceKey=converter}}">
+                                                                               Converter={StaticResource ResourceKey=MoudleInfoToImageConerter}}">
                                             <dxn:NavBarGroup.ImageSettings>
                                                 <dxn:ImageSettings Width="24" Height="24" />
                                             </dxn:NavBarGroup.ImageSettings>
@@ -104,6 +130,7 @@
                                                     <TreeView Margin="0"
                                                               Background="White"
                                                               BorderThickness="0"
+                                                          ItemTemplate="{StaticResource TreeItemDataTemplate}"
                                                               ItemsSource="{Binding ChildModules}"
                                                               ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                                               ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -112,8 +139,8 @@
                                                             <Style TargetType="TreeViewItem">
                                                                 <Setter Property="IsExpanded" Value="True" />
                                                                 <Setter Property="Padding" Value="0" />
-                                                                <Setter Property="Height" Value="28" />                                                                
-                                                                <Style.Triggers>
+                                                                <Setter Property="Height" Value="28" />
+                                                                                                                                <Style.Triggers>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
                                                                             <Condition Property="HasItems" Value="False" />
@@ -125,25 +152,7 @@
                                                                 </Style.Triggers>
                                                             </Style>
                                                         </TreeView.ItemContainerStyle>
-                                                        <TreeView.ItemTemplate>
-                                                            <HierarchicalDataTemplate ItemsSource="{Binding ChildModules}">
-                                                                <StackPanel Margin="0"  
-                                                                            VerticalAlignment="Center" 
-                                                                            Mouse.PreviewMouseDown="StackPanel_PreviewMouseDown"
-                                                                            Orientation="Horizontal">
-
-                                                                    <Image Width="24"
-                                                                           Height="24"
-                                                                           Margin="0,0,0,0"
-                                                                           Source="{Binding ModuleInfo,
-                                                                                            Converter={StaticResource ResourceKey=converter}}" />
-
-                                                                    <TextBlock Margin="0,5,5,0" Width="120" Text="{Binding ModuleTitle}" />
-
-
-                                                                </StackPanel>
-                                                            </HierarchicalDataTemplate>
-                                                        </TreeView.ItemTemplate>
+                                                    
                                                     </TreeView>
                                                 </Canvas>
                                             </dxn:NavBarGroup.Content>

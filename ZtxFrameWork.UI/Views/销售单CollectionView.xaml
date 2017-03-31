@@ -16,8 +16,8 @@
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="600"
-             d:DesignWidth="600"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:销售单CollectionViewModel}"
+             d:DesignWidth="1200"
+             d:DataContext="{dxmvvm:ViewModelSource Type=ViewModels:销售单CollectionViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
         <behaviors:UserControlDefaultLoad />
@@ -51,7 +51,7 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <DockPanel>
-           <controls:CollectionMenu DataView="{Binding ElementName=View}" DockPanel.Dock="Top" />
+            <controls:CollectionMenu DataView="{Binding ElementName=View}" DockPanel.Dock="Top" />
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 
@@ -62,10 +62,12 @@
                                       ItemHeight="Auto">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
                             <dxg:GridControl AutoGenerateColumns="AddNew"
-                                             EnableSmartColumnsGeneration="True"
+                                             EnableSmartColumnsGeneration="True"                                           
+                                   ColumnGeneratorStyle="{StaticResource ColorGridColumnStyle}"
                                              ItemsSource="{Binding Entities}"
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}">
+                                
                                 <dxmvvm:Interaction.Behaviors>
                                     <dxmvvm:EventToCommand Command="{Binding EditCommand}"
                                                            EventName="MouseDoubleClick"
@@ -78,8 +80,18 @@
                                 <dxg:GridControl.View>
                                     <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  />
                                 </dxg:GridControl.View>
-                                <dxg:GridControl.Columns />
 
+                                <dxg:GridColumn Header="编号"  FieldName="编号" IsSmart="True"/>
+                                <dxg:GridColumn Header="日期"  FieldName="日期" IsSmart="True"/>
+                                <dxg:GridColumn Header="数量"  FieldName="数量" IsSmart="True"/>
+                                <dxg:GridColumn Header="总金额"  FieldName="总金额" IsSmart="True"/>
+                                <dxg:GridColumn Header="已收金额"  FieldName="已收金额" IsSmart="True"/>
+                                <dxg:GridColumn Header="未收金额"  FieldName="未收金额" IsSmart="True"/>
+                                <dxg:GridColumn Header="状态"  FieldName="状态" IsSmart="True"/>
+                                <dxg:GridColumn Header="分店"  FieldName="分店.名称" IsSmart="True"/>
+                                <dxg:GridColumn Header="会员"  FieldName="会员.姓名" IsSmart="True"/>
+                                <dxg:GridColumn Header="操作员"  FieldName="操作员.DispalyName" IsSmart="True"/>
+                                <dxg:GridColumn Header="备注"  FieldName="备注" IsSmart="True"/>
 
 
 
