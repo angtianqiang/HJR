@@ -10,7 +10,7 @@ namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_UserAuthorityModuleMappings")]
     [DisplayName("用户权限管理")]
-    public  class UserAuthorityModuleMapping : ModelBase
+    public  class UserAuthorityModuleMapping : Entity
     {
         private long _userID;
         [Display(Name = "外键", AutoGenerateField = false)]

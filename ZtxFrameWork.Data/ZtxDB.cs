@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.Core;
@@ -12,7 +13,9 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+
 using ZtxFrameWork.Data.Model;
 
 namespace ZtxFrameWork.Data
@@ -23,7 +26,7 @@ namespace ZtxFrameWork.Data
         {
             base.Seed(context);
 
-            ZtxDB.Init(context);
+         ZtxDB.Init(context);
 
         }
     }
@@ -137,6 +140,11 @@ namespace ZtxFrameWork.Data
                 InitAuthorityModule(context, "系统参数配置", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "ChangePasswordView", Parent = p, ModuleTitle = "更改登录密码", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "更改登录密码", "系统管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                m = context.Modules.Add(new Model.Module() { DocumentType = "DbOperatorLogCollectionView", Parent = p, ModuleTitle = "数据存储操作日志", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "数据存储操作日志", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                m = context.Modules.Add(new Model.Module() { DocumentType = "BillStateChangeLogCollectionView", Parent = p, ModuleTitle = "单据状态更改日志", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "单据状态更改日志", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+
             }
 
             //添加页面模块
@@ -257,12 +265,12 @@ namespace ZtxFrameWork.Data
 
             Inited = true;
         }
-        protected static void InitAuthorityModule(ZtxDB context, string ModuleViewString, string category, bool Navigate = true, bool Add = true, bool Edit = true, bool Delete = true, bool Export=true,bool Print = true, bool Preview = true, bool Design = true, bool Confirm = true, bool UnConfirm = true, bool Audit = true, bool UnAudit = true)
+        protected static void InitAuthorityModule(ZtxDB context, string permissionTitle, string category, bool Navigate = true, bool Add = true, bool Edit = true, bool Delete = true, bool Export=true,bool Print = true, bool Preview = true, bool Design = true, bool Confirm = true, bool UnConfirm = true, bool Audit = true, bool UnAudit = true)
         {
-            var view = context.AuthorityModules.Where(t => t.ViewTitle == ModuleViewString).FirstOrDefault();
+            var view = context.AuthorityModules.Where(t => t.ViewTitle == permissionTitle).FirstOrDefault();
             if (view == null)
             {
-                var v = context.AuthorityModules.Add(new AuthorityModule() { ViewTitle = ModuleViewString, Category = category, Navigate = Navigate, Add = Add, Edit = Edit, Delete = Delete,Export=Export, Print = Print, Preview = Preview, Design = Design, Confirm = Confirm, UnConfirm = UnConfirm, Audit = Audit, UnAudit = UnAudit });
+                var v = context.AuthorityModules.Add(new AuthorityModule() { ViewTitle = permissionTitle, Category = category, Navigate = Navigate, Add = Add, Edit = Edit, Delete = Delete,Export=Export, Print = Print, Preview = Preview, Design = Design, Confirm = Confirm, UnConfirm = UnConfirm, Audit = Audit, UnAudit = UnAudit });
 
 
                 foreach (var item in context.Users.AsEnumerable())
@@ -288,24 +296,88 @@ namespace ZtxFrameWork.Data
 
             base.OnModelCreating(modelBuilder);
         }
-        //public ZtxDB() : this("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork2;Integrated Security=True")
-        //{ }
+        //自动迁够是用到
+      public ZtxDB() : this("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork3;Integrated Security=True;MultipleActiveResultSets=true")
+       { InitializeDbContext(); }
         public ZtxDB(string conn) : base(conn)
         {
             // this.Configuration.ProxyCreationEnabled = true;
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
-            }
-            else
-            {
-                //    Database.SetInitializer<ZtxDB>(null);
+            //if (System.Diagnostics.Debugger.IsAttached)
+            //{
+            //    Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
+            //}
+            //else
+            //{
+            //    //    Database.SetInitializer<ZtxDB>(null);
 
-                Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
-            }
-            //  this.Database.Initialize(true);
+            //    Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
+            //}
+            Database.SetInitializer<ZtxDB>(null   );
+            this.Database.Initialize(false);
+            InitializeDbContext();
         }
-        public ZtxDB(DbConnection con) : base(con, contextOwnsConnection: false) { }
+        public ZtxDB(DbConnection con) : base(con, contextOwnsConnection: false) { InitializeDbContext(); }
+
+      private void   InitializeDbContext()
+        {
+           
+          this.Configuration.LazyLoadingEnabled = false;
+            this.Configuration.ProxyCreationEnabled = false;
+
+            var context = ((IObjectContextAdapter)this).ObjectContext;
+         
+            context.ObjectStateManager.ObjectStateManagerChanged += ObjectStateManager_ObjectStateManagerChanged;
+            context.ObjectMaterialized += Context_ObjectMaterialized;
+        }
+
+        private void Context_ObjectMaterialized(object sender, ObjectMaterializedEventArgs e)
+        {
+            if (e.Entity is IEntity)
+            {
+                ((IEntity)e.Entity).OnLoaded();
+            }
+        }
+
+        private  void ObjectStateManager_ObjectStateManagerChanged(object sender, System.ComponentModel.CollectionChangeEventArgs e)
+        {
+            if (e.Action == CollectionChangeAction.Add)
+            {
+                //if (e.Element is INotifyPropertyChanged)
+                //{
+                //    ((INotifyPropertyChanged)e.Element).PropertyChanged -= Object_PropertyChanged;
+                //    ((INotifyPropertyChanged)e.Element).PropertyChanged += Object_PropertyChanged;
+                //}
+                //设置添加对象的时间和用户
+                if (e.Element is IEntity)
+                {
+
+                }
+                if (e.Element is IDbContextLink)
+                {
+                ((IDbContextLink)e.Element).DbContext = this;
+                }
+            }
+            else if (e.Action == CollectionChangeAction.Remove)
+            {
+                //if (e.Element is INotifyPropertyChanged)
+                //{
+                //    ((INotifyPropertyChanged)e.Element).PropertyChanged -= Object_PropertyChanged;
+                //}
+                if (e.Element is IDbContextLink)
+                {
+                    ((IDbContextLink)e.Element).DbContext = null;
+                }
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            var context = ((IObjectContextAdapter)this).ObjectContext;
+            context.ObjectStateManager.ObjectStateManagerChanged -= ObjectStateManager_ObjectStateManagerChanged;
+            context.ObjectMaterialized -= Context_ObjectMaterialized;
+            base.Dispose(disposing);
+        }
+
         private IList GetModifiedObjects()
         {
             var context = ((IObjectContextAdapter)this).ObjectContext;
@@ -373,45 +445,67 @@ namespace ZtxFrameWork.Data
                 }
             }
         }
+        public void NotityChanging()
+        {
+            IList modifiedObjects = GetModifiedObjects();
+            foreach (Object obj in modifiedObjects)
+            {
+                if (obj is IEntity)
+                {
+                    #region 20170411 首次生成数据库，添加种子数据库时，未注册 ObjectStateManager_ObjectStateManagerChanged DB上下文为NULL(EF执行的先后顺序解决了）
+                    if (((IEntity)obj).DbContext == null)
+                    {
+                        ((IEntity)obj).DbContext = this;
+                    }
+                    #endregion
+                    ((IEntity)obj).OnSaving();
+                }
+            }
+        }
         public override int SaveChanges()
         {
-            try
-            {
-                IList modifiedObjects = GetModifiedObjects();
-                foreach (Object obj in modifiedObjects)
-                {
-                    if (obj is IVHObject)
-                    {
-                        ((IVHObject)obj).OnSaving();
-                    }
-                }
+            //try
+            //{
+        NotityChanging();
                 return base.SaveChanges();
-            }
-            catch (DbEntityValidationException ex)
-            {
-                var sb = new StringBuilder();
-                foreach (var error in ex.EntityValidationErrors)
-                {
-                    foreach (var item in error.ValidationErrors)
-                    {
-                        sb.AppendLine(item.PropertyName + ": " + item.ErrorMessage);
-                    }
-                }
-                //    Logger.Error("SaveChanges.DbEntityValidation", ex.GetAllMessages() + sb);
-                throw new Exception(sb.ToString()) ;
-            }
+          //  }
+            //catch (DbEntityValidationException ex)
+            //{
+            //    var sb = new StringBuilder();
+            //    foreach (var error in ex.EntityValidationErrors)
+            //    {
+            //        foreach (var item in error.ValidationErrors)
+            //        {
+            //            sb.AppendLine(item.PropertyName + ": " + item.ErrorMessage);
+            //        }
+            //    }
+            //    //    Logger.Error("SaveChanges.DbEntityValidation", ex.GetAllMessages() + sb);
+            //    throw new Exception(sb.ToString()) ;
+            //}
           
-            catch (Exception e)
-            {
+            //catch (Exception e)
+            //{
 
-                throw e;
-            }
+            //    throw e;
+            //}
+        }
+        public override Task<int> SaveChangesAsync()
+        {
+            NotityChanging();
+            return base.SaveChangesAsync();
+        }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
+        {
+            NotityChanging();
+            return base.SaveChangesAsync(cancellationToken);
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Model.Module> Modules { get; set; }
         public DbSet<AuthorityModule> AuthorityModules { get; set; }        
         public DbSet<UserAuthorityModuleMapping> UserAuthorityModuleMappings { get; set; }
-        public DbSet<SystemConfiguration> SystemConfigurations { get; set; }
+        public DbSet<SystemConfiguration> SystemConfigurations { get; set; }        
+        public DbSet<DbOperatorLog> DbOperatorLogs { get; set; }
+        public DbSet<BillStateChangeLog> BillStateChangeLogs { get; set; }
 
         public DbSet<分店> 分店s { get; set; }
         public DbSet<单位> 单位s { get; set; }
@@ -452,6 +546,16 @@ namespace ZtxFrameWork.Data
         public DbSet<订单明细> 订单明细s { get; set; }
         public DbSet<产品> 产品s { get; set; }
         public DbSet<颜色> 颜色s { get; set; }
+
+        public ObjectSet<T> GetObjectSet<T>() where T : class
+        {
+            var objectContext = ((IObjectContextAdapter)this).ObjectContext;
+            ObjectSet<T> set = objectContext.CreateObjectSet<T>();
+            set.MergeOption = MergeOption.OverwriteChanges;
+
+            return set;
+        }
+
     }
 
     public abstract class ZtxEntityTypeConfiguration<T> : EntityTypeConfiguration<T> where T : class

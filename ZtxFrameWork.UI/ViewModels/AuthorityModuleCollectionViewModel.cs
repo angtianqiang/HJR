@@ -7,7 +7,7 @@ using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.Data;
 using System.Linq;
-
+using System.Data.Entity;
 namespace ZtxFrameWork.UI.ViewModels
 {
     [POCOViewModel]

@@ -313,11 +313,11 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             if (this.IsInDesignMode()) return true;
 
             bool temp = projectionEntity != null && !IsLoading && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Delete;
-            try
+            if (projectionEntity is IBillEntity)
             {
-                temp = temp && ((dynamic)projectionEntity).状态 == "N";
+                temp = temp && ((IBillEntity)projectionEntity).状态 == "N";
             }
-            catch { }
+          
             return temp;
         }
 
@@ -519,7 +519,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
 
         #region 20170227生成最新的单号
-        static public string GetNewCode(string prefix, IDbFactory<TDbContext> dbFactory,
+        static public async Task<string> GetNewCode(string prefix, IDbFactory<TDbContext> dbFactory,
               Func<TDbContext, DbSet<TEntity>> getDbSetFunc, Expression<Func<TEntity, string>> getCodeKeyExpression)
         {
             string str = prefix + DateTime.Now.ToString("yyyyMMdd");
@@ -531,7 +531,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             //try
             //{
             var dbSet = getDbSetFunc(dbFactory.CreateDbContext());
-            var list = ETForStartsWith<TEntity>(dbSet, str, propertyInfo).ToList();
+            var list =await ETForStartsWith<TEntity>(dbSet, str, propertyInfo).ToListAsync();
             if (list != null && list.Count > 0)
             {
                 k = list.Select(t => Convert.ToInt32(fun(t).Substring(10, 3))).Max() + 1;

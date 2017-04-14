@@ -11,6 +11,7 @@ using System.Reflection;
 using System.ComponentModel.DataAnnotations;
 
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 
 namespace ZtxFrameWork.Data
 {
@@ -29,7 +30,7 @@ namespace ZtxFrameWork.Data
         #endregion
         #region Properties
          [Display(AutoGenerateField = false)]
-         [NotMapped]
+       [NotMapped]
         public string UniqueId { get { return this._uniqueId; } set { this._uniqueId = value; } }
           [Display(AutoGenerateField = false)]
         [NotMapped]
@@ -195,8 +196,7 @@ namespace ZtxFrameWork.Data
 
             return property.Name;
         }
-      public virtual  void OnSaving() { }
-
+    
         #region 20160617在开发工单的打印次数里增加，更改通知，但不改DirtyState属性
         protected virtual void RaisePropertyChanged<T>(
          Expression<Func<T>> propertyExpression)
@@ -256,12 +256,13 @@ namespace ZtxFrameWork.Data
         {
             get { return null; }
         }
+      
 
         public string this[string columnName]
         {
             get { return this.ValidateProperty(this.GetType(), columnName); }
         }
         #endregion
-
+       
     }
 }

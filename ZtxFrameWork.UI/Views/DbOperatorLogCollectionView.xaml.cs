@@ -12,17 +12,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ZtxFrameWork.UI.QueryList
+namespace ZtxFrameWork.UI.Views
 {
     /// <summary>
-    /// Interaction logic for 饰品出入明细表View.xaml
+    /// Interaction logic for DbOperatorLogCollectionView.xaml
     /// </summary>
-    public partial class 饰品出入明细表View : UserControl
+    public partial class DbOperatorLogCollectionView : UserControl
     {
-        public 饰品出入明细表View()
+        public DbOperatorLogCollectionView()
         {
             InitializeComponent();
-
         }
     }
 }

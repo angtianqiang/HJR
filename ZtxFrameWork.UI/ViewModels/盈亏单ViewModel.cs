@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
@@ -23,9 +24,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 盈亏单ViewModel() : base(DbFactory.Instance, x => x.盈亏单s, x => x.ID, x => x.编号, "盈亏单")
         {
             if (this.IsInDesignMode()) return;
-           var db = DB;
-            操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            分店Source = db.分店s.OrderBy(t => t.名称).ToList(); 
+            Init();
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
@@ -36,6 +35,21 @@ namespace ZtxFrameWork.UI.ViewModels
                 UpdateTotal();
             });
 
+        }
+
+        public async void Init()
+        {
+
+
+         var t1   = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            var t2=await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            操作员Source = t1;
+            分店Source = t2;
+
+        }
+        protected override IQueryable<盈亏单> DbInclude(ObjectSet<盈亏单> dbSet)
+        {
+            return dbSet.Include(t => t.盈亏单明细s.Select(p => p.饰品));
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
@@ -57,7 +71,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
+            var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
                   .Where(t => t.编号.StartsWith(startStr))
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })
@@ -92,7 +106,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
             var item = DB.盈亏单明细s.Create();
-            item.DirtyState = DirtyState.Added;          
+            item.DirtyState = DirtyState.Added;
             if (Entity.盈亏单明细s.Count == 0)
             {
                 item.序号 = 1;
@@ -138,8 +152,10 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 盈亏单 entity)
         {
             base.OnBeforeEntityConfirmed(dbContext, primaryKey, entity);
-            if (entity.盈亏单明细s.Count <= 0)            {
-                throw new Exception("没有单身内容");            }
+            if (entity.盈亏单明细s.Count <= 0)
+            {
+                throw new Exception("没有单身内容");
+            }
             foreach (var item in entity.盈亏单明细s)
             {
 
@@ -149,10 +165,10 @@ namespace ZtxFrameWork.UI.ViewModels
                 {
                     temp = dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.分店ID });
                 }
-               
-                    temp.数量 += item.盈亏数量;
-                    temp.重量 += item.盈亏重量;
-               
+
+                temp.数量 += item.盈亏数量;
+                temp.重量 += item.盈亏重量;
+
                 //更新总库存 
                 var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
                 product.库存数量 += item.盈亏数量;
@@ -187,10 +203,10 @@ namespace ZtxFrameWork.UI.ViewModels
 
                 //更新分库库存
                 var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
-                
-                    temp.数量 -= item.盈亏数量;
-                    temp.重量 -= item.盈亏重量;
-               
+
+                temp.数量 -= item.盈亏数量;
+                temp.重量 -= item.盈亏重量;
+
                 //更新总库存 
                 var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
                 product.库存数量 -= item.盈亏数量;

@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
@@ -24,9 +25,8 @@ namespace ZtxFrameWork.UI.ViewModels
         {
 
             if (this.IsInDesignMode()) return;
-           var db = DB;
-            签收员Source= 调拨员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            源分店Source = 目标分店Source = db.分店s.OrderBy(t => t.名称).ToList();
+            Init();
+          
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
@@ -38,6 +38,18 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
             });
+        }
+        public async void Init()
+        {
+          
+         var t1=   await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            var t2 =  await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            签收员Source = 调拨员Source = t1;
+            源分店Source = 目标分店Source = t2;
+        }
+        protected override IQueryable<调拨单> DbInclude(ObjectSet<调拨单> dbSet)
+        {
+            return dbSet.Include(t => t.调拨单明细s.Select(p => p.饰品));
         }
         public virtual List<User> 签收员Source { get; set; }
         public virtual List<User> 调拨员Source { get; set; }

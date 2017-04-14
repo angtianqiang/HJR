@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZtxFrameWork.Data
 {
-    interface IVHObject:INotifyPropertyChanged
+  public  interface IVHObject:INotifyPropertyChanged
     {
         #region Properties
 
@@ -32,7 +32,7 @@ namespace ZtxFrameWork.Data
         void NotifyPropertyChanged(string propertyName);
 
 
-        void OnSaving();
+     
         #endregion
     }
 }

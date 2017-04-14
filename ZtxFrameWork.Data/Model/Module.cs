@@ -10,10 +10,11 @@ namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_Modules")]
     [DisplayName("系统模块")]
-    public class Module : ModelBase
+    public class Module : Entity
     {
         [Required]
         [Display(Name = "模块名称")]
+        [OperatorLogAttribute]
         public string ModuleTitle { get; set; }
       
 

@@ -35,9 +35,10 @@ namespace ZtxFrameWork.UI
          //   db.SaveChanges();
 
 
-            DataDirectoryHelper.LocalPrefix = "ZtxFrameWork.UI";
-            bool exit;
-            singleInstanceApplicationGuard = DataDirectoryHelper.SingleInstanceApplicationGuard("DevExpressWpfOutlookInspiredApp", out exit);
+      
+            bool exit=false;
+            //   DataDirectoryHelper.LocalPrefix = "ZtxFrameWork.UI";
+            //  singleInstanceApplicationGuard = DataDirectoryHelper.SingleInstanceApplicationGuard("DevExpressWpfOutlookInspiredApp", out exit);
             if (exit)
             {
                 application.Shutdown();
@@ -49,7 +50,6 @@ namespace ZtxFrameWork.UI
           //  InitSystemSet();
 
 
-            SplashScreenHelper.Instance.ShowSplashScreen();
           //  base.OnStartup(e);
             application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
@@ -62,6 +62,7 @@ namespace ZtxFrameWork.UI
             LoginWindow loginWindow = new LoginWindow();
 
 
+            SplashScreenHelper.Instance.ShowSplashScreen();
             bool? temp = loginWindow.ShowDialog();
 
 

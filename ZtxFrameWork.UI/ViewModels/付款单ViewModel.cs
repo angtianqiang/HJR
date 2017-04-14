@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
@@ -24,11 +25,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 付款单ViewModel() : base(DbFactory.Instance, x => x.付款单s, x => x.ID, x => x.编号, "付款单")
         {
             if (this.IsInDesignMode()) return;
-           var db = DB;
-            操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            分店Source = db.分店s.OrderBy(t => t.名称).ToList();
-         //   会员Source = db.会员s.OrderBy(t => t.编号).ToList();
-            供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
+            Init();
             Messenger.Default.Register<string>(this, "入库单号更改" + Token, m =>
             {
                 SelectChildEntity.入库单ID = null;
@@ -41,14 +38,28 @@ namespace ZtxFrameWork.UI.ViewModels
             });
             Messenger.Default.Register<string>(this, "本次支付金额更改" + Token, m =>
             {
-              //  var item = SelectChildEntity;
-             //   item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
+                //  var item = SelectChildEntity;
+                //   item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                 UpdateTotal();
             });
         }
+        public async void Init()
+        {
+          var t1   = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+          var t2=   await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+          var t3   = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
+            操作员Source = t1;
+            分店Source = t2;
+            供应商Source  = t3;
+
+        }
+        protected override IQueryable<付款单> DbInclude(ObjectSet<付款单> dbSet)
+        {
+            return dbSet.Include(t => t.付款单明细s);
+        }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
-     //   public virtual List<会员> 会员Source { get; set; }
+        //   public virtual List<会员> 会员Source { get; set; }
         public virtual List<供应商> 供应商Source { get; set; }
         #region 明细表操作
 
@@ -65,7 +76,7 @@ namespace ZtxFrameWork.UI.ViewModels
             this.RaiseCanExecuteChanged(x => x.AddChildRow());
             this.RaiseCanExecuteChanged(x => x.DeleteChildRow());
 
-         
+
         }
 
 
@@ -76,9 +87,9 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
-            List<dynamic> list = db.入库单s.Include(t =>t.供应商)
-                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID==Entity.供应商ID && t.状态!="N" && t.未付金额>0m && t.分店ID==Entity.分店ID)
+            var db = DB;
+            List<dynamic> list = db.入库单s.Include(t => t.供应商)
+                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N" && t.未付金额 > 0m && t.分店ID == Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.日期, 供应商 = t.供应商.简称, 总金额 = t.总金额, 已付金额 = t.已付金额, 未付金额 = t.未付金额 })
                   .ToList<dynamic>();
             //if (list.Count==1)
@@ -97,7 +108,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 {
                     SelectChildEntity.入库单ID = VM.SelectEntity.ID;
                     this.DB.Entry(SelectChildEntity).Reference(t => t.入库单).Load();
-                   SelectChildEntity.入库单号 = VM.SelectEntity.编号;
+                    SelectChildEntity.入库单号 = VM.SelectEntity.编号;
 
                     SelectChildEntity.退库单ID = null;
                     SelectChildEntity.退库单 = null;
@@ -115,9 +126,9 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
+            var db = DB;
             List<dynamic> list = db.退库单s.Include(t => t.供应商)
-                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N"&& t.未收金额>0m && t.分店ID == Entity.分店ID)
+                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N" && t.未收金额 > 0m && t.分店ID == Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.日期, 供应商 = t.供应商.简称, 总金额 = t.总金额, 已收金额 = t.已收金额, 未收金额 = t.未收金额 })
                   .ToList<dynamic>();
             //if (list.Count==1)
@@ -136,7 +147,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 {
                     SelectChildEntity.入库单ID = null;
                     SelectChildEntity.入库单 = null;
-                    SelectChildEntity.入库单号 ="";
+                    SelectChildEntity.入库单号 = "";
 
                     SelectChildEntity.退库单ID = VM.SelectEntity.ID;
                     this.DB.Entry(SelectChildEntity).Reference(t => t.退库单).Load();
@@ -157,10 +168,10 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
             var item = DB.付款单明细s.Create();
-         
+
             item.DirtyState = DirtyState.Added;
-       
-         
+
+
             if (Entity.付款单明细s.Count == 0)
             {
                 item.序号 = 1;
@@ -216,17 +227,17 @@ namespace ZtxFrameWork.UI.ViewModels
                 throw new Exception("没有单身内容");
             foreach (var item in entity.付款单明细s)
             {
-                if (item.入库单ID>0)
+                if (item.入库单ID > 0)
                 {
-                 var temp=   dbContext.入库单s.Where(t => t.ID == item.入库单ID && t.状态 != "N").Single();
+                    var temp = dbContext.入库单s.Where(t => t.ID == item.入库单ID && t.状态 != "N").Single();
                     temp.已付金额 += item.本次支付金额;
                     temp.未付金额 = temp.总金额 - temp.已付金额;
 
                 }
-                if (item.退库单ID>0)
+                if (item.退库单ID > 0)
                 {
                     var temp = dbContext.退库单s.Where(t => t.ID == item.退库单ID && t.状态 != "N").Single();
-                    temp.已收金额 += item.本次支付金额*-1m;
+                    temp.已收金额 += item.本次支付金额 * -1m;
                     temp.未收金额 = temp.总金额 - temp.已收金额;
                 }
 
@@ -249,7 +260,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 if (item.退库单ID > 0)
                 {
                     var temp = dbContext.退库单s.Where(t => t.ID == item.退库单ID && t.状态 != "N").Single();
-                    temp.已收金额-= item.本次支付金额 * -1m;
+                    temp.已收金额 -= item.本次支付金额 * -1m;
                     temp.未收金额 = temp.总金额 - temp.已收金额;
                 }
 

@@ -29,7 +29,7 @@ namespace ZtxFrameWork.UI.QueryList
         public virtual List<dynamic> Entities { get; set; }
 
         public virtual object Parameter { get; set; }
-        protected virtual void OnParameterChanged()
+        protected virtual async void OnParameterChanged()
         {
             if (int.TryParse(Parameter.ToString(), out var id))
             {
@@ -83,7 +83,7 @@ namespace ZtxFrameWork.UI.QueryList
                              在途数量入 = d2 == null ? 0 : d2.在途数量入
                          };
 
-                Entities = dd.ToList<dynamic>();
+                Entities =await dd.ToListAsync<dynamic>();
 
             //    Mouse.OverrideCursor = null;
 

@@ -30,7 +30,7 @@ namespace ZtxFrameWork.UI.QueryList
         }
 
 
-        protected override System.Collections.Generic.List<dynamic> GetNewData(Expression<Func<入库单, bool>> AdvancedExpression)
+        protected override  System.Collections.Generic.List<dynamic> GetNewData(Expression<Func<入库单, bool>> AdvancedExpression)
         {
 
           

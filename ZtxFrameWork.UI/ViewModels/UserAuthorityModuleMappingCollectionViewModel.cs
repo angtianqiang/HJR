@@ -10,7 +10,7 @@ using System.Linq;
 using DevExpress.Mvvm.POCO;
 using ZtxFrameWork.UI.Comm;
 using DevExpress.XtraReports.UI;
-
+using System.Data.Entity;
 namespace ZtxFrameWork.UI.ViewModels
 {
     [POCOViewModel]
@@ -36,7 +36,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected UserAuthorityModuleMappingCollectionViewModel()
         {
             DB = DbFactory.Instance.CreateDbContext();
-            Entities = new VHObjectList<UserAuthorityModuleMapping>(DB.UserAuthorityModuleMappings.Where(t=>t.User.IsFrozen==false).AsEnumerable());
+            Entities = new VHObjectList<UserAuthorityModuleMapping>(DB.UserAuthorityModuleMappings.Include(t=>t.User).Include(t=>t.AuthorityModule).Where(t=>t.User.IsFrozen==false).AsEnumerable());
         }
         public virtual void Save()
         {

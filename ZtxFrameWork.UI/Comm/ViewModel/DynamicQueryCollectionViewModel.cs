@@ -39,7 +39,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         {
             PermissionTitle = permissionTitle;
         }
-        protected virtual List<dynamic> GetNewData(Expression<Func<TEntity, bool>> AdvancedExpression)
+        protected virtual  List<dynamic> GetNewData(Expression<Func<TEntity, bool>> AdvancedExpression)
         {
             return null;
         }

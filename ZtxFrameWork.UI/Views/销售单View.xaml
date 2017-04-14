@@ -18,7 +18,7 @@
              xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils"
              d:DesignHeight="800"
              d:DesignWidth="800"
-           d:DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:销售单ViewModel}}"
+        DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:销售单ViewModel}}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
         <behaviors:UserControlDefaultLoad  />

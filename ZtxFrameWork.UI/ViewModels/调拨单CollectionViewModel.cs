@@ -23,13 +23,14 @@ namespace ZtxFrameWork.UI.ViewModels
 
         }
         private Action<调拨单> b = InitEntity;
-        static public void InitEntity(调拨单 NewEntity)
+        static public async void InitEntity(调拨单 NewEntity)
         {
-            NewEntity.编号 = GetNewCode("DB", DbFactory.Instance, x => x.调拨单s, t => t.编号);
-             NewEntity.日期 = DateTime.Now;
-            NewEntity.调拨员ID = App.CurrentUser.ID;
-       
+            var t1 = GetNewCode("DB", DbFactory.Instance, x => x.调拨单s, t => t.编号);
+            NewEntity.日期 = DateTime.Now;
+            NewEntity.调拨员ID = App.CurrentUser.ID;       
             NewEntity.状态 = "N";
+            NewEntity.编号 = await t1; 
+
         }
 
 

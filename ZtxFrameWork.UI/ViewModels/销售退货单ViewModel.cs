@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -25,12 +26,8 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 销售退货单ViewModel() : base(DbFactory.Instance, x => x.销售退货单s, x => x.ID, x => x.编号, "销售退货单")
         {
             if (this.IsInDesignMode()) return;
-           var db = DB;
-            操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            分店Source = db.分店s.OrderBy(t => t.名称).ToList();
+            Init();
 
-       //     供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
-            会员Source = db.会员s.OrderBy(t => t.编号).ToList();
             Messenger.Default.Register<string>(this, "销售单号更改" + Token, m =>
             {
                 SelectChildEntity.销售单明细ID = 0;
@@ -39,13 +36,28 @@ namespace ZtxFrameWork.UI.ViewModels
             Messenger.Default.Register<string>(this, "更新金额" + Token, m =>
             {
                 var item = SelectChildEntity;
-            //    item.销售价 = item.工费计法 == 费用计法.按件 ? item.饰品.按件批发价 * item.数量 + item.饰品.成本工费 + item.饰品.批发工费 : item.饰品.按重批发价 * item.重量 + item.饰品.成本工费 + item.饰品.批发工费;
-              
+                //    item.销售价 = item.工费计法 == 费用计法.按件 ? item.饰品.按件批发价 * item.数量 + item.饰品.成本工费 + item.饰品.批发工费 : item.饰品.按重批发价 * item.重量 + item.饰品.成本工费 + item.饰品.批发工费;
+
             });
+        }
+        public async void Init()
+        {
+
+           var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+          var t2=  await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+          var t3=  await DbFactory.Instance.CreateDbContext().会员s.OrderBy(t => t.编号).ToListAsync();
+
+            操作员Source = t1;
+            分店Source = t2;
+            会员Source = t3;
+        }
+        protected override IQueryable<销售退货单> DbInclude(ObjectSet<销售退货单> dbSet)
+        {
+            return dbSet.Include(t => t.销售退货单明细s.Select(p=>p.销售单明细));
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
-      //  public virtual List<供应商> 供应商Source { get; set; }
+        //  public virtual List<供应商> 供应商Source { get; set; }
         public virtual List<会员> 会员Source { get; set; }
         #region 明细表操作
 
@@ -54,7 +66,7 @@ namespace ZtxFrameWork.UI.ViewModels
             Entity.总金额 = Entity.销售退货单明细s.Sum(t => t.销售价);
             Entity.未付金额 = Entity.总金额 - Entity.已付金额;
             Entity.数量 = Entity.销售退货单明细s.Sum(t => t.数量);
-           
+
         }
 
         protected override void UpdateCommands()
@@ -74,13 +86,26 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
+            var db = DB;
             List<dynamic> list = db.销售单明细s.Include(t => t.销售单).Include(t => t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位)
-                  .Where(t => t.销售单.编号.StartsWith(startStr) && t.销售单.状态!="N")
-                       .Select(t => new { ID = t.ID, 编号 = t.销售单.编号, 品名 = t.饰品.品名, 单位 = t.饰品.单位.名称, 重量单位 = t.饰品.重量单位.名称, 尺寸 = t.饰品.尺寸, 
-                           数量 = t.数量, 重量 = t.重量, 销售价 = t.销售价, 金额=t.金额, 工费计法=t.工费计法, 工费=t.工费  ,
-                           折扣=t.折扣,
-                           折前价=t.折前价           })             
+                  .Where(t => t.销售单.编号.StartsWith(startStr) && t.销售单.状态 != "N")
+                       .Select(t => new
+                       {
+                           ID = t.ID,
+                           编号 = t.销售单.编号,
+                           品名 = t.饰品.品名,
+                           单位 = t.饰品.单位.名称,
+                           重量单位 = t.饰品.重量单位.名称,
+                           尺寸 = t.饰品.尺寸,
+                           数量 = t.数量,
+                           重量 = t.重量,
+                           销售价 = t.销售价,
+                           金额 = t.金额,
+                           工费计法 = t.工费计法,
+                           工费 = t.工费,
+                           折扣 = t.折扣,
+                           折前价 = t.折前价
+                       })
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -270,7 +295,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
         #region 20170321 收款 退货操作
-        public virtual void SK()
+        public virtual async void SK()
         {
             //生成收款单
             long parKey = GetPrimaryKey(Entity);
@@ -280,7 +305,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 var skd = dbContext.收款单s.Create();
 
 
-                skd.编号 = CollectionViewModel<收款单, ZtxDB, long>.GetNewCode("SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
+                skd.编号 = await CollectionViewModel<收款单, ZtxDB, long>.GetNewCode("SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
                 skd.收款日期 = DateTime.Now;
                 skd.会员ID = Entity.操作员ID;
                 //  skd.状态 = "Y";//直接生效
@@ -300,7 +325,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
                 };
                 dbContext.收款单明细s.Add(temp);
-           skd.收款单明细s.Add(temp);
+                skd.收款单明细s.Add(temp);
 
                 skd.实收金额 = skd.收款单明细s.Sum(t => t.本次收入金额);
                 skd.应收金额 = skd.收款单明细s.Sum(t => t.应收金额);
@@ -319,12 +344,12 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             if (this.IsInDesignMode())
                 return true;
-            return Entity.已付金额 < Entity.总金额 && ((dynamic)Entity).状态 != "N";
+            return Entity!=null&& Entity.已付金额 < Entity.总金额 && ((IBillEntity)Entity).状态 != "N";
         }
         public virtual void TH()
         {
 
-          
+
 
 
         }
@@ -333,7 +358,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             if (this.IsInDesignMode())
                 return true;
-            return ((dynamic)Entity).状态 != "N";
+            return Entity != null && ((IBillEntity)Entity).状态 != "N";
         }
         #endregion
         ////20170321 用户不新建  和编辑退库单，只

@@ -9,10 +9,11 @@ namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_SystemConfigurations")]
     [DisplayName("系统参数配置")]
-  public  class SystemConfiguration : ModelBase
+  public  class SystemConfiguration : Entity
     {
         private String  _token;
         [Display(Name = "标识", AutoGenerateField = true)]
+        [OperatorLogAttribute]
         public String  Token
         {
             get { return _token; }

@@ -22,14 +22,16 @@ namespace ZtxFrameWork.UI.ViewModels
         {
 
         }
-        static public void InitEntity(收款单 NewEntity)
-        { }
-
-        public override bool CanNew()
+        static public async void InitEntity(收款单 NewEntity)
         {
-            if (this.IsInDesignMode()) return true;
-            return false;
+       var t1=    GetNewCode("SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
+       NewEntity.收款日期 = DateTime.Now;
+            NewEntity.操作员ID = App.CurrentUser.ID;
+            NewEntity.状态 = "N";
+            NewEntity.编号 = await t1;
         }
+
+     
         #region 20170320 删除时同时删除子表
         protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 收款单 entity)
         {

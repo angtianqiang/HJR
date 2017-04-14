@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
@@ -26,11 +27,7 @@ namespace ZtxFrameWork.UI.ViewModels
             if (this.IsInDesignMode()) return;
             //  Entity.入库单明细s.AcceTChanges();
 
-           var db = DB;
-            操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            分店Source = db.分店s.OrderBy(t => t.名称).ToList();
-
-            供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
+            Init();
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
@@ -42,6 +39,22 @@ namespace ZtxFrameWork.UI.ViewModels
                 item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                 UpdateTotal();
             });
+        }
+        public async void Init()
+        {
+          
+           var t1  = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+         var t2=    await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+         var t3    = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
+            操作员Source = t1;
+            分店Source = t2;
+            供应商Source = t3;
+
+
+        }
+        protected override IQueryable<入库单> DbInclude(ObjectSet<入库单> dbSet)
+        {
+            return dbSet.Include(t => t.入库单明细s.Select(p => p.饰品));
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }

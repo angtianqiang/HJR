@@ -61,7 +61,7 @@
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="">
                         <dxb:BarSubItem Content="导出"
-                                        KeyGesture="CTRL++SHIFT+E"
+                                        KeyGesture="CTRL+SHIFT+E"
                                         LargeGlyph="/ZtxFrameWork.UI;component/Images/export.png">
                             <dxb:BarCheckItem Command="{Binding ExportToXlsxCommand}"
                                               CommandParameter="{Binding Path=DataView,

@@ -23,12 +23,13 @@ namespace ZtxFrameWork.UI.ViewModels
 
         }
         private Action<销售单> b = InitEntity;
-        static public void InitEntity(销售单 NewEntity)
+        static public async void InitEntity(销售单 NewEntity)
         {
-            NewEntity.编号 = GetNewCode("XS", DbFactory.Instance, x => x.销售单s, t => t.编号);
-           NewEntity.日期 = DateTime.Now;
+            var t1 = GetNewCode("XS", DbFactory.Instance, x => x.销售单s, t => t.编号);
+            NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";
+            NewEntity.编号 = await t1;
         }
 
         #region 20170320 删除时同时删除子表

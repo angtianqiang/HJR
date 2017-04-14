@@ -17,7 +17,7 @@ namespace ZtxFrameWork.UI.Comm.DataModel
          static  DbFactory()
         {
           //  db = new ZtxDB();
-
+         
 
           //  db.Configuration.AutoDetectChangesEnabled = false;
           //db.Configuration.ProxyCreationEnabled = false;
@@ -28,7 +28,7 @@ namespace ZtxFrameWork.UI.Comm.DataModel
             //  return db;
             Qty++;
             System.Diagnostics.Debug.WriteLine($"数据库上下文ztxDB的实例数为: {Qty.ToString()}");
-            return  this.IsInDesignMode()?  new ZtxDB("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork2;Integrated Security=True") : new ZtxDB("conn1");
+            return  this.IsInDesignMode()?  new ZtxDB("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork3;Integrated Security=True;MultipleActiveResultSets=true") : new ZtxDB("conn1");
 
         }
         public ZtxDB CreateDbContext(System.Data.Common.DbConnection con)

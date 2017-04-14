@@ -10,7 +10,7 @@ namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_AuthorityModules")]
     [DisplayName("模块权限配置")]
-    public class AuthorityModule : ModelBase
+    public class AuthorityModule : Entity
     {
         public AuthorityModule()
         {

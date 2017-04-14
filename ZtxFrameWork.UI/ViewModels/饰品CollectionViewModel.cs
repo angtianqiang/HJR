@@ -27,5 +27,15 @@ namespace ZtxFrameWork.UI.ViewModels
             NewEntity.饰品图片 = new 饰品图片();
           
         }
+
+        protected override 饰品 ReloadCore(饰品 entity)
+        {
+     
+
+            DB.Entry(entity).Reload();
+            DB.Entry(entity.饰品图片).Reload();
+            return ReadOnlyDbSet.Find(this.getPrimaryKeyExpression.Compile()(entity));
+       
+    }
     }
 }

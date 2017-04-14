@@ -154,7 +154,7 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="日期">
-                        <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        <dxe:DateEdit EditValue="{Binding Entity.收款日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="操作员">
                         <dxg:LookUpEdit DisplayMember="DispalyName"

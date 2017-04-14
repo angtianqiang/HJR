@@ -15,6 +15,7 @@ using System.Data.Entity;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.Utils;
 using System.Windows.Input;
+using System.Data.Entity.Infrastructure;
 
 namespace ZtxFrameWork.UI.Comm.ViewModel
 {
@@ -173,7 +174,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         protected readonly IDbFactory<TDbContext> dbFactory;
         protected readonly Func<TDbContext, DbSet<TEntity>> getDbSetFunc;
         protected Func<IQueryable<TEntity>, IQueryable<TProjection>> Projection { get; private set; }
-        Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression { get; }
+        protected Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression { get; }
 
         /// <summary>
         /// Initializes a new instance of the EntitiesViewModelBase class. EntitiesViewModelBase类的初始化一个新的实例
@@ -432,14 +433,29 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         public  TProjection FindActualProjectionByKey( Func<IQueryable<TEntity>, IQueryable<TProjection>> projection, TPrimaryKey primaryKey) 
         {
             var primaryKeyEqualsExpression = GetProjectionPrimaryKeyEqualsExpression( primaryKey);
-            var result = ReadOnlyDbSet.GetFilteredEntities(null, projection).Where(primaryKeyEqualsExpression).Take(1).ToArray().FirstOrDefault();
+
+            //   var result = ReadOnlyDbSet.GetFilteredEntities(null, projection).Where(primaryKeyEqualsExpression).Take(1).ToArray().FirstOrDefault();
+
+
+            var objectContext = ((IObjectContextAdapter)this.DB).ObjectContext;
+            var objectSet = objectContext.CreateObjectSet<TEntity>();
+            var oldMergeOption = objectSet.MergeOption;
+            objectSet.MergeOption = System.Data.Entity.Core.Objects.MergeOption.OverwriteChanges;
+           var result = objectSet.GetFilteredEntities(null, projection).Where(primaryKeyEqualsExpression).Take(1).ToArray().FirstOrDefault();
+            objectSet.MergeOption = oldMergeOption;
+            //  20170412 更改这里减少一次查询
+            //return GetProjectionValue(result,
+            //    (TEntity x) => x != null ? ReloadCore(x) : null,
+            //(TProjection x) => x);
             return GetProjectionValue(result,
-                (TEntity x) =>  x != null ? ReloadCore(x) : null, 
-            (TProjection x) => x);
+               (TEntity x) => x,
+           (TProjection x) => x);
         }
         protected virtual TEntity ReloadCore(TEntity entity)
         {
-            DB.Entry(entity).Reload();
+         
+                DB.Entry(entity).Reload();
+      
             return ReadOnlyDbSet.Find(this.getPrimaryKeyExpression.Compile()(entity));
         }
         static TProjectionResult GetProjectionValue<TEntity, TProjection, TEntityResult, TProjectionResult>(TProjection value, Func<TEntity, TEntityResult> entityFunc, Func<TProjection, TProjectionResult> projectionFunc)

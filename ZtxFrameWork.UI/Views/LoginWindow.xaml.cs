@@ -37,35 +37,48 @@ namespace ZtxFrameWork.UI.Views
 
 
 
-            this.Loaded += (s, e) =>
-            {
-
-
-                Messenger.Default.Register<string>(this, "Cancel" + Token, m =>
-                {
-                    this.DialogResult = false;
-                });
-                Messenger.Default.Register<string>(this, "Confirm" + Token, m =>
-                {
-                    this.DialogResult = true;
-                    Mouse.OverrideCursor = Cursors.Wait;
-                });
-                Messenger.Default.Register<string>(this, "Error" + Token, m => {
-                    DXMessageBox.Show(this, m, "系统提示", MessageBoxButton.OK, MessageBoxImage.Error);
-                });
-
-                this.txtUserName.Focus();
-
-                WindowInteropHelper windHelper = new WindowInteropHelper(this);
-                SplashScreenHelper.Instance.HideSplashScreen();
-                //20140717  加入SplashScreen窗体后发现登录窗口显示后不能自动得到焦点，
-                //因此用API得到
-                SetForegroundWindow(windHelper.Handle);
-            };
+            this.Loaded += LoginWindow_Loaded;
+          
             this.Closed += (s, e) =>
             {
                 Messenger.Default.Unregister(this);
             };
+        }
+
+        private void LoginWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            Messenger.Default.Register<string>(this, "Cancel" + Token, m =>
+            {
+                this.DialogResult = false;
+            });
+            Messenger.Default.Register<string>(this, "Confirm" + Token, m =>
+            {
+                this.DialogResult = true;
+                Mouse.OverrideCursor = Cursors.Wait;
+            });
+            Messenger.Default.Register<string>(this, "Error" + Token, m =>
+            {
+                DXMessageBox.Show(this, m, "系统提示", MessageBoxButton.OK, MessageBoxImage.Error);
+            });
+
+            this.txtUserName.Focus();
+
+                WindowInteropHelper windHelper = new WindowInteropHelper(this);
+                SplashScreenHelper.Instance.HideSplashScreen();
+            //20140717  加入SplashScreen窗体后发现登录窗口显示后不能自动得到焦点，
+            //因此用API得到
+            try
+            {
+                SetForegroundWindow(windHelper.Handle);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+               
+            }
+              
+           
         }
 
         private void UIElement_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)

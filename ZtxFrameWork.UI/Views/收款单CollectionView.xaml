@@ -43,8 +43,8 @@
                 <Style TargetType="{x:Type dx:DXWindow}">
                     <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
                     <Setter Property="Icon" Value="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
-                    <Setter Property="Width" Value="500" />
-                    <Setter Property="Height" Value="380" />
+                    <Setter Property="Width" Value="700" />
+                    <Setter Property="Height" Value="600" />
                 </Style>
             </dx:WindowedDocumentUIService.WindowStyle>
         </dx:WindowedDocumentUIService>

@@ -17,17 +17,19 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new  盈亏单CollectionViewModel());
         }
-        protected  盈亏单CollectionViewModel() : base(DbFactory.Instance, x => x. 盈亏单s, query => query.OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "盈亏单")
+        protected  盈亏单CollectionViewModel() : base(DbFactory.Instance, x => x. 盈亏单s, query => query.Include(t=>t.分店).Include(t=>t.操作员).OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "盈亏单")
         {
 
         }
         private Action< 盈亏单> b = InitEntity;
-        static public void InitEntity( 盈亏单 NewEntity)
+        static public async void InitEntity( 盈亏单 NewEntity)
         {
-            NewEntity.编号 = GetNewCode("YK", DbFactory.Instance, x => x. 盈亏单s, t => t.编号);
-           NewEntity.日期 = DateTime.Now;
+            var t1 = GetNewCode("YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
+            NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";
+            NewEntity.编号 = await t1;
+
         }
 
         #region 20170320 删除时同时删除子表

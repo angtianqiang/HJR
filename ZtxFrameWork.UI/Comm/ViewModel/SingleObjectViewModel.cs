@@ -21,12 +21,14 @@ using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.Utils;
 using System.Configuration;
+using System.Data.Entity.Core.Objects;
+
 namespace ZtxFrameWork.UI.Comm.ViewModel
 {
     [POCOViewModel]
     public class SingleObjectViewModel<TEntity, TDbContext, TPrimaryKey> : ISingleObjectViewModel<TEntity, TPrimaryKey>, ISupportParameter, IDocumentContent
-      where TEntity : class
-where TDbContext : DbContext
+        where TEntity : class
+      where TDbContext : DbContext
     {
 
         object title;
@@ -62,9 +64,9 @@ where TDbContext : DbContext
             {
                 this.Entity = this.DbSet.FirstOrDefault();
             }
-            else
-                #region 20170329 设置数据不延时加载
-                DB.Configuration.LazyLoadingEnabled = false;
+
+            #region 20170329 设置数据不延时加载
+            DB.Configuration.LazyLoadingEnabled = false;
             DB.Configuration.ProxyCreationEnabled = false;
             #endregion
             OnInitializeInRuntime();
@@ -345,10 +347,11 @@ where TDbContext : DbContext
                         }
 
                         DB.SaveChanges();
-                        PrimaryKey = this.GetPrimaryKey(Entity);
-                        LoadEntityByKey(PrimaryKey);
+
                         OnEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
                         tran.Commit();
+                        PrimaryKey = this.GetPrimaryKey(Entity);
+                        LoadEntityByKey(PrimaryKey);
                         Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, isNewEntity ? EntityMessageType.Added : EntityMessageType.Changed));
                     }
                     catch (Exception innerEx)
@@ -399,14 +402,14 @@ where TDbContext : DbContext
 
         protected virtual void OnEntitySaved(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity, bool isNewEntity)
         {
-           
+
         }
 
         protected virtual void OnBeforeEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityDeleted(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-          
+
         }
         #region 20170330
 
@@ -480,21 +483,51 @@ where TDbContext : DbContext
             isEntityNewAndUnmodified = true;
         }
 
-        protected void LoadEntityByKey(TPrimaryKey primaryKey)
+        protected async void LoadEntityByKey(TPrimaryKey primaryKey)
         {
 
-            if (Entity == null)
-            {
-                Entity = DbSet.Find(primaryKey);
-            }
-            else
-            {
-                DB.Entry(Entity).Reload();
-                Entity = DbSet.Find(primaryKey);
-            }
+            //if (Entity == null)
+            //{
+            //    Entity = DbSet.Find(primaryKey);
+            //}
+            //else
+            //{
+            //    DB.Entry(Entity).ReloadAsync();
+            //    Entity = DbSet.Find(primaryKey);
+            //}
+
+            //if (Entity == null)
+            //{    
+            var objectContext = ((IObjectContextAdapter)this.DB).ObjectContext;
+            var objectSet = objectContext.CreateObjectSet<TEntity>();
+            var oldMergeOption = objectSet.MergeOption;
+            objectSet.MergeOption = System.Data.Entity.Core.Objects.MergeOption.OverwriteChanges;
+
+            Entity = await DbInclude(objectSet).FirstOrDefaultAsync(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
+            objectSet.MergeOption = oldMergeOption;
+            //   Entity = await DbInclude(DbSet).FirstOrDefaultAsync(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
+            UpdateCommands();
+            //}
+            //else
+            //{
+            //    DB.Entry(Entity).ReloadAsync();
+            //    Entity = DbSet.Find(primaryKey);
+            //}
 
         }
 
+        protected virtual IQueryable<TEntity> DbInclude(DbSet<TEntity> dbSet)
+        {
+
+
+            return dbSet;
+        }
+        protected virtual IQueryable<TEntity> DbInclude(ObjectSet<TEntity> dbSet)
+        {
+
+
+            return dbSet;
+        }
 
 
         void UpdateTitle()
@@ -673,7 +706,7 @@ where TDbContext : DbContext
 
 
         //用于在XAML中绑定当前用户
-      public virtual User CurrentUser { get; set; } = User.CurrentUser;
+        public virtual User CurrentUser { get; set; } = User.CurrentUser;
 
 
 
@@ -774,6 +807,75 @@ where TDbContext : DbContext
 
 
         #region 20170310 生效审核权限实现
+        private void BillStateChange(TDbContext dbContext, string sourceState, string targetState, TEntity entity)
+        {
+
+            ((IBillEntity)entity).状态 = targetState;
+            // dbContext.Entry(entity).State = EntityState.Modified;
+            var db = dbContext as ZtxDB;
+            db.BillStateChangeLogs.Add(new BillStateChangeLog() { BillID = ((IEntity)entity).ID, BillName = EntityDisplayName, BillNum = ((IBillEntity)entity).编号, SourceState = sourceState, TargetState = targetState, ChangeBy = User.CurrentUser.DispalyName, ChangeOn = DateTime.Now });
+
+        }
+        private void ExceptionHandle(Exception e)
+        {
+            if (e is DbException)
+            {
+                var ex = e as DbException;
+                Mouse.OverrideCursor = null;
+                MessageBoxService.ShowMessage(ex.ErrorMessage, ex.ErrorCaption, MessageButton.OK, MessageIcon.Error);
+                return;
+            }
+            if (e is DbEntityValidationException)
+            {
+                var ex = e as DbEntityValidationException;
+                Mouse.OverrideCursor = null;
+                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(ex);
+                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
+                return;
+            }
+            if (e is DbUpdateException)
+            {
+                var ex = e as DbUpdateException;
+                Mouse.OverrideCursor = null;
+                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(ex);
+                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
+                return;
+            }
+            Mouse.OverrideCursor = null;
+            MessageBoxService.ShowMessage(e.Message, CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
+        }
+        private  TEntity LoadEntityByKeyOfNewDb(TDbContext newDb,TPrimaryKey primaryKey)
+        {
+
+            //if (Entity == null)
+            //{
+            //    Entity = DbSet.Find(primaryKey);
+            //}
+            //else
+            //{
+            //    DB.Entry(Entity).ReloadAsync();
+            //    Entity = DbSet.Find(primaryKey);
+            //}
+
+            //if (Entity == null)
+            //{    
+            var objectContext = ((IObjectContextAdapter)newDb).ObjectContext;
+            var objectSet = objectContext.CreateObjectSet<TEntity>();
+            var oldMergeOption = objectSet.MergeOption;
+            objectSet.MergeOption = System.Data.Entity.Core.Objects.MergeOption.OverwriteChanges;
+
+           Entity =  DbInclude(objectSet).FirstOrDefault(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
+            return Entity;
+            //   Entity = await DbInclude(DbSet).FirstOrDefaultAsync(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
+           
+            //}
+            //else
+            //{
+            //    DB.Entry(Entity).ReloadAsync();
+            //    Entity = DbSet.Find(primaryKey);
+            //}
+
+        }
         public virtual void Confirm()
         {
             if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Confirm, EntityDisplayName), GetConfirmationMessageTitle(), MessageButton.YesNo) != MessageResult.Yes)
@@ -815,15 +917,19 @@ where TDbContext : DbContext
                             var newDB = dbFactory.CreateDbContext(con);
                             newDB.Database.UseTransaction(SqlTransaction);
 
-                            var newDbSet = getDbSetFunc(newDB);
-                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                            if (((dynamic)newEntity).状态 != "N")
+                          //  var newDbSet = getDbSetFunc(newDB);
+                            //   var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            //   var newEntity = DbInclude(newDbSet).FirstOrDefault(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, this.GetPrimaryKey(Entity)));
+                            var newEntity = LoadEntityByKeyOfNewDb(newDB, this.GetPrimaryKey(Entity));
+                            if (((IBillEntity)newEntity).状态 != "N")
                             {
                                 throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
                             }
                             OnBeforeEntityConfirmed(newDB, PrimaryKey, newEntity);
-                            ((dynamic)newEntity).状态 = "Y";
-                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            BillStateChange(newDB, "N", "Y", newEntity);
+                            // ((dynamic)newEntity).状态 = "Y";
+                            //  newDB.Entry(newEntity).State = EntityState.Modified;
+                            //   newDB.SaveChanges();
                             newDB.SaveChanges();
                             //   PrimaryKey = this.GetPrimaryKey(newEntity);
                             // LoadEntityByKey(PrimaryKey);
@@ -841,36 +947,15 @@ where TDbContext : DbContext
                     }
                 }
 
-
-
                 LoadEntityByKey(PrimaryKey);
-                UpdateCommands();
+                //    UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("生效成功！");
 
             }
-            catch (DbException e)
-            {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-
-            }
-            catch (DbUpdateException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
-            catch (DbEntityValidationException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
             catch (Exception e)
             {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.Message, CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
+                ExceptionHandle(e);
             }
             finally
             {
@@ -878,19 +963,12 @@ where TDbContext : DbContext
                 //if (IsRunOK == false) LoadEntityByKey(this.GetPrimaryKey(Entity));
             }
         }
+
         public virtual bool CanConfirm()
         {
-            if (this.IsInDesignMode())
-            {
-                return true;
-            }
-            bool temp = !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Confirm;
-            try
-            {
-                temp = temp && ((dynamic)Entity).状态 == "N";
-            }
-            catch { }
-            return temp;
+            if (this.IsInDesignMode()) return true;
+            if (!(Entity is IBillEntity)) return false;
+            return Entity != null && !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Confirm && ((IBillEntity)Entity).状态 == "N";
         }
         public virtual void UnConfirm()
         {
@@ -933,15 +1011,18 @@ where TDbContext : DbContext
                             var newDB = dbFactory.CreateDbContext(con);
                             newDB.Database.UseTransaction(SqlTransaction);
 
-                            var newDbSet = getDbSetFunc(newDB);
-                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                            if (((dynamic)newEntity).状态 != "Y")
+                            //  var newDbSet = getDbSetFunc(newDB);
+                            //    var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            //  var newEntity = DbInclude(newDbSet).FirstOrDefault(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, this.GetPrimaryKey(Entity)));
+                            var newEntity = LoadEntityByKeyOfNewDb(newDB, this.GetPrimaryKey(Entity));
+                            if (((IBillEntity)newEntity).状态 != "Y")
                             {
                                 throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
                             }
                             OnBeforeEntityUnConfirmed(newDB, PrimaryKey, newEntity);
-                            ((dynamic)newEntity).状态 = "N";
-                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            BillStateChange(newDB, "Y", "N", newEntity);
+                            //  ((dynamic)newEntity).状态 = "N";
+                            //  newDB.Entry(newEntity).State = EntityState.Modified;
                             newDB.SaveChanges();
                             //  PrimaryKey = this.GetPrimaryKey(newEntity);
                             //   LoadEntityByKey(PrimaryKey);
@@ -960,33 +1041,15 @@ where TDbContext : DbContext
                 }
 
                 LoadEntityByKey(PrimaryKey);
-                UpdateCommands();
+                //   UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("失效成功！");
 
             }
-            catch (DbException e)
-            {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
 
-            }
-            catch (DbUpdateException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
-            catch (DbEntityValidationException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
             catch (Exception e)
             {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.Message, CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
+                ExceptionHandle(e);
             }
             finally
             {
@@ -997,14 +1060,8 @@ where TDbContext : DbContext
         public virtual bool CanUnConfirm()
         {
             if (this.IsInDesignMode()) return true;
-
-            bool temp = !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Confirm;
-            try
-            {
-                temp = temp && ((dynamic)Entity).状态 == "Y";
-            }
-            catch { }
-            return temp;
+            if (!(Entity is IBillEntity)) return false;
+            return Entity != null && !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).UnConfirm && ((IBillEntity)Entity).状态 == "Y";
         }
         public virtual void Audit()
         {
@@ -1046,15 +1103,18 @@ where TDbContext : DbContext
                             var newDB = dbFactory.CreateDbContext(con);
                             newDB.Database.UseTransaction(SqlTransaction);
 
-                            var newDbSet = getDbSetFunc(newDB);
-                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                            if (((dynamic)newEntity).状态 != "Y")
+                            // var newDbSet = getDbSetFunc(newDB);
+                            // var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            // var newEntity = DbInclude(newDbSet).FirstOrDefault(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, this.GetPrimaryKey(Entity)));
+                            var newEntity = LoadEntityByKeyOfNewDb(newDB, this.GetPrimaryKey(Entity));
+                            if (((IBillEntity)newEntity).状态 != "Y")
                             {
                                 throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
                             }
                             OnBeforeEntityAudited(newDB, PrimaryKey, newEntity);
-                            ((dynamic)newEntity).状态 = "Z";
-                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            BillStateChange(newDB, "Y", "Z", newEntity);
+                            //  ((dynamic)newEntity).状态 = "Z";
+                            //  newDB.Entry(newEntity).State = EntityState.Modified;
                             newDB.SaveChanges();
                             // PrimaryKey = this.GetPrimaryKey(newEntity);
                             //   LoadEntityByKey(PrimaryKey);
@@ -1073,33 +1133,15 @@ where TDbContext : DbContext
                 }
 
                 LoadEntityByKey(PrimaryKey);
-                UpdateCommands();
+                //    UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("审核成功！");
 
             }
-            catch (DbException e)
-            {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
 
-            }
-            catch (DbUpdateException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
-            catch (DbEntityValidationException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
             catch (Exception e)
             {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.Message, CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
+                ExceptionHandle(e);
             }
             finally
             {
@@ -1110,14 +1152,8 @@ where TDbContext : DbContext
         public virtual bool CanAudit()
         {
             if (this.IsInDesignMode()) return true;
-
-            bool temp = !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Confirm;
-            try
-            {
-                temp = temp && ((dynamic)Entity).状态 == "Y";
-            }
-            catch { }
-            return temp;
+            if (!(Entity is IBillEntity)) return false;
+            return Entity != null && !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Audit && ((IBillEntity)Entity).状态 == "Y";
         }
         public virtual void UnAudit()
         {
@@ -1158,16 +1194,19 @@ where TDbContext : DbContext
                         {
                             var newDB = dbFactory.CreateDbContext(con);
                             newDB.Database.UseTransaction(SqlTransaction);
-                   
-                            var newDbSet = getDbSetFunc(newDB);
-                            var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
-                            if (((dynamic)newEntity).状态 != "Z")
+
+                            // var newDbSet = getDbSetFunc(newDB);
+                            //   var newEntity = newDbSet.Find(this.GetPrimaryKey(Entity));
+                            // var newEntity = DbInclude(newDbSet).FirstOrDefault(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, this.GetPrimaryKey(Entity)));
+                            var newEntity = LoadEntityByKeyOfNewDb(newDB, this.GetPrimaryKey(Entity));
+                            if (((IBillEntity)newEntity).状态 != "Z")
                             {
                                 throw new Exception("当前状态不可操作，可能其它用户已更改了单据状态！");
                             }
                             OnBeforeEntityUnAudited(newDB, PrimaryKey, newEntity);
-                            ((dynamic)newEntity).状态 = "Y";
-                            newDB.Entry(newEntity).State = EntityState.Modified;
+                            BillStateChange(newDB, "Z", "Y", newEntity);
+                            //  ((dynamic)newEntity).状态 = "Y";
+                            //  newDB.Entry(newEntity).State = EntityState.Modified;
                             newDB.SaveChanges();
                             // PrimaryKey = this.GetPrimaryKey(newEntity);
                             //  LoadEntityByKey(PrimaryKey);
@@ -1186,33 +1225,16 @@ where TDbContext : DbContext
                 }
 
                 LoadEntityByKey(PrimaryKey);
-                UpdateCommands();
+                //    UpdateCommands();
                 Mouse.OverrideCursor = null;
                 MessageBoxService.ShowMessage("取消审核成功！");
 
             }
-            catch (DbException e)
-            {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.ErrorMessage, e.ErrorCaption, MessageButton.OK, MessageIcon.Error);
 
-            }
-            catch (DbUpdateException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
-            catch (DbEntityValidationException e)
-            {
-                Mouse.OverrideCursor = null;
-                var dbExprtion = Comm.DataModel.DbExceptionsConverter.Convert(e);
-                MessageBoxService.ShowMessage(dbExprtion.ErrorMessage, dbExprtion.ErrorCaption, MessageButton.OK, MessageIcon.Error);
-            }
+
             catch (Exception e)
             {
-                Mouse.OverrideCursor = null;
-                MessageBoxService.ShowMessage(e.Message, CommonResources.Exception_UpdateErrorCaption, MessageButton.OK, MessageIcon.Error);
+                ExceptionHandle(e);
             }
             finally
             {
@@ -1223,14 +1245,8 @@ where TDbContext : DbContext
         public virtual bool CanUnAudit()
         {
             if (this.IsInDesignMode()) return true;
-
-            bool temp = !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).Confirm;
-            try
-            {
-                temp = temp && ((dynamic)Entity).状态 == "Z";
-            }
-            catch { }
-            return temp;
+            if (!(Entity is IBillEntity)) return false;
+            return Entity != null && !DB.ChangeTracker.HasChanges() && User.CurrentUser.GetUserAuthorityModuleMapping(PermissionTitle).UnAudit && ((IBillEntity)Entity).状态 == "Z";
         }
 
 
@@ -1238,25 +1254,25 @@ where TDbContext : DbContext
 
         protected virtual void OnEntityEntityConfirmed(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+            //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
         protected virtual void OnBeforeEntityUnConfirmed(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityEntityUnConfirmed(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+            //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
         protected virtual void OnBeforeEntityAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityEntityAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+            //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
         protected virtual void OnBeforeEntityUnAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity) { }
 
         protected virtual void OnEntityEntityUnAudited(TDbContext dbContext, TPrimaryKey primaryKey, TEntity entity)
         {
-          //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
+            //  Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(primaryKey, EntityMessageType.Changed));
         }
 
         #endregion

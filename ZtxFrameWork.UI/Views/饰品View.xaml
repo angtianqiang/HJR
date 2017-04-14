@@ -43,7 +43,7 @@
                             <dxe:TextEdit EditValue="{Binding Entity.柜号, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="净重">
-                            <dxe:SpinEdit EditValue="{Binding Entity.金重,
+                            <dxe:SpinEdit EditValue="{Binding Entity.净重,
                                                               NotifyOnSourceUpdated=True,
                                                               UpdateSourceTrigger=PropertyChanged,
                                                               ValidatesOnDataErrors=True}"

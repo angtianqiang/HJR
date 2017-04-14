@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,7 +26,8 @@ namespace ZtxFrameWork.Data.Model
     public class 订单明细 : VHObject
     {
         public long ID { get; set; }
-
+    
+[DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int 序号 { get; set; }
         public int 数量 { get; set; }
         public string 订单号 { get; set; }

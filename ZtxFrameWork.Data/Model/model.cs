@@ -8,9 +8,10 @@ using System.Text;
 
 namespace ZtxFrameWork.Data.Model
 {
-    public class 分店 : ModelBase
+    public class 分店 : Entity
     {
         private string _编号;
+        [OperatorLogAttribute]
         public string 编号
         {
             get { return _编号; }
@@ -80,9 +81,10 @@ namespace ZtxFrameWork.Data.Model
 
 
     }
-    public class 单位 : ModelBase
+    public class 单位 : Entity
     {
         private string _名称;
+        [OperatorLogAttribute]
         [Display(Name = "单位名称", AutoGenerateField = true)]
         public string 名称
         {
@@ -99,9 +101,10 @@ namespace ZtxFrameWork.Data.Model
         public virtual ICollection<饰品> 饰品s { get; set; }
 
     }
-    public class 重量单位 : ModelBase
+    public class 重量单位 : Entity
     {
         private string _名称;
+        [OperatorLogAttribute]
         public string 名称
         {
             get { return _名称; }
@@ -116,9 +119,10 @@ namespace ZtxFrameWork.Data.Model
         }
         public virtual ICollection<饰品> 饰品s { get; set; }
     }
-    public class 材质 : ModelBase
+    public class 材质 : Entity
     {
         private string _名称;
+        [OperatorLogAttribute]
         public string 名称
         {
             get { return _名称; }
@@ -140,9 +144,10 @@ namespace ZtxFrameWork.Data.Model
         }
         public virtual ICollection<饰品> 饰品s { get; set; }
     }
-    public class 黄金种类 : ModelBase
+    public class 黄金种类 : Entity
     {
         private string _名称;
+        [OperatorLogAttribute]
         public string 名称
         {
             get { return _名称; }
@@ -157,9 +162,10 @@ namespace ZtxFrameWork.Data.Model
         }
         public virtual ICollection<饰品> 饰品s { get; set; }
     }
-    public class 饰品类别 : ModelBase
+    public class 饰品类别 : Entity
     {
         private string _名称;
+        [OperatorLogAttribute]
         public string 名称
         {
             get { return _名称; }
@@ -175,9 +181,10 @@ namespace ZtxFrameWork.Data.Model
         public virtual ICollection<饰品类型> 饰品类型s { get; set; }
 
     }
-    public class 饰品类型 : ModelBase
+    public class 饰品类型 : Entity
     {
         private string _名称;
+        [OperatorLogAttribute]
         public string 名称
         {
             get { return _名称; }
@@ -204,9 +211,10 @@ namespace ZtxFrameWork.Data.Model
         public virtual ICollection<饰品> 饰品s { get; set; }
 
     }
-    public class 饰品 : ModelBase
+    public class 饰品 : Entity
     {
         private string _编号;
+        [OperatorLogAttribute]
         [Required(ErrorMessage = "必输值...")]
         public string 编号
         {
@@ -214,6 +222,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<string>(() => this.编号, ref _编号, value); }
         }
         private string _条码;
+        [Required(ErrorMessage = "必输值...")]
         public string 条码
         {
             get { return _条码; }
@@ -261,12 +270,12 @@ namespace ZtxFrameWork.Data.Model
             get { return _单重; }
             set { Set<decimal>(() => this.单重, ref _单重, value, ChangeColums); }
         }
-        //private decimal _金重;
-        //public decimal 金重
-        //{
-        //    get { return _金重; }
-        //    set { Set<decimal>(() => this.金重, ref _金重, value); }
-        //}
+        private decimal _净重;
+        public decimal 净重
+        {
+            get { return _净重; }
+            set { Set<decimal>(() => this.净重, ref _净重, value); }
+        }
         //private long _黄金种类ID;
         //[Display(Name = "外键ID", AutoGenerateField = false)]
         //public long 黄金种类ID
@@ -450,7 +459,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
     }
-    public class 饰品图片 : ModelBase
+    public class 饰品图片 : Entity
     {
         private byte[] _图片;
         public byte[] 图片
@@ -461,7 +470,7 @@ namespace ZtxFrameWork.Data.Model
 
     }
 
-    public class 饰品提成 : ModelBase
+    public class 饰品提成 : Entity
     {
 
         private long _饰品ID;
@@ -500,7 +509,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
     }
-    public class 会员 : ModelBase
+    public class 会员 : Entity
     {
         private String _编号;
         public String 编号
@@ -509,6 +518,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
         private String _姓名;
+        [OperatorLogAttribute]
         public String 姓名
         {
             get { return _姓名; }
@@ -595,7 +605,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
     }
-    public class 供应商 : ModelBase
+    public class 供应商 : Entity
     {
         private String _编号;
         public String 编号
@@ -604,6 +614,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<String>(() => this.编号, ref _编号, value); }
         }
         private String _简称;
+        [OperatorLogAttribute]
         public String 简称
         {
             get { return _简称; }
@@ -641,18 +652,13 @@ namespace ZtxFrameWork.Data.Model
         }
 
     }
-    public class 销售单 : ModelBase
+    public class 销售单 : BillEntity
     {
         public 销售单()
         {
             销售单明细s = new VHObjectList<销售单明细>();
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+       
         private DateTime _日期;
         public DateTime 日期
         {
@@ -725,12 +731,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _本次积分; }
             set { Set<Int32>(() => this.本次积分, ref _本次积分, value); }
         }
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+      
         private String _备注;
         public String 备注
         {
@@ -747,7 +748,7 @@ namespace ZtxFrameWork.Data.Model
 
 
     }
-    public class 销售单明细 : ModelBase
+    public class 销售单明细 : Entity
     {
         private long _销售单ID;
       
@@ -855,19 +856,13 @@ namespace ZtxFrameWork.Data.Model
         #endregion
 
     }
-    public class 销售退货单 : ModelBase
+    public class 销售退货单 : BillEntity
     {
         public 销售退货单()
         {
             销售退货单明细s = new VHObjectList<销售退货单明细>();
         }
-        private String _编号;
-     
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+      
         private DateTime _日期;
         public DateTime 日期
         {
@@ -939,12 +934,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _本次积分; }
             set { Set<Int32>(() => this.本次积分, ref _本次积分, value); }
         }
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+      
         private String _备注;
         public String 备注
         {
@@ -963,7 +953,7 @@ namespace ZtxFrameWork.Data.Model
 
       
     }
-    public class 销售退货单明细 : ModelBase
+    public class 销售退货单明细 : Entity
     {
         private long _销售退货单ID;
         [Display(Name = "外键", AutoGenerateField = false)]
@@ -1070,18 +1060,13 @@ namespace ZtxFrameWork.Data.Model
         }
         #endregion
     }
-    public class 收款单 : ModelBase
+    public class 收款单 : BillEntity
     {
         public 收款单()
         {
             收款单明细s = new VHObjectList<收款单明细>();
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+       
         private DateTime _收款日期;
         public DateTime 收款日期
         {
@@ -1129,12 +1114,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.实收金额, ref _实收金额, value); }
         }
 
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+      
         private ICollection<收款单明细> _收款单明细s;
         public virtual ICollection<收款单明细> 收款单明细s
         {
@@ -1152,7 +1132,7 @@ namespace ZtxFrameWork.Data.Model
        
 
     }
-    public class 收款单明细 : ModelBase
+    public class 收款单明细 : Entity
     {
         private Int32 _序号;
         public Int32 序号
@@ -1232,7 +1212,7 @@ namespace ZtxFrameWork.Data.Model
         #endregion
 
     }
-    public class 库存 : ModelBase
+    public class 库存 : Entity
     {
         private long _饰品ID;
          [Display(Name = "外键", AutoGenerateField = false)]
@@ -1273,19 +1253,14 @@ namespace ZtxFrameWork.Data.Model
       
 
     }
-    public class 入库单 : ModelBase
+    public class 入库单 : BillEntity
     {
         public 入库单()
         {
             this.入库单明细s = new VHObjectList<入库单明细>();
 
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+       
         private DateTime _日期;
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         public DateTime 日期
@@ -1346,12 +1321,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _未付金额; }
             set { Set<decimal>(() => this.未付金额, ref _未付金额, value); }
         }
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+      
         private String _备注;
         public String 备注
         {
@@ -1369,7 +1339,7 @@ namespace ZtxFrameWork.Data.Model
 
 
     }
-    public class 入库单明细 : ModelBase
+    public class 入库单明细 : Entity
     {
 
         private long _入库单ID;
@@ -1468,18 +1438,13 @@ namespace ZtxFrameWork.Data.Model
 
     }
     [DisplayName("采购退货单")]
-    public class 退库单 : ModelBase
+    public class 退库单 : BillEntity
     {
         public 退库单()
         {
             退库单明细s = new VHObjectList<退库单明细>();
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+     
         private DateTime _日期;
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         public DateTime 日期
@@ -1538,12 +1503,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _未收金额; }
             set { Set<decimal>(() => this.未收金额, ref _未收金额, value); }
         }
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+       
         private String _备注;
         public String 备注
         {
@@ -1561,7 +1521,7 @@ namespace ZtxFrameWork.Data.Model
 
 
     }
-    public class 退库单明细 : ModelBase
+    public class 退库单明细 : Entity
     {
         private long _退库单ID;
         [Display(Name = "外键ID", AutoGenerateField = false)]
@@ -1648,18 +1608,13 @@ namespace ZtxFrameWork.Data.Model
         }
         #endregion
     }
-    public class 盈亏单 : ModelBase
+    public class 盈亏单 : BillEntity
     {
         public 盈亏单()
         {
             盈亏单明细s = new VHObjectList<盈亏单明细>();
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+      
         private DateTime _日期;
         public DateTime 日期
         {
@@ -1691,12 +1646,7 @@ namespace ZtxFrameWork.Data.Model
             get => _数量;
             set => Set<int>(() => this.数量, ref _数量, value);
         }
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+      
         private String _备注;
         public String 备注
         {
@@ -1712,7 +1662,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
     }
-    public class 盈亏单明细 : ModelBase
+    public class 盈亏单明细 : Entity
     {
         private long _盈亏单id;
         [Display(Name = "外键ID", AutoGenerateField = false)]
@@ -1782,18 +1732,13 @@ namespace ZtxFrameWork.Data.Model
         }
         #endregion
     }
-    public class 调拨单 : ModelBase
+    public class 调拨单 : BillEntity
     {
         public 调拨单()
         {
             调拨单明细s = new VHObjectList<调拨单明细>();
         }
-        private string _编号;
-        public string 编号
-        {
-            get { return _编号; }
-            set { Set<string>(() => this.编号, ref _编号, value); }
-        }
+     
         private DateTime _日期;
         public DateTime 日期
         {
@@ -1838,6 +1783,7 @@ namespace ZtxFrameWork.Data.Model
          [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 签收员 { get; set; }
         private String _签收日期;
+        [DisplayFormat(DataFormatString = "yyyy-MM-dd", ApplyFormatInEditMode = true, NullDisplayText = "")]
         public String 签收日期
         {
             get { return _签收日期; }
@@ -1850,12 +1796,7 @@ namespace ZtxFrameWork.Data.Model
             get => _数量;
             set => Set<int>(() => this.数量, ref _数量, value);
         }
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+     
         private String _备注;
         public String 备注
         {
@@ -1874,7 +1815,7 @@ namespace ZtxFrameWork.Data.Model
 
 
     }
-    public class 调拨单明细 : ModelBase
+    public class 调拨单明细 : Entity
     {
         private long _调拨单ID;
         [Display(Name = "外键ID", AutoGenerateField = false)]
@@ -1939,18 +1880,13 @@ namespace ZtxFrameWork.Data.Model
         }
         #endregion
     }
-    public class 付款单 : ModelBase
+    public class 付款单 : BillEntity
     {
         public 付款单()
         {
             付款单明细s = new VHObjectList<付款单明细>();
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+    
         private DateTime _日期;
         public DateTime 日期
         {
@@ -2000,12 +1936,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.实付金额, ref _实付金额, value); }
         }
 
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+    
         private ICollection<付款单明细> _付款单明细s;
         public virtual ICollection<付款单明细> 付款单明细s
         {
@@ -2013,7 +1944,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<ICollection<付款单明细>>(() => this.付款单明细s, ref _付款单明细s, value); }
         }
     }
-    public class 付款单明细 : ModelBase
+    public class 付款单明细 : Entity
     {
         private Int32 _序号;
         public Int32 序号
@@ -2090,7 +2021,7 @@ namespace ZtxFrameWork.Data.Model
         #endregion
 
     }
-    public class 库存出入明细 : ModelBase
+    public class 库存出入明细 : Entity
     {
         private DateTime _日期;
         public DateTime 日期
@@ -2166,18 +2097,13 @@ namespace ZtxFrameWork.Data.Model
         [Display(Name = "外键ID", AutoGenerateField = false)]
         public virtual 饰品 饰品 { get; set; }
     }
-    public class 盘点表 : ModelBase
+    public class 盘点表 : BillEntity
     {
         public 盘点表()
         {
             盘点表明细s = new VHObjectList<盘点表明细>();
         }
-        private String _编号;
-        public String 编号
-        {
-            get { return _编号; }
-            set { Set<String>(() => this.编号, ref _编号, value); }
-        }
+      
         private DateTime _日期;
         public DateTime 日期
         {
@@ -2204,12 +2130,7 @@ namespace ZtxFrameWork.Data.Model
         public virtual User 操作员 { get; set; }
 
 
-        private String _状态;
-        public String 状态
-        {
-            get { return _状态; }
-            set { Set<String>(() => this.状态, ref _状态, value); }
-        }
+      
         private String _备注;
         public String 备注
         {
@@ -2239,7 +2160,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
     }
-    public class 盘点表明细 : ModelBase
+    public class 盘点表明细 : Entity
     {
         private long _盘点表ID;
         [Display(Name = "外键ID", AutoGenerateField = false)]

@@ -7,7 +7,7 @@ using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.Data;
 using System.Linq;
-
+using System.Data.Entity;
 namespace ZtxFrameWork.UI.ViewModels
 {
     [POCOViewModel]
@@ -17,7 +17,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 饰品类型CollectionViewModel());
         }
-        protected 饰品类型CollectionViewModel() : base(DbFactory.Instance, x => x.饰品类型s, query => query.OrderBy(x=>x.排序号), x => x.ID, t => InitEntity(t), permissionTitle: "饰品类型")
+        protected 饰品类型CollectionViewModel() : base(DbFactory.Instance, x => x.饰品类型s, query => query.Include(t=>t.饰品类别).OrderBy(x=>x.排序号), x => x.ID, t => InitEntity(t), permissionTitle: "饰品类型")
         {
 
         }

@@ -10,7 +10,7 @@ namespace ZtxFrameWork.Data.Model
 {
     [Table("sys_Users")]
     [DisplayName("用户管理")]
- public   class User:VHObject
+ public   class User:Entity
     {
         public static User CurrentUser = null;
         public  UserAuthorityModuleMapping GetUserAuthorityModuleMapping(string ViewTitle)
@@ -23,14 +23,9 @@ namespace ZtxFrameWork.Data.Model
         {
             UserAuthorityModuleMappings = new VHObjectList<UserAuthorityModuleMapping>();
         }
-        private long id;
-        public long ID
-        {
-            get { return id;  }
-            set { Set<long>(() => this.ID, ref id, value); }
-        }
-        private string userName;
 
+        private string userName;
+        [OperatorLogAttribute]
         [DisplayName("用户代码")]
         [Required(ErrorMessage = "用户代码为必输项")]
         public string UserName
@@ -41,7 +36,7 @@ namespace ZtxFrameWork.Data.Model
 
         private string passWord;
     
-        [Display(Name = "用户密码", AutoGenerateField = true)]
+        [Display(Name = "用户密码", AutoGenerateField = false)]
         [ReadOnly(true)]
         [Required]
         [DataType(DataType.Password)]

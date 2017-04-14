@@ -4,6 +4,7 @@ using DevExpress.Mvvm.POCO;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Windows.Input;
 using ZtxFrameWork.Data;
@@ -24,18 +25,28 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 盘点表ViewModel() : base(DbFactory.Instance, x => x.盘点表s, x => x.ID, x => x.编号, "盘点表")
         {
             if (this.IsInDesignMode()) return;
-            if (this.IsInDesignMode()) return;
-            //  Entity.盘点表明细s.AcceTChanges();
-
-           var db = DB;
-            操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            分店Source = db.分店s.OrderBy(t => t.名称).ToList();
+           
+            Init();
 
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
                 SelectChildEntity.饰品 = null;
             });
+        }
+        public async void Init()
+        {
+         
+          var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+           var t2=await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            操作员Source = t1;
+            分店Source = t2;
+
+
+        }
+        protected override IQueryable<盘点表> DbInclude(ObjectSet<盘点表> dbSet)
+        {
+            return dbSet.Include(t => t.盘点表明细s);
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
@@ -178,7 +189,7 @@ namespace ZtxFrameWork.UI.ViewModels
         #endregion
         #region 20170318 单据确认操作
      
-        protected override void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 盘点表 entity)
+        protected override async void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 盘点表 entity)
         {
             base.OnBeforeEntityConfirmed(dbContext, primaryKey, entity);
             if (entity.盘点表明细s.Count <= 0)
@@ -187,7 +198,7 @@ namespace ZtxFrameWork.UI.ViewModels
             var ykd = dbContext.盈亏单s.Create();
             entity.盈亏单 = ykd;
 
-            ykd.编号 = CollectionViewModel<盈亏单, ZtxDB, long>.GetNewCode("YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
+            ykd.编号 =await CollectionViewModel<盈亏单, ZtxDB, long>.GetNewCode("YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
             ykd.日期 = entity.日期;
             ykd.操作员ID = entity.操作员ID;
             ykd.状态 = "Y";//直接生效

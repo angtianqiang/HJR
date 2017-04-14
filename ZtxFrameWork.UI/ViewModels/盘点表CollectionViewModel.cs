@@ -23,9 +23,9 @@ namespace ZtxFrameWork.UI.ViewModels
 
         }
         private Action<盘点表> b = InitEntity;
-        static public void InitEntity(盘点表 NewEntity)
+        static public async void InitEntity(盘点表 NewEntity)
         {
-            NewEntity.编号 = GetNewCode("PD", DbFactory.Instance, x => x.盘点表s, t => t.编号);
+            NewEntity.编号 =await GetNewCode("PD", DbFactory.Instance, x => x.盘点表s, t => t.编号);
            NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";
