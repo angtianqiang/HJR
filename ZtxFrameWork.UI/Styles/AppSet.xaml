@@ -9,8 +9,9 @@
 
     <converter:MoudleInfoToImageConerter x:Key="MoudleInfoToImageConerter" />
     <converter:GridRowIndicatorConerter x:Key="GridRowIndicatorConerter" />
-    <converter:CommObjectConverter x:Key="CommObjectConverter" />
+    <converter:CommObjectConverter x:Key="CommObjectConverter" /> 
     <converter:BoolToVisbiltyConverter x:Key="BoolToVisbiltyConverter" />
+    <converter:PathToImageConerter x:Key="PathToImageConerter" />
 
 
     <!--  表格行状态颜色样式  TargetType="{x:Type dxg:GridRowContent}"  -->
@@ -110,7 +111,10 @@
     </Style>
     <!--  清单表风格   用于报表查询  -->
     <Style x:Key="ReportTableView" TargetType="{x:Type dxg:TableView}">
+        <Setter Property="AllowPerPixelScrolling" Value="True" />
         <Setter Property="AllowColumnFiltering" Value="True" />
+        <Setter Property="ClipboardCopyOptions" Value="All" />
+        <Setter Property="ClipboardMode" Value="PlainText"></Setter>
         <Setter Property="AllowEditing" Value="False" />
         <Setter Property="AllowGrouping" Value="True" />
         <Setter Property="AllowPerPixelScrolling" Value="True" />
@@ -127,7 +131,16 @@
         <!--<Setter Property="BestFitMode" Value="DistinctValues" />-->
         <Setter Property="BestFitMode" Value="VisibleRows" />
     </Style>
-    <!--  列头居左对齐  -->
+    <!--  清单表风格   用于报表查询  -->
+    <Style x:Key="ReportGridControl" TargetType="{x:Type dxg:GridControl}">
+        <Setter Property="AutoGenerateColumns" Value="AddNew"></Setter>
+        <Setter Property="EnableSmartColumnsGeneration" Value="True"></Setter>
+        <Setter Property="ClipboardCopyMode" Value="ExcludeHeader"></Setter>
+        <Setter Property="SelectionMode" Value="Cell"></Setter>      
+    </Style>
+
+
+        <!--  列头居左对齐  -->
     <Style x:Key="GridColumnHeaderLeftAlignment" TargetType="{x:Type dxg:HeaderContentControl}">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
     </Style>

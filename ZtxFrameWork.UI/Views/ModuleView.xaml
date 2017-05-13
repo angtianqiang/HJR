@@ -71,6 +71,27 @@
                     <dxlc:LayoutItem Label="模块页面">
                         <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.DocumentType, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="模块图标">
+                        <dxe:ComboBoxEdit IsTextEditable="False"  ItemsSource="{Binding Images}" EditValue="{Binding Entity.ImageName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}">
+                            <dxe:ComboBoxEdit.ItemTemplate>
+
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image  Height="24" Stretch="Uniform" Source="{Binding   Converter={StaticResource PathToImageConerter}}"/>
+
+                                    </StackPanel>
+                                </DataTemplate>
+                            </dxe:ComboBoxEdit.ItemTemplate>
+                            <dxe:ComboBoxEdit.EditNonEditableTemplate>
+                                <ControlTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image x:Name="PART_Editor" Height="22"  Stretch="Uniform" Source="{Binding Path=(dxe:BaseEdit.OwnerEdit).SelectedItem,  Converter={StaticResource PathToImageConerter}}"/>
+                                    </StackPanel>
+                                </ControlTemplate>
+                            </dxe:ComboBoxEdit.EditNonEditableTemplate>
+
+                        </dxe:ComboBoxEdit>
+                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="排序号">
                         <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.SortNo, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
                     </dxlc:LayoutItem>

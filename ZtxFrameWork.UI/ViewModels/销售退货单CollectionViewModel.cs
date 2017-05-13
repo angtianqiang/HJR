@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 销售退货单CollectionViewModel());
         }
-        protected 销售退货单CollectionViewModel() : base(DbFactory.Instance, x => x.销售退货单s, query => query.Include(t=>t.会员).Include(t=>t.分店).Include(t=>t.操作员).OrderBy(x=>x.编号), x =>x.ID,t=>InitEntity(t), permissionTitle: "销售退货单")
+        protected 销售退货单CollectionViewModel() : base(DbFactory.Instance, x => x.销售退货单s, query => query.Include(t=>t.会员).Include(t=>t.分店).Include(t=>t.操作员).OrderByDescending(x => x.编号).Take(App.ViewTopCount), x =>x.ID,t=>InitEntity(t), permissionTitle: "销售退货单")
         {
 
         }

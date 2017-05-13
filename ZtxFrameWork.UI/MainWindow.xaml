@@ -11,7 +11,7 @@
                     Height="650"
                     Icon="{Binding IcoPath,
                                    Source={StaticResource ResourceKey=AppSet}}"
-                    WindowState="Maximized">
+                 WindowState="Maximized"   >
 
 
 

@@ -51,6 +51,14 @@ namespace ZtxFrameWork.UI.ViewModels
             分店Source = t2;
             会员Source = t3;
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.销售退货单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
         protected override IQueryable<销售退货单> DbInclude(ObjectSet<销售退货单> dbSet)
         {
             return dbSet.Include(t => t.销售退货单明细s.Select(p=>p.销售单明细));

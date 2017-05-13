@@ -47,6 +47,14 @@ namespace ZtxFrameWork.UI.ViewModels
             分店Source = t2;
 
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.盈亏单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
         protected override IQueryable<盈亏单> DbInclude(ObjectSet<盈亏单> dbSet)
         {
             return dbSet.Include(t => t.盈亏单明细s.Select(p => p.饰品));

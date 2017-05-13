@@ -6,6 +6,7 @@ using DevExpress.Mvvm.POCO;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.Data;
+using System.Linq;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -16,11 +17,12 @@ namespace ZtxFrameWork.UI.ViewModels
     {
         return ViewModelSource.Create(() => new ModuleCollectionViewModel());
     }
-    protected ModuleCollectionViewModel():base(DbFactory.Instance, x => x.Modules, x => x, x => x.ID, permissionTitle: "系统模块")
+    protected ModuleCollectionViewModel():base(DbFactory.Instance, x => x.Modules, query => query.OrderByDescending(x => x.ID).Take(App.ViewTopCount), x => x.ID, permissionTitle: "系统模块")
         {
 
     }
         static public void InitEntity(Module NewEntity)
         { }
+      
     }
 }

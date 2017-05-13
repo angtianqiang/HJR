@@ -83,7 +83,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             return newReport;
 
         }
-        protected void SetReportDataSource(XtraReport report)
+        protected virtual void SetReportDataSource(XtraReport report)
         {
           //  DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource();
          //   objectDataSource.DataSource = this.Entity;

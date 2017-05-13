@@ -128,7 +128,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _名称; }
             set { Set<string>(() => this.名称, ref _名称, value); }
         }
-     
+
         private decimal _当前价;
         public decimal 当前价
         {
@@ -199,13 +199,13 @@ namespace ZtxFrameWork.Data.Model
         }
 
         private long _类别ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 类别ID
         {
             get { return _类别ID; }
             set { Set<long>(() => this.类别ID, ref _类别ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 饰品类别 饰品类别 { get; set; }
 
         public virtual ICollection<饰品> 饰品s { get; set; }
@@ -236,7 +236,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _类型ID; }
             set { Set<long>(() => this.类型ID, ref _类型ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public 饰品类型 饰品类型 { get; set; }
         private string _品名;
         public string 品名
@@ -252,7 +252,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _单位ID; }
             set { Set<long>(() => this.单位ID, ref _单位ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 单位 单位 { get; set; }
         private long _重量单位ID;
         [Display(Name = "外键ID", AutoGenerateField = false)]
@@ -262,7 +262,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _重量单位ID; }
             set { Set<long>(() => this.重量单位ID, ref _重量单位ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 重量单位 重量单位 { get; set; }
         private decimal _单重;
         public decimal 单重
@@ -305,13 +305,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _材质ID; }
             set { Set<long>(() => this.材质ID, ref _材质ID, value); }
         }
-     
+
         private 材质 _材质;
         [Display(Name = "外键ID", AutoGenerateField = false)]
         public virtual 材质 材质
         {
             get { return _材质; }
-            set { Set<材质>(() => this.材质, ref _材质, value,ChangeColums); }
+            set { Set<材质>(() => this.材质, ref _材质, value, ChangeColums); }
         }
 
         private 费用计法 _工费计法;
@@ -430,8 +430,26 @@ namespace ZtxFrameWork.Data.Model
                 }
                 else
                 {
-
-                    return this.单重 * this.材质.当前价 + this.批发工费;
+                    try
+                    {
+                        if (this.工费计法 == 费用计法.按件)
+                        {
+                            return this.单重 * this.材质.当前价 + this.批发工费;
+                        }
+                        else if (this.工费计法 == 费用计法.按重)
+                        {
+                            return (this.材质.当前价 + this.批发工费) * this.单重;
+                       
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                    catch
+                    {
+                        return 0m;
+                    }
                 }
             }
         }
@@ -448,7 +466,18 @@ namespace ZtxFrameWork.Data.Model
                 {
                     try
                     {
-                        return System.Math.Round((this.单重 * this.材质.当前价 + this.批发工费) / this.单重,3);
+                        if (this.工费计法 == 费用计法.按件)
+                        {
+                            return System.Math.Round((this.单重 * this.材质.当前价 + this.批发工费) / this.单重, 3);
+                        }
+                        else if (this.工费计法 == 费用计法.按重)
+                        {
+                            return this.材质.当前价 + this.批发工费;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
                     }
                     catch (Exception)
                     {
@@ -481,7 +510,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
 
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 饰品 饰品 { get; set; }
         private bool _是否按比例;
         public bool 是否按比例
@@ -658,7 +687,7 @@ namespace ZtxFrameWork.Data.Model
         {
             销售单明细s = new VHObjectList<销售单明细>();
         }
-       
+
         private DateTime _日期;
         public DateTime 日期
         {
@@ -667,31 +696,31 @@ namespace ZtxFrameWork.Data.Model
         }
 
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 会员 会员 { get; set; }
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
         private Int32 _数量;
         public Int32 数量
@@ -731,7 +760,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _本次积分; }
             set { Set<Int32>(() => this.本次积分, ref _本次积分, value); }
         }
-      
+
         private String _备注;
         public String 备注
         {
@@ -751,7 +780,7 @@ namespace ZtxFrameWork.Data.Model
     public class 销售单明细 : Entity
     {
         private long _销售单ID;
-      
+
         [Display(Name = "外键", AutoGenerateField = false)]
         public long 销售单ID
         {
@@ -813,10 +842,10 @@ namespace ZtxFrameWork.Data.Model
             get { return _销售价; }
             set { Set<decimal>(() => this.销售价, ref _销售价, value); }
         }
-      
+
 
         private decimal _折扣;
-        [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="N2")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "N2")]
         public decimal 折扣
         {
             get { return _折扣; }
@@ -835,7 +864,7 @@ namespace ZtxFrameWork.Data.Model
             get => _金额;
             set => Set<decimal>(() => this.金额, ref _金额, value);
         }
-     
+
         private String _备注;
         public String 备注
         {
@@ -862,7 +891,7 @@ namespace ZtxFrameWork.Data.Model
         {
             销售退货单明细s = new VHObjectList<销售退货单明细>();
         }
-      
+
         private DateTime _日期;
         public DateTime 日期
         {
@@ -870,31 +899,31 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 会员 会员 { get; set; }
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
         private Int32 _数量;
         public Int32 数量
@@ -934,7 +963,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _本次积分; }
             set { Set<Int32>(() => this.本次积分, ref _本次积分, value); }
         }
-      
+
         private String _备注;
         public String 备注
         {
@@ -951,7 +980,7 @@ namespace ZtxFrameWork.Data.Model
 
 
 
-      
+
     }
     public class 销售退货单明细 : Entity
     {
@@ -979,7 +1008,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<long>(() => this.销售单明细ID, ref _销售单明细ID, value); }
         }
 
-    
+
 
         private 销售单明细 _销售单明细;
         [Display(Name = "外键ID", AutoGenerateField = false)]
@@ -1001,7 +1030,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _重量; }
             set { Set<decimal>(() => this.重量, ref _重量, value); }
         }
-       
+
         private 费用计法 _工费计法;
         public 费用计法 工费计法
         {
@@ -1021,8 +1050,8 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.销售价, ref _销售价, value); }
         }
         private decimal _折扣;
-       
-     [DisplayFormat(ApplyFormatInEditMode =true,DataFormatString ="N2")]
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "N2")]
         public decimal 折扣
         {
             get { return _折扣; }
@@ -1034,7 +1063,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _折前价; }
             set { Set<decimal>(() => this.折前价, ref _折前价, value); }
         }
-    
+
         private decimal _金额;
         public decimal 金额
         {
@@ -1052,7 +1081,7 @@ namespace ZtxFrameWork.Data.Model
 
 
         private string _销售单号;//20170302此字段与饰品.编号同步，是为了防止用户更改饰品.编号后保存到了DB
-      
+
         public string 销售单号
         {
             get { return _销售单号; }
@@ -1066,7 +1095,7 @@ namespace ZtxFrameWork.Data.Model
         {
             收款单明细s = new VHObjectList<收款单明细>();
         }
-       
+
         private DateTime _收款日期;
         public DateTime 收款日期
         {
@@ -1074,31 +1103,31 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.收款日期, ref _收款日期, value); }
         }
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private long? _会员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long? 会员ID
         {
             get { return _会员ID; }
             set { Set<long?>(() => this.会员ID, ref _会员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 会员 会员 { get; set; }
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
 
         private decimal _应收金额;
@@ -1114,7 +1143,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.实收金额, ref _实收金额, value); }
         }
 
-      
+
         private ICollection<收款单明细> _收款单明细s;
         public virtual ICollection<收款单明细> 收款单明细s
         {
@@ -1128,8 +1157,8 @@ namespace ZtxFrameWork.Data.Model
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
 
-       
-       
+
+
 
     }
     public class 收款单明细 : Entity
@@ -1168,7 +1197,7 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 销售退货单 销售退货单 { get; set; }
-       
+
 
         private decimal _应收金额;
         [Editable(false)]
@@ -1215,22 +1244,22 @@ namespace ZtxFrameWork.Data.Model
     public class 库存 : Entity
     {
         private long _饰品ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 饰品ID
         {
             get { return _饰品ID; }
             set { Set<long>(() => this.饰品ID, ref _饰品ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 饰品 饰品 { get; set; }
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private Int32 _数量;
         public Int32 数量
@@ -1250,7 +1279,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _金额; }
             set { Set<decimal>(() => this.金额, ref _金额, value); }
         }
-      
+
 
     }
     public class 入库单 : BillEntity
@@ -1260,7 +1289,7 @@ namespace ZtxFrameWork.Data.Model
             this.入库单明细s = new VHObjectList<入库单明细>();
 
         }
-       
+
         private DateTime _日期;
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         public DateTime 日期
@@ -1321,7 +1350,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _未付金额; }
             set { Set<decimal>(() => this.未付金额, ref _未付金额, value); }
         }
-      
+
         private String _备注;
         public String 备注
         {
@@ -1329,7 +1358,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<String>(() => this.备注, ref _备注, value); }
         }
         private VHObjectList<入库单明细> _入库单明细s;
-       
+
         public virtual VHObjectList<入库单明细> 入库单明细s
         {
             get { return _入库单明细s; }
@@ -1444,7 +1473,7 @@ namespace ZtxFrameWork.Data.Model
         {
             退库单明细s = new VHObjectList<退库单明细>();
         }
-     
+
         private DateTime _日期;
         [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
         public DateTime 日期
@@ -1453,31 +1482,31 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private long? _供应商ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long? 供应商ID
         {
             get { return _供应商ID; }
             set { Set<long?>(() => this.供应商ID, ref _供应商ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 供应商 供应商 { get; set; }
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
         private Int32 _数量;
         public Int32 数量
@@ -1503,7 +1532,7 @@ namespace ZtxFrameWork.Data.Model
             get { return _未收金额; }
             set { Set<decimal>(() => this.未收金额, ref _未收金额, value); }
         }
-       
+
         private String _备注;
         public String 备注
         {
@@ -1614,7 +1643,7 @@ namespace ZtxFrameWork.Data.Model
         {
             盈亏单明细s = new VHObjectList<盈亏单明细>();
         }
-      
+
         private DateTime _日期;
         public DateTime 日期
         {
@@ -1629,16 +1658,16 @@ namespace ZtxFrameWork.Data.Model
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
         private int _数量;
         public int 数量
@@ -1646,7 +1675,7 @@ namespace ZtxFrameWork.Data.Model
             get => _数量;
             set => Set<int>(() => this.数量, ref _数量, value);
         }
-      
+
         private String _备注;
         public String 备注
         {
@@ -1738,7 +1767,7 @@ namespace ZtxFrameWork.Data.Model
         {
             调拨单明细s = new VHObjectList<调拨单明细>();
         }
-     
+
         private DateTime _日期;
         public DateTime 日期
         {
@@ -1746,41 +1775,41 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _源分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 源分店ID
         {
             get { return _源分店ID; }
             set { Set<long>(() => this.源分店ID, ref _源分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 源分店 { get; set; }
         private long _目标分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 目标分店ID
         {
             get { return _目标分店ID; }
             set { Set<long>(() => this.目标分店ID, ref _目标分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 目标分店 { get; set; }
         private long? _调拨员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long? 调拨员ID
         {
             get { return _调拨员ID; }
             set { Set<long?>(() => this.调拨员ID, ref _调拨员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 调拨员 { get; set; }
 
         private long? _签收员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long? 签收员ID
         {
             get { return _签收员ID; }
             set { Set<long?>(() => this.签收员ID, ref _签收员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 签收员 { get; set; }
         private String _签收日期;
         [DisplayFormat(DataFormatString = "yyyy-MM-dd", ApplyFormatInEditMode = true, NullDisplayText = "")]
@@ -1789,14 +1818,14 @@ namespace ZtxFrameWork.Data.Model
             get { return _签收日期; }
             set { Set<String>(() => this.签收日期, ref _签收日期, value); }
         }
-     
+
         private int _数量;
         public int 数量
         {
             get => _数量;
             set => Set<int>(() => this.数量, ref _数量, value);
         }
-     
+
         private String _备注;
         public String 备注
         {
@@ -1886,7 +1915,7 @@ namespace ZtxFrameWork.Data.Model
         {
             付款单明细s = new VHObjectList<付款单明细>();
         }
-    
+
         private DateTime _日期;
         public DateTime 日期
         {
@@ -1894,36 +1923,36 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
-      
+
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
         private long _供应商ID;
         [Display(Name = "外键", AutoGenerateField = false)]
-        [RangeAttribute(1, int.MaxValue,ErrorMessage ="请输入供应商")]
+        [RangeAttribute(1, int.MaxValue, ErrorMessage = "请输入供应商")]
         public long 供应商ID
         {
             get { return _供应商ID; }
             set { Set<long>(() => this.供应商ID, ref _供应商ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 供应商 供应商 { get; set; }
         private decimal _应付金额;
-     
+
         public decimal 应付金额
         {
             get { return _应付金额; }
@@ -1936,7 +1965,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.实付金额, ref _实付金额, value); }
         }
 
-    
+
         private ICollection<付款单明细> _付款单明细s;
         public virtual ICollection<付款单明细> 付款单明细s
         {
@@ -2103,7 +2132,7 @@ namespace ZtxFrameWork.Data.Model
         {
             盘点表明细s = new VHObjectList<盘点表明细>();
         }
-      
+
         private DateTime _日期;
         public DateTime 日期
         {
@@ -2111,26 +2140,26 @@ namespace ZtxFrameWork.Data.Model
             set { Set<DateTime>(() => this.日期, ref _日期, value); }
         }
         private long _分店ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 分店ID
         {
             get { return _分店ID; }
             set { Set<long>(() => this.分店ID, ref _分店ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual 分店 分店 { get; set; }
         private long _操作员ID;
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public long 操作员ID
         {
             get { return _操作员ID; }
             set { Set<long>(() => this.操作员ID, ref _操作员ID, value); }
         }
-         [Display(Name = "外键", AutoGenerateField = false)]
+        [Display(Name = "外键", AutoGenerateField = false)]
         public virtual User 操作员 { get; set; }
 
 
-      
+
         private String _备注;
         public String 备注
         {

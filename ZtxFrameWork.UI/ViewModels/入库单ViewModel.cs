@@ -27,7 +27,7 @@ namespace ZtxFrameWork.UI.ViewModels
             if (this.IsInDesignMode()) return;
             //  Entity.入库单明细s.AcceTChanges();
 
-            Init();
+          Init();
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
@@ -42,15 +42,40 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         public async void Init()
         {
-          
-           var t1  = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-         var t2=    await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
-         var t3    = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
-            操作员Source = t1;
-            分店Source = t2;
-            供应商Source = t3;
+
+            操作员Source = this.DB.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
+            分店Source = this.DB.分店s.OrderBy(t => t.名称).ToList();
+            供应商Source = this.DB.供应商s.OrderBy(t => t.简称).ToList();
 
 
+
+        }
+        //public async void Init()
+        //{
+
+        //    var t1 = DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+        //    var t2 = DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+        //    var t3 = DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
+
+        //    供应商Source = await t3;
+        //    操作员Source = await t1;
+        //    分店Source = await t2;
+
+
+
+        //}
+        public async void Init1()=> 操作员Source = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+        public async void Init2() => 分店Source = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+        public async void Init3() => 供应商Source = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
+
+
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.入库单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
         }
         protected override IQueryable<入库单> DbInclude(ObjectSet<入库单> dbSet)
         {

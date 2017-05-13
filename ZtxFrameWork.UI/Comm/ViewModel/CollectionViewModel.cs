@@ -231,7 +231,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
         /// <param name="projectionEntity">An entity to edit.</param>
         public virtual void Delete(TProjection projectionEntity)
         {
-            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Delete, typeof(TEntity).Name), CommonResources.Confirmation_Caption, MessageButton.YesNo) != MessageResult.Yes)
+            if (MessageBoxService.ShowMessage(string.Format(CommonResources.Confirmation_Delete, EntityDisplayName), CommonResources.Confirmation_Caption, MessageButton.YesNo) != MessageResult.Yes)
                 return;
             try
             {
@@ -476,6 +476,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                 throw new ArgumentException(string.Format("Projection type {0} should have primary key property {1}", typeof(TProjection).Name, primaryKeyPropertyName), "TProjection");
         }
 
+        public virtual string EntityDisplayName { get { return EntityDisplayNameHelper.GetEntityDisplayName(typeof(TEntity)); } }
         #region SelectEntityMessage
         protected class SelectEntityMessage
         {

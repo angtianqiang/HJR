@@ -44,6 +44,14 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.盘点表明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
         protected override IQueryable<盘点表> DbInclude(ObjectSet<盘点表> dbSet)
         {
             return dbSet.Include(t => t.盘点表明细s);

@@ -27,13 +27,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 销售单ViewModel() : base(DbFactory.Instance, x => x.销售单s, x => x.ID, x => x.编号, "销售单")
         {
             if (this.IsInDesignMode()) return;
-            //  var db = this.DB;
-            //     会员Source = await db.会员s.OrderBy(t => t.编号).ToListAsync();
-            //操作员Source = db.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            //分店Source = db.分店s.OrderBy(t => t.名称).ToList();
-            ////  System.Diagnostics.Debug.WriteLine($"销售单ViewModel(): { System.Threading.Thread.CurrentThread.ManagedThreadId}");
-            ////  供应商Source = db.供应商s.OrderBy(t => t.简称).ToList();
-            //会员Source = db.会员s.OrderBy(t => t.编号).ToList();
+            
             Init();
             //Init1();
             //Init2();
@@ -61,6 +55,15 @@ namespace ZtxFrameWork.UI.ViewModels
             操作员Source = await t2;
             分店Source = await t3;
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.销售单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
+
         public async void Init1() => 分店Source = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
         public async void Init2() => 操作员Source = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
         public async void Init3() => 会员Source = await DbFactory.Instance.CreateDbContext().会员s.OrderBy(t => t.编号).ToListAsync();

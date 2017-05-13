@@ -26,7 +26,10 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             base.OnEntitySaved(dbContext, primaryKey, entity, isNewEntity);
 
-            App.SystemConfigs = DbFactory.Instance.CreateDbContext().SystemConfigurations.ToList();
+            App.SystemConfigs = dbContext.SystemConfigurations.ToList();
+
+       
+        
         }
     }
 }

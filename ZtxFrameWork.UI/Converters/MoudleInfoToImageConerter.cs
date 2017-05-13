@@ -22,7 +22,7 @@ namespace ZtxFrameWork.UI.Converters
             }
             else if (A == ModuleInfo.MoudleSubGroup)
             {
-                return DevExpress.Utils.AssemblyHelper.GetResourceUri(typeof(MoudleInfoToImageConerter).Assembly, string.Format("Images/moudleGroup.png"));
+                return DevExpress.Utils.AssemblyHelper.GetResourceUri(typeof(MoudleInfoToImageConerter).Assembly, string.Format("Images/moudleSubGroup.png"));
 
                 //  return "../Images/Status/b.png";
             }

@@ -21,8 +21,8 @@ namespace ZtxFrameWork.UI.QueryList
 
     protected 饰品出入明细表_ExpressionViewModel(IEnumerable<string> hiddenProperties, IEnumerable<string> additionalProperties) : base(hiddenProperties, additionalProperties)
         {
-
-    }
+          
+        }
 
     protected override bool DataValidate()
     {
@@ -32,8 +32,8 @@ namespace ZtxFrameWork.UI.QueryList
     {
         base.SetLoadData();
         StartCode = null;
-            StartDate = Helpers.DateTimeHelper.GetCurrentMonthFistDay();
-            EndDate = Helpers.DateTimeHelper.GetCurrentMonthCurrentDay();
+            开始日期 = Helpers.DateTimeHelper.GetCurrentMonthFistDay();
+            结束日期 = Helpers.DateTimeHelper.GetCurrentMonthCurrentDay();
     }
     protected override void BuilderExpression()
     {
@@ -44,14 +44,14 @@ namespace ZtxFrameWork.UI.QueryList
             Expression<Func<库存出入明细, bool>> d = (x) => x.饰品.编号.StartsWith(StartCode);
             this.AdvancedExpression = this.AdvancedExpression.And(d);
         }
-            Expression<Func<库存出入明细, bool>> d2 = (x) => x.日期 >= StartDate;
-            Expression<Func<库存出入明细, bool>> d3 = (x) => x.日期 <= EndDate;
+            Expression<Func<库存出入明细, bool>> d2 = (x) => x.日期 >= 开始日期;
+            Expression<Func<库存出入明细, bool>> d3 = (x) => x.日期 <= 结束日期;
             this.AdvancedExpression = this.AdvancedExpression.And(d2);
             this.AdvancedExpression = this.AdvancedExpression.And(d3);
         }
 
     public virtual string StartCode { get; set; }
-        public virtual DateTime StartDate { get; set; }
-        public virtual DateTime EndDate { get; set; }
+        public virtual DateTime 开始日期 { get; set; }
+        public virtual DateTime 结束日期 { get; set; }
     }
 }

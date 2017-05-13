@@ -21,7 +21,7 @@ namespace ZtxFrameWork.UI.QueryList
 
         protected 库存明细表_ExpressionViewModel(IEnumerable<string> hiddenProperties, IEnumerable<string> additionalProperties) : base(hiddenProperties, additionalProperties)
         {
-
+          
         }
 
         protected override bool DataValidate()

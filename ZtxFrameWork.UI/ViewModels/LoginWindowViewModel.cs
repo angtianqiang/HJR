@@ -15,8 +15,8 @@ namespace ZtxFrameWork.UI.ViewModels
     public class LoginWindowViewModel
     {
         public string Token { get; set; }
-        public virtual string UserName { get; set; } = "F";
-        public virtual string PassWord { get; set; } = "050301";
+        public virtual string UserName { get; set; }// = "F";
+        public virtual string PassWord { get; set; }// = "050301";
         public void Login()
         {
             if (string.IsNullOrEmpty(UserName))

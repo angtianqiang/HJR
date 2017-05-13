@@ -152,10 +152,13 @@ namespace ZtxFrameWork.Data
                     //20131116注：这里更改后把DirtyState改为Modified，如果实类已是ADDED的话就不用更改
                 //   if (propertyName!="DirtyState" &&propertyName!="ClientTag")//20131118注:加上一个判断,以免更改这个个属性是，会把DirtyState设置为Modified，比如客户端设置为Added后，程序却变成Modified了
                     {
-                        this.DirtyState = DirtyState.Modified;
+                       this.DirtyState = DirtyState.Modified;
+                     
+                    
+
                     }
-                  
-                  //  this.OnPropertyChanged(propertyName, oldValue, propertyField);
+
+                    //  this.OnPropertyChanged(propertyName, oldValue, propertyField);
                 }
                 this.OnPropertyChanged(propertyName, oldValue, propertyField);
                 if (changedCallback!=null)

@@ -55,6 +55,14 @@ namespace ZtxFrameWork.UI.ViewModels
             会员Source = t3;
 
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.收款单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
         protected override IQueryable<收款单> DbInclude(ObjectSet<收款单> dbSet)
         {
             return dbSet.Include(t => t.收款单明细s);

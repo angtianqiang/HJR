@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using ZtxFrameWork.UI.Comm.DataModel;
 using DevExpress.Mvvm.POCO;
 using System.Linq;
+using System.IO;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -21,10 +22,15 @@ namespace ZtxFrameWork.UI.ViewModels
         protected ModuleViewModel() : base(DbFactory.Instance, x => x.Modules,x=>x.ID, x => x.ModuleTitle,"系统模块")
         {
            var db = DB;
-            ModuleGroup = db.Modules.Where(x => x.ModuleInfo != ModuleInfo.MoudleAction).ToList(); 
-
+            ModuleGroup = db.Modules.Where(x => x.ModuleInfo != ModuleInfo.MoudleAction).ToList();
+            var imagesPath = System.Environment.CurrentDirectory + @"\MoudleImages";
+            var dir = new DirectoryInfo(imagesPath);
+            Images = dir.GetFiles("*.png", SearchOption.TopDirectoryOnly).Select(t => t.Name).ToList(); ;
+          //图标24*24 PADDING 2
         }
 
         public virtual List<Module> ModuleGroup { get; set; }
+
+        public virtual List<string> Images { get; set; }
     }
 }

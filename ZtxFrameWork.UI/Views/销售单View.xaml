@@ -253,17 +253,19 @@
                                                AllowGrouping="False"
                                                ColumnHeaderContentStyle="{StaticResource ResourceKey=GridColumnHeaderCenterAlignment}"
                                                ShowGroupPanel="False"
+                                             
                                                Style="{StaticResource ResourceKey=DetailsTableView}"
                                                UseLightweightTemplates="All">
-                                    <dxg:TableView.RowStyle>
+                                    <dxg:TableView.RowStyle >
                                         <Style>
+                                            
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Row.DirtyState}" Value="Added">
                                                     <Setter Property="TextElement.Foreground" Value="MediumVioletRed" />
                                                 </DataTrigger>
-                                                <!--<DataTrigger Binding="{Binding Path=Row.DirtyState}" Value="Modified">
+                                                <DataTrigger Binding="{Binding Path=Row.DirtyState}" Value="Modified">
                                                     <Setter Property="TextElement.Foreground" Value="BlueViolet" />
-                                                </DataTrigger>-->
+                                                </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
                                     </dxg:TableView.RowStyle>

@@ -11,12 +11,14 @@
              xmlns:dxn="http://schemas.devexpress.com/winfx/2008/xaml/navbar"
              xmlns:dxnt="http://schemas.devexpress.com/winfx/2008/xaml/navbar/themekeys"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+               xmlns:dxwui="http://schemas.devexpress.com/winfx/2008/xaml/windowsui" 
+   
              xmlns:dxwuin="http://schemas.devexpress.com/winfx/2008/xaml/windowsui/navigation"
                  xmlns:model="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="300"
-             d:DesignWidth="300"
+             d:DesignWidth="600"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:NavMainViewModel}"
              mc:Ignorable="d">
     <dxmvvm:Interaction.Behaviors>
@@ -26,10 +28,10 @@
         <DockPanel.Resources>
             <HierarchicalDataTemplate x:Key="TreeItemDataTemplate" DataType="{x:Type model:Module}" ItemsSource="{Binding ChildModules}">
                 <StackPanel Margin="0"    Orientation="Horizontal" VerticalAlignment="Center"  Cursor="Hand"    >
-                    <Image Width="24"  Height="24"  Margin="0,0,0,0"  Source="{Binding ModuleInfo,
-                                                                                            Converter={StaticResource ResourceKey=MoudleInfoToImageConerter}}" />
+                    <Image Width="24"  Height="24"  Stretch="Uniform"  Margin="0"  Source="{Binding ImageName,
+                                                                                            Converter={StaticResource ResourceKey=PathToImageConerter}}" />
 
-                    <TextBlock Margin="0,5,5,0" Width="120" Text="{Binding ModuleTitle}" />
+                    <TextBlock Margin="2,5,5,0" Width="120" Text="{Binding ModuleTitle}" />
 
                     <StackPanel.Style>
                         <Style TargetType="StackPanel">
@@ -99,17 +101,17 @@
             </dxr:RibbonStatusBarControl.LeftItems>
         </dxr:RibbonStatusBarControl>
         <Grid>
-            <dxdo:DockLayoutManager ClosedPanelsBarVisibility="Never" >
-                <dxdo:LayoutGroup>
+            <dxdo:DockLayoutManager x:Name="dockManager"  ClosedPanelsBarVisibility="Never"  >
+                <dxdo:LayoutGroup  >
                     <dxdo:LayoutPanel AllowClose="False"
                                       AllowContextMenu="False"
                                       AllowFloat="False"
                                       Caption="功能菜单"
                                       FloatOnDoubleClick="False"
-                                      ItemWidth="250"
+                                      ItemWidth="250" AllowMove="False"
                                       ShowBorder="True"
                                       ShowCaption="True">
-                        <dxn:NavBarControl ItemsSource="{Binding Modules}">
+                        <dxn:NavBarControl ItemsSource="{Binding Modules}" >
                           
                             
                          
@@ -117,29 +119,33 @@
                             <dxn:NavBarControl.ItemTemplate>
                                 <DataTemplate>
                                     <ContentControl>
+                                       
+                                     
                                         <dxn:NavBarGroup DisplaySource="Content"
                                                          Header="{Binding ModuleTitle}"
-                                                         ImageSource="{Binding ModuleInfo,
-                                                                               Converter={StaticResource ResourceKey=MoudleInfoToImageConerter}}">
+                                                         GroupScrollMode="ScrollBar" 
+                                                         ImageSource="{Binding ImageName,
+                                                                               Converter={StaticResource ResourceKey=PathToImageConerter}}">
                                             <dxn:NavBarGroup.ImageSettings>
                                                 <dxn:ImageSettings Width="24" Height="24" />
                                             </dxn:NavBarGroup.ImageSettings>
 
                                             <dxn:NavBarGroup.Content>
-                                                <Canvas Background="White">
-                                                    <TreeView Margin="0"
+                                              
+                                                    <!--<Canvas Background="White"      >--><!--//20170423 滚动条支持-->
+                                                       
+                                                        <TreeView Margin="0"
                                                               Background="White"
+                                                             
                                                               BorderThickness="0"
                                                           ItemTemplate="{StaticResource TreeItemDataTemplate}"
-                                                              ItemsSource="{Binding ChildModules}"
-                                                              ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                                                              ScrollViewer.VerticalScrollBarVisibility="Auto">
+                                                              ItemsSource="{Binding ChildModules}"   >
 
                                                         <TreeView.ItemContainerStyle>
                                                             <Style TargetType="TreeViewItem">
                                                                 <Setter Property="IsExpanded" Value="True" />
                                                                 <Setter Property="Padding" Value="0" />
-                                                                <Setter Property="Height" Value="28" />
+                                                                <!--<Setter Property="Height" Value="28" /> 这句不能要影响树-->
                                                                                                                                 <Style.Triggers>
                                                                     <MultiTrigger>
                                                                         <MultiTrigger.Conditions>
@@ -154,9 +160,13 @@
                                                         </TreeView.ItemContainerStyle>
                                                     
                                                     </TreeView>
-                                                </Canvas>
+                                                   
+                                                <!--</Canvas>-->
+                                             
                                             </dxn:NavBarGroup.Content>
                                         </dxn:NavBarGroup>
+                                    
+                                  
                                     </ContentControl>
                                 </DataTemplate>
                             </dxn:NavBarControl.ItemTemplate>
@@ -165,8 +175,9 @@
                             </dxn:NavBarControl.View>
                         </dxn:NavBarControl>
                     </dxdo:LayoutPanel>
-                    <dxdo:DocumentGroup x:Name="documnetGroup" ItemWidth="*" ClosePageButtonShowMode="InActiveTabPageHeader" >
-                        <dxdo:DocumentPanel Caption="Document" AllowClose="False">
+                   
+                        <dxdo:DocumentGroup  ShowTabForSinglePage="True" x:Name="documnetGroup"  ItemWidth="*" ShowCaption="True" ClosePageButtonShowMode="InActiveTabPageHeader" TabHeaderLayoutType="Default" TabContentCacheMode="None" MDIStyle="Default" CaptionLocation="Default"   >
+                        <dxdo:DocumentPanel AllowMove="False" TabIndex="1" TabCaptionWidth="0"  AllowClose="False" >
                             <Grid />
                         </dxdo:DocumentPanel>
 
@@ -175,24 +186,35 @@
                                 <Setter Property="AllowContextMenu" Value="False" />
                                 <Setter Property="FloatOnDoubleClick" Value="False" />
                                 <Setter Property="AllowFloat" Value="False" />
+                                <Setter Property="AllowMove" Value="False" />
                                 <Setter Property="AllowClose" Value="True" />
+                                <Setter Property="ShowCaption" Value="False"></Setter>
                             </Style>
                         </dxdo:DocumentGroup.ItemStyle>
+                    
+                            
+                        
                     </dxdo:DocumentGroup>
                     <dxmvvm:Interaction.Behaviors>
-                        <dxdo:TabbedDocumentUIService x:Name="TabbedDocumentManagerService" DocumentGroup="{Binding ElementName=documnetGroup}">
+                        <dxdo:TabbedDocumentUIService x:Name="TabbedDocumentManagerService" DocumentGroup="{Binding ElementName=documnetGroup}" >
                             <dxdo:TabbedDocumentUIService.DocumentPanelStyle>
                                 <Style TargetType="dxdo:DocumentPanel">
                                     <Setter Property="AllowContextMenu" Value="False" />
                                     <Setter Property="FloatOnDoubleClick" Value="False" />
                                     <Setter Property="AllowFloat" Value="False" />
+                                    <Setter Property="AllowMove" Value="False" />
                                     <Setter Property="AllowClose" Value="True" />
+                                    <Setter Property="TabIndex" Value="1" />
+
                                 </Style>
                             </dxdo:TabbedDocumentUIService.DocumentPanelStyle>
+
                         </dxdo:TabbedDocumentUIService>
 
                     </dxmvvm:Interaction.Behaviors>
+                   
                 </dxdo:LayoutGroup>
+              
             </dxdo:DockLayoutManager>
         </Grid>
     </DockPanel>

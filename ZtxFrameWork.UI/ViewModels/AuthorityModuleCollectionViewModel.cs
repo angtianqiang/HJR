@@ -17,7 +17,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new AuthorityModuleCollectionViewModel());
         }
-        protected AuthorityModuleCollectionViewModel() : base(DbFactory.Instance, x => x.AuthorityModules, query => query.OrderBy(x=>x.Category).OrderBy(x=>x.ViewTitle), x => x.ID,permissionTitle: "模块权限配置")
+        protected AuthorityModuleCollectionViewModel() : base(DbFactory.Instance, x => x.AuthorityModules, query => query.OrderBy(x=>x.Category).OrderByDescending(x=>x.ID).Take(App.ViewTopCount), x => x.ID,permissionTitle: "模块权限配置")
         {
 
         }
@@ -28,11 +28,13 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
 
-            dbContext.Entry(entity).Reference(t => t.UserAuthorityModuleMappings).Load();
-            foreach (var item in entity.UserAuthorityModuleMappings)
+            dbContext.Entry(entity).Collection(t => t.UserAuthorityModuleMappings).Load();
+            for (int i = 0; i < entity.UserAuthorityModuleMappings.Count; i++)
             {
-                dbContext.Entry(item).State = System.Data.Entity.EntityState.Deleted;
+                
+                dbContext.Entry(entity.UserAuthorityModuleMappings[i]).State = System.Data.Entity.EntityState.Deleted;
             }
+
         }
       
 

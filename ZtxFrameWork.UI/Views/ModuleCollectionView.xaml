@@ -84,8 +84,17 @@
                                                       ShowTotalSummary="True" />
                                 </dxg:GridControl.View>
                                 <dxg:GridColumn FieldName="ModuleTitle" IsSmart="True" />
-                                <dxg:GridColumn FieldName="DocumentType" IsSmart="True" />
-                                <dxg:GridColumn FieldName="ImageName" IsSmart="True" />
+                                <dxg:GridColumn FieldName="DocumentType" Width="300" IsSmart="True" />
+                                <dxg:GridColumn FieldName="ImageName" IsSmart="True">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Width="24" Stretch="Uniform" Source="{Binding Path=Value, Converter={StaticResource PathToImageConerter}}"/>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                </dxg:GridColumn>
                                 <dxg:GridColumn FieldName="SortNo" IsSmart="True" />
                                 <dxg:GridColumn FieldName="ModuleInfo" IsSmart="True" />
                             </dxg:GridControl>

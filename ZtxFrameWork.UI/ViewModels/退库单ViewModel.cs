@@ -54,6 +54,14 @@ namespace ZtxFrameWork.UI.ViewModels
             供应商Source = t3;
 
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.退库单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
         protected override IQueryable<退库单> DbInclude(ObjectSet<退库单> dbSet)
         {
             return dbSet.Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品));

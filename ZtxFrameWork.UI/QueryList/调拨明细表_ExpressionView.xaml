@@ -1,0 +1,118 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.QueryList.调拨明细表_ExpressionView"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.QueryList"
+             xmlns:behaviors="clr-namespace:ZtxFrameWork.UI.Behaviors"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <dxmvvm:Interaction.Behaviors>
+        <behaviors:EntityExpressionUserControlDefaultLoad />
+    </dxmvvm:Interaction.Behaviors>
+    <Grid>
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <dxlc:LayoutControl Orientation="Vertical" View="GroupBox">
+            <dxlc:LayoutGroup Header="基本信息" View="GroupBox" Orientation="Vertical">
+                <dxlc:LayoutItem Label="开始日期">
+                    <dxe:DateEdit EditValue="{Binding 开始日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="结束日期">
+                    <dxe:DateEdit EditValue="{Binding 结束日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="源分店">
+                    <dxg:LookUpEdit DisplayMember="名称"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding 源分店ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 源分店Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="目标分店">
+                    <dxg:LookUpEdit DisplayMember="名称"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding 目标分店ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 目标分店Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="调拨员">
+                    <dxg:LookUpEdit DisplayMember="DispalyName"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding 调拨员ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 调拨员Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="签收员">
+                    <dxg:LookUpEdit DisplayMember="DispalyName"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding 签收员ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 签收员Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
+                </dxlc:LayoutItem>
+            </dxlc:LayoutGroup>
+
+            <dxlc:LayoutGroup VerticalAlignment="Top"
+                              Header="高级条件"
+                              IsCollapsible="False"
+                              View="GroupBox">
+                <dxe:FilterControl x:Name="FilterControl"
+                                   MinHeight="80"
+                                   FilterCriteria="{Binding AdvancedCriteria,
+                                                            Mode=TwoWay}">
+                    <dxmvvm:Interaction.Behaviors>
+                        <dxmvvm:EventToCommand Command="{Binding ElementName=FilterControl, Path=ApplyFilterCommand}" EventName="IsVisibleChanged" />
+                        <dxe:FilterControlColumnsBehavior AdditionalProperties="{Binding AdditionalProperties,
+                                                                                         Converter={dxmvvm:EnumerableConverter {dxmvvm:ReflectionConverter}}}"
+                                                          HiddenProperties="{Binding HiddenProperties}"
+                                                          ObjectType="{Binding EntityType}"
+                                                          UpperCasePropertyNames="True" />
+                    </dxmvvm:Interaction.Behaviors>
+                </dxe:FilterControl>
+            </dxlc:LayoutGroup>
+        </dxlc:LayoutControl>
+
+        <StackPanel Grid.Row="1"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+            <Button Width="60"
+                    Height="25"
+                    Margin="0,0,20,0"
+                    Command="{Binding ConfirmCommand}"
+                    Content="确认" />
+            <Button Width="60"
+                    Height="25"
+                    Margin="0,0,20,0"
+                    Command="{Binding ClearCommand}"
+                    Content="清除" />
+            <Button Width="60"
+                    Height="25"
+                    Margin="0,0,20,0"
+                    Command="{Binding CancelCommand}"
+                    Content="取消" />
+        </StackPanel>
+
+
+    </Grid>
+</UserControl>

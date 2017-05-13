@@ -47,6 +47,14 @@ namespace ZtxFrameWork.UI.ViewModels
             签收员Source = 调拨员Source = t1;
             源分店Source = 目标分店Source = t2;
         }
+        protected override void SetDetailsDirtyState()
+        {
+            base.SetDetailsDirtyState();
+            foreach (var item in Entity.调拨单明细s)
+            {
+                item.DirtyState = DirtyState.UnChanged;
+            }
+        }
         protected override IQueryable<调拨单> DbInclude(ObjectSet<调拨单> dbSet)
         {
             return dbSet.Include(t => t.调拨单明细s.Select(p => p.饰品));

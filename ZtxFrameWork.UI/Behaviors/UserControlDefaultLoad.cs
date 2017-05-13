@@ -33,7 +33,8 @@ namespace ZtxFrameWork.UI.Behaviors
             //string Token = ((dynamic)AssociatedObject.DataContext).Token;
 
             //AssociatedObject.Tag = Token;
-            if (((UserControl)sender).DataContext !=null)
+      
+          if (((UserControl)sender).DataContext !=null)
             {
                 System.Windows.Input.Mouse.OverrideCursor = null;
                 string Token1 = ((dynamic)AssociatedObject.DataContext).Token;

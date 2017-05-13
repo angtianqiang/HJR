@@ -5,6 +5,7 @@
              xmlns:behaviors="clr-namespace:ZtxFrameWork.UI.Behaviors"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+              xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
              xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
              xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
@@ -22,13 +23,48 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <dxlc:LayoutControl Orientation="Vertical" View="GroupBox">
-            <dxlc:LayoutGroup Header="基本信息" View="GroupBox">
-                <dxlc:LayoutItem Label="饰品编号">
-                    <dxe:TextEdit EditValue="{Binding StartCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <dxlc:LayoutGroup Header="基本信息" View="GroupBox" Orientation="Vertical">
+                <dxlc:LayoutItem Label="开始日期">
+                    <dxe:DateEdit EditValue="{Binding 开始日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="结束日期">
+                    <dxe:DateEdit EditValue="{Binding 结束日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="分店">
+                    <dxg:LookUpEdit DisplayMember="名称"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding 分店ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 分店Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="操作员">
+                    <dxg:LookUpEdit DisplayMember="DispalyName"
+                                        EditMode="Standalone"
+                                        EditValue="{Binding 操作员ID,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        ItemsSource="{Binding 操作员Source}"
+                                        PopupWidth="300"
+                                        TabIndex="0"
+                                        ValueMember="ID" />
+                </dxlc:LayoutItem>
+                <dxlc:LayoutItem Label="供应商">
+                    <dxg:LookUpEdit DisplayMember="简称"
+                                    EditMode="Standalone"
+                                    EditValue="{Binding 供应商ID,
+                                                        UpdateSourceTrigger=PropertyChanged}"
+                                    ItemsSource="{Binding 供应商Source}"
+                                    PopupWidth="300"
+                                    TabIndex="0"
+                                    ValueMember="ID" />
                 </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
 
-            <dxlc:LayoutGroup VerticalAlignment="Top"
+           
+        
+        <dxlc:LayoutGroup VerticalAlignment="Top"
                               Header="高级条件"
                               IsCollapsible="False"
                               View="GroupBox">

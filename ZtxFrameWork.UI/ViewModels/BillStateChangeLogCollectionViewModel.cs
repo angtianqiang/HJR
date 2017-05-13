@@ -16,7 +16,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new BillStateChangeLogCollectionViewModel());
         }
-        protected BillStateChangeLogCollectionViewModel() : base(DbFactory.Instance, x => x.BillStateChangeLogs, query => query.OrderByDescending(x=>x.ChangeOn), x => x.ID,permissionTitle: "单据状态更改日志")
+        protected BillStateChangeLogCollectionViewModel() : base(DbFactory.Instance, x => x.BillStateChangeLogs, query => query.OrderByDescending(x=>x.ChangeOn).Take(App.ViewTopCount), x => x.ID,permissionTitle: "单据状态更改日志")
         {
 
         }

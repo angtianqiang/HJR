@@ -31,68 +31,37 @@
             <dx:DialogService.DialogStyle>
                 <Style TargetType="{x:Type dx:DXDialogWindow}">
                     <Setter Property="WindowStyle" Value="ToolWindow" />
-                    <Setter Property="Height" Value="300" />
+                    <Setter Property="Height" Value="410" />
                     <Setter Property="Width" Value="400" />
                 </Style>
             </dx:DialogService.DialogStyle>
         </dx:DialogService>
-        <dx:WindowedDocumentUIService x:Name="SignleObjectDocumentManagerService"
-                                      DocumentShowMode="Dialog"
-                                      WindowType="{x:Type dxr:DXRibbonWindow}">
-            <dx:WindowedDocumentUIService.WindowStyle>
-                <Style TargetType="{x:Type dx:DXWindow}">
-                    <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
-                    <Setter Property="Icon" Value="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
-                    <Setter Property="Width" Value="500" />
-                    <Setter Property="Height" Value="380" />
-                </Style>
-            </dx:WindowedDocumentUIService.WindowStyle>
-        </dx:WindowedDocumentUIService>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
         <DockPanel>
             <controls:DynamicQueryCollectionMenu DockPanel.Dock="Top" />
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
-
                     <dxdo:LayoutPanel AllowClose="False"
                                       AllowDrag="False"
                                       AllowHide="False"
                                       Caption="{Binding ReportTitle}"
                                       ItemHeight="Auto">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                            <dxg:GridControl AutoGenerateColumns="AddNew"
-                                             EnableSmartColumnsGeneration="True"
+                            <dxg:GridControl 
                                              ItemsSource="{Binding Entities}"
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}"
-                                             SelectionMode="Cell">
-                                <dxmvvm:Interaction.Behaviors>
-                                    <dxmvvm:EventToCommand Command="{Binding EditCommand}"
-                                                           EventName="MouseDoubleClick"
-                                                           PassEventArgsToCommand="True">
-                                        <dxmvvm:EventToCommand.EventArgsConverter>
-                                            <dx:EventArgsToDataRowConverter />
-                                        </dxmvvm:EventToCommand.EventArgsConverter>
-                                    </dxmvvm:EventToCommand>
-                                </dxmvvm:Interaction.Behaviors>
+                                          Style="{StaticResource ResourceKey=ReportGridControl}" >
                                 <dxg:GridControl.View>
-                                    <dxg:TableView Name="View"
-                                                   AllowEditing="False"
-                                                   AllowPerPixelScrolling="True"
-                                                   ShowTotalSummary="True"
+                                    <dxg:TableView Name="View"                                                 
                                                    Style="{StaticResource ResourceKey=ReportTableView}" />
                                 </dxg:GridControl.View>
-
-
                             </dxg:GridControl>
-
                         </dxlc:LayoutGroup>
-
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>
             </dxdo:DockLayoutManager>
-
         </DockPanel>
     </Grid>
 </UserControl>

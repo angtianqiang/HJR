@@ -1,4 +1,5 @@
 ﻿using DevExpress.Mvvm;
+using DevExpress.Xpf.Docking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,25 @@ namespace ZtxFrameWork.UI.Views
         public NavMain()
         {
             InitializeComponent();
+            //this.dockManager.DockItemActivated += DockManager_DockItemActivated;
+            //this.dockManager.DockItemClosed += DockManager_DockItemClosed;
         }
+
+        //private void DockManager_DockItemClosed(object sender, DevExpress.Xpf.Docking.Base.DockItemClosedEventArgs e)
+        //{
+        //  var doc = this.documnetGroup.Items.OrderByDescending(t => t.TabIndex).FirstOrDefault();
+        //    if (doc == null) return;
+        //    this.dockManager.Activate(doc);
+        //}
+
+        //DocumentPanel lastActiveDoc = null;
+        //private void DockManager_DockItemActivated(object sender, DevExpress.Xpf.Docking.Base.DockItemActivatedEventArgs ea)
+        //{
+        //    var documentPanel = ea.Item as DocumentPanel;
+        //    if (documentPanel == null) return;
+        //    documentPanel.TabIndex = this.documnetGroup.Items.Max(t => t.TabIndex) + 1;
+        //}
+
         private void StackPanel_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left && e.ClickCount >= 1)
@@ -33,5 +52,9 @@ namespace ZtxFrameWork.UI.Views
                 Messenger.Default.Send(((StackPanel)sender).DataContext as ZtxFrameWork.Data.Model.Module);
             }
         }
+
+        
+
+     
     }
 }

@@ -34,11 +34,13 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
 
-            dbContext.Entry(entity).Reference(t => t.UserAuthorityModuleMappings).Load();
-            foreach (var item in entity.UserAuthorityModuleMappings)
+            dbContext.Entry(entity).Collection(t => t.UserAuthorityModuleMappings).Load();
+            for (int i = 0; i < entity.UserAuthorityModuleMappings.Count; i++)
             {
-                dbContext.Entry(item).State = System.Data.Entity.EntityState.Deleted;
+
+                dbContext.Entry(entity.UserAuthorityModuleMappings[i]).State = System.Data.Entity.EntityState.Deleted;
             }
+          
         }
         protected override void OnBeforeEntitySaved(ZtxDB dbContext, long primaryKey, User entity, bool isNewEntity)
         {

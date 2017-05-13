@@ -337,30 +337,32 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                     try
                     {
                         OnBeforeEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
-                        if (isNewEntity)
-                        {
-                            DB.Entry(Entity).State = EntityState.Added;
-                        }
-                        else
-                        {
-                            DB.Entry(Entity).State = EntityState.Modified;
-                        }
+                        //if (isNewEntity)
+                        //{
+                        //    DB.Entry(Entity).State = EntityState.Added;
+                        //}
+                        //else
+                        //{
+                        //    DB.Entry(Entity).State = EntityState.Modified;
+                        //}
 
                         DB.SaveChanges();
 
                         OnEntitySaved(DB, PrimaryKey, Entity, isNewEntity);
                         tran.Commit();
-                        PrimaryKey = this.GetPrimaryKey(Entity);
-                        LoadEntityByKey(PrimaryKey);
-                        Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, isNewEntity ? EntityMessageType.Added : EntityMessageType.Changed));
+                      
                     }
                     catch (Exception innerEx)
                     {
                         tran.Rollback();
                         throw innerEx;
                     }
+                  
                 }
 
+                PrimaryKey = this.GetPrimaryKey(Entity);
+                LoadEntityByKey(PrimaryKey);
+               Messenger.Default.Send(new EntityMessage<TEntity, TPrimaryKey>(PrimaryKey, isNewEntity ? EntityMessageType.Added : EntityMessageType.Changed));
 
                 Mouse.OverrideCursor = null;
                 return true;
@@ -502,10 +504,12 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             var objectSet = objectContext.CreateObjectSet<TEntity>();
             var oldMergeOption = objectSet.MergeOption;
             objectSet.MergeOption = System.Data.Entity.Core.Objects.MergeOption.OverwriteChanges;
+   Entity =  DbInclude(objectSet).FirstOrDefault(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
 
-            Entity = await DbInclude(objectSet).FirstOrDefaultAsync(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
+     // Entity = await DbInclude(objectSet).FirstOrDefaultAsync(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
             objectSet.MergeOption = oldMergeOption;
-            //   Entity = await DbInclude(DbSet).FirstOrDefaultAsync(ExpressionHelper.GetValueEqualsExpression(this.getPrimaryKeyExpression, primaryKey));
+           
+            SetDetailsDirtyState();
             UpdateCommands();
             //}
             //else
@@ -515,8 +519,12 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             //}
 
         }
-
-        protected virtual IQueryable<TEntity> DbInclude(DbSet<TEntity> dbSet)
+        /// <summary>
+        /// 设置明细行的更改状态（用于在表格行里显示颜色）
+        /// </summary>
+        protected virtual void SetDetailsDirtyState()
+        { }
+       protected virtual IQueryable<TEntity> DbInclude(DbSet<TEntity> dbSet)
         {
 
 

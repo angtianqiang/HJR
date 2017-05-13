@@ -20,9 +20,9 @@ namespace ZtxFrameWork.UI.ViewModels
             return ViewModelSource.Create(() => new 单位ViewModel());
         }
         public DbSet<单位> 单位s { get; set; }
-        protected 单位ViewModel() : base(DbFactory.Instance, x => x.单位s, x=>x.ID, x => x.名称, "单位")
+        protected 单位ViewModel() : base(DbFactory.Instance, x => x.单位s, x => x.ID, x => x.名称, "单位")
         {
-          
+
 
         }
     }

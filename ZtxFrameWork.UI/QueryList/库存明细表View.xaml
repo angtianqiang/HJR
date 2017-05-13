@@ -30,7 +30,7 @@
             <dx:DialogService.DialogStyle>
                 <Style TargetType="{x:Type dx:DXDialogWindow}">
                     <Setter Property="WindowStyle" Value="ToolWindow" />
-                    <Setter Property="Height" Value="300" />
+                    <Setter Property="Height" Value="310" />
                     <Setter Property="Width" Value="400" />
                 </Style>
             </dx:DialogService.DialogStyle>

@@ -24,10 +24,10 @@
             <dxlc:LayoutGroup Header="基本信息" View="GroupBox">
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="起始日期">
-                        <dxe:DateEdit EditValue="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxe:DateEdit EditValue="{Binding 开始日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="截止日期">
-                        <dxe:DateEdit EditValue="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <dxe:DateEdit EditValue="{Binding 结束日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="饰品编号">
                         <dxe:TextEdit EditValue="{Binding StartCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
