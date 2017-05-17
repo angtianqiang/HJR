@@ -20,13 +20,13 @@ using ZtxFrameWork.Data.Model;
 
 namespace ZtxFrameWork.Data
 {
-    public class ZtxCreateDatabaseIfNotExists :  CreateDatabaseIfNotExists<ZtxDB> // DropCreateDatabaseIfModelChanges<ZtxDB>
+    public class ZtxCreateDatabaseIfNotExists : CreateDatabaseIfNotExists<ZtxDB> // DropCreateDatabaseIfModelChanges<ZtxDB>
     {
         protected override void Seed(ZtxDB context)
         {
             base.Seed(context);
 
-         ZtxDB.Init(context);
+            ZtxDB.Init(context);
 
         }
     }
@@ -50,7 +50,7 @@ namespace ZtxFrameWork.Data
             Model.Module m = null;
             if (parentMoudle == null)
             {
-                var p = context.Modules.Add(new Model.Module() { ModuleTitle = "销售管理", ImageName= "Sales-Order.png", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
+                var p = context.Modules.Add(new Model.Module() { ModuleTitle = "销售管理", ImageName = "Sales-Order.png", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
                 m = context.Modules.Add(new Model.Module() { DocumentType = "销售单CollectionView", ImageName = "Shopping Basket Add-WF.png", Parent = p, ModuleTitle = "销售单", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "销售单", "销售管理");
                 m = context.Modules.Add(new Model.Module() { DocumentType = "销售退货单CollectionView", ImageName = "Shopping Basket Delete-WF.png", Parent = p, ModuleTitle = "销售退货单", ModuleInfo = Model.ModuleInfo.MoudleAction });
@@ -63,6 +63,9 @@ namespace ZtxFrameWork.Data
             if (parentMoudle == null)
             {
                 var p = context.Modules.Add(new Model.Module() { ModuleTitle = "库存管理", ImageName = "Cupboard.png", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
+
+                m = context.Modules.Add(new Model.Module() { DocumentType = "分店库存View", ImageName = "Shopping OK-WF.png", Parent = p, ModuleTitle = "分店库存", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "分店库存", "库存管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "入库单CollectionView", ImageName = "Shopping OK-WF.png", Parent = p, ModuleTitle = "采购入库单", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "采购入库单", "库存管理");
                 m = context.Modules.Add(new Model.Module() { DocumentType = "退库单CollectionView", ImageName = "Shopping Remove-01-WF.png", Parent = p, ModuleTitle = "采购退货单", ModuleInfo = Model.ModuleInfo.MoudleAction });
@@ -90,19 +93,27 @@ namespace ZtxFrameWork.Data
                 var p = context.Modules.Add(new Model.Module() { ModuleTitle = "基础资料", ImageName = "Gear-02-WF.png", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
 
                 m = context.Modules.Add(new Model.Module() { DocumentType = "饰品CollectionView", ImageName = "Bullet-WF.png", Parent = p, ModuleTitle = "饰品", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "饰品", "基础资料",Confirm:false,UnConfirm:false,Audit:false,UnAudit:false   );
+                InitAuthorityModule(context, "饰品", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "分店CollectionView", ImageName = "Bank.png", Parent = p, ModuleTitle = "分店", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "分店", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+
+
+                m = context.Modules.Add(new Model.Module() { DocumentType = "电镀方式CollectionView", ImageName = "Gear--03WF.png", Parent = p, ModuleTitle = "电镀方式", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "电镀方式", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                m = context.Modules.Add(new Model.Module() { DocumentType = "石头颜色CollectionView", ImageName = "Gear--03WF.png", Parent = p, ModuleTitle = "石头颜色", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "石头颜色", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+
+
                 m = context.Modules.Add(new Model.Module() { DocumentType = "单位CollectionView", ImageName = "Gear--03WF.png", Parent = p, ModuleTitle = "单位", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "单位", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "重量单位CollectionView", ImageName = "Gear--03WF.png", Parent = p, ModuleTitle = "重量单位", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "重量单位", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "材质CollectionView", ImageName = "Gear--03WF.png", Parent = p, ModuleTitle = "材质", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "材质", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
-               // m = context.Modules.Add(new Model.Module() { DocumentType = "黄金种类CollectionView", Parent = p, ModuleTitle = "黄金种类", ModuleInfo = Model.ModuleInfo.MoudleAction });
-              //  InitAuthorityModule(context, "黄金种类", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
-                m = context.Modules.Add(new Model.Module() { DocumentType = "饰品类别CollectionView", ImageName = "Gear-01-WF.png", Parent = p, ModuleTitle = "饰品类别", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "饰品类别", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                // m = context.Modules.Add(new Model.Module() { DocumentType = "黄金种类CollectionView", Parent = p, ModuleTitle = "黄金种类", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                //  InitAuthorityModule(context, "黄金种类", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                m = context.Modules.Add(new Model.Module() { DocumentType = "饰品类别CollectionView", ImageName = "Gear-01-WF.png", Parent = p, ModuleTitle = "品名", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "品名", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "饰品类型CollectionView", ImageName = "Gear--03WF.png", Parent = p, ModuleTitle = "饰品类型", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "饰品类型", "基础资料", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 //m = context.Modules.Add(new Model.Module() { DocumentType = "饰品提成CollectionView", Parent = p, ModuleTitle = "饰品提成", ModuleInfo = Model.ModuleInfo.MoudleAction });
@@ -116,10 +127,10 @@ namespace ZtxFrameWork.Data
             parentMoudle = context.Modules.Where(t => t.ModuleTitle == "报表管理").FirstOrDefault();
             if (parentMoudle == null)
             {
-             //   var p = context.Modules.Add(new Model.Module() { ModuleTitle = "报表管理", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
+                //   var p = context.Modules.Add(new Model.Module() { ModuleTitle = "报表管理", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
                 var p = context.Modules.Add(new Model.Module() { ModuleTitle = "报表管理", ImageName = "Documents-02.png", ModuleInfo = Model.ModuleInfo.ModuleGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
 
-                var p1= context.Modules.Add(new Model.Module() { ModuleTitle = "财务报表", ImageName = "edit.png", Parent =p, ModuleInfo = Model.ModuleInfo.MoudleSubGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
+                var p1 = context.Modules.Add(new Model.Module() { ModuleTitle = "财务报表", ImageName = "edit.png", Parent = p, ModuleInfo = Model.ModuleInfo.MoudleSubGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
                 var p2 = context.Modules.Add(new Model.Module() { ModuleTitle = "库存报表", ImageName = "edit.png", Parent = p, ModuleInfo = Model.ModuleInfo.MoudleSubGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
                 var p3 = context.Modules.Add(new Model.Module() { ModuleTitle = "销售报表", ImageName = "edit.png", Parent = p, ModuleInfo = Model.ModuleInfo.MoudleSubGroup, CreateOn = DateTime.Now, ModifiedOn = DateTime.Now });
 
@@ -128,7 +139,7 @@ namespace ZtxFrameWork.Data
                 m = context.Modules.Add(new Model.Module() { DocumentType = "应付款明细表View", ImageName = "Graph-03.png", Parent = p1, ModuleTitle = "应付款明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "应付款明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "付款明细表View", ImageName = "Document Find-WF.png", Parent = p1, ModuleTitle = "付款明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "付款明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);              
+                InitAuthorityModule(context, "付款明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "收款明细表View", ImageName = "Document Find-WF.png", Parent = p1, ModuleTitle = "收款明细表", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "收款明细表", "报表管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
 
@@ -167,9 +178,9 @@ namespace ZtxFrameWork.Data
                 m = context.Modules.Add(new Model.Module() { DocumentType = "UserCollectionView", ImageName = "User-Group.png", Parent = p, ModuleTitle = "用户管理", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "用户管理", "系统管理", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "AuthorityModuleCollectionView", ImageName = "Login2-WF.png", Parent = p, ModuleTitle = "模块权限配置", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "模块权限配置", "系统管理",  Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                InitAuthorityModule(context, "模块权限配置", "系统管理", Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "UserAuthorityModuleMappingCollectionView", ImageName = "Gear-02-WF.png", Parent = p, ModuleTitle = "用户权限管理", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "用户权限管理", "系统管理", Add: false,  Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                InitAuthorityModule(context, "用户权限管理", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "SystemConfigurationCollectionView", ImageName = "Graph-03.png", Parent = p, ModuleTitle = "系统参数配置", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "系统参数配置", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "ChangePasswordView", ImageName = "Login-WF.png", Parent = p, ModuleTitle = "更改登录密码", ModuleInfo = Model.ModuleInfo.MoudleAction });
@@ -178,7 +189,8 @@ namespace ZtxFrameWork.Data
                 InitAuthorityModule(context, "数据存储操作日志", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "BillStateChangeLogCollectionView", ImageName = "Database Connection-WF.png", Parent = p, ModuleTitle = "单据状态更改日志", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "单据状态更改日志", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
-
+                m = context.Modules.Add(new Model.Module() { DocumentType = "店面切换View", ImageName = "Bank.png", Parent = p, ModuleTitle = "店面切换", ModuleInfo = Model.ModuleInfo.MoudleAction });
+                InitAuthorityModule(context, "店面切换", "系统管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
             }
 
             //添加页面模块
@@ -208,11 +220,11 @@ namespace ZtxFrameWork.Data
             }
             if (context.材质s.Where(T => T.名称 == "银").FirstOrDefault() == null)
             {
-                context.材质s.Add(new 材质() { 名称 = "银", 当前价=5.45m, 排序号 = "001" });
+                context.材质s.Add(new 材质() { 名称 = "银", 当前价 = 5.45m, 排序号 = "001" });
             }
             if (context.材质s.Where(T => T.名称 == "金").FirstOrDefault() == null)
             {
-                context.材质s.Add(new 材质() { 名称 = "金",  当前价=9.385m, 排序号 = "002" });
+                context.材质s.Add(new 材质() { 名称 = "金", 当前价 = 9.385m, 排序号 = "002" });
             }
 
             if (context.分店s.Where(T => T.名称 == "中山总店").FirstOrDefault() == null)
@@ -269,15 +281,15 @@ namespace ZtxFrameWork.Data
             #region 加载系统配置
             SystemConfiguration config = null;
             config = context.SystemConfigurations.Where(t => t.Token == "DestroyOnClose").FirstOrDefault();
-            if (config==null)
+            if (config == null)
             {
                 context.SystemConfigurations.Add(new SystemConfiguration()
                 {
-                     Token= "DestroyOnClose",
-                      Category="全局系统设置",
-                      TokenValue="0",
-                      Des= "是否启用页面缓存",
-                      Remark= "0:关闭页面文档后，释放内存；1：关闭页面文档后，留文档"
+                    Token = "DestroyOnClose",
+                    Category = "全局系统设置",
+                    TokenValue = "0",
+                    Des = "是否启用页面缓存",
+                    Remark = "0:关闭页面文档后，释放内存；1：关闭页面文档后，留文档"
                 }
                 );
             }
@@ -312,17 +324,17 @@ namespace ZtxFrameWork.Data
 
             Inited = true;
         }
-        protected static void InitAuthorityModule(ZtxDB context, string permissionTitle, string category, bool Navigate = true, bool Add = true, bool Edit = true, bool Delete = true, bool Export=true,bool Print = true, bool Preview = true, bool Design = true, bool Confirm = true, bool UnConfirm = true, bool Audit = true, bool UnAudit = true)
+        protected static void InitAuthorityModule(ZtxDB context, string permissionTitle, string category, bool Navigate = true, bool Add = true, bool Edit = true, bool Delete = true, bool Export = true, bool Print = true, bool Preview = true, bool Design = true, bool Confirm = true, bool UnConfirm = true, bool Audit = true, bool UnAudit = true)
         {
             var view = context.AuthorityModules.Where(t => t.ViewTitle == permissionTitle).FirstOrDefault();
             if (view == null)
             {
-                var v = context.AuthorityModules.Add(new AuthorityModule() { ViewTitle = permissionTitle, Category = category, Navigate = Navigate, Add = Add, Edit = Edit, Delete = Delete,Export=Export, Print = Print, Preview = Preview, Design = Design, Confirm = Confirm, UnConfirm = UnConfirm, Audit = Audit, UnAudit = UnAudit });
+                var v = context.AuthorityModules.Add(new AuthorityModule() { ViewTitle = permissionTitle, Category = category, Navigate = Navigate, Add = Add, Edit = Edit, Delete = Delete, Export = Export, Print = Print, Preview = Preview, Design = Design, Confirm = Confirm, UnConfirm = UnConfirm, Audit = Audit, UnAudit = UnAudit });
 
 
                 foreach (var item in context.Users.AsEnumerable())
                 {
-                    v.UserAuthorityModuleMappings.Add(new UserAuthorityModuleMapping() { UserID = item.ID, Navigate = Navigate, Add = Add, Edit = Edit, Delete = Delete,Export=Export, Print = Print, Preview = Preview, Design = Design, Confirm = Confirm, UnConfirm = UnConfirm, Audit = Audit, UnAudit = UnAudit });
+                    v.UserAuthorityModuleMappings.Add(new UserAuthorityModuleMapping() { UserID = item.ID, Navigate = Navigate, Add = Add, Edit = Edit, Delete = Delete, Export = Export, Print = Print, Preview = Preview, Design = Design, Confirm = Confirm, UnConfirm = UnConfirm, Audit = Audit, UnAudit = UnAudit });
                 }
             }
         }
@@ -344,11 +356,11 @@ namespace ZtxFrameWork.Data
             base.OnModelCreating(modelBuilder);
         }
         //自动迁够是用到
-      public ZtxDB() : this("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork3;Integrated Security=True;MultipleActiveResultSets=true")
-       { InitializeDbContext(); }
+        public ZtxDB() : this("Data Source=127.0.0.1;Initial Catalog=ztxFrameWork3;Integrated Security=True;MultipleActiveResultSets=true")
+        { InitializeDbContext(); }
         public ZtxDB(string conn) : base(conn)
         {
-           
+
             if (System.Diagnostics.Debugger.IsAttached)
             {
                 Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
@@ -359,21 +371,21 @@ namespace ZtxFrameWork.Data
 
                 Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
             }
-            //       Database.SetInitializer<ZtxDB>(null   );
-            //        this.Database.Initialize(false);
+             //  Database.SetInitializer<ZtxDB>(null   );
+              this.Database.Initialize(false);
             InitializeDbContext();
         }
         public ZtxDB(DbConnection con) : base(con, contextOwnsConnection: false) { InitializeDbContext(); }
 
-      private void   InitializeDbContext()
+        private void InitializeDbContext()
         {
-           
-          this.Configuration.LazyLoadingEnabled = false;
+
+            this.Configuration.LazyLoadingEnabled = false;
            this.Configuration.ProxyCreationEnabled = false;
 
             var context = ((IObjectContextAdapter)this).ObjectContext;
 
-         
+
             context.ObjectStateManager.ObjectStateManagerChanged += ObjectStateManager_ObjectStateManagerChanged;
             context.ObjectMaterialized += Context_ObjectMaterialized;
         }
@@ -386,18 +398,18 @@ namespace ZtxFrameWork.Data
             }
         }
 
-        private  void ObjectStateManager_ObjectStateManagerChanged(object sender, System.ComponentModel.CollectionChangeEventArgs e)
+        private void ObjectStateManager_ObjectStateManagerChanged(object sender, System.ComponentModel.CollectionChangeEventArgs e)
         {
 
-           
+
 
 
             if (e.Action == CollectionChangeAction.Add)
             {
                 if (e.Element is INotifyPropertyChanged)
                 {
-                   // ((INotifyPropertyChanged)e.Element).PropertyChanged -= Object_PropertyChanged;
-                 // ((INotifyPropertyChanged)e.Element).PropertyChanged += Object_PropertyChanged;
+                    // ((INotifyPropertyChanged)e.Element).PropertyChanged -= Object_PropertyChanged;
+                    // ((INotifyPropertyChanged)e.Element).PropertyChanged += Object_PropertyChanged;
                 }
                 //设置添加对象的时间和用户
 
@@ -409,14 +421,14 @@ namespace ZtxFrameWork.Data
                 }
                 if (e.Element is IDbContextLink)
                 {
-                ((IDbContextLink)e.Element).DbContext = this;
+                    ((IDbContextLink)e.Element).DbContext = this;
                 }
             }
             else if (e.Action == CollectionChangeAction.Remove)
             {
                 if (e.Element is INotifyPropertyChanged)
                 {
-                  //  ((INotifyPropertyChanged)e.Element).PropertyChanged -= Object_PropertyChanged;
+                    //  ((INotifyPropertyChanged)e.Element).PropertyChanged -= Object_PropertyChanged;
                 }
                 if (e.Element is IDbContextLink)
                 {
@@ -557,9 +569,9 @@ namespace ZtxFrameWork.Data
         {
             //try
             //{
-        NotityChanging();
-                return base.SaveChanges();
-          //  }
+            NotityChanging();
+            return base.SaveChanges();
+            //  }
             //catch (DbEntityValidationException ex)
             //{
             //    var sb = new StringBuilder();
@@ -573,7 +585,7 @@ namespace ZtxFrameWork.Data
             //    //    Logger.Error("SaveChanges.DbEntityValidation", ex.GetAllMessages() + sb);
             //    throw new Exception(sb.ToString()) ;
             //}
-          
+
             //catch (Exception e)
             //{
 
@@ -592,9 +604,9 @@ namespace ZtxFrameWork.Data
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Model.Module> Modules { get; set; }
-        public DbSet<AuthorityModule> AuthorityModules { get; set; }        
+        public DbSet<AuthorityModule> AuthorityModules { get; set; }
         public DbSet<UserAuthorityModuleMapping> UserAuthorityModuleMappings { get; set; }
-        public DbSet<SystemConfiguration> SystemConfigurations { get; set; }        
+        public DbSet<SystemConfiguration> SystemConfigurations { get; set; }
         public DbSet<DbOperatorLog> DbOperatorLogs { get; set; }
         public DbSet<BillStateChangeLog> BillStateChangeLogs { get; set; }
 
@@ -605,6 +617,8 @@ namespace ZtxFrameWork.Data
         public DbSet<黄金种类> 黄金种类s { get; set; }
         public DbSet<饰品类别> 饰品类别s { get; set; }
         public DbSet<饰品类型> 饰品类型s { get; set; }
+        public DbSet<电镀方式> 电镀方式s { get; set; }
+        public DbSet<石头颜色> 石头颜色s { get; set; }
         public DbSet<饰品> 饰品s { get; set; }
         public DbSet<饰品图片> 饰品图片s { get; set; }
         public DbSet<饰品提成> 饰品提成s { get; set; }

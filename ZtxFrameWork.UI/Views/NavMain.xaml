@@ -88,7 +88,7 @@
                             <StackPanel Orientation="Horizontal">
 
                                 <TextBlock Text="{Binding Path=DataContext.CurrentUser.DispalyName, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='当前用户:{0}'}" />
-
+                                <TextBlock Text="{Binding Path=DataContext.Current分店.名称, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, StringFormat='    {0}'}" />
                             </StackPanel>
 
                         </DataTemplate>

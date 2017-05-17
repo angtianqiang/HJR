@@ -55,11 +55,7 @@
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 
-                    <dxdo:LayoutPanel AllowClose="False"
-                                      AllowDrag="False"
-                                      AllowHide="False"
-                                      Caption="明细"
-                                      ItemHeight="Auto">
+                    <dxdo:LayoutPanel  Style="{StaticResource CommLayoutPanel}" Caption="明细">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
                             <dxg:GridControl AutoGenerateColumns="None"
                                              EnableSmartColumnsGeneration="True"
@@ -67,6 +63,7 @@
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}">
                                 <dxmvvm:Interaction.Behaviors>
+                                    <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
                                     <dxmvvm:EventToCommand Command="{Binding EditCommand}"
                                                            EventName="MouseDoubleClick"
                                                            PassEventArgsToCommand="True">

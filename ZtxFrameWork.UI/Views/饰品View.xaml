@@ -37,12 +37,40 @@
                             <dxe:TextEdit EditValue="{Binding Entity.编号, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </dxlc:LayoutItem>
                         <dxlc:LayoutItem Label="品名">
-                            <dxe:TextEdit EditValue="{Binding Entity.品名, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <dxg:LookUpEdit 
+                                            DisplayMember="名称"
+                                            EditMode="Standalone"
+                                            EditValue="{Binding Entity.类别ID,
+                                                                UpdateSourceTrigger=PropertyChanged}"
+                                            ItemsSource="{Binding 饰品类别Source}"
+                                            PopupWidth="300"
+                                            TabIndex="0"
+                                            ValueMember="ID"                                 >
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxmvvm:EventToCommand 
+                                                       Command="{Binding Update饰品类型SourceCommand }" EventName="EditValueChanged"   />
+                                </dxmvvm:Interaction.Behaviors>
+
+                            </dxg:LookUpEdit>
                         </dxlc:LayoutItem>
+                      
                         <dxlc:LayoutItem Label="柜号">
                             <dxe:TextEdit EditValue="{Binding Entity.柜号, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutItem Label="净重">
+                        <dxlc:LayoutItem Label="电镀方式">
+
+                            <dxg:LookUpEdit 
+                                            DisplayMember="名称"
+                                            EditMode="Standalone"
+                                            EditValue="{Binding Entity.电镀方式ID,
+                                                                UpdateSourceTrigger=PropertyChanged}"
+                                            ItemsSource="{Binding 电镀方式Source}"
+                                            PopupWidth="300"
+                                            TabIndex="0"
+                                            ValueMember="ID" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="净金属重">
                             <dxe:SpinEdit EditValue="{Binding Entity.净重,
                                                               NotifyOnSourceUpdated=True,
                                                               UpdateSourceTrigger=PropertyChanged,
@@ -76,7 +104,7 @@
                         <dxlc:LayoutItem Label="条码">
                             <dxe:TextEdit EditValue="{Binding Entity.条码, NotifyOnSourceUpdated=True, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
                         </dxlc:LayoutItem>
-                        <dxlc:LayoutItem Label="类型名称">
+                        <dxlc:LayoutItem Label="饰品类型">
                             <dxg:LookUpEdit x:Name="billCategory"
                                             DisplayMember="名称"
                                             EditMode="Standalone"
@@ -93,6 +121,18 @@
                                             EditValue="{Binding Entity.材质ID,
                                                                 UpdateSourceTrigger=PropertyChanged}"
                                             ItemsSource="{Binding 材质Source}"
+                                            PopupWidth="300"
+                                            TabIndex="0"
+                                            ValueMember="ID" />
+                        </dxlc:LayoutItem>
+                        <dxlc:LayoutItem Label="石头颜色">
+
+                            <dxg:LookUpEdit 
+                                            DisplayMember="名称"
+                                            EditMode="Standalone"
+                                            EditValue="{Binding Entity.石头颜色ID,
+                                                                UpdateSourceTrigger=PropertyChanged}"
+                                            ItemsSource="{Binding 石头颜色Source}"
                                             PopupWidth="300"
                                             TabIndex="0"
                                             ValueMember="ID" />
@@ -122,17 +162,18 @@
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Width="181"
                                   Height="225"
-                                  Header="图片"
+                                  Header="图片" Orientation="Vertical"  
                                   View="GroupBox">
 
-                    <dxe:ImageEdit Width="160"
-                                   Height="160"
+                    <dxe:ImageEdit Width="155" x:Name="imageEdit"
+                                   Height="155"
                                    EditValue="{Binding Entity.饰品图片.图片,
                                                        Mode=TwoWay,
                                                        UpdateSourceTrigger=PropertyChanged}"
                                    ShowLoadDialogOnClickMode="Empty"
                                    ShowMenuMode="Always"
                                    Stretch="UniformToFill" />
+                    <Button Height="22"  Click="Button_Click" Content="浏览图片"></Button>
 
                 </dxlc:LayoutGroup>
             </dxlc:LayoutGroup>

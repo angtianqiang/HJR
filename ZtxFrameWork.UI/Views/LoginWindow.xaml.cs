@@ -62,7 +62,7 @@ namespace ZtxFrameWork.UI.Views
                 DXMessageBox.Show(this, m, "系统提示", MessageBoxButton.OK, MessageBoxImage.Error);
             });
 
-            this.txtUserName.Focus();
+            this.lookEd.Focus();
 
                 WindowInteropHelper windHelper = new WindowInteropHelper(this);
                 SplashScreenHelper.Instance.HideSplashScreen();

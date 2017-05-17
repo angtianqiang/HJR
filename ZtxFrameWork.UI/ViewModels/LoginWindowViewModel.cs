@@ -8,6 +8,7 @@ using System.Data.Entity;
 using ZtxFrameWork.UI.Comm.DataModel;
 using System.Data.Entity.Core.Mapping;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Collections.Generic;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -17,7 +18,18 @@ namespace ZtxFrameWork.UI.ViewModels
         public string Token { get; set; }
         public virtual string UserName { get; set; }// = "F";
         public virtual string PassWord { get; set; }// = "050301";
-        public void Login()
+        public virtual long Current分店ID { get; set; }
+        public virtual List<分店> 分店Source { get; set; }
+        public LoginWindowViewModel()
+        {
+            Init();
+        }
+        public  void Init()
+        {
+                分店Source =  DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToList();
+            
+        }
+            public void Login()
         {
             if (string.IsNullOrEmpty(UserName))
             {
@@ -27,6 +39,11 @@ namespace ZtxFrameWork.UI.ViewModels
             if (string.IsNullOrEmpty(PassWord))
             {
                 Messenger.Default.Send<string>("用户密码不能为空！", "Error" + Token);
+                return;
+            }
+            if (Current分店ID<=0)
+            {
+                Messenger.Default.Send<string>("请选择登录的分店！", "Error" + Token);
                 return;
             }
             Mouse.OverrideCursor = Cursors.Wait;
@@ -64,6 +81,7 @@ namespace ZtxFrameWork.UI.ViewModels
             //     LocalTimeSync.SyncTime(dt);//同步服务器的时间 
 
             App.CurrentUser = User.CurrentUser = userInfo;
+            App.Current分店 = 分店Source.First(T=>T.ID==Current分店ID);
             userInfo.LoginCount++;
             userInfo.LastLoginDate = dt;
             db.SaveChanges();

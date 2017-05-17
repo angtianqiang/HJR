@@ -27,11 +27,18 @@ namespace ZtxFrameWork.UI.ViewModels
             if (this.IsInDesignMode()) return;
             //  Entity.入库单明细s.AcceTChanges();
 
-          Init();
+            Init();
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
                 SelectChildEntity.饰品 = null;
+            });
+            Messenger.Default.Register<string>(this, "数量更改" + Token, m =>
+            {
+                var item = SelectChildEntity;
+                item.重量 = item.饰品.单重 * item.数量;
+                item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
+                UpdateTotal();
             });
             Messenger.Default.Register<string>(this, "更新金额" + Token, m =>
             {
@@ -64,7 +71,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
         //}
-        public async void Init1()=> 操作员Source = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+        public async void Init1() => 操作员Source = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
         public async void Init2() => 分店Source = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
         public async void Init3() => 供应商Source = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
 
@@ -84,6 +91,23 @@ namespace ZtxFrameWork.UI.ViewModels
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
         public virtual List<供应商> 供应商Source { get; set; }
+
+
+        public void AddProduct()
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            GetDocumentManagerService().ShowNewEntityDocument<饰品>(this, t => InitEntity(t));
+        }
+        public bool CanProduct()
+        {
+            if (this.IsInDesignMode()) return true;
+
+            return User.CurrentUser.GetUserAuthorityModuleMapping("饰品").Add;
+        }
+
+
+        static public void InitEntity(饰品 NewEntity)
+        { }
         #region 明细表操作
 
         private void UpdateTotal()
@@ -110,10 +134,22 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
-            List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
+            var db = DB;
+            List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质)
                   .Where(t => t.编号.StartsWith(startStr))
-                .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })
+                .Select(t => new
+                {
+                    ID = t.ID,
+                    编号 = t.编号,
+                    品名 = t.品名.名称,
+                    材质 = t.材质.名称,
+                    电镀方式 = t.电镀方式.名称,
+                    石头颜色 = t.石头颜色.名称,
+                    单位 = t.单位.名称,
+                    重量单位 = t.重量单位.名称,
+                    尺寸 = t.尺寸,
+                    工费计法 = t.工费计法
+                })
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -129,9 +165,38 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.饰品ID = VM.SelectEntity.ID;
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+                    long tmepID = VM.SelectEntity.ID;
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+
+                    //if (!this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).IsLoaded)
+                    //{
+                    //    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+                    //}
+                    //if (!this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.品名).IsLoaded)
+                    //{
+                    //    this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.品名).Load();
+                    //}
+                    //if (!this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.材质).IsLoaded)
+                    //{
+                    //    this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.材质).Load();
+                    //}
+                    //if (!this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.电镀方式).IsLoaded)
+                    //{
+                    //    this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.电镀方式).Load();
+                    //}
+                    //if (!this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.石头颜色).IsLoaded)
+                    //{
+                    //    this.DB.Entry(SelectChildEntity.饰品).Reference(t => t.石头颜色).Load();
+                    //}
+
+
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
+
+                    var item = SelectChildEntity;
+                    item.计价方式 = item.饰品.工费计法;
+                    item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.QtyPrice : item.饰品.WeightPrice;
+                    item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
+                    UpdateTotal();
                     UpdateTotal();
 
                 }
@@ -203,20 +268,20 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 入库单 entity)
         {
             base.OnBeforeEntityConfirmed(dbContext, primaryKey, entity);
-            if (entity.入库单明细s.Count <= 0)            
-                throw new Exception("没有单身内容");            
+            if (entity.入库单明细s.Count <= 0)
+                throw new Exception("没有单身内容");
             foreach (var item in entity.入库单明细s)
             {
                 //更新分库库存
                 var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
                 if (temp == null)
                 {
-                  temp =  dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.分店ID });
+                    temp = dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.分店ID });
                 }
-               
-                    temp.数量 += item.数量;
-                    temp.重量 += item.重量;
-               
+
+                temp.数量 += item.数量;
+                temp.重量 += item.重量;
+
                 //更新总库存 
                 var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
                 product.库存数量 += item.数量;
@@ -248,17 +313,17 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityUnConfirmed(ZtxDB dbContext, long primaryKey, 入库单 entity)
         {
             base.OnBeforeEntityUnConfirmed(dbContext, primaryKey, entity);
-            if (entity.已付金额!=0)
+            if (entity.已付金额 != 0)
             {
                 throw new Exception("已付金额不为0");
             }
             foreach (var item in entity.入库单明细s)
             {
                 //更新分库库存
-                var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).Single();    
-                    temp.数量 -= item.数量;
-                    temp.重量 -= item.重量;
-               
+                var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).Single();
+                temp.数量 -= item.数量;
+                temp.重量 -= item.重量;
+
                 //更新总库存 
                 var product = dbContext.饰品s.Where(t => t.ID == item.饰品ID).Single();
                 product.库存数量 -= item.数量;
@@ -271,7 +336,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 product.账面成本小计 -= item.金额;
                 //写出入明细
                 var inOutDetails = dbContext.库存出入明细s.Where(t => t.单据ID == item.ID && t.单据编号 == entity.编号).Single();
-                dbContext.Entry(inOutDetails).State = EntityState.Deleted;             
+                dbContext.Entry(inOutDetails).State = EntityState.Deleted;
             }
             dbContext.SaveChanges();
         }

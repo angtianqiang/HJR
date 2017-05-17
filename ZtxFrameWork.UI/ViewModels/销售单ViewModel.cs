@@ -27,7 +27,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 销售单ViewModel() : base(DbFactory.Instance, x => x.销售单s, x => x.ID, x => x.编号, "销售单")
         {
             if (this.IsInDesignMode()) return;
-            
+
             Init();
             //Init1();
             //Init2();
@@ -36,6 +36,12 @@ namespace ZtxFrameWork.UI.ViewModels
             {
                 SelectChildEntity.饰品ID = 0;
                 SelectChildEntity.饰品 = null;
+            });
+            Messenger.Default.Register<string>(this, "数量更改" + Token, m =>
+            {
+                var item = SelectChildEntity;
+                item.重量 = item.饰品.单重 * item.数量;
+                UpdatePrice();
             });
             Messenger.Default.Register<string>(this, "更新金额" + Token, m =>
             {
@@ -80,11 +86,11 @@ namespace ZtxFrameWork.UI.ViewModels
         public void UpdatePrice()
         {
             var item = SelectChildEntity;
-            item.销售价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.饰品?.QtyPrice ?? 0 : item.饰品?.WeightPrice ?? 0,2);
+            item.销售价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.饰品?.QtyPrice ?? 0 : item.饰品?.WeightPrice ?? 0, 2);
             item.工费 = item.工费计法 == 费用计法.按件 ? item.饰品?.批发工费 ?? 0 : item.饰品?.批发工费 ?? 0;
             //   item.重量 = item.数量 * item.饰品.单重;
-            item.折前价 = System.Math.Round(item.工费计法 ==  费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价,2);
-            item.金额 = System.Math.Round(item.折前价 * item.折扣,2);
+            item.折前价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价, 2);
+            item.金额 = System.Math.Round(item.折前价 * item.折扣, 2);
             UpdateTotal();
         }
         public virtual List<User> 操作员Source { get; set; }
@@ -120,7 +126,19 @@ namespace ZtxFrameWork.UI.ViewModels
             var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.材质)
                   .Where(t => t.编号.StartsWith(startStr))
-                .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })
+                .Select(t => new
+                {
+                    ID = t.ID,
+                    编号 = t.编号,
+                    品名 = t.品名.名称,
+                    材质 = t.材质.名称,
+                    电镀方式 = t.电镀方式.名称,
+                    石头颜色 = t.石头颜色.名称,
+                    单位 = t.单位.名称,
+                    重量单位 = t.重量单位.名称,
+                    尺寸 = t.尺寸,
+                    工费计法 = t.工费计法
+                })
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -136,9 +154,9 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.饰品ID = VM.SelectEntity.ID;
+                  //  SelectChildEntity.饰品ID = VM.SelectEntity.ID;
 
-                    饰品 temp1 = this.DB.饰品s.Local.FirstOrDefault(t1 => t1.ID == SelectChildEntity.饰品ID);
+                    饰品 temp1 = this.DB.饰品s.Local.FirstOrDefault(t1 => t1.ID == VM.SelectEntity.ID);
                     if (temp1 != null)
                     {
                         //材质 temp2 = this.DB.材质s.Local.FirstOrDefault(t2 => t2.ID == temp1.材质ID);
@@ -153,7 +171,13 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
 
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Query().Include(t => t.材质).Load();
+                    //   this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Query().Include(t => t.材质).Include(t => t.品名).Include(t => t.石头颜色).Include(t => t.电镀方式).Load();
+
+                    long tmepID = VM.SelectEntity.ID;
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+
+
+
                     //long newId = VM.SelectEntity.ID;
                     //SelectChildEntity.饰品 = this.DB.饰品s.AsNoTracking().Include(t => t.材质).Where(t => t.ID == newId).Single();
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;

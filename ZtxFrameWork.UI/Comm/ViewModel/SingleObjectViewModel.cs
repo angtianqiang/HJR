@@ -66,8 +66,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             }
 
             #region 20170329 设置数据不延时加载
-            DB.Configuration.LazyLoadingEnabled = false;
-            DB.Configuration.ProxyCreationEnabled = false;
+           DB.Configuration.LazyLoadingEnabled = false;
+           DB.Configuration.ProxyCreationEnabled = false;
             #endregion
             OnInitializeInRuntime();
 
@@ -715,7 +715,7 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         //用于在XAML中绑定当前用户
         public virtual User CurrentUser { get; set; } = User.CurrentUser;
-
+    
 
 
         protected bool HasPrimaryKey(TEntity Entity)

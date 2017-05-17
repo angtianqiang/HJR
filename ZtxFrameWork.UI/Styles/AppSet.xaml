@@ -4,7 +4,7 @@
                     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
                     xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges"
                      xmlns:converter="clr-namespace:ZtxFrameWork.UI.Converters"
-                
+            xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
                     xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
 
     <converter:MoudleInfoToImageConerter x:Key="MoudleInfoToImageConerter" />
@@ -154,8 +154,16 @@
         <Setter Property="VisibleIndex" Value="0"></Setter>
     </Style>
 
+    <!--  生动生成列的属性  -->
+    <Style x:Key="CommLayoutPanel" TargetType="dxdo:LayoutPanel">
+        <Setter Property="AllowClose" Value="False"></Setter>
+        <Setter Property="AllowDock" Value="False"></Setter>
+        <Setter Property="AllowHide" Value="False"></Setter>
+        <Setter Property="AllowDrag" Value="False"></Setter>
+        <Setter Property="AllowContextMenu" Value="False"></Setter>
+        <Setter Property="ItemHeight" Value="Auto"></Setter>
+    </Style>
 
-  
 
 
 

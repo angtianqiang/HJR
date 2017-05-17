@@ -97,6 +97,24 @@ namespace ZtxFrameWork.Data.Mapping
             this.Require(t => t.饰品类别, t => t.饰品类型s, t => t.类别ID);
         }
     }
+    public class 电镀方式Map : ZtxEntityTypeConfiguration<电镀方式>
+    {
+        public 电镀方式Map()
+        {
+            this.HasKey(a => a.ID);
+            this.Property(t => t.名称).IsRequired().HasMaxLength(40)
+               .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_电镀方式_名称") { IsUnique = true }));
+        }
+    }
+    public class 石头颜色Map : ZtxEntityTypeConfiguration<石头颜色>
+    {
+        public 石头颜色Map()
+        {
+            this.HasKey(a => a.ID);
+            this.Property(t => t.名称).IsRequired().HasMaxLength(40)
+               .HasColumnAnnotation(IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute("IX_石头颜色_名称") { IsUnique = true }));
+        }
+    }
     public class 饰品Map : ZtxEntityTypeConfiguration<饰品>
     {
         public 饰品Map()
@@ -109,7 +127,8 @@ namespace ZtxFrameWork.Data.Mapping
 
 
             this.HasOptional(t => t.饰品图片).WithMany().HasForeignKey(t => t.饰品图片ID).WillCascadeOnDelete(false);
-         
+
+            this.Require(t => t.品名, t => t.饰品s, t => t.类别ID);
             this.Require(t => t.饰品类型, t => t.饰品s, t => t.类型ID);
             this.Require(t => t.单位, t => t.饰品s, t => t.单位ID);
             this.Require(t => t.重量单位, t => t.饰品s, t => t.重量单位ID);

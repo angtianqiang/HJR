@@ -49,6 +49,8 @@ namespace ZtxFrameWork.UI.Views
                     Messenger.Default.Send<string>("", "饰品编号更改" + this.Tag.ToString());
                     break;
                 case "数量":
+                    Messenger.Default.Send<string>("", "数量更改" + this.Tag.ToString());
+                    break;
                 case "重量":
                 case "单价":
                 case "工费计法":

@@ -149,7 +149,7 @@
                 </dxlc:LayoutItem>
 
                 <dxlc:LayoutItem Label="分店">
-                    <dxg:LookUpEdit DisplayMember="名称"
+                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
                                     EditMode="Standalone"
                                     EditValue="{Binding Entity.分店ID,
                                                         UpdateSourceTrigger=PropertyChanged}"
@@ -206,6 +206,9 @@
                                          EnableSmartColumnsGeneration="True"
                                          ItemsSource="{Binding Entity.盈亏单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
+                            <dxmvvm:Interaction.Behaviors>
+                                <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
+                            </dxmvvm:Interaction.Behaviors>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"
@@ -252,8 +255,20 @@
                             </dxg:GridColumn>
 
                             <dxg:GridColumn Width="80"
-                                            FieldName="饰品.品名"
+                                            FieldName="饰品.品名.名称"
                                             Header="品名"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.材质.名称"
+                                            Header="材质"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.电镀方式.名称"
+                                            Header="电镀方式"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.石头颜色.名称"
+                                            Header="石头颜色"
                                             ReadOnly="True" />
                             <dxg:GridColumn Width="100" FieldName="盈亏数量">
                                 <dxg:GridColumn.EditSettings>

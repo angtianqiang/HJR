@@ -57,18 +57,17 @@
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 
-                    <dxdo:LayoutPanel AllowClose="False"
-                                      AllowDrag="False"
-                                      AllowHide="False"
-                                      Caption="{Binding Title}"
-                                      ItemHeight="Auto">
+                    <dxdo:LayoutPanel   Style="{StaticResource CommLayoutPanel}"
+                                      Caption="{Binding Title}"  >
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
                             <dxg:GridControl x:Name="grid"
                                              AutoGenerateColumns="AddNew"
                                              EnableSmartColumnsGeneration="True"
                                              ItemsSource="{Binding Entities}"
                                              SelectionMode="Cell">
-
+                                <dxmvvm:Interaction.Behaviors>
+                                    <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>                                   
+                                </dxmvvm:Interaction.Behaviors>
                                 <dxg:GridControl.View>
                                     <dxg:TableView Name="View"
                                                    AllowBestFit="True"

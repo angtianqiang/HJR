@@ -179,7 +179,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<string>(() => this.排序号, ref _排序号, value); }
         }
         public virtual ICollection<饰品类型> 饰品类型s { get; set; }
-
+        public virtual ICollection<饰品> 饰品s { get; set; }
     }
     public class 饰品类型 : Entity
     {
@@ -211,6 +211,44 @@ namespace ZtxFrameWork.Data.Model
         public virtual ICollection<饰品> 饰品s { get; set; }
 
     }
+
+    public class 电镀方式 : Entity
+    {
+        private string _名称;
+        [OperatorLogAttribute]
+        public string 名称
+        {
+            get { return _名称; }
+            set { Set<string>(() => this.名称, ref _名称, value); }
+        }
+        private string _排序号;
+        [Display(Name = "排序号", AutoGenerateField = false)]
+        public string 排序号
+        {
+            get { return _排序号; }
+            set { Set<string>(() => this.排序号, ref _排序号, value); }
+        }
+        public virtual ICollection<饰品> 饰品s { get; set; }
+    }
+    public class  石头颜色 : Entity
+    {
+        private string _名称;
+        [OperatorLogAttribute]
+        public string 名称
+        {
+            get { return _名称; }
+            set { Set<string>(() => this.名称, ref _名称, value); }
+        }
+        private string _排序号;
+        [Display(Name = "排序号", AutoGenerateField = false)]
+        public string 排序号
+        {
+            get { return _排序号; }
+            set { Set<string>(() => this.排序号, ref _排序号, value); }
+        }
+        public virtual ICollection<饰品> 饰品s { get; set; }
+    }
+
     public class 饰品 : Entity
     {
         private string _编号;
@@ -238,12 +276,54 @@ namespace ZtxFrameWork.Data.Model
         }
         [Display(Name = "外键", AutoGenerateField = false)]
         public 饰品类型 饰品类型 { get; set; }
-        private string _品名;
-        public string 品名
+
+        private long _类别ID;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
+        [RangeAttribute(1, long.MaxValue)]
+        public long 类别ID
+        {
+            get { return _类别ID; }
+            set { Set<long>(() => this.类别ID, ref _类别ID, value); }
+        }
+        private 饰品类别 _品名;
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public virtual 饰品类别 品名
         {
             get { return _品名; }
-            set { Set<string>(() => this.品名, ref _品名, value); }
+            set { Set<饰品类别>(() => this.品名, ref _品名, value); }
         }
+
+        private long _电镀方式ID;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
+        [RangeAttribute(1, long.MaxValue)]
+        public long 电镀方式ID
+        {
+            get { return _电镀方式ID; }
+            set { Set<long>(() => this.电镀方式ID, ref _电镀方式ID, value); }
+        }
+        private 电镀方式 _电镀方式;
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public virtual 电镀方式 电镀方式
+        {
+            get { return _电镀方式; }
+            set { Set<电镀方式>(() => this.电镀方式, ref _电镀方式, value); }
+        }
+        private long _石头颜色ID;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
+        [RangeAttribute(1, long.MaxValue)]
+        public long 石头颜色ID
+        {
+            get { return _石头颜色ID; }
+            set { Set<long>(() => this.石头颜色ID, ref _石头颜色ID, value); }
+        }
+        private 石头颜色   _石头颜色;
+        [Display(Name = "外键", AutoGenerateField = false)]
+        public virtual 石头颜色 石头颜色
+        {
+            get { return _石头颜色; }
+            set { Set<石头颜色>(() => this.石头颜色, ref _石头颜色, value); }
+        }
+
         private long _单位ID;
         [Display(Name = "外键ID", AutoGenerateField = false)]
         [RangeAttribute(1, long.MaxValue)]
@@ -271,6 +351,7 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.单重, ref _单重, value, ChangeColums); }
         }
         private decimal _净重;
+        [Display(Name = "净金属重")]
         public decimal 净重
         {
             get { return _净重; }

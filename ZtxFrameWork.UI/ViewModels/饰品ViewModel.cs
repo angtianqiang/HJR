@@ -24,28 +24,58 @@ namespace ZtxFrameWork.UI.ViewModels
             DB.Configuration.LazyLoadingEnabled = true;
             DB.Configuration.ProxyCreationEnabled = true;
 
-            Init();
-
+            // Init();
+            Init1();
+            Init2();
+            Init3();
+            Init4();
+            Init5();
+            Init6();
+            Init7();
+            //this.Entity.PropertyChanged += (s, e) => {
+            //    if (e.PropertyName== "类别ID")
+            //    {
+            //        饰品类型Source = DB.饰品类型s.Where(t => t.类别ID == this.Entity.类别ID).ToList();
+            //    }
+            //};
         }
+       
+      
+            public async void Init1() => 饰品类别Source = await DbFactory.Instance.CreateDbContext().饰品类别s.OrderBy(t => t.排序号).ToListAsync();
+            public async void Init2() => 单位Source = await DbFactory.Instance.CreateDbContext().单位s.OrderBy(t => t.排序号).ToListAsync();
+            public async void Init3() => 重量单位Source = await DbFactory.Instance.CreateDbContext().重量单位s.OrderBy(t => t.排序号).ToListAsync();
+            public async void Init4() => 黄金种类Source = await DbFactory.Instance.CreateDbContext().黄金种类s.OrderBy(t => t.排序号).ToListAsync();
+            public async void Init5() => 材质Source = await DbFactory.Instance.CreateDbContext().材质s.OrderBy(t => t.排序号).ToListAsync();
+            public async void Init6() => 石头颜色Source = await  DbFactory.Instance.CreateDbContext().石头颜色s.OrderBy(t => t.排序号).ToListAsync();
+            public async void Init7() => 电镀方式Source = await  DbFactory.Instance.CreateDbContext().电镀方式s.OrderBy(t => t.排序号).ToListAsync();
 
-        public async void Init()
+           
+      
+        public async void Update饰品类型Source()
         {
-           var t1 =await DbFactory.Instance.CreateDbContext().饰品类型s.OrderBy(t => t.排序号).ToListAsync();
-             var t2= await DbFactory.Instance.CreateDbContext().单位s.OrderBy(t => t.排序号).ToListAsync();
-             var t3= await DbFactory.Instance.CreateDbContext().重量单位s.OrderBy(t => t.排序号).ToListAsync();
-             var t4= await DbFactory.Instance.CreateDbContext().黄金种类s.OrderBy(t => t.排序号).ToListAsync();
-             var t5= await DbFactory.Instance.CreateDbContext().材质s.OrderBy(t => t.排序号).ToListAsync();
-            饰品类型Source = t1;
-            单位Source = t2;
-            重量单位Source = t3;
-            黄金种类Source = t4;
-            材质Source = t5;
+            饰品类型Source = await DbFactory.Instance.CreateDbContext().饰品类型s.Where(t => t.类别ID == this.Entity.类别ID).ToListAsync();
         }
+        //public async void Init()
+        //{
+        //    饰品类型Source = DB.饰品类型s.OrderBy(t => t.排序号).ToList();
+        //    单位Source = DB.单位s.OrderBy(t => t.排序号).ToList();
+        //    重量单位Source = DB.重量单位s.OrderBy(t => t.排序号).ToList();
+        //    黄金种类Source = DB.黄金种类s.OrderBy(t => t.排序号).ToList();
+        //    材质Source = DB.材质s.OrderBy(t => t.排序号).ToList();
+        //    石头颜色Source = DB.石头颜色s.OrderBy(t => t.排序号).ToList();
+        //    电镀方式Source = DB.电镀方式s.OrderBy(t => t.排序号).ToList();
+
+           
+        //}
+
+        public virtual List<饰品类别> 饰品类别Source { get; set; }
         public virtual List<饰品类型> 饰品类型Source { get; set; }
         public virtual List<单位> 单位Source { get; set; }
         public virtual List<重量单位> 重量单位Source { get; set; }
         public virtual List<黄金种类> 黄金种类Source { get; set; }
         public virtual List<材质> 材质Source { get; set; }
-       
+        public virtual List<石头颜色> 石头颜色Source { get; set; }
+        public virtual List<电镀方式 > 电镀方式Source { get; set; }
+
     }
 }

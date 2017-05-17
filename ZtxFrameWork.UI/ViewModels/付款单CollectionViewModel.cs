@@ -29,6 +29,7 @@ namespace ZtxFrameWork.UI.ViewModels
             NewEntity.日期 = DateTime.Now;
            NewEntity.操作员ID = App.CurrentUser.ID;
            NewEntity.状态 = "N";
+            NewEntity.分店ID = App.Current分店.ID;
             NewEntity.编号 = await t1;
         }
 

@@ -18,6 +18,7 @@ namespace ZtxFrameWork.UI
     public partial class App : Application
     {
         public static User CurrentUser = null;
+        public static Data.Model.分店 Current分店 = null;
         public static List<SystemConfiguration> SystemConfigs = null;
         public static int ViewTopCount => SystemConfigs==null?1000 : Convert.ToInt32( SystemConfigs.Where(t=>t.Token== "ViewTopCount").Single().TokenValue);
         static IDisposable singleInstanceApplicationGuard;
@@ -55,9 +56,9 @@ namespace ZtxFrameWork.UI
             application.ShutdownMode = ShutdownMode.OnExplicitShutdown;
 
 
-     // ZtxFrameWork.Data.ZtxDB.Init(DbFactory.Instance.CreateDbContext());
+  //    ZtxFrameWork.Data.ZtxDB.Init(DbFactory.Instance.CreateDbContext());
          //   DevExpress.Data.CurrencyDataController.DisableThreadingProblemsDetection = true;
-
+         
 
             LoginWindow loginWindow = new LoginWindow();
 

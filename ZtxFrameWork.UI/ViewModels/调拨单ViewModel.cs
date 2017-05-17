@@ -26,7 +26,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             if (this.IsInDesignMode()) return;
             Init();
-          
+
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
             {
                 SelectChildEntity.饰品ID = 0;
@@ -41,9 +41,9 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         public async void Init()
         {
-          
-         var t1=   await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-            var t2 =  await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+
+            var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
             签收员Source = 调拨员Source = t1;
             源分店Source = 目标分店Source = t2;
         }
@@ -85,10 +85,22 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
+            var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
                   .Where(t => t.编号.StartsWith(startStr))
-                .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })
+                .Select(t => new
+                {
+                    ID = t.ID,
+                    编号 = t.编号,
+                    品名 = t.品名.名称,
+                    材质 = t.材质.名称,
+                    电镀方式 = t.电镀方式.名称,
+                    石头颜色 = t.石头颜色.名称,
+                    单位 = t.单位.名称,
+                    重量单位 = t.重量单位.名称,
+                    尺寸 = t.尺寸,
+                    工费计法 = t.工费计法
+                })
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -104,8 +116,12 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.饰品ID = VM.SelectEntity.ID;
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+                    //SelectChildEntity.饰品ID = VM.SelectEntity.ID;
+                    //this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+
+                    long tmepID = VM.SelectEntity.ID;
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
                     UpdateTotal();
                 }
@@ -122,10 +138,10 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
             var item = DB.调拨单明细s.Create();
-          
+
             item.DirtyState = DirtyState.Added;
-           
-          
+
+
             if (Entity.调拨单明细s.Count == 0)
             {
                 item.序号 = 1;
@@ -187,9 +203,9 @@ namespace ZtxFrameWork.UI.ViewModels
                 {
                     temp = dbContext.库存s.Add(new 库存() { 饰品ID = item.饰品ID, 分店ID = entity.源分店ID });
                 }
-               
-                    temp.数量-= item.数量;
-                    temp.重量 -= item.重量;
+
+                temp.数量 -= item.数量;
+                temp.重量 -= item.重量;
                 //更新目标分店库存
                 var temp1 = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.目标分店ID).SingleOrDefault();
                 if (temp1 == null)
@@ -202,7 +218,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
 
 
-              
+
                 //写出入明细
                 dbContext.库存出入明细s.Add(new 库存出入明细()
                 {
@@ -211,8 +227,8 @@ namespace ZtxFrameWork.UI.ViewModels
                     单据ID = item.ID,
                     单据编号 = entity.编号,
                     出入别 = "O",
-                    数量 = item.数量*-1,
-                    重量 = item.重量*-1m,                  
+                    数量 = item.数量 * -1,
+                    重量 = item.重量 * -1m,
                     分店ID = entity.源分店ID,
                     饰品ID = item.饰品ID
                 });
@@ -224,7 +240,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     单据编号 = entity.编号,
                     出入别 = "I",
                     数量 = item.数量,
-                    重量 = item.重量 ,
+                    重量 = item.重量,
                     分店ID = entity.目标分店ID,
                     饰品ID = item.饰品ID
                 });
@@ -239,17 +255,17 @@ namespace ZtxFrameWork.UI.ViewModels
                 //更新分库库存
                 //更新源库存
                 var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.源分店ID).SingleOrDefault();
-              
+
                 temp.数量 += item.数量;
                 temp.重量 += item.重量;
                 //更新目标分店库存
                 var temp1 = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.目标分店ID).SingleOrDefault();
-             
+
                 temp1.数量 -= item.数量;
                 temp1.重量 -= item.重量;
 
                 //写出入明细
-                var inOutDetails = dbContext.库存出入明细s.Where(t => t.单据ID == item.ID && t.单据编号 == entity.编号 && t.出入别=="I").Single();
+                var inOutDetails = dbContext.库存出入明细s.Where(t => t.单据ID == item.ID && t.单据编号 == entity.编号 && t.出入别 == "I").Single();
                 dbContext.Entry(inOutDetails).State = EntityState.Deleted;
                 var inOutDetails2 = dbContext.库存出入明细s.Where(t => t.单据ID == item.ID && t.单据编号 == entity.编号 && t.出入别 == "O").Single();
                 dbContext.Entry(inOutDetails2).State = EntityState.Deleted;

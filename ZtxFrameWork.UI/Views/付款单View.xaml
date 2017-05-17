@@ -155,7 +155,7 @@
                     <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="分店">
-                    <dxg:LookUpEdit DisplayMember="名称"
+                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
                                     EditMode="Standalone"
                                     EditValue="{Binding Entity.分店ID, UpdateSourceTrigger=PropertyChanged}"
                                     ItemsSource="{Binding 分店Source}"

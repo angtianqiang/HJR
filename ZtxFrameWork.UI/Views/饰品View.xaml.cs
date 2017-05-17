@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -24,5 +25,39 @@ namespace ZtxFrameWork.UI.Views
             InitializeComponent();
          
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (imageEdit.EditValue==null)
+            {
+                return;
+            }
+            byte[] temp = imageEdit.EditValue as byte[];
+
+       //     BitmapSource image=
+            var window = new Window() { Width = 600, Height =500, WindowStyle = WindowStyle.SingleBorderWindow, ShowActivated = true, Title = "浏览图片" };
+            var ImageViewer = new Controls.ImageViewer() { Margin = new Thickness(0) };
+            ImageViewer.ImageSource = ByteArrayToBitmapImage(temp);
+            window.Content = ImageViewer;
+            window.ShowDialog();
+         
+        }
+        public static BitmapImage ByteArrayToBitmapImage(byte[] byteArray)
+        {
+            BitmapImage bmp = null;
+            try
+            {
+                bmp = new BitmapImage();
+                bmp.BeginInit();
+                bmp.StreamSource = new MemoryStream(byteArray);
+                bmp.EndInit();
+            }
+            catch
+            {
+                bmp = null;
+            }
+            return bmp;
+        }
+
     }
 }

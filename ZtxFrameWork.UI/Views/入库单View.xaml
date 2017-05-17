@@ -164,7 +164,7 @@
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutItem Label="分店">
-                    <dxg:LookUpEdit DisplayMember="名称"
+                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
                                     EditMode="Standalone"
                                     EditValue="{Binding Entity.分店ID,
                                                         UpdateSourceTrigger=PropertyChanged}"
@@ -223,13 +223,18 @@
                                                                  ElementName=Details}"
                                                Content="预览"
                                                Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/Preview.png" />
-
+                            <dxb:BarButtonItem Command="{Binding  AddProductCommand  }"
+                                               Content="添加饰品"
+                                               Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/AddNewDataSource_32x32.png" />
                         </dxb:ToolBarControl>
                         <dxg:GridControl x:Name="DetailGrid"
                                          AutoGenerateColumns="AddNew"
                                          EnableSmartColumnsGeneration="True"
                                          ItemsSource="{Binding Entity.入库单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
+                            <dxmvvm:Interaction.Behaviors>
+                                <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
+                            </dxmvvm:Interaction.Behaviors>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"
@@ -276,8 +281,20 @@
                             </dxg:GridColumn>
 
                             <dxg:GridColumn Width="80"
-                                            FieldName="饰品.品名"
+                                            FieldName="饰品.品名.名称"
                                             Header="品名"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.材质.名称"
+                                            Header="材质"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.电镀方式.名称"
+                                            Header="电镀方式"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.石头颜色.名称"
+                                            Header="石头颜色"
                                             ReadOnly="True" />
                             <dxg:GridColumn Width="50" FieldName="数量">
                                 <dxg:GridColumn.EditSettings>
@@ -291,7 +308,7 @@
                                             FieldName="重量"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="60"
-                                            FieldName="计价方式"
+                                            FieldName="计价方式" ReadOnly="True"
                                             Header="计价方式">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:ComboBoxEditSettings>

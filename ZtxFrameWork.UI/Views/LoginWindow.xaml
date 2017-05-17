@@ -4,6 +4,7 @@
              xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core" 
+          xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors" 
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,13 +28,19 @@
                         <ImageBrush ImageSource="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
                     </Border.Background>
                 </Border>
-
-                <dxe:TextEdit x:Name="txtUserName" Canvas.Left="148" Canvas.Top="69" Width="150" Height="25"  FontSize="16" FontWeight="Bold" Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" />
-                <dxe:PasswordBoxEdit Canvas.Left="148" Canvas.Top="99" Width="150" Height="28" FontSize="16" FontWeight="Bold" Text="{Binding PassWord, UpdateSourceTrigger=PropertyChanged}" />
-                <Button Canvas.Left="148" Canvas.Top="146" Width="64" Height="27" Command="{Binding LoginCommand}" Content="登录" />
+                <dxg:LookUpEdit DisplayMember="名称" x:Name="lookEd" 
+                                    EditMode="Standalone"
+                                    EditValue="{Binding Current分店ID, UpdateSourceTrigger=PropertyChanged}"
+                                    ItemsSource="{Binding 分店Source}"
+                                    PopupWidth="300" PopupHeight="200"
+                                    TabIndex="0"
+                                    ValueMember="ID" Width="151" Height="25" Canvas.Left="148" Canvas.Top="69" />
+                <dxe:TextEdit x:Name="txtUserName" Canvas.Left="148" Canvas.Top="99" Width="150" Height="25"  FontSize="16" FontWeight="Bold" Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" />
+                <dxe:PasswordBoxEdit Canvas.Left="148" Canvas.Top="127" Width="150" Height="25" FontSize="16" FontWeight="Bold" Text="{Binding PassWord, UpdateSourceTrigger=PropertyChanged}" />
+                <Button Canvas.Left="148" Canvas.Top="160" Width="64" Height="27" Command="{Binding LoginCommand}" Content="登录" />
                 <TextBlock Canvas.Left="233" Canvas.Top="50" Width="76" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe Script" FontSize="10" Foreground="#FF207E7E" RenderTransformOrigin="-0.327,1.192" Text="by:郑天祥" TextWrapping="Wrap" />
-                <Button Canvas.Left="228" Canvas.Top="146" Width="60" Height="27" Command="{Binding CancelCommand}" Content="取消" />
-
+                <Button Canvas.Left="228" Canvas.Top="160" Width="60" Height="27" Command="{Binding CancelCommand}" Content="取消" />
+             
             </Canvas>
         </dxlc:GroupBox>
 

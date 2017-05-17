@@ -168,7 +168,7 @@
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutItem Label="分店">
-                    <dxg:LookUpEdit DisplayMember="名称"
+                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
                                     EditMode="Standalone"
                                     EditValue="{Binding Entity.分店ID,
                                                         UpdateSourceTrigger=PropertyChanged}"
@@ -219,6 +219,9 @@
                                          EnableSmartColumnsGeneration="True"
                                          ItemsSource="{Binding Entity.收款单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
+                            <dxmvvm:Interaction.Behaviors>
+                                <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
+                            </dxmvvm:Interaction.Behaviors>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"

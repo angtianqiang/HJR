@@ -165,7 +165,7 @@
                     <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </dxlc:LayoutItem>
                 <dxlc:LayoutItem Label="分店">
-                    <dxg:LookUpEdit DisplayMember="名称"
+                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
                                     EditMode="Standalone"
                                     EditValue="{Binding Entity.分店ID, UpdateSourceTrigger=PropertyChanged}"
                                     ItemsSource="{Binding 分店Source}"
@@ -206,6 +206,9 @@
                                          EnableSmartColumnsGeneration="True"
                                          ItemsSource="{Binding Entity.盘点表明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
+                            <dxmvvm:Interaction.Behaviors>
+                                <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
+                            </dxmvvm:Interaction.Behaviors>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"
@@ -239,14 +242,30 @@
                                             Header="饰品编号" ReadOnly="True"/>                               
                           
 
-                            <dxg:GridColumn Width="80"                                          
+                            <!--<dxg:GridColumn Width="80"                                          
                                             Header="品名"  >
                                 <dxg:GridColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Name="PART_Editor" VerticalAlignment="Center" Text="{Binding RowData.Row.饰品.品名, Mode=TwoWay}"></TextBlock>
                                     </DataTemplate>
                                 </dxg:GridColumn.CellTemplate>
-                            </dxg:GridColumn>
+                            </dxg:GridColumn>-->
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.品名.名称"
+                                            Header="品名"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.材质.名称"
+                                            Header="材质"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.电镀方式.名称"
+                                            Header="电镀方式"
+                                            ReadOnly="True" />
+                            <dxg:GridColumn Width="80"
+                                            FieldName="饰品.石头颜色.名称"
+                                            Header="石头颜色"
+                                            ReadOnly="True" />
                             <dxg:GridColumn Width="80"
                                             FieldName="盘点前数量"
                                             IsSmart="True" />

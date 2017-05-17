@@ -162,6 +162,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\EntityExpressionUserControlDefaultLoad.cs" />
+    <Compile Include="Behaviors\GridControlLayoutLoad.cs" />
     <Compile Include="Behaviors\RibbonControlMergeBehavior.cs" />
     <Compile Include="Behaviors\ShowCheckBoxSelectorColumn.cs" />
     <Compile Include="Behaviors\UserControlDefaultLoad.cs" />
@@ -179,6 +180,9 @@
     </Compile>
     <Compile Include="Controls\DynamicQueryCollectionMenu.xaml.cs">
       <DependentUpon>DynamicQueryCollectionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageViewer.xaml.cs">
+      <DependentUpon>ImageViewer.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SingleStatusBar.xaml.cs">
       <DependentUpon>SingleStatusBar.xaml</DependentUpon>
@@ -349,8 +353,14 @@
     <Compile Include="ViewModels\UserAuthorityModuleMappingCollectionViewModel.cs" />
     <Compile Include="ViewModels\UserCollectionViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\分店库存ViewModel.cs" />
+    <Compile Include="ViewModels\店面切换ViewModel.cs" />
     <Compile Include="ViewModels\收款单CollectionViewModel.cs" />
     <Compile Include="ViewModels\收款单ViewModel.cs" />
+    <Compile Include="ViewModels\电镀方式CollectionViewModel.cs" />
+    <Compile Include="ViewModels\电镀方式ViewModel.cs" />
+    <Compile Include="ViewModels\石头颜色CollectionViewModel.cs" />
+    <Compile Include="ViewModels\石头颜色ViewModel.cs" />
     <Compile Include="Views\AuthorityModuleCollectionView.xaml.cs">
       <DependentUpon>AuthorityModuleCollectionView.xaml</DependentUpon>
     </Compile>
@@ -405,11 +415,29 @@
     <Compile Include="ViewModels\盈亏单ViewModel.cs" />
     <Compile Include="ViewModels\盘点表CollectionViewModel.cs" />
     <Compile Include="ViewModels\盘点表ViewModel.cs" />
+    <Compile Include="Views\分店库存View.xaml.cs">
+      <DependentUpon>分店库存View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\店面切换View.xaml.cs">
+      <DependentUpon>店面切换View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\收款单CollectionView.xaml.cs">
       <DependentUpon>收款单CollectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\收款单View.xaml.cs">
       <DependentUpon>收款单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\电镀方式CollectionView.xaml.cs">
+      <DependentUpon>电镀方式CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\电镀方式View.xaml.cs">
+      <DependentUpon>电镀方式View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\石头颜色CollectionView.xaml.cs">
+      <DependentUpon>石头颜色CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\石头颜色View.xaml.cs">
+      <DependentUpon>石头颜色View.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\调拨单CollectionView.xaml.cs">
       <DependentUpon>调拨单CollectionView.xaml</DependentUpon>
@@ -567,6 +595,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DynamicQueryCollectionMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ImageViewer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -798,11 +830,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\分店库存View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\店面切换View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\收款单CollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\收款单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\电镀方式CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\电镀方式View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\石头颜色CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\石头颜色View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1226,6 +1282,12 @@
     <None Include="MoudleImages\User.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Resource Include="Images\GeoPoint_16x16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\AddNewDataSource_32x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="zh-Hans\DevExpress.Charts.Designer.v16.2.resources.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

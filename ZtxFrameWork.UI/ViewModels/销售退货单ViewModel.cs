@@ -101,7 +101,10 @@ namespace ZtxFrameWork.UI.ViewModels
                        {
                            ID = t.ID,
                            编号 = t.销售单.编号,
-                           品名 = t.饰品.品名,
+                           品名 = t.饰品.品名.名称,
+                           材质 = t.饰品.材质.名称,
+                           电镀方式 = t.饰品.电镀方式.名称,
+                           石头颜色 = t.饰品.石头颜色.名称,
                            单位 = t.饰品.单位.名称,
                            重量单位 = t.饰品.重量单位.名称,
                            尺寸 = t.饰品.尺寸,
@@ -129,9 +132,13 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.销售单明细ID = VM.SelectEntity.ID;
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.销售单明细).Load();
-                    this.DB.Entry(SelectChildEntity.销售单明细).Reference(t => t.饰品).Load();
+                    //SelectChildEntity.销售单明细ID = VM.SelectEntity.ID;
+                    //this.DB.Entry(SelectChildEntity).Reference(t => t.销售单明细).Load();
+                    //this.DB.Entry(SelectChildEntity.销售单明细).Reference(t => t.饰品).Load();
+                    long tmepID = VM.SelectEntity.ID;
+                    SelectChildEntity.销售单明细 = db.销售单明细s.Include(t=>t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位).Include(t => t.饰品.石头颜色).Include(t => t.饰品.电镀方式).Include(t => t.饰品.材质).Where(t => t.ID == tmepID).First();
+
+
                     SelectChildEntity.销售单号 = VM.SelectEntity.编号;
                     SelectChildEntity.数量 = VM.SelectEntity.数量;
                     SelectChildEntity.重量 = VM.SelectEntity.重量;

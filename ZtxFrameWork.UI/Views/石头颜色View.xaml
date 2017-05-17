@@ -1,0 +1,47 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.Views.石头颜色View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
+             xmlns:behaviors="clr-namespace:ZtxFrameWork.UI.Behaviors"
+             xmlns:controls="clr-namespace:ZtxFrameWork.UI.Controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:石头颜色ViewModel}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <dxmvvm:Interaction.Behaviors>
+        <behaviors:UserControlDefaultLoad />
+    </dxmvvm:Interaction.Behaviors>
+    <DockPanel>
+        <controls:SingleMenu DockPanel.Dock="Top" />
+        <dxr:RibbonStatusBarControl DockPanel.Dock="Bottom" />
+        <dxlc:LayoutControl>
+            <dxlc:LayoutGroup>
+                <dxlc:LayoutGroup Orientation="Vertical">
+
+                    <dxlc:LayoutItem Label="名称">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.名称, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="排序号">
+                        <dxe:TextEdit MinWidth="116" EditValue="{Binding Entity.排序号, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True, NotifyOnSourceUpdated=True}" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
+            </dxlc:LayoutGroup>
+
+
+
+
+
+
+        </dxlc:LayoutControl>
+    </DockPanel>
+</UserControl>

@@ -28,7 +28,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 OnInitializeInRuntime();
             Messenger.Default.Register<Module>(this, x => Show(x));
 
-
+            Messenger.Default.Register<string>(this,"分店变更",x => this.Current分店=App.Current分店);
         }
 
         public object ThemeCollection
@@ -39,11 +39,12 @@ namespace ZtxFrameWork.UI.ViewModels
                 ICollectionView view = CollectionViewSource.GetDefaultView(Theme.Themes.Where(t => (t.Category == Theme.Office2010Category)).Select(t => new ThemeViewModel(t)).ToArray());
                 view.GroupDescriptions.Add(new PropertyGroupDescription("Theme.Category"));
                 return view;
-
+              
             }
         }
 
         public virtual User CurrentUser { get; set; } = User.CurrentUser;
+        public virtual 分店 Current分店 { get; set; } = App.Current分店;
         protected IMessageBoxService MessageBoxService { get { return this.GetRequiredService<IMessageBoxService>(); } }
         IDocumentManagerService SignleObjectDocumentManagerService { get { return this.GetService<IDocumentManagerService>("SignleObjectDocumentManagerService"); } }
 

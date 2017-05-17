@@ -54,11 +54,8 @@
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 
-                    <dxdo:LayoutPanel AllowClose="False"
-                                      AllowDrag="False"
-                                      AllowHide="False"
-                                      Caption="{Binding ReportTitle}"
-                                      ItemHeight="Auto">
+                    <dxdo:LayoutPanel  Style="{StaticResource CommLayoutPanel}"
+                                      Caption="{Binding ReportTitle}">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group" Orientation="Vertical">
                             <dxg:GridControl AutoGenerateColumns="AddNew" x:Name="grid"
                                              EnableSmartColumnsGeneration="True"

@@ -41,8 +41,8 @@ namespace ZtxFrameWork.UI.ViewModels
         {
 
 
-         var t1   = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-            var t2=await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
             操作员Source = t1;
             分店Source = t2;
 
@@ -82,7 +82,19 @@ namespace ZtxFrameWork.UI.ViewModels
             var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
                   .Where(t => t.编号.StartsWith(startStr))
-                .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })
+                .Select(t => new
+                {
+                    ID = t.ID,
+                    编号 = t.编号,
+                    品名 = t.品名.名称,
+                    材质 = t.材质.名称,
+                    电镀方式 = t.电镀方式.名称,
+                    石头颜色 = t.石头颜色.名称,
+                    单位 = t.单位.名称,
+                    重量单位 = t.重量单位.名称,
+                    尺寸 = t.尺寸,
+                    工费计法 = t.工费计法
+                })
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -96,8 +108,13 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.饰品ID = VM.SelectEntity.ID;
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+                    //SelectChildEntity.饰品ID = VM.SelectEntity.ID;
+                    //this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+
+                    long tmepID = VM.SelectEntity.ID;
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+
+
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
                     UpdateTotal();
                 }

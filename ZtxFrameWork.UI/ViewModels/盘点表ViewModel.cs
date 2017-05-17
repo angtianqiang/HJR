@@ -25,7 +25,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected 盘点表ViewModel() : base(DbFactory.Instance, x => x.盘点表s, x => x.ID, x => x.编号, "盘点表")
         {
             if (this.IsInDesignMode()) return;
-           
+
             Init();
 
             Messenger.Default.Register<string>(this, "饰品编号更改" + Token, m =>
@@ -36,9 +36,9 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         public async void Init()
         {
-         
-          var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-           var t2=await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+
+            var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
             操作员Source = t1;
             分店Source = t2;
 
@@ -79,10 +79,22 @@ namespace ZtxFrameWork.UI.ViewModels
 
             Keyboard.Focus(null);//更新界面的值
 
-           var db = DB;
+            var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
                   .Where(t => t.编号.StartsWith(startStr))
-                .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.品名, 单位 = t.单位.名称, 重量单位 = t.重量单位.名称, 尺寸 = t.尺寸, 工费计法 = t.工费计法 })
+                .Select(t => new
+                {
+                    ID = t.ID,
+                    编号 = t.编号,
+                    品名 = t.品名.名称,
+                    材质 = t.材质.名称,
+                    电镀方式 = t.电镀方式.名称,
+                    石头颜色 = t.石头颜色.名称,
+                    单位 = t.单位.名称,
+                    重量单位 = t.重量单位.名称,
+                    尺寸 = t.尺寸,
+                    工费计法 = t.工费计法
+                })
                   .ToList<dynamic>();
             //if (list.Count==1)
             //{
@@ -98,8 +110,13 @@ namespace ZtxFrameWork.UI.ViewModels
                 doc.Show();
                 if (VM.IsSelect == true)
                 {
-                    SelectChildEntity.饰品ID = VM.SelectEntity.ID;
-                    this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+                    //SelectChildEntity.饰品ID = VM.SelectEntity.ID;
+                    //this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
+
+                    long tmepID = VM.SelectEntity.ID;
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+
+
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
                 }
             }
@@ -196,7 +213,7 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         #endregion
         #region 20170318 单据确认操作
-     
+
         protected override async void OnBeforeEntityConfirmed(ZtxDB dbContext, long primaryKey, 盘点表 entity)
         {
             base.OnBeforeEntityConfirmed(dbContext, primaryKey, entity);
@@ -206,7 +223,7 @@ namespace ZtxFrameWork.UI.ViewModels
             var ykd = dbContext.盈亏单s.Create();
             entity.盈亏单 = ykd;
 
-            ykd.编号 =await CollectionViewModel<盈亏单, ZtxDB, long>.GetNewCode("YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
+            ykd.编号 = await CollectionViewModel<盈亏单, ZtxDB, long>.GetNewCode("YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
             ykd.日期 = entity.日期;
             ykd.操作员ID = entity.操作员ID;
             ykd.状态 = "Y";//直接生效
@@ -229,7 +246,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 a.盈亏金额 = 0;
 
                 //按盈亏单的生效逻辑写数据
-             
+
                 //更新分库库存
                 var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
                 if (temp == null)
@@ -273,7 +290,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 });
             }
 
-       
+
 
 
 
@@ -288,7 +305,7 @@ namespace ZtxFrameWork.UI.ViewModels
             {
                 throw new Exception("未找到对应的盈亏单");
             }
-          
+
 
 
             //删除出入明细
@@ -298,12 +315,12 @@ namespace ZtxFrameWork.UI.ViewModels
                 dbContext.Entry(temp).State = EntityState.Deleted;
             }
 
-    
+
 
             foreach (var item in ykd.盈亏单明细s)
             {
 
-           
+
                 //更新分库库存
                 var temp = dbContext.库存s.Where(t => t.饰品ID == item.饰品ID && t.分店ID == entity.分店ID).SingleOrDefault();
                 if (temp == null)
@@ -326,15 +343,15 @@ namespace ZtxFrameWork.UI.ViewModels
                 product.账面成本小计 += item.盈亏金额;
                 //写出入明细
 
-              
+
             }
             entity.盈亏单ID = null;
             dbContext.盈亏单明细s.RemoveRange(ykd.盈亏单明细s);
-            
-          
+
+
             dbContext.Entry(ykd).State = EntityState.Deleted;
-          
-       dbContext.SaveChanges();
+
+            dbContext.SaveChanges();
 
         }
         #endregion

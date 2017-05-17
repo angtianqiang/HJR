@@ -19,7 +19,7 @@ namespace ZtxFrameWork.UI.QueryList
             return ViewModelSource.Create(() => new 饰品出入明细表ViewModel());
         }
 
-        protected 饰品出入明细表ViewModel():base("饰品出入明细表")
+        protected 饰品出入明细表ViewModel() : base("饰品出入明细表")
         {
 
             HiddenProperties = new[] {
@@ -36,13 +36,30 @@ namespace ZtxFrameWork.UI.QueryList
             //// 局部函数
             //Expression<Func<库存出入明细, bool>> GetRemoteData(库存出入明细 s)
             //{
-        
-               
+
+
             //}
-            return DbFactory.Instance.CreateDbContext().库存出入明细s.Include(t=>t.饰品).Include(t=>t.分店)
+            return DbFactory.Instance.CreateDbContext().库存出入明细s.Include(t => t.饰品).Include(t => t.分店)
                 .Where(AdvancedExpression)
-                .OrderBy(t=>t.日期)
-                .Select(t => new { 编号 = t.饰品.编号, 品名 = t.饰品.品名, 分店=t.分店.名称, 日期 = t.日期, 出入别 = t.出入别, 单据类型=t.相关单据, 单据编号=t.单据编号, 数量=t.数量, 重量=t.重量, 金额=t.金额 })
+                .OrderBy(t => t.日期)
+                .Select(t => new
+                {
+                    编号 = t.饰品.编号,
+                    品名 = t.饰品.品名.名称,
+                    材质 = t.饰品.材质.名称,
+                    电镀方式 = t.饰品.电镀方式.名称,
+                    石头颜色 = t.饰品.石头颜色.名称,
+                    单位 = t.饰品.单位.名称,
+                    重量单位 = t.饰品.重量单位.名称,
+                    分店 = t.分店.名称,
+                    日期 = t.日期,
+                    出入别 = t.出入别,
+                    单据类型 = t.相关单据,
+                    单据编号 = t.单据编号,
+                    数量 = t.数量,
+                    重量 = t.重量,
+                    金额 = t.金额
+                })
                 .ToList<dynamic>();
         }
     }
