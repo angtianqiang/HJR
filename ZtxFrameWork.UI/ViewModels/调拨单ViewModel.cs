@@ -57,7 +57,12 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         protected override IQueryable<调拨单> DbInclude(ObjectSet<调拨单> dbSet)
         {
-            return dbSet.Include(t => t.调拨单明细s.Select(p => p.饰品));
+            return dbSet.Include(t => t.调拨单明细s.Select(p => p.饰品))
+                   .Include(t => t.调拨单明细s.Select(p => p.饰品.品名))
+                .Include(t => t.调拨单明细s.Select(p => p.饰品.材质))
+                .Include(t => t.调拨单明细s.Select(p => p.饰品.电镀方式))
+                .Include(t => t.调拨单明细s.Select(p => p.饰品.石头颜色))
+                ;
         }
         public virtual List<User> 签收员Source { get; set; }
         public virtual List<User> 调拨员Source { get; set; }
@@ -120,7 +125,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     //this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).Load();
 
                     long tmepID = VM.SelectEntity.ID;
-                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.品名).Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
 
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
                     UpdateTotal();

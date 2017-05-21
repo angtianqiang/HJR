@@ -50,7 +50,7 @@
         </dx:WindowedDocumentUIService>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
-        <DockPanel>
+        <DockPanel x:Name="dp">
             <dxr:RibbonControl RibbonStyle="Office2010" DockPanel.Dock="Top">
 
 
@@ -59,22 +59,26 @@
                     <dxr:RibbonPage Caption="操作">
 
                         <dxr:RibbonPageGroup Caption="">
-                            <dxb:BarSubItem Content="所有店面"
+                            <dxb:BarSplitButtonItem  Content="所有店面"
                                         KeyGesture="CTRL+SHIFT+E"
-                                        LargeGlyph="/ZtxFrameWork.UI;component/Images/export.png" Command="{Binding ReshDataCommand}" CommandParameter="99"
-                                         ItemLinksSource="{Binding 分店Source}" >
-                                <dxb:BarSubItem.ItemTemplate>
+                                        LargeGlyph="/ZtxFrameWork.UI;component/Images/export.png"     Command="{Binding ReshDataCommand}" CommandParameter="99" RibbonStyle="Large" GlyphAlignment="Left"
+                                         >
+                                <dxb:BarSplitButtonItem.PopupControl>
+                                    <dxb:PopupMenu  ItemLinksSource="{Binding 分店Source}">
+                                    <dxb:PopupMenu.ItemTemplate>
                                     <DataTemplate >
                                         <ContentControl>
                                             <dxb:BarButtonItem Content="{Binding 名称}"                                     
                                        GlyphAlignment="Top"
                                        BarItemDisplayMode="ContentAndGlyph"   Glyph="/ZtxFrameWork.UI;component/Images/GeoPoint_16x16.png"
-                                       Command="{Binding ReshDataCommand}" CommandParameter="{Binding ID}"/>
+                                       Command="{Binding DataContext.ReshDataCommand,ElementName=dp}"  CommandParameter="{Binding ID}" />
                                             
                                         </ContentControl>
                                     </DataTemplate>
-                                </dxb:BarSubItem.ItemTemplate>
-                            </dxb:BarSubItem>
+                                    </dxb:PopupMenu.ItemTemplate>
+                                    </dxb:PopupMenu>
+                                </dxb:BarSplitButtonItem.PopupControl>
+                            </dxb:BarSplitButtonItem>
                             <dxb:BarButtonItem Command="{Binding RefreshCommand}"
                                            Content="刷新"
                                            KeyGesture="CTRL+F"
@@ -166,7 +170,8 @@
                                     <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  />
                                 </dxg:GridControl.View>
 
-                             
+                                <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="301"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.条码" Header="条码"  Visible="True" VisibleIndex="301"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.品名.名称" Header="品名" Visible="True" VisibleIndex="301"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.电镀方式.名称" Header="电镀方式" Visible="True" VisibleIndex="302"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.石头颜色.名称" Header="石头颜色" Visible="True" VisibleIndex="303"></dxg:GridColumn>
@@ -175,7 +180,7 @@
                                 <dxg:GridColumn FieldName="数量" ></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="重量" ></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="金额" ></dxg:GridColumn>
-
+                               
                             </dxg:GridControl>
 
                         </dxlc:LayoutGroup>

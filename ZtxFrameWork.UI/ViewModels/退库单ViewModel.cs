@@ -64,7 +64,12 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         protected override IQueryable<退库单> DbInclude(ObjectSet<退库单> dbSet)
         {
-            return dbSet.Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品));
+            return dbSet.Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品))
+                   .Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品.品名))
+                .Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品.材质))
+                .Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品.电镀方式))
+                .Include(t => t.退库单明细s.Select(p => p.入库单明细.饰品.石头颜色))
+                ;
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
@@ -137,7 +142,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     //this.DB.Entry(SelectChildEntity.入库单明细).Reference(t => t.饰品).Load();
 
                     long tmepID = VM.SelectEntity.ID;
-                    SelectChildEntity.入库单明细 = db.入库单明细s.Include(t => t.饰品.单位).Include(t => t.饰品.重量单位).Include(t => t.饰品.石头颜色).Include(t => t.饰品.电镀方式).Include(t => t.饰品.材质).Where(t => t.ID == tmepID).First();
+                    SelectChildEntity.入库单明细 = db.入库单明细s.Include(t => t.饰品.品名).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位).Include(t => t.饰品.石头颜色).Include(t => t.饰品.电镀方式).Include(t => t.饰品.材质).Where(t => t.ID == tmepID).First();
 
 
                     SelectChildEntity.入库单号 = VM.SelectEntity.编号;

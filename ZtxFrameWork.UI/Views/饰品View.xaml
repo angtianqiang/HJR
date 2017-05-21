@@ -15,6 +15,7 @@
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:sys="clr-namespace:System;assembly=mscorlib"
              d:DesignHeight="550"
              d:DesignWidth="600"
              DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:饰品ViewModel}}"
@@ -251,7 +252,7 @@
                                                           NotifyOnSourceUpdated=True,
                                                           UpdateSourceTrigger=PropertyChanged,
                                                           ValidatesOnDataErrors=True}"
-                                      Mask="n0"
+                                      Mask="n0" MaskType="Numeric"  EditValueType="{x:Type sys:Int32}"
                                       MaskUseAsDisplayFormat="True" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="库存下限">
@@ -259,7 +260,7 @@
                                                           NotifyOnSourceUpdated=True,
                                                           UpdateSourceTrigger=PropertyChanged,
                                                           ValidatesOnDataErrors=True}"
-                                      Mask="n0"
+                                     Mask="n0" MaskType="Numeric" EditValueType="{x:Type sys:Int32}"
                                       MaskUseAsDisplayFormat="True" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
