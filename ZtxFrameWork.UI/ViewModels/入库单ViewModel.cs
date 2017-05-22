@@ -86,7 +86,14 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         protected override IQueryable<入库单> DbInclude(ObjectSet<入库单> dbSet)
         {
-            return dbSet.Include(t => t.入库单明细s.Select(p => p.饰品));
+            return dbSet.Include(t => t.入库单明细s.Select(p => p.饰品))
+                .Include(t => t.入库单明细s.Select(p => p.饰品.品名))
+                .Include(t => t.入库单明细s.Select(p => p.饰品.材质))
+                .Include(t => t.入库单明细s.Select(p => p.饰品.电镀方式))
+                .Include(t => t.入库单明细s.Select(p => p.饰品.石头颜色))
+                ;
+
+
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
@@ -135,7 +142,7 @@ namespace ZtxFrameWork.UI.ViewModels
             Keyboard.Focus(null);//更新界面的值
 
             var db = DB;
-            List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质)
+            List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.品名).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质)
                   .Where(t => t.编号.StartsWith(startStr))
                 .Select(t => new
                 {

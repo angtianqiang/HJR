@@ -61,7 +61,12 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         protected override IQueryable<销售退货单> DbInclude(ObjectSet<销售退货单> dbSet)
         {
-            return dbSet.Include(t => t.销售退货单明细s.Select(p=>p.销售单明细));
+            return dbSet.Include(t => t.销售退货单明细s.Select(p=>p.销售单明细))
+                   .Include(t => t.销售退货单明细s.Select(p => p.销售单明细.饰品.品名))
+                .Include(t => t.销售退货单明细s.Select(p => p.销售单明细.饰品.材质))
+                .Include(t => t.销售退货单明细s.Select(p => p.销售单明细.饰品.电镀方式))
+                .Include(t => t.销售退货单明细s.Select(p => p.销售单明细.饰品.石头颜色))
+                ;
         }
         public virtual List<User> 操作员Source { get; set; }
         public virtual List<分店> 分店Source { get; set; }
@@ -136,7 +141,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     //this.DB.Entry(SelectChildEntity).Reference(t => t.销售单明细).Load();
                     //this.DB.Entry(SelectChildEntity.销售单明细).Reference(t => t.饰品).Load();
                     long tmepID = VM.SelectEntity.ID;
-                    SelectChildEntity.销售单明细 = db.销售单明细s.Include(t=>t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位).Include(t => t.饰品.石头颜色).Include(t => t.饰品.电镀方式).Include(t => t.饰品.材质).Where(t => t.ID == tmepID).First();
+                    SelectChildEntity.销售单明细 = db.销售单明细s.Include(t=>t.饰品).Include(t => t.饰品.品名).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位).Include(t => t.饰品.石头颜色).Include(t => t.饰品.电镀方式).Include(t => t.饰品.材质).Where(t => t.ID == tmepID).First();
 
 
                     SelectChildEntity.销售单号 = VM.SelectEntity.编号;

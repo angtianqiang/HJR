@@ -249,6 +249,7 @@ namespace ZtxFrameWork.Data.Model
         public virtual ICollection<饰品> 饰品s { get; set; }
     }
 
+    [DisplayName("饰品")]
     public class 饰品 : Entity
     {
         private string _编号;

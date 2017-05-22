@@ -9,6 +9,7 @@ using ZtxFrameWork.Data;
 using System.Linq;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -33,13 +34,19 @@ namespace ZtxFrameWork.UI.ViewModels
 
         public void ReshData(long 分店ID)
         {
-            if (分店ID==99)
+            Mouse.OverrideCursor = Cursors.Wait;
+            if (分店ID == 99)
             {
+                this.FilterExpression =t=>1==1;
                 this.Refresh();
+                Mouse.OverrideCursor = null;
                 return;
             }
             this.FilterExpression = t => t.分店ID == 分店ID;
+            this.Refresh();
+            Mouse.OverrideCursor = null;
         }
-   
+      
+
     }
 }
