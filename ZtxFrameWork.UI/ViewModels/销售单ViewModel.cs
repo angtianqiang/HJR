@@ -50,16 +50,14 @@ namespace ZtxFrameWork.UI.ViewModels
             });
 
         }
-        public async void Init()
+        public  void Init()
         {
 
-            var t1 = DbFactory.Instance.CreateDbContext().会员s.OrderBy(t => t.编号).ToListAsync();
-            var t2 = DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-            var t3 = DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            会员Source = Helpers.CacheHelper.会员Source;
+            操作员Source = Helpers.CacheHelper.操作员Source;
+            分店Source = Helpers.CacheHelper.分店Source;
             //  await Task.WhenAll(t1, t2, t3);
-            会员Source = await t1;
-            操作员Source = await t2;
-            分店Source = await t3;
+
         }
         protected override void SetDetailsDirtyState()
         {
@@ -130,7 +128,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.材质)
-                  .Where(t => t.编号.StartsWith(startStr))
+                  .Where(t => t.编号.Contains(startStr))
                 .Select(t => new
                 {
                     ID = t.ID,
@@ -186,6 +184,14 @@ namespace ZtxFrameWork.UI.ViewModels
                     //long newId = VM.SelectEntity.ID;
                     //SelectChildEntity.饰品 = this.DB.饰品s.AsNoTracking().Include(t => t.材质).Where(t => t.ID == newId).Single();
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
+                    //会员提成
+                    if (Entity.会员!=null)
+                    {
+                        if (Entity.会员.折扣 != 0m)
+                        {
+                            SelectChildEntity.折扣 = Entity.会员.折扣;
+                        }
+                    }
                     UpdatePrice();
                 }
             }

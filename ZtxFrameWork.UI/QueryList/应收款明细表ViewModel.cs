@@ -37,13 +37,16 @@ namespace ZtxFrameWork.UI.QueryList
                 .Where(AdvancedExpression)
                 .Select(t => new
                 {
-                    编号 = t.编号,
+                    销售编号 = t.编号,
                     分店=t.分店.名称,
                     会员 = t.会员.姓名,
-                    日期 = t.日期,                   
-                    数量 = t.总金额,
-                    重量 = t.已收金额,
-                    计价方式 = t.未收金额,                  
+                    日期 = t.日期,
+                    数量 = t.销售单明细s.Sum(p => p.数量),
+                    重量 = t.销售单明细s.Sum(p=>p.重量),
+                    总金额 = t.总金额,
+                    已收金额 = t.已收金额,
+                    未收金额 = t.未收金额,  
+                 
                     状态 = t.状态,
                     备注 = t.备注
                 })

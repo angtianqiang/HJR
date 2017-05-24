@@ -70,6 +70,7 @@ namespace ZtxFrameWork.UI.ViewModels
               InitAndSort(item, _modules);
                 Modules.Add(item);
             }
+            Modules.Where(t => t.ModuleTitle == "系统管理").First().ChildModules.Add(new Module() { ImageName = "Gear-02-WF.png", ModuleTitle = "清除字典缓存" });
       }
 
         public void InitAndSort(Module item, List<Module> _modules)
@@ -108,10 +109,15 @@ namespace ZtxFrameWork.UI.ViewModels
 
         public void Show(Module module)
         {
-
+            if (module!=null && module.ModuleTitle == "清除字典缓存")
+            {
+                Helpers.CacheHelper.ClearCache();
+                MessageBoxService.ShowMessage("清除成功", "提示", MessageButton.OK, MessageIcon.Information);
+                return;
+            }
             if (module == null || DocumentManagerService == null || string.IsNullOrEmpty(module.DocumentType)|| module.ModuleInfo!= ModuleInfo.MoudleAction)
                 return;
-
+          
             //权限判断
             if (User.CurrentUser.GetUserAuthorityModuleMapping(module.ModuleTitle).Navigate==false)
             {

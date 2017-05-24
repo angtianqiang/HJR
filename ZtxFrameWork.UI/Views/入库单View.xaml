@@ -38,7 +38,7 @@
     <DockPanel>
         <DockPanel.Resources>
             <Style TargetType="{x:Type dxe:TextEdit}">
-                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />         
             </Style>
             <Style TargetType="{x:Type dxe:DateEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
@@ -209,7 +209,7 @@
 
                     <DockPanel>
                         <dxb:ToolBarControl VerticalAlignment="Top"
-                                            AllowQuickCustomization="False"
+                                            AllowQuickCustomization="False" 
                                             BarItemDisplayMode="ContentAndGlyph"
                                             DockPanel.Dock="Top">
                             <dxb:BarButtonItem Alignment="Default"
@@ -235,6 +235,12 @@
                             <dxmvvm:Interaction.Behaviors>
                                 <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
                             </dxmvvm:Interaction.Behaviors>
+                            <dxg:GridControl.TotalSummary>
+
+                                <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
+                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                            </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"
@@ -244,6 +250,7 @@
                                                AllowGrouping="False"
                                                ColumnHeaderContentStyle="{StaticResource ResourceKey=GridColumnHeaderCenterAlignment}"
                                                ShowGroupPanel="False"
+                                               
                                                Style="{StaticResource ResourceKey=DetailsTableView}"
                                                UseLightweightTemplates="All">
                                     <dxg:TableView.RowStyle>
@@ -300,7 +307,7 @@
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings AllowNullInput="False"
                                                           Mask="d"
-                                                          MaskType="Numeric"
+                                                          MaskType="Numeric" 
                                                           MaskUseAsDisplayFormat="True" />
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>

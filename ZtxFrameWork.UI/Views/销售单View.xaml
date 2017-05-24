@@ -247,6 +247,12 @@
                             <dxmvvm:Interaction.Behaviors>
                                 <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
                             </dxmvvm:Interaction.Behaviors>
+                            <dxg:GridControl.TotalSummary>
+
+                                <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
+                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                            </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"
@@ -346,12 +352,12 @@
                                             Header="折扣"
                                             IsSmart="True" />
                             <dxg:GridColumn Width="80"
-                                            FieldName="折前价"
+                                            FieldName="折前价" Visible="False"
                                             Header="折前价"
                                             IsSmart="True"  ReadOnly="True" />
                             <dxg:GridColumn Width="80"
                                             FieldName="金额"
-                                            Header="金额"
+                                            Header="折后销售价"
                                             IsSmart="True" ReadOnly="True" />
 
                         </dxg:GridControl>

@@ -44,7 +44,7 @@
                     <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
                     <Setter Property="Icon" Value="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
                     <Setter Property="Width" Value="800" />
-                    <Setter Property="Height" Value="580" />
+                    <Setter Property="Height" Value="700" />
                 </Style>
             </dx:WindowedDocumentUIService.WindowStyle>
         </dx:WindowedDocumentUIService>
@@ -65,17 +65,17 @@
                                          >
                                 <dxb:BarSplitButtonItem.PopupControl>
                                     <dxb:PopupMenu  ItemLinksSource="{Binding 分店Source}">
-                                    <dxb:PopupMenu.ItemTemplate>
-                                    <DataTemplate >
-                                        <ContentControl>
-                                            <dxb:BarButtonItem Content="{Binding 名称}"                                     
+                                        <dxb:PopupMenu.ItemTemplate>
+                                            <DataTemplate >
+                                                <ContentControl>
+                                                    <dxb:BarButtonItem Content="{Binding 名称}"                                     
                                        GlyphAlignment="Top"
                                        BarItemDisplayMode="ContentAndGlyph"   Glyph="/ZtxFrameWork.UI;component/Images/GeoPoint_16x16.png"
                                        Command="{Binding DataContext.ReshDataCommand,ElementName=dp}"  CommandParameter="{Binding ID}" />
-                                            
-                                        </ContentControl>
-                                    </DataTemplate>
-                                    </dxb:PopupMenu.ItemTemplate>
+
+                                                </ContentControl>
+                                            </DataTemplate>
+                                        </dxb:PopupMenu.ItemTemplate>
                                     </dxb:PopupMenu>
                                 </dxb:BarSplitButtonItem.PopupControl>
                             </dxb:BarSplitButtonItem>
@@ -150,12 +150,26 @@
                                       Caption="明细"
                                       ItemHeight="Auto">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                            <dxg:GridControl AutoGenerateColumns="AddNew"
-                                             EnableSmartColumnsGeneration="True"
+                            <dxg:GridControl AutoGenerateColumns="AddNew"   x:Name="grid" AutoExpandAllGroups="True"
+                                             EnableSmartColumnsGeneration="True" 
                                                  ColumnGeneratorStyle="{StaticResource ColorGridColumnStyle}"
-                                             ItemsSource="{Binding Entities}"
+                                             ItemsSource="{Binding Entities}" 
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}">
+                                <dxg:GridControl.GroupSummary>
+                                    <dxg:GridSummaryItem FieldName="按件销售额" SummaryType="Sum" ShowInGroupColumnFooter="按件销售额"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="按重销售额" SummaryType="Sum" ShowInGroupColumnFooter="按重销售额"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" ShowInGroupColumnFooter="数量"  DisplayFormat="{}{0:d}"/>
+                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" ShowInGroupColumnFooter="重量"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" ShowInGroupColumnFooter="金额"  DisplayFormat="{}{0:n2}"/>
+                                </dxg:GridControl.GroupSummary>
+                                <dxg:GridControl.TotalSummary>
+                                    <dxg:GridSummaryItem FieldName="按件销售额" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="按重销售额" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum"  DisplayFormat="{}{0:d}"/>
+                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
+                                </dxg:GridControl.TotalSummary>
                                 <dxmvvm:Interaction.Behaviors>
                                     <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
                                     <dxmvvm:EventToCommand Command="{Binding EditCommand}"
@@ -167,20 +181,43 @@
                                     </dxmvvm:EventToCommand>
                                 </dxmvvm:Interaction.Behaviors>
                                 <dxg:GridControl.View>
-                                    <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  />
+                                    <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"   RowMinHeight="40"   ShowGroupFooters="True" GroupSummaryDisplayMode="Default" />
                                 </dxg:GridControl.View>
 
-                                <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="301"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="饰品.条码" Header="条码"  Visible="True" VisibleIndex="301"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="饰品.品名.名称" Header="品名" Visible="True" VisibleIndex="301"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="饰品.电镀方式.名称" Header="电镀方式" Visible="True" VisibleIndex="302"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="饰品.石头颜色.名称" Header="石头颜色" Visible="True" VisibleIndex="303"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="饰品.材质.名称" Header="材质" Visible="True" VisibleIndex="304"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.饰品图片.图片"   Header="图片" Visible="True" VisibleIndex="301" Fixed="Left" >
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image  Name="PART_Editor" Source="{Binding Path=RowData.Row.饰品.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill">
+                                                <Image.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </Image.ContextMenu>
+                                            </Image>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                              
+                                </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="数量" ></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="重量" ></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="金额" ></dxg:GridColumn>
-                               
+                                <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="302" Fixed="Left"></dxg:GridColumn>
+
+                                <dxg:GridColumn FieldName="饰品.条码" Header="条码"  Visible="True" VisibleIndex="303" Fixed="Left"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.品名.名称" Header="品名" GroupIndex="1"   Visible="True" Fixed="Left" VisibleIndex="304"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.饰品类型.名称"   Header="类型" Visible="True" Fixed="Left" VisibleIndex="305"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.电镀方式.名称" Header="电镀方式" Visible="True" VisibleIndex="306"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.石头颜色.名称" Header="石头颜色" Visible="True" VisibleIndex="307"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.材质.名称" Header="材质" Visible="True" VisibleIndex="308"></dxg:GridColumn>
+
+                                <dxg:GridColumn FieldName="数量" VisibleIndex="309"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="重量" VisibleIndex="310" ></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="金额" VisibleIndex="311"></dxg:GridColumn>
+
+                                <dxg:GridColumn FieldName="饰品.QtyPrice"  Header="按件批发价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
+                                <dxg:GridColumn UnboundType="Decimal" FieldName="按件销售额" UnboundExpression="([饰品.QtyPrice] * [数量])" Header="按件销售额"  Visible="True" VisibleIndex="313"></dxg:GridColumn>
+
+                                <dxg:GridColumn FieldName="饰品.WeightPrice"  Header="按重批发价" Visible="True" VisibleIndex="314"></dxg:GridColumn>
+                                <dxg:GridColumn UnboundType="Decimal"  FieldName="按重销售额" UnboundExpression="饰品.WeightPrice * 重量"  Header="按重销售额"  Visible="True" VisibleIndex="315"></dxg:GridColumn>
+
                             </dxg:GridControl>
 
                         </dxlc:LayoutGroup>

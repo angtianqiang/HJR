@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Converters\PathToImageConerter.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Helpers\CacheHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DataDirectoryHelper.cs" />
     <Compile Include="Helpers\DateTimeHelper.cs" />
@@ -335,6 +336,10 @@
       <DependentUpon>饰品销售排行表_ExpressionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="QueryList\饰品销售排行表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\饰品销售明细.xaml.cs">
+      <DependentUpon>饰品销售明细.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品销售明细ViewModel.cs" />
     <Compile Include="Utils\ApplicationSet.cs" />
     <Compile Include="Utils\CommandHelper.cs" />
     <Compile Include="Utils\TreeHelper.cs" />
@@ -770,6 +775,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="QueryList\饰品销售明细.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\AppSet.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1057,6 +1066,9 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="Reports\采购入库单明细表Report.repx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Reports\销售单Report.repx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

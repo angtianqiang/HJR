@@ -44,7 +44,7 @@
                     <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
                     <Setter Property="Icon" Value="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
                     <Setter Property="Width" Value="800" />
-                    <Setter Property="Height" Value="580" />
+                    <Setter Property="Height" Value="700" />
                 </Style>
             </dx:WindowedDocumentUIService.WindowStyle>
         </dx:WindowedDocumentUIService>
@@ -76,6 +76,12 @@
                                 <dxg:GridControl.View>
                                     <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  />
                                 </dxg:GridControl.View>
+                                <dxg:GridControl.TotalSummary>
+
+                                
+                                    <dxg:GridSummaryItem FieldName="实付金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="应付金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                </dxg:GridControl.TotalSummary>
                                 <dxg:GridControl.Columns >
                                 <dxg:GridColumn Width="80"   FieldName="分店.名称"        Header="分店" IsSmart="True"  VisibleIndex="201"  />
                                     <dxg:GridColumn Width="80"   FieldName="供应商.简称"        Header="供应商" IsSmart="True"  VisibleIndex="202"  />

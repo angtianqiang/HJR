@@ -47,12 +47,12 @@ namespace ZtxFrameWork.UI.ViewModels
                 UpdateTotal();
             });
         }
-        public async void Init()
+        public  void Init()
         {
 
-            操作员Source = this.DB.Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToList();
-            分店Source = this.DB.分店s.OrderBy(t => t.名称).ToList();
-            供应商Source = this.DB.供应商s.OrderBy(t => t.简称).ToList();
+            操作员Source = Helpers.CacheHelper.操作员Source;
+            分店Source = Helpers.CacheHelper.分店Source;
+            供应商Source = Helpers.CacheHelper.供应商Source;
 
 
 
@@ -143,7 +143,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.品名).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质)
-                  .Where(t => t.编号.StartsWith(startStr))
+                  .Where(t => t.编号.Contains(startStr))
                 .Select(t => new
                 {
                     ID = t.ID,
@@ -173,7 +173,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 if (VM.IsSelect == true)
                 {
                     long tmepID = VM.SelectEntity.ID;
-                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
+                    SelectChildEntity.饰品 = db.饰品s.Include(t => t.品名).Include(t => t.单位).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质).Where(t => t.ID == tmepID).First();
 
                     //if (!this.DB.Entry(SelectChildEntity).Reference(t => t.饰品).IsLoaded)
                     //{
@@ -201,7 +201,8 @@ namespace ZtxFrameWork.UI.ViewModels
 
                     var item = SelectChildEntity;
                     item.计价方式 = item.饰品.工费计法;
-                    item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.QtyPrice : item.饰品.WeightPrice;
+                    //        item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.按件成本价  : item.饰品.按重成本价  ;
+                    item.单价 = item.饰品.成本工费;
                     item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                     UpdateTotal();
                     UpdateTotal();

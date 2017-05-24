@@ -43,7 +43,7 @@
                 <dxlc:LayoutGroup Margin="50" ItemSpace="20" Orientation="Vertical">
                     <dxlc:LayoutGroup ItemSpace="20">
                         <dxlc:LayoutGroup Header="销售情况" Orientation="Vertical" View="GroupBox">
-                            <dxlc:LayoutItem Label="饰品笔数">
+                            <dxlc:LayoutItem Label="饰品款数">
                                 <dxe:TextEdit IsReadOnly="True" EditValue="{Binding CurrentData.当日销售笔数, Mode=OneWay}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="饰品数量">
@@ -57,7 +57,7 @@
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                         <dxlc:LayoutGroup Header="销售退货情况" Orientation="Vertical" View="GroupBox">
-                            <dxlc:LayoutItem Label="饰品笔数">
+                            <dxlc:LayoutItem Label="饰品款数">
                                 <dxe:TextEdit IsReadOnly="True" EditValue="{Binding CurrentData.当日销售退货笔数, Mode=OneWay}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="饰品数量">
@@ -73,7 +73,7 @@
                     </dxlc:LayoutGroup>
                     <dxlc:LayoutGroup ItemSpace="20">
                         <dxlc:LayoutGroup Header="采购入库情况" Orientation="Vertical" View="GroupBox">
-                            <dxlc:LayoutItem Label="饰品笔数">
+                            <dxlc:LayoutItem Label="饰品款数">
                                 <dxe:TextEdit IsReadOnly="True" EditValue="{Binding CurrentData.当日采购入库笔数, Mode=OneWay}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="饰品数量">
@@ -87,7 +87,7 @@
                             </dxlc:LayoutItem>
                         </dxlc:LayoutGroup>
                         <dxlc:LayoutGroup Header="采购入库退货情况" Orientation="Vertical" View="GroupBox">
-                            <dxlc:LayoutItem Label="饰品笔数">
+                            <dxlc:LayoutItem Label="饰品款数">
                                 <dxe:TextEdit IsReadOnly="True" EditValue="{Binding CurrentData.当日采购退货笔数, Mode=OneWay}"/>
                             </dxlc:LayoutItem>
                             <dxlc:LayoutItem Label="饰品数量">

@@ -44,15 +44,15 @@ namespace ZtxFrameWork.UI.ViewModels
                 UpdateTotal();
             });
         }
-        public async void Init()
+        public  void Init()
         {
-           
-           var t1 =await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-          var t2=  await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
-          var t3=  await DbFactory.Instance.CreateDbContext().会员s.OrderBy(t => t.编号).ToListAsync();
-            操作员Source = t1;
-            分店Source = t2;
-            会员Source = t3;
+
+            // var t1 =await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            //var t2=  await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            //var t3=  await DbFactory.Instance.CreateDbContext().会员s.OrderBy(t => t.编号).ToListAsync();
+            操作员Source = Helpers.CacheHelper.操作员Source;
+            分店Source = Helpers.CacheHelper.分店Source;
+            会员Source = Helpers.CacheHelper.会员Source;
 
         }
         protected override void SetDetailsDirtyState()
@@ -99,7 +99,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
            var db = DB;
             List<dynamic> list = db.销售单s
-                  .Where(t => t.编号.StartsWith(startStr) && t.状态 != "N" && t.未收金额 > 0m && t.分店ID == Entity.分店ID)
+                  .Where(t => t.编号.Contains(startStr) && t.状态 != "N" && t.未收金额 > 0m && t.分店ID == Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.日期,  总金额 = t.总金额, 已收金额 = t.已收金额, 未收金额 = t.未收金额 })
                   .ToList<dynamic>();
             //if (list.Count==1)

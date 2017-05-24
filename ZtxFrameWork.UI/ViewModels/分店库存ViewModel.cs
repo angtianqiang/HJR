@@ -20,13 +20,13 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 分店库存ViewModel());
         }
-        protected 分店库存ViewModel() : base(DbFactory.Instance, x => x.库存s, query => query.Include(t=>t.饰品).Include(t => t.饰品.品名).Include(t => t.饰品.材质).Include(t => t.饰品.电镀方式).Include(t => t.饰品.石头颜色).Include(t=>t.分店).OrderByDescending(x =>x.饰品.编号), x =>x.ID, permissionTitle: "分店库存")
+        protected 分店库存ViewModel() : base(DbFactory.Instance, x => x.库存s, query => query.Include(t=>t.饰品).Include(t => t.饰品.品名).Include(t => t.饰品.饰品类型).Include(t => t.饰品.材质).Include(t => t.饰品.电镀方式).Include(t => t.饰品.石头颜色).Include(t => t.饰品.饰品图片).Include(t=>t.分店).OrderByDescending(x =>x.饰品.编号), x =>x.ID, permissionTitle: "分店库存")
         {
             Init();
         }
         public void Init()
         {
-            分店Source = DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToList();
+            分店Source = Helpers.CacheHelper.分店Source;
 
         }
 

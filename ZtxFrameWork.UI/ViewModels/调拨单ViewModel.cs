@@ -39,13 +39,13 @@ namespace ZtxFrameWork.UI.ViewModels
 
             });
         }
-        public async void Init()
+        public  void Init()
         {
 
-            var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-            var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
-            签收员Source = 调拨员Source = t1;
-            源分店Source = 目标分店Source = t2;
+            //var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            //var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            签收员Source = 调拨员Source = Helpers.CacheHelper.操作员Source;
+            源分店Source = 目标分店Source = Helpers.CacheHelper.分店Source;
         }
         protected override void SetDetailsDirtyState()
         {
@@ -92,7 +92,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             var db = DB;
             List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位)
-                  .Where(t => t.编号.StartsWith(startStr))
+                  .Where(t => t.编号.Contains(startStr))
                 .Select(t => new
                 {
                     ID = t.ID,

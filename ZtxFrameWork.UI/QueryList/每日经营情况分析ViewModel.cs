@@ -83,8 +83,8 @@ namespace ZtxFrameWork.UI.QueryList
             {
                 CurrentData.当日采购入库笔数 += 1;
                 CurrentData.当日采购入库数量 += item.数量;
-                CurrentData.当日采购入库重量 += item.金额;
-                CurrentData.当日采购入库金额 += item.重量;
+                CurrentData.当日采购入库重量 += item.重量;
+                CurrentData.当日采购入库金额 += item.金额;
             }
 
             //采购退货

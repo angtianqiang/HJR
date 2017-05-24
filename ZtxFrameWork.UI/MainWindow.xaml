@@ -8,7 +8,7 @@
                     Title="{Binding Title,
                                     Source={StaticResource ResourceKey=AppSet}}"
                     Width="525"
-                    Height="650"
+                    Height="700"
                     Icon="{Binding IcoPath,
                                    Source={StaticResource ResourceKey=AppSet}}"
                  WindowState="Maximized"   >

@@ -415,12 +415,14 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.批发工费, ref _批发工费, value, ChangeColums); }
         }
         private decimal _按件批发价;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
         public decimal 按件批发价
         {
             get { return _按件批发价; }
             set { Set<decimal>(() => this.按件批发价, ref _按件批发价, value); }
         }
         private decimal _按重批发价;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
         public decimal 按重批发价
         {
             get { return _按重批发价; }

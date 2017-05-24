@@ -37,5 +37,10 @@ namespace ZtxFrameWork.UI.ViewModels
             return ReadOnlyDbSet.Find(this.getPrimaryKeyExpression.Compile()(entity));
        
     }
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 饰品 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.库存s.RemoveRange(dbContext.库存s.Where(t => t.饰品ID == entity.ID).ToArray());
+        }
     }
 }

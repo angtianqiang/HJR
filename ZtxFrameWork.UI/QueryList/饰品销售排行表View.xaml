@@ -43,17 +43,32 @@
                 <dxdo:LayoutGroup>
                     <dxdo:LayoutPanel  Style="{StaticResource CommLayoutPanel}"
                                       Caption="{Binding ReportTitle}">
-                        <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                            <dxg:GridControl 
+                        <dxlc:LayoutGroup Header="LayoutGroup" View="Group" Orientation="Vertical">
+                            <dxg:GridControl x:Name="grid"
                                              ItemsSource="{Binding Entities}"
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}"
                                           Style="{StaticResource ResourceKey=ReportGridControl}" >
                                 <dxg:GridControl.View>
-                                    <dxg:TableView Name="View"                                                 
+                                    <dxg:TableView Name="View"             RowMinHeight="40"                                    
                                                    Style="{StaticResource ResourceKey=ReportTableView}" />
                                 </dxg:GridControl.View>
+                                <dxg:GridColumn FieldName="ID" Header="ID" Visible="False"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="图片" Header="图片" Visible="True">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image Source="{Binding Path=Value}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" >
+                                                <Image.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </Image.ContextMenu>
+                                            </Image>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                </dxg:GridColumn>
                             </dxg:GridControl>
+                            <Views:饰品销售明细 Height="100" dxmvvm:ViewModelExtensions.Parameter="{Binding SelectedItem.ID, ElementName=grid}"></Views:饰品销售明细>
                         </dxlc:LayoutGroup>
                     </dxdo:LayoutPanel>
                 </dxdo:LayoutGroup>

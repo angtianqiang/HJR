@@ -28,7 +28,7 @@ namespace ZtxFrameWork.UI.ViewModels
      
         public void Init()
         {
-            分店Source = DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToList();
+            分店Source = Helpers.CacheHelper.分店Source;
 
         }
 

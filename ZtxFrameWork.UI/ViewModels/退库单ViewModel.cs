@@ -43,15 +43,15 @@ namespace ZtxFrameWork.UI.ViewModels
             });
 
         }
-        public async void Init()
+        public  void Init()
         {
 
-            var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-            var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
-            var t3 = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
-            操作员Source = t1;
-            分店Source = t2;
-            供应商Source = t3;
+            //var t1 = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            //var t2 = await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            //var t3 = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
+            操作员Source = Helpers.CacheHelper.操作员Source;
+            分店Source = Helpers.CacheHelper.分店Source;
+            供应商Source = Helpers.CacheHelper.供应商Source;
 
         }
         protected override void SetDetailsDirtyState()
@@ -104,7 +104,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             var db = DB;
             List<dynamic> list = db.入库单明细s.Include(t => t.入库单).Include(t => t.饰品).Include(t => t.饰品.单位).Include(t => t.饰品.重量单位)
-                  .Where(t => t.入库单.编号.StartsWith(startStr) && t.入库单.状态 != "N" && t.入库单.供应商ID == Entity.供应商ID && t.入库单.分店ID == Entity.分店ID)
+                  .Where(t => t.入库单.编号.Contains(startStr) && t.入库单.状态 != "N" && t.入库单.供应商ID == Entity.供应商ID && t.入库单.分店ID == Entity.分店ID)
                 .Select(t => new
                 {
                     ID = t.ID,

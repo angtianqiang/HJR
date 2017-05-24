@@ -23,7 +23,10 @@ namespace ZtxFrameWork.UI.ViewModels
         static public void InitEntity(DbOperatorLog NewEntity)
         { }
 
-
+        public override bool CanDelete(DbOperatorLog projectionEntity)
+        {
+            return base.CanDelete(projectionEntity);
+        }
 
     }
 }

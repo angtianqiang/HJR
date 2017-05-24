@@ -43,14 +43,14 @@ namespace ZtxFrameWork.UI.ViewModels
                 UpdateTotal();
             });
         }
-        public async void Init()
+        public  void Init()
         {
-          var t1   = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
-          var t2=   await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
-          var t3   = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
-            操作员Source = t1;
-            分店Source = t2;
-            供应商Source  = t3;
+            //var t1   = await DbFactory.Instance.CreateDbContext().Users.Where(t => t.IsFrozen == false).OrderBy(t => t.UserName).ToListAsync();
+            //var t2=   await DbFactory.Instance.CreateDbContext().分店s.OrderBy(t => t.名称).ToListAsync();
+            //var t3   = await DbFactory.Instance.CreateDbContext().供应商s.OrderBy(t => t.简称).ToListAsync();
+            操作员Source = Helpers.CacheHelper.操作员Source;
+            分店Source = Helpers.CacheHelper.分店Source;
+            供应商Source = Helpers.CacheHelper.供应商Source;
 
         }
         protected override IQueryable<付款单> DbInclude(ObjectSet<付款单> dbSet)
@@ -89,7 +89,7 @@ namespace ZtxFrameWork.UI.ViewModels
 
             var db = DB;
             List<dynamic> list = db.入库单s.Include(t => t.供应商)
-                  .Where(t => t.编号.StartsWith(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N" && t.未付金额 > 0m && t.分店ID == Entity.分店ID)
+                  .Where(t => t.编号.Contains(startStr) && t.供应商.ID == Entity.供应商ID && t.状态 != "N" && t.未付金额 > 0m && t.分店ID == Entity.分店ID)
                 .Select(t => new { ID = t.ID, 编号 = t.编号, 品名 = t.日期, 供应商 = t.供应商.简称, 总金额 = t.总金额, 已付金额 = t.已付金额, 未付金额 = t.未付金额 })
                   .ToList<dynamic>();
             //if (list.Count==1)

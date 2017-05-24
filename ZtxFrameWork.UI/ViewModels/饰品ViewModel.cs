@@ -59,14 +59,14 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         public  void Init()
         {
-            饰品类别Source =DB.饰品类别s.OrderBy(t => t.排序号).ToList();
-            饰品类型Source = DB.饰品类型s.OrderBy(t => t.排序号).ToList();
-            单位Source = DB.单位s.OrderBy(t => t.排序号).ToList();
-            重量单位Source = DB.重量单位s.OrderBy(t => t.排序号).ToList();
-            黄金种类Source = DB.黄金种类s.OrderBy(t => t.排序号).ToList();
-            材质Source = DB.材质s.OrderBy(t => t.排序号).ToList();
-            石头颜色Source = DB.石头颜色s.OrderBy(t => t.排序号).ToList();
-            电镀方式Source = DB.电镀方式s.OrderBy(t => t.排序号).ToList();
+            饰品类别Source = Helpers.CacheHelper.饰品类别Source;
+            饰品类型Source = Helpers.CacheHelper.饰品类型Source;
+            单位Source = Helpers.CacheHelper.单位Source;
+            重量单位Source = Helpers.CacheHelper.重量单位Source;
+            黄金种类Source = Helpers.CacheHelper.黄金种类Source;
+            材质Source = Helpers.CacheHelper.材质Source;
+            石头颜色Source = Helpers.CacheHelper.石头颜色Source;
+            电镀方式Source = Helpers.CacheHelper.电镀方式Source;
 
 
         }
@@ -79,6 +79,13 @@ namespace ZtxFrameWork.UI.ViewModels
         public virtual List<材质> 材质Source { get; set; }
         public virtual List<石头颜色> 石头颜色Source { get; set; }
         public virtual List<电镀方式 > 电镀方式Source { get; set; }
-
+        #region 20170320 删除时同时删除子表
+     
+        protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 饰品 entity)
+        {
+            base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            dbContext.库存s.RemoveRange(dbContext.库存s.Where(t=>t.饰品ID==entity.ID).ToArray());
+        }
+        #endregion
     }
 }

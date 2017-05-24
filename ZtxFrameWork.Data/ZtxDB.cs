@@ -186,9 +186,9 @@ namespace ZtxFrameWork.Data
                 m = context.Modules.Add(new Model.Module() { DocumentType = "ChangePasswordView", ImageName = "Login-WF.png", Parent = p, ModuleTitle = "更改登录密码", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "更改登录密码", "系统管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "DbOperatorLogCollectionView", ImageName = "edit.png", Parent = p, ModuleTitle = "数据存储操作日志", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "数据存储操作日志", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                InitAuthorityModule(context, "数据存储操作日志", "系统管理", Add: false,Edit:false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "BillStateChangeLogCollectionView", ImageName = "Database Connection-WF.png", Parent = p, ModuleTitle = "单据状态更改日志", ModuleInfo = Model.ModuleInfo.MoudleAction });
-                InitAuthorityModule(context, "单据状态更改日志", "系统管理", Add: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
+                InitAuthorityModule(context, "单据状态更改日志", "系统管理", Add: false,Edit:false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
                 m = context.Modules.Add(new Model.Module() { DocumentType = "店面切换View", ImageName = "Bank.png", Parent = p, ModuleTitle = "店面切换", ModuleInfo = Model.ModuleInfo.MoudleAction });
                 InitAuthorityModule(context, "店面切换", "系统管理", Add: false, Edit: false, Delete: false, Confirm: false, UnConfirm: false, Audit: false, UnAudit: false);
             }
@@ -371,7 +371,7 @@ namespace ZtxFrameWork.Data
 
                 Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
             }
-             //  Database.SetInitializer<ZtxDB>(null   );
+             Database.SetInitializer<ZtxDB>(null   );
               this.Database.Initialize(false);
             InitializeDbContext();
         }

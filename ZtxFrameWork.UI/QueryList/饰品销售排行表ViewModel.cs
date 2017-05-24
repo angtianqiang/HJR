@@ -37,9 +37,12 @@ namespace ZtxFrameWork.UI.QueryList
                  .Where(t => t.销售单.备注 != "N")
                 .GroupBy(x => new
                 {
-                    编号=   x.饰品.编号,
+                    ID = x.饰品.ID,
+                    图片 = x.饰品.饰品图片.图片,
+                    编号 =   x.饰品.编号,
                     品名=  x.饰品.品名.名称,
-                    材质=   x.饰品.材质.名称,
+                    饰品类型 = x.饰品.饰品类型.名称,
+                    材质 =   x.饰品.材质.名称,
                     电镀方式=  x.饰品.电镀方式.名称,
                     石头颜色=   x.饰品.石头颜色.名称,
                     单位=  x.饰品.单位.名称,
@@ -47,8 +50,12 @@ namespace ZtxFrameWork.UI.QueryList
                 })
                 .Select(t => new
                 {
+                    ID = t.Key.ID,
+                    图片 = t.Key.图片,
+
                     编号 =t.Key.编号,
                     品名 = t.Key.品名,
+                    饰品类型 = t.Key.饰品类型,
                     材质  = t.Key.材质,
                     电镀方式  = t.Key.电镀方式,
                     石头颜色 = t.Key.石头颜色,
