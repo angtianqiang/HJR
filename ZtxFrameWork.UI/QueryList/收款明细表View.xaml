@@ -49,6 +49,10 @@
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}"
                                           Style="{StaticResource ResourceKey=ReportGridControl}" >
+                                <dxg:GridControl.TotalSummary>
+                                    <dxg:GridSummaryItem FieldName="应收金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="本次收入金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                </dxg:GridControl.TotalSummary>
                                 <dxg:GridControl.View>
                                     <dxg:TableView Name="View"                                                 
                                                    Style="{StaticResource ResourceKey=ReportTableView}" />

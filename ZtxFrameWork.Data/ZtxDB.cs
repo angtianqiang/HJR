@@ -372,7 +372,7 @@ namespace ZtxFrameWork.Data
                 Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
             }
              Database.SetInitializer<ZtxDB>(null   );
-              this.Database.Initialize(false);
+           //   this.Database.Initialize(false);
             InitializeDbContext();
         }
         public ZtxDB(DbConnection con) : base(con, contextOwnsConnection: false) { InitializeDbContext(); }

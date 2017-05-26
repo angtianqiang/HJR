@@ -27,8 +27,11 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, AuthorityModule entity)
         {
             base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
-
-            dbContext.Entry(entity).Collection(t => t.UserAuthorityModuleMappings).Load();
+            if (!dbContext.Entry(entity).Collection(t => t.UserAuthorityModuleMappings).IsLoaded)
+            {
+                dbContext.Entry(entity).Collection(t => t.UserAuthorityModuleMappings).Load();
+            }
+          //  dbContext.Entry(entity).Collection(t => t.UserAuthorityModuleMappings).Load();
             for (int i = 0; i < entity.UserAuthorityModuleMappings.Count; i++)
             {
                 

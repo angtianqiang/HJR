@@ -63,22 +63,27 @@
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}"
                                              SelectionMode="Cell">
-                                
+                                <dxg:GridControl.TotalSummary>
+                                    <dxg:GridSummaryItem FieldName="库存数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
+                                    <dxg:GridSummaryItem FieldName="库存重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                </dxg:GridControl.TotalSummary>
+
                                 <dxg:GridControl.View>
                                     <dxg:TableView Name="View"
                                                    AllowEditing="False"
-                                                   AllowPerPixelScrolling="True"
+                                                   AllowPerPixelScrolling="True" RowMinHeight="40"
                                                    ShowTotalSummary="True" 
                                                    Style="{StaticResource ResourceKey=ReportTableView}" />
                                 </dxg:GridControl.View>
                                 <dxg:GridColumn FieldName="ID" Header="ID" Visible="False"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="图片" Header="图片" Visible="True">
+                                <dxg:GridColumn FieldName="图片" Header="图片" Visible="True"  Fixed="Left">
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Image Source="{Binding Path=Value}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="None" />
+                                            <Image Source="{Binding Path=Value}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" />
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>
+                                <dxg:GridColumn FieldName="编号" Header="编号" Visible="True"  Fixed="Left"></dxg:GridColumn>
                             </dxg:GridControl>
                             <Views:分店库存明细View Height="100" dxmvvm:ViewModelExtensions.Parameter="{Binding SelectedItem.ID, ElementName=grid}"></Views:分店库存明细View>
                         </dxlc:LayoutGroup>

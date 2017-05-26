@@ -37,6 +37,10 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnBeforeEntityDeleted(ZtxDB dbContext, long primaryKey, 盈亏单 entity)
         {
             base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
+            if (!dbContext.Entry(entity).Collection(t => t.盈亏单明细s).IsLoaded)
+            {
+                dbContext.Entry(entity).Collection(t => t.盈亏单明细s).Load();
+            }
             dbContext.盈亏单明细s.RemoveRange(entity.盈亏单明细s);
         }
         #endregion

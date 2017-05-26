@@ -331,6 +331,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 //  skd.状态 = "Y";//直接生效
                 skd.分店ID = Entity.分店ID;
                 skd.操作员ID = Entity.操作员ID;
+                skd.状态 = "N";
                 //  skd.销售单ID = Entity.ID;
                 // skd.金额 = Entity.已付金额* -1m;
 
