@@ -39,15 +39,19 @@
         <DockPanel.Resources>
             <Style TargetType="{x:Type dxe:TextEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:DateEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:ComboBoxEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:LookUpEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:GridColumn}">
                 <Setter Property="ReadOnly" Value="{Binding IsReadOnly}" />
@@ -109,7 +113,7 @@
                                            Content="退款"
                                            KeyGesture="F7"
                                            LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/sk.png"
-                                           ToolTip="F7" />                     
+                                           ToolTip="F7" />
                     </dxr:RibbonPageGroup>
                     <dxr:RibbonPageGroup Caption="">
                         <dxb:BarButtonItem Command="{Binding ReportPrintCommand}"
@@ -161,6 +165,9 @@
                                         TabIndex="0"
                                         ValueMember="ID" />
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="数量">
+                        <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                    </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="日期">
@@ -176,22 +183,19 @@
                                         TabIndex="0"
                                         ValueMember="ID" />
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="重量">
+                        <dxe:TextEdit EditValue="{Binding Entity.重量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                    </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical">
-                    <dxlc:LayoutItem Label="分店">
-                        <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
+                <dxlc:LayoutItem Label="分店">
+                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
                                         EditMode="Standalone"
-                                        EditValue="{Binding Entity.分店ID,
-                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        EditValue="{Binding Entity.分店ID, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding 分店Source}"
                                         PopupWidth="300"
                                         TabIndex="0"
                                         ValueMember="ID" />
-                    </dxlc:LayoutItem>
-                    <dxlc:LayoutItem Label="数量">
-                        <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
-                    </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
+                </dxlc:LayoutItem>
             </dxlc:LayoutGroup>
             <dxlc:LayoutGroup Header="费用信息" View="GroupBox">
                 <dxlc:LayoutItem Label="总金额">
@@ -249,8 +253,8 @@
                             <dxg:GridControl.TotalSummary>
 
                                 <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                             </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
@@ -296,8 +300,8 @@
                                     </dxe:ButtonEditSettings>
                                 </dxg:GridColumn.EditSettings>
                             </dxg:GridColumn>
-                          
-                           
+
+
                             <!--<dxg:GridColumn Width="80"                                          
                                             Header="品名"  >
                                 <dxg:GridColumn.CellTemplate>

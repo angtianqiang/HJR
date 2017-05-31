@@ -225,8 +225,8 @@
                             <dxg:GridControl.TotalSummary>
 
                               
-                                <dxg:GridSummaryItem FieldName="本次收入金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                <dxg:GridSummaryItem FieldName="应收金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="本次收入金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                <dxg:GridSummaryItem FieldName="应收金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                             </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"

@@ -58,7 +58,7 @@
                     <dxdo:LayoutPanel  Style="{StaticResource CommLayoutPanel}"
                                       Caption="明细"  >
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                            <dxg:GridControl AutoGenerateColumns="AddNew"  
+                            <dxg:GridControl AutoGenerateColumns="AddNew"   x:Name="grid"
                                              EnableSmartColumnsGeneration="True" 
                                              ItemsSource="{Binding Entities}"
                                              SelectedItem="{Binding SelectedEntity,
@@ -76,10 +76,16 @@
                                 <dxg:GridControl.View>
                                     <dxg:TableView Name="View" Style="{StaticResource CollectionsTableView}"  RowMinHeight="40"    />
                                 </dxg:GridControl.View>
-                                <dxg:GridColumn   Header="图片" Visible="True" VisibleIndex="1" ReadOnly="True" Fixed="Left">
+                                <dxg:GridColumn   Header="图片" FieldName="饰品图片.图片" Visible="True" VisibleIndex="1" ReadOnly="True" Fixed="Left">
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Image  Name="PART_Editor" Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" />
+                                            <Image  Name="PART_Editor" Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" >
+                                                <Image.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </Image.ContextMenu>
+                                            </Image>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>

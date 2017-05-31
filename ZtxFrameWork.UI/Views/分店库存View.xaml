@@ -150,25 +150,25 @@
                                       Caption="明细"
                                       ItemHeight="Auto">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
-                            <dxg:GridControl AutoGenerateColumns="AddNew"   x:Name="grid" AutoExpandAllGroups="True"
+                            <dxg:GridControl AutoGenerateColumns="None"   x:Name="grid" AutoExpandAllGroups="True"
                                              EnableSmartColumnsGeneration="True" 
                                                  ColumnGeneratorStyle="{StaticResource ColorGridColumnStyle}"
                                              ItemsSource="{Binding Entities}" 
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}">
                                 <dxg:GridControl.GroupSummary>
-                                    <dxg:GridSummaryItem FieldName="按件销售额" SummaryType="Sum" ShowInGroupColumnFooter="按件销售额"  DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="按重销售额" SummaryType="Sum" ShowInGroupColumnFooter="按重销售额"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="按件销售额" SummaryType="Sum" ShowInGroupColumnFooter="按件销售额"  DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="按重销售额" SummaryType="Sum" ShowInGroupColumnFooter="按重销售额"  DisplayFormat="{}{0:n1}"/>
                                     <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" ShowInGroupColumnFooter="数量"  DisplayFormat="{}{0:d}"/>
-                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" ShowInGroupColumnFooter="重量"  DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" ShowInGroupColumnFooter="金额"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" ShowInGroupColumnFooter="重量"  DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="饰品.库存总金额" SummaryType="Sum" ShowInGroupColumnFooter="饰品.库存总金额"  DisplayFormat="{}{0:n1}"/>
                                 </dxg:GridControl.GroupSummary>
                                 <dxg:GridControl.TotalSummary>
-                                    <dxg:GridSummaryItem FieldName="按件销售额" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="按重销售额" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="按件销售额" SummaryType="Sum"  DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="按重销售额" SummaryType="Sum"  DisplayFormat="{}{0:n1}"/>
                                     <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum"  DisplayFormat="{}{0:d}"/>
-                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum"  DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum"  DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="饰品.库存总金额" SummaryType="Sum"  DisplayFormat="{}{0:n1}"/>
                                 </dxg:GridControl.TotalSummary>
                                 <dxmvvm:Interaction.Behaviors>
                                     <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
@@ -210,12 +210,14 @@
 
                                 <dxg:GridColumn FieldName="数量" VisibleIndex="309"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="重量" VisibleIndex="310" ></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="金额" VisibleIndex="311"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.库存总金额" Header="库存成本额" VisibleIndex="311"></dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="饰品.QtyPrice"  Header="按件批发价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.按件成本价"  Header="按件成本价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
                                 <dxg:GridColumn UnboundType="Decimal" FieldName="按件销售额" UnboundExpression="([饰品.QtyPrice] * [数量])" Header="按件销售额"  Visible="True" VisibleIndex="313"></dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="饰品.WeightPrice"  Header="按重批发价" Visible="True" VisibleIndex="314"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.按重成本价"  Header="按重成本价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
                                 <dxg:GridColumn UnboundType="Decimal"  FieldName="按重销售额" UnboundExpression="饰品.WeightPrice * 重量"  Header="按重销售额"  Visible="True" VisibleIndex="315"></dxg:GridColumn>
 
                             </dxg:GridControl>

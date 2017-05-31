@@ -80,13 +80,15 @@
                                 <dxg:GridControl.TotalSummary>
 
                                     <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                    <dxg:GridSummaryItem FieldName="已收金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="总金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="未收金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="已收金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="总金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="未收金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                                 </dxg:GridControl.TotalSummary>
                                 <dxg:GridColumn Header="编号"  FieldName="编号" IsSmart="True"/>
                                 <dxg:GridColumn Header="日期"  FieldName="日期" IsSmart="True"/>
                                 <dxg:GridColumn Header="数量"  FieldName="数量" IsSmart="True"/>
+                                <dxg:GridColumn Header="重量"  FieldName="重量" IsSmart="True"/>
                                 <dxg:GridColumn Header="总金额"  FieldName="总金额" IsSmart="True"/>
                                 <dxg:GridColumn Header="已收金额"  FieldName="已收金额" IsSmart="True"/>
                                 <dxg:GridColumn Header="未收金额"  FieldName="未收金额" IsSmart="True"/>

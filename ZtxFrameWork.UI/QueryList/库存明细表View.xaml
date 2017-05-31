@@ -65,7 +65,7 @@
                                              SelectionMode="Cell">
                                 <dxg:GridControl.TotalSummary>
                                     <dxg:GridSummaryItem FieldName="库存数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                    <dxg:GridSummaryItem FieldName="库存重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="库存重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                                 </dxg:GridControl.TotalSummary>
 
                                 <dxg:GridControl.View>

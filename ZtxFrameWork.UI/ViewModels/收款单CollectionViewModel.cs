@@ -24,7 +24,7 @@ namespace ZtxFrameWork.UI.ViewModels
         }
         static public async void InitEntity(收款单 NewEntity)
         {
-       var t1=    GetNewCode("SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
+       var t1=    GetNewCode(App.Current分店.编号 + "SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
        NewEntity.收款日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";

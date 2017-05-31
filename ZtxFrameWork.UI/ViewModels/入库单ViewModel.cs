@@ -36,7 +36,8 @@ namespace ZtxFrameWork.UI.ViewModels
             Messenger.Default.Register<string>(this, "数量更改" + Token, m =>
             {
                 var item = SelectChildEntity;
-                item.重量 = item.饰品.单重 * item.数量;
+                var temp = item == null ? 0m : item.饰品.单重;
+                item.重量 = temp * item.数量;
                 item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                 UpdateTotal();
             });
@@ -121,6 +122,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             Entity.总金额 = Entity.入库单明细s.Sum(t => t.金额);
             Entity.数量 = Entity.入库单明细s.Sum(t => t.数量);
+            Entity.重量 = Entity.入库单明细s.Sum(t => t.重量);
             Entity.未付金额 = Entity.总金额 - Entity.已付金额;
         }
 
@@ -202,7 +204,7 @@ namespace ZtxFrameWork.UI.ViewModels
                     var item = SelectChildEntity;
                     item.计价方式 = item.饰品.工费计法;
                     //        item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.按件成本价  : item.饰品.按重成本价  ;
-                    item.单价 = item.饰品.成本工费;
+                    item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.按件成本价+item.饰品.成本工费 : item.饰品.按重成本价 + item.饰品.成本工费;
                     item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                     UpdateTotal();
                     UpdateTotal();

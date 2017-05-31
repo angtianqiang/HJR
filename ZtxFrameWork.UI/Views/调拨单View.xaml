@@ -39,15 +39,19 @@
         <DockPanel.Resources>
             <Style TargetType="{x:Type dxe:TextEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:DateEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:ComboBoxEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:LookUpEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:GridColumn}">
                 <Setter Property="ReadOnly" Value="{Binding IsReadOnly}" />
@@ -172,6 +176,9 @@
                                         TabIndex="0"
                                         ValueMember="ID" />
                     </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="重量">
+                        <dxe:TextEdit EditValue="{Binding Entity.重量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                    </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
                 <dxlc:LayoutGroup Orientation="Vertical">
                     <dxlc:LayoutItem Label="源分店">
@@ -242,7 +249,7 @@
                             <dxg:GridControl.TotalSummary>
 
                                 <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                              
                             </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>

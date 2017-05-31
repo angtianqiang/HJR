@@ -38,16 +38,20 @@
     <DockPanel>
         <DockPanel.Resources>
             <Style TargetType="{x:Type dxe:TextEdit}">
-                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />         
+                <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:DateEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:ComboBoxEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:LookUpEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:GridColumn}">
                 <Setter Property="ReadOnly" Value="{Binding IsReadOnly}" />
@@ -163,16 +167,20 @@
                         <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutItem Label="分店">
-                    <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
-                                    EditMode="Standalone"
-                                    EditValue="{Binding Entity.分店ID,
-                                                        UpdateSourceTrigger=PropertyChanged}"
-                                    ItemsSource="{Binding 分店Source}"
-                                    PopupWidth="300"
-                                    TabIndex="0"
-                                    ValueMember="ID" />
-                </dxlc:LayoutItem>
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="分店">
+                        <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
+                            EditMode="Standalone"
+                            EditValue="{Binding Entity.分店ID, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding 分店Source}"
+                            PopupWidth="300"
+                            TabIndex="0"
+                            ValueMember="ID" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="重量">
+                        <dxe:TextEdit EditValue="{Binding Entity.重量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
                 <dxlc:LayoutItem Label="供应商">
                     <dxg:LookUpEdit DisplayMember="简称"
                                     EditMode="Standalone"
@@ -238,8 +246,8 @@
                             <dxg:GridControl.TotalSummary>
 
                                 <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                             </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"

@@ -361,16 +361,16 @@ namespace ZtxFrameWork.Data
         public ZtxDB(string conn) : base(conn)
         {
 
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
-            }
-            else
-            {
-                //    Database.SetInitializer<ZtxDB>(null);
+            //if (System.Diagnostics.Debugger.IsAttached)
+            //{
+            //    Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
+            //}
+            //else
+            //{
+            //    //    Database.SetInitializer<ZtxDB>(null);
 
-                Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
-            }
+            //    Database.SetInitializer<ZtxDB>(new ZtxCreateDatabaseIfNotExists());
+            //}
              Database.SetInitializer<ZtxDB>(null   );
            //   this.Database.Initialize(false);
             InitializeDbContext();

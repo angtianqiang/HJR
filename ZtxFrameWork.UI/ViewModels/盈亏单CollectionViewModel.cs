@@ -24,7 +24,7 @@ namespace ZtxFrameWork.UI.ViewModels
         private Action< 盈亏单> b = InitEntity;
         static public async void InitEntity( 盈亏单 NewEntity)
         {
-            var t1 = GetNewCode("YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
+            var t1 = GetNewCode(App.Current分店.编号+"YK", DbFactory.Instance, x => x.盈亏单s, t => t.编号);
             NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";

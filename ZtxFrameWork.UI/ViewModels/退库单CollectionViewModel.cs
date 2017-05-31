@@ -25,7 +25,7 @@ namespace ZtxFrameWork.UI.ViewModels
         private Action<退库单> b = InitEntity;
         static public async void InitEntity(退库单 NewEntity)
         {
-            var t1 = GetNewCode("TK", DbFactory.Instance, x => x.退库单s, t => t.编号);
+            var t1 = GetNewCode(App.Current分店.编号 + "TK", DbFactory.Instance, x => x.退库单s, t => t.编号);
             NewEntity.日期 = DateTime.Now;
             NewEntity.操作员ID = App.CurrentUser.ID;
             NewEntity.状态 = "N";

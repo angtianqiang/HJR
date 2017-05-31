@@ -79,8 +79,8 @@
                                 <dxg:GridControl.TotalSummary>
 
                                 
-                                    <dxg:GridSummaryItem FieldName="实付金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                    <dxg:GridSummaryItem FieldName="应付金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                    <dxg:GridSummaryItem FieldName="实付金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="应付金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                                 </dxg:GridControl.TotalSummary>
                                 <dxg:GridControl.Columns >
                                 <dxg:GridColumn Width="80"   FieldName="分店.名称"        Header="分店" IsSmart="True"  VisibleIndex="201"  />

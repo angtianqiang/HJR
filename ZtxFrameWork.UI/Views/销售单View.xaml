@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="ZtxFrameWork.UI.Views.销售单View"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:System="clr-namespace:System;assembly=mscorlib"
@@ -16,6 +16,7 @@
              xmlns:entity="clr-namespace:ZtxFrameWork.Data.Model;assembly=ZtxFrameWork.Data"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils"
+             xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.2" x:Class="ZtxFrameWork.UI.Views.销售单View"
              d:DesignHeight="800"
              d:DesignWidth="800"
         DataContext="{dxmvvm:ViewModelSource Type={x:Type ViewModels:销售单ViewModel}}"
@@ -39,18 +40,22 @@
         <DockPanel.Resources>
             <Style TargetType="{x:Type dxe:TextEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:DateEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxe:ComboBoxEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:LookUpEdit}">
                 <Setter Property="IsReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="AllowSpinOnMouseWheel" Value="False" />
             </Style>
             <Style TargetType="{x:Type dxg:GridColumn}">
-                <Setter Property="ReadOnly" Value="{Binding IsReadOnly}" />
+                <Setter Property="ReadOnly" Value="{Binding IsReadOnly}" />           
             </Style>
             <!--<Style TargetType="dxg:TableView">
             20160802这里不启用，是因为TableView又显示设置了Style属情，导致不启用
@@ -146,8 +151,7 @@
         <controls:SingleStatusBar DockPanel.Dock="Bottom" />
         <controls:BillState DockPanel.Dock="Bottom" />
         <dxlc:LayoutControl ItemSpace="10"
-                            Orientation="Vertical"
-                            ScrollBars="Auto">
+                            ScrollBars="Auto" Orientation="Vertical">
             <dxmvvm:Interaction.Behaviors>
                 <dxmvvm:EventToCommand Command="{Binding UpdateCommand}" Event="{x:Static Binding.SourceUpdatedEvent}" />
             </dxmvvm:Interaction.Behaviors>
@@ -159,45 +163,46 @@
                     <dxlc:LayoutItem Label="操作员">
                         <dxg:LookUpEdit DisplayMember="DispalyName"
                                         EditMode="Standalone"
-                                        EditValue="{Binding Entity.操作员ID,
-                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        EditValue="{Binding Entity.操作员ID, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding 操作员Source}"
                                         PopupWidth="300"
                                         TabIndex="0"
                                         ValueMember="ID" />
                     </dxlc:LayoutItem>
-                </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup Orientation="Vertical">
-                    <dxlc:LayoutItem Label="日期">
-                        <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="会员">
                         <dxg:LookUpEdit DisplayMember="姓名"
                                         EditMode="Standalone"
-                                        EditValue="{Binding Entity.会员ID,
-                                                            UpdateSourceTrigger=PropertyChanged}"
+                                        EditValue="{Binding Entity.会员ID, UpdateSourceTrigger=PropertyChanged}"
                                         ItemsSource="{Binding 会员Source}"
                                         PopupWidth="300"
                                         TabIndex="0"
                                         ValueMember="ID" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical">
-                    <dxlc:LayoutItem Label="分店">
-                        <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
-                                        EditMode="Standalone"
-                                        EditValue="{Binding Entity.分店ID,
-                                                            UpdateSourceTrigger=PropertyChanged}"
-                                        ItemsSource="{Binding 分店Source}"
-                                        PopupWidth="300"
-                                        TabIndex="0"
-                                        ValueMember="ID" />
+                <dxlc:LayoutGroup dx:ScrollViewerTouchBehavior.IsEnabled="True" Orientation="Vertical" Serialization:SerializableItem.TypeName="LayoutGroup">
+                    <dxlc:LayoutItem Label="日期">
+                        <dxe:DateEdit EditValue="{Binding Entity.日期, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="数量">
                         <dxe:TextEdit EditValue="{Binding Entity.数量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                     </dxlc:LayoutItem>
                 </dxlc:LayoutGroup>
-            
+                <dxlc:LayoutGroup Orientation="Vertical">
+                    <dxlc:LayoutItem Label="分店">
+                        <dxg:LookUpEdit DisplayMember="名称" IsReadOnly="True"
+                            EditMode="Standalone"
+                            EditValue="{Binding Entity.分店ID, UpdateSourceTrigger=PropertyChanged}"
+                            ItemsSource="{Binding 分店Source}"
+                            PopupWidth="300"
+                            TabIndex="0"
+                            ValueMember="ID" />
+                    </dxlc:LayoutItem>
+
+                    <dxlc:LayoutItem Label="重量">
+                        <dxe:TextEdit EditValue="{Binding Entity.重量, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
+                    </dxlc:LayoutItem>
+                </dxlc:LayoutGroup>
+
             </dxlc:LayoutGroup>
             <dxlc:LayoutGroup Header="费用信息" View="GroupBox">
                 <dxlc:LayoutItem Label="总金额">
@@ -209,7 +214,7 @@
                 <dxlc:LayoutItem Label="未收金额">
                     <dxe:TextEdit EditValue="{Binding Entity.未收金额, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="False" />
                 </dxlc:LayoutItem>
-                
+
             </dxlc:LayoutGroup>
             <dxlc:LayoutItem Label="备注">
                 <dxe:TextEdit EditValue="{Binding Entity.备注, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -233,8 +238,7 @@
                             <dxb:BarButtonItem Command="{Binding DeleteChildRowCommand}"
                                                Content="删行"
                                                Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/DeleteRow.png" />
-                            <dxb:BarButtonItem Command="{Binding GridViewCommands.ShowPrintPreview,
-                                                                 ElementName=Details}"
+                            <dxb:BarButtonItem Command="{Binding GridViewCommands.ShowPrintPreview, ElementName=Details}"
                                                Content="预览"
                                                Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/Preview.png" />
 
@@ -245,20 +249,18 @@
                                          ItemsSource="{Binding Entity.销售单明细s}"
                                          SelectedItem="{Binding SelectChildEntity}">
                             <dxmvvm:Interaction.Behaviors>
-                                <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"></behaviors:GridControlLayoutLoad>
+                                <behaviors:GridControlLayoutLoad Key="{Binding PermissionTitle}"/>
                             </dxmvvm:Interaction.Behaviors>
                             <dxg:GridControl.TotalSummary>
 
                                 <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
-                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n2}"/>
+                                <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
                             </dxg:GridControl.TotalSummary>
                             <dxg:GridControl.View>
                                 <dxg:TableView x:Name="Details"
                                                utils:TableViewButtonEditEnterSupportHelper.IsRegister="True"
-                                               AllowEditing="{Binding IsReadOnly,
-                                                                      ConverterParameter=True:False:True,
-                                                                      Converter={StaticResource ResourceKey=CommObjectConverter}}"
+                                               AllowEditing="{Binding IsReadOnly, ConverterParameter=True:False:True, Converter={StaticResource ResourceKey=CommObjectConverter}}"
                                                AllowGrouping="False"
                                                ColumnHeaderContentStyle="{StaticResource ResourceKey=GridColumnHeaderCenterAlignment}"
                                                ShowGroupPanel="False"
@@ -267,12 +269,12 @@
                                                UseLightweightTemplates="All">
                                     <dxg:TableView.RowStyle >
                                         <Style>
-                                            
+
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Row.DirtyState}" Value="Added">
                                                     <Setter Property="TextElement.Foreground" Value="MediumVioletRed" />
                                                 </DataTrigger>
-                                                <DataTrigger Binding="{Binding Path=Row.DirtyState}" Value="Modified">
+                                                <DataTrigger Binding="{Binding Row.DirtyState}" Value="Modified">
                                                     <Setter Property="TextElement.Foreground" Value="BlueViolet" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -292,8 +294,7 @@
                                     <dxe:ButtonEditSettings AllowDefaultButton="True">
                                         <dxmvvm:Interaction.Behaviors>
                                             <dxmvvm:EventToCommand Command="{Binding ShowListCommand}"
-                                                                   CommandParameter="{Binding ActiveEditor.EditValue,
-                                                                                              ElementName=Details}"
+                                                                   CommandParameter="{Binding ActiveEditor.EditValue, ElementName=Details}"
                                                                    EventName="DefaultButtonClick" />
                                         </dxmvvm:Interaction.Behaviors>
                                     </dxe:ButtonEditSettings>
@@ -359,7 +360,10 @@
                                             FieldName="金额"
                                             Header="折后销售价"
                                             IsSmart="True" ReadOnly="True" />
-
+                            <dxg:GridColumn Width="80"
+                                            FieldName="金额"
+                                            Header="金额"
+                                            IsSmart="True" ReadOnly="True" />
                         </dxg:GridControl>
                     </DockPanel>
                 </dxlc:LayoutGroup>

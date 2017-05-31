@@ -93,6 +93,7 @@ namespace ZtxFrameWork.UI.ViewModels
             item.工费 = item.工费计法 == 费用计法.按件 ? item.饰品?.批发工费 ?? 0 : item.饰品?.批发工费 ?? 0;
             //   item.重量 = item.数量 * item.饰品.单重;
             item.折前价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价, 2);
+
             item.金额 = System.Math.Round(item.折前价 * item.折扣, 2);
             UpdateTotal();
         }
@@ -106,6 +107,7 @@ namespace ZtxFrameWork.UI.ViewModels
             Entity.总金额 = Entity.销售单明细s.Sum(t => t.金额);
             Entity.未收金额 = Entity.总金额 - Entity.已收金额;
             Entity.数量 = Entity.销售单明细s.Sum(t => t.数量);
+            Entity.重量 = Entity.销售单明细s.Sum(t => t.重量);
         }
 
 
@@ -125,24 +127,42 @@ namespace ZtxFrameWork.UI.ViewModels
             string startStr = startCode?.ToString() ?? "";
 
             Keyboard.Focus(null);//更新界面的值
-
+            //20170531 添加过滤条件，当前分店有库存
             var db = DB;
-            List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.材质)
-                  .Where(t => t.编号.Contains(startStr))
-                .Select(t => new
-                {
-                    ID = t.ID,
-                    编号 = t.编号,
-                    品名 = t.品名.名称,
-                    材质 = t.材质.名称,
-                    电镀方式 = t.电镀方式.名称,
-                    石头颜色 = t.石头颜色.名称,
-                    单位 = t.单位.名称,
-                    重量单位 = t.重量单位.名称,
-                    尺寸 = t.尺寸,
-                    工费计法 = t.工费计法
-                })
+            List<dynamic> list = db.库存s.Where(t=>t.数量>0 && t.饰品.编号.Contains(startStr) && t.分店ID==Entity.分店ID)
+                   .Select(t => new
+                   {
+                       ID = t.饰品.ID,
+                       编号 = t.饰品.编号,
+                       品名 = t.饰品.品名.名称,
+                       材质 = t.饰品.材质.名称,
+                       电镀方式 = t.饰品.电镀方式.名称,
+                       石头颜色 = t.饰品.石头颜色.名称,
+                       数量 = t.数量,
+                       重量 = t.重量,
+                       单位 = t.饰品.单位.名称,
+                       重量单位 = t.饰品.重量单位.名称,
+                       尺寸 = t.饰品.尺寸,
+                       工费计法 = t.饰品.工费计法
+                   })
                   .ToList<dynamic>();
+
+            //List<dynamic> list = db.饰品s.Include(t => t.单位).Include(t => t.重量单位).Include(t => t.材质)
+            //      .Where(t => t.编号.Contains(startStr) )
+            //    .Select(t => new
+            //    {
+            //        ID = t.ID,
+            //        编号 = t.编号,
+            //        品名 = t.品名.名称,
+            //        材质 = t.材质.名称,
+            //        电镀方式 = t.电镀方式.名称,
+            //        石头颜色 = t.石头颜色.名称,
+            //        单位 = t.单位.名称,
+            //        重量单位 = t.重量单位.名称,
+            //        尺寸 = t.尺寸,
+            //        工费计法 = t.工费计法
+            //    })
+            //      .ToList<dynamic>();
             //if (list.Count==1)
             //{
             //    SelectChildEntity.饰品ID = list[0].ID;

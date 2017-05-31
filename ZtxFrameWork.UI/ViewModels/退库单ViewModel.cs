@@ -79,6 +79,7 @@ namespace ZtxFrameWork.UI.ViewModels
         private void UpdateTotal()
         {
             Entity.总金额 = Entity.退库单明细s.Sum(t => t.金额);
+            Entity.重量 = Entity.退库单明细s.Sum(t => t.重量);
             Entity.数量 = Entity.退库单明细s.Sum(t => t.数量);
             Entity.未收金额 = Entity.总金额 - Entity.已收金额;
         }

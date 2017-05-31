@@ -79,7 +79,7 @@ namespace ZtxFrameWork.UI.ViewModels
             Entity.总金额 = Entity.销售退货单明细s.Sum(t => t.销售价);
             Entity.未付金额 = Entity.总金额 - Entity.已付金额;
             Entity.数量 = Entity.销售退货单明细s.Sum(t => t.数量);
-
+            Entity.重量 = Entity.销售退货单明细s.Sum(t => t.重量);
         }
 
         protected override void UpdateCommands()

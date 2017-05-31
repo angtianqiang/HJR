@@ -71,7 +71,9 @@ namespace ZtxFrameWork.UI.ViewModels
         #region 明细表操作
 
         private void UpdateTotal()
-        { Entity.数量 = Entity.调拨单明细s.Sum(t => t.数量); }
+        { Entity.数量 = Entity.调拨单明细s.Sum(t => t.数量);
+            Entity.重量 = Entity.调拨单明细s.Sum(t => t.重量);
+        }
 
         protected override void UpdateCommands()
         {

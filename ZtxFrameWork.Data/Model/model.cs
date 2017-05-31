@@ -455,6 +455,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
         private decimal _账面成本小计;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
         public decimal 账面成本小计
         {
             get { return _账面成本小计; }
@@ -474,6 +475,7 @@ namespace ZtxFrameWork.Data.Model
         }
 
         private decimal _库存总金额;
+        [Display(Name = "外键ID", AutoGenerateField = false)]
         public decimal 库存总金额
         {
             get { return _库存总金额; }
@@ -812,6 +814,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _数量; }
             set { Set<Int32>(() => this.数量, ref _数量, value); }
         }
+        private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 重量
+        {
+            get { return _重量; }
+            set { Set<decimal>(() => this.重量, ref _重量, value); }
+        }
         private decimal _总金额;
         public decimal 总金额
         {
@@ -1014,6 +1023,13 @@ namespace ZtxFrameWork.Data.Model
         {
             get { return _数量; }
             set { Set<Int32>(() => this.数量, ref _数量, value); }
+        }
+        private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 重量
+        {
+            get { return _重量; }
+            set { Set<decimal>(() => this.重量, ref _重量, value); }
         }
         private decimal _总金额;
         public decimal 总金额
@@ -1416,6 +1432,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _数量; }
             set { Set<Int32>(() => this.数量, ref _数量, value); }
         }
+        private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 重量
+        {
+            get { return _重量; }
+            set { Set<decimal>(() => this.重量, ref _重量, value); }
+        }
         private decimal _总金额;
         public decimal 总金额
         {
@@ -1598,6 +1621,13 @@ namespace ZtxFrameWork.Data.Model
             get { return _数量; }
             set { Set<Int32>(() => this.数量, ref _数量, value); }
         }
+        private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 重量
+        {
+            get { return _重量; }
+            set { Set<decimal>(() => this.重量, ref _重量, value); }
+        }
         private decimal _总金额;
         public decimal 总金额
         {
@@ -1759,7 +1789,13 @@ namespace ZtxFrameWork.Data.Model
             get => _数量;
             set => Set<int>(() => this.数量, ref _数量, value);
         }
-
+        private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 重量
+        {
+            get { return _重量; }
+            set { Set<decimal>(() => this.重量, ref _重量, value); }
+        }
         private String _备注;
         public String 备注
         {
@@ -1909,7 +1945,13 @@ namespace ZtxFrameWork.Data.Model
             get => _数量;
             set => Set<int>(() => this.数量, ref _数量, value);
         }
-
+        private decimal _重量;
+        [DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+        public decimal 重量
+        {
+            get { return _重量; }
+            set { Set<decimal>(() => this.重量, ref _重量, value); }
+        }
         private String _备注;
         public String 备注
         {

@@ -10,13 +10,25 @@
 
     <converter:MoudleInfoToImageConerter x:Key="MoudleInfoToImageConerter" />
     <converter:GridRowIndicatorConerter x:Key="GridRowIndicatorConerter" />
-    <converter:CommObjectConverter x:Key="CommObjectConverter" /> 
+    <converter:CommObjectConverter x:Key="CommObjectConverter" />
     <converter:BoolToVisbiltyConverter x:Key="BoolToVisbiltyConverter" />
     <converter:PathToImageConerter x:Key="PathToImageConerter" />
 
     <!--  设置鼠标中轮滚动改变数字  -->
     <Style TargetType="{x:Type dxe:TextEdit}">
-             <Setter Property="AllowSpinOnMouseWheel" Value="False"></Setter>
+        <Setter Property="AllowSpinOnMouseWheel" Value="False"></Setter>
+    </Style>
+    <Style TargetType="{x:Type dxg:LookUpEdit }">
+        <Setter Property="AllowSpinOnMouseWheel" Value="False"></Setter>
+    </Style>
+    <Style TargetType="{x:Type dxe:SpinEdit}">
+        <Setter Property="AllowSpinOnMouseWheel" Value="False"></Setter>
+    </Style>
+    <Style TargetType="{x:Type dxe:DateEdit}">
+        <Setter Property="AllowSpinOnMouseWheel" Value="False"></Setter>
+    </Style>
+    <Style TargetType="{x:Type dxe:ComboBoxEdit}">
+        <Setter Property="AllowSpinOnMouseWheel" Value="False" />
     </Style>
     <Style TargetType="{x:Type dxb:ToolBarControl}">
         <Setter Property="AllowCustomizationMenu" Value="False"></Setter>
@@ -145,11 +157,11 @@
         <Setter Property="AutoGenerateColumns" Value="AddNew"></Setter>
         <Setter Property="EnableSmartColumnsGeneration" Value="True"></Setter>
         <Setter Property="ClipboardCopyMode" Value="ExcludeHeader"></Setter>
-        <Setter Property="SelectionMode" Value="Cell"></Setter>      
+        <Setter Property="SelectionMode" Value="Cell"></Setter>
     </Style>
 
 
-        <!--  列头居左对齐  -->
+    <!--  列头居左对齐  -->
     <Style x:Key="GridColumnHeaderLeftAlignment" TargetType="{x:Type dxg:HeaderContentControl}">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
     </Style>

@@ -39,7 +39,9 @@ namespace ZtxFrameWork.UI.QueryList
                 .Where(AdvancedExpression)
                 .Select(t => new
                 {
-                    编号 = t.收款单.编号,
+                    收款单号 = t.收款单.编号,
+                    销售单号 = t.销售单.编号,
+                    销售退货单号 = t.销售退货单.编号,
                     会员 = t.收款单.会员.姓名,
                     日期 = t.收款单.收款日期,
                     应收金额 = t.应收金额,
