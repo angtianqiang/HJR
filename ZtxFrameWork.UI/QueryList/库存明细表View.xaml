@@ -84,6 +84,11 @@
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>
                                 <dxg:GridColumn FieldName="编号" Header="编号" Visible="True"  Fixed="Left"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="库存重量" Header="库存重量"    >
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n1"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
                             </dxg:GridControl>
                             <Views:分店库存明细View Height="100" dxmvvm:ViewModelExtensions.Parameter="{Binding SelectedItem.ID, ElementName=grid}"></Views:分店库存明细View>
                         </dxlc:LayoutGroup>

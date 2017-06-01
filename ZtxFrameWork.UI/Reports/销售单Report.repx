@@ -12,29 +12,13 @@
 namespace XtraReportSerialization {
     
     public class XtraReport : DevExpress.XtraReports.UI.XtraReport {
-        private DevExpress.XtraReports.UI.XRLabel label18;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell10;
+        private DevExpress.XtraReports.UI.XRLabel label6;
         private DevExpress.XtraReports.UI.XRLabel label20;
-        private DevExpress.XtraReports.UI.XRLabel label1;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell3;
-        private DevExpress.XtraReports.UI.XRLabel label5;
-        private DevExpress.XtraReports.UI.XRLabel label3;
-        private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell1;
-        private DevExpress.XtraReports.UI.XRLabel label21;
-        private DevExpress.XtraReports.UI.XRTable table1;
-        private DevExpress.XtraReports.UI.XRTableRow tableRow1;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell11;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell2;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell4;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell5;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell6;
         private DevExpress.XtraReports.UI.XRTableCell tableCell8;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell9;
-        private DevExpress.XtraReports.UI.XRTableCell tableCell7;
         private DevExpress.XtraReports.UI.ReportHeaderBand ReportHeader;
         private DevExpress.XtraReports.UI.XRLabel label24;
         private DevExpress.XtraReports.UI.XRLabel label19;
+        private DevExpress.XtraReports.UI.XRLabel label18;
         private DevExpress.XtraReports.UI.XRLabel label17;
         private DevExpress.XtraReports.UI.XRLabel label16;
         private DevExpress.XtraReports.UI.XRLabel label15;
@@ -43,19 +27,41 @@ namespace XtraReportSerialization {
         private DevExpress.XtraReports.UI.XRLabel label12;
         private DevExpress.XtraReports.UI.XRLabel label11;
         private DevExpress.XtraReports.UI.XRLabel label10;
-        private DevExpress.XtraReports.UI.XRLabel label4;
-        private DevExpress.XtraReports.UI.DetailBand detailBand1;
         private DevExpress.XtraReports.UI.XRLabel label9;
-        private DevExpress.XtraReports.UI.XRLabel label8;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell7;
+        private DevExpress.XtraReports.UI.ReportFooterBand ReportFooter;
+        private DevExpress.XtraReports.UI.XRLabel label28;
+        private DevExpress.XtraReports.UI.XRLabel label27;
+        private DevExpress.XtraReports.UI.XRLabel label26;
+        private DevExpress.XtraReports.UI.XRLabel label25;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell10;
         private DevExpress.XtraReports.UI.XRLabel label7;
-        private DevExpress.XtraReports.UI.XRLabel label6;
-        private DevExpress.XtraReports.UI.XRLabel label2;
-        private DevExpress.XtraReports.UI.XRLabel label22;
-        private DevExpress.XtraReports.UI.TopMarginBand topMarginBand1;
         private DevExpress.XtraReports.UI.DetailBand Detail;
-        private DevExpress.XtraReports.UI.DetailReportBand DetailReport;
+        private DevExpress.XtraReports.UI.XRTable table1;
+        private DevExpress.XtraReports.UI.XRTableRow tableRow1;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell11;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell1;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell2;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell3;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell4;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell5;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell6;
+        private DevExpress.XtraReports.UI.XRTableCell tableCell9;
+        private DevExpress.XtraReports.UI.XRLabel label5;
+        private DevExpress.XtraReports.UI.XRLabel label22;
+        private DevExpress.XtraReports.UI.GroupFooterBand GroupFooter1;
+        private DevExpress.XtraReports.UI.XRLabel label1;
+        private DevExpress.XtraReports.UI.DetailBand detailBand1;
+        private DevExpress.XtraReports.UI.XRLabel label8;
+        private DevExpress.XtraReports.UI.XRLabel label4;
+        private DevExpress.XtraReports.UI.XRLabel label3;
+        private DevExpress.XtraReports.UI.XRLabel label2;
+        private DevExpress.DataAccess.ObjectBinding.ObjectDataSource objectDataSource1;
         private DevExpress.XtraReports.UI.BottomMarginBand bottomMarginBand1;
         private DevExpress.XtraReports.UI.XRLabel label23;
+        private DevExpress.XtraReports.UI.XRLabel label21;
+        private DevExpress.XtraReports.UI.TopMarginBand topMarginBand1;
+        private DevExpress.XtraReports.UI.DetailReportBand DetailReport;
         private System.Resources.ResourceManager _resources;
         private string _resourceString;
         public XtraReport() {
@@ -71,76 +77,78 @@ namespace XtraReportSerialization {
             }
         }
         private void InitializeComponent() {
-            this.label18 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
+            DevExpress.XtraReports.UI.XRSummary summary3 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.XtraReports.UI.XRSummary summary4 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.XtraReports.UI.XRSummary summary2 = new DevExpress.XtraReports.UI.XRSummary();
+            DevExpress.XtraReports.UI.XRSummary summary1 = new DevExpress.XtraReports.UI.XRSummary();
+            this.label6 = new DevExpress.XtraReports.UI.XRLabel();
             this.label20 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label1 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.label5 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label3 = new DevExpress.XtraReports.UI.XRLabel();
-            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource();
-            this.tableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.label21 = new DevExpress.XtraReports.UI.XRLabel();
-            this.table1 = new DevExpress.XtraReports.UI.XRTable();
             this.tableCell8 = new DevExpress.XtraReports.UI.XRTableCell();
             this.ReportHeader = new DevExpress.XtraReports.UI.ReportHeaderBand();
-            this.tableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.label4 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.detailBand1 = new DevExpress.XtraReports.UI.DetailBand();
-            this.label22 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label10 = new DevExpress.XtraReports.UI.XRLabel();
             this.label9 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label2 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label13 = new DevExpress.XtraReports.UI.XRLabel();
-            this.topMarginBand1 = new DevExpress.XtraReports.UI.TopMarginBand();
-            this.label19 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label7 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
-            this.label15 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.label11 = new DevExpress.XtraReports.UI.XRLabel();
-            this.Detail = new DevExpress.XtraReports.UI.DetailBand();
             this.tableCell7 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.DetailReport = new DevExpress.XtraReports.UI.DetailReportBand();
-            this.bottomMarginBand1 = new DevExpress.XtraReports.UI.BottomMarginBand();
-            this.label23 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label16 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.label14 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label17 = new DevExpress.XtraReports.UI.XRLabel();
+            this.ReportFooter = new DevExpress.XtraReports.UI.ReportFooterBand();
+            this.label13 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell10 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.label7 = new DevExpress.XtraReports.UI.XRLabel();
+            this.Detail = new DevExpress.XtraReports.UI.DetailBand();
+            this.label5 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label22 = new DevExpress.XtraReports.UI.XRLabel();
+            this.GroupFooter1 = new DevExpress.XtraReports.UI.GroupFooterBand();
+            this.label19 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label18 = new DevExpress.XtraReports.UI.XRLabel();
             this.tableCell5 = new DevExpress.XtraReports.UI.XRTableCell();
-            this.label6 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label26 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell3 = new DevExpress.XtraReports.UI.XRTableCell();
             this.label12 = new DevExpress.XtraReports.UI.XRLabel();
-            this.label8 = new DevExpress.XtraReports.UI.XRLabel();
-            this.tableCell11 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.label1 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell6 = new DevExpress.XtraReports.UI.XRTableCell();
             this.label24 = new DevExpress.XtraReports.UI.XRLabel();
+            this.detailBand1 = new DevExpress.XtraReports.UI.DetailBand();
+            this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource();
+            this.tableRow1 = new DevExpress.XtraReports.UI.XRTableRow();
+            this.bottomMarginBand1 = new DevExpress.XtraReports.UI.BottomMarginBand();
+            this.tableCell1 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.label15 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label21 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label14 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell11 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.label10 = new DevExpress.XtraReports.UI.XRLabel();
+            this.topMarginBand1 = new DevExpress.XtraReports.UI.TopMarginBand();
+            this.label25 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label27 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label2 = new DevExpress.XtraReports.UI.XRLabel();
+            this.table1 = new DevExpress.XtraReports.UI.XRTable();
+            this.label3 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell2 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.label23 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label28 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label16 = new DevExpress.XtraReports.UI.XRLabel();
+            this.DetailReport = new DevExpress.XtraReports.UI.DetailReportBand();
+            this.label8 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell4 = new DevExpress.XtraReports.UI.XRTableCell();
+            this.label17 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label4 = new DevExpress.XtraReports.UI.XRLabel();
+            this.label11 = new DevExpress.XtraReports.UI.XRLabel();
+            this.tableCell9 = new DevExpress.XtraReports.UI.XRTableCell();
             ((System.ComponentModel.ISupportInitialize)(this.objectDataSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.table1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
             // 
-            // label18
+            // label6
             // 
-            this.label18.Dpi = 254F;
-            this.label18.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label18.LocationFloat = new DevExpress.Utils.PointFloat(1911.879F, 56.80919F);
-            this.label18.Name = "label18";
-            this.label18.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label18.SizeF = new System.Drawing.SizeF(216.9583F, 58.41998F);
-            this.label18.StylePriority.UseFont = false;
-            this.label18.Text = "金额";
-            // 
-            // tableCell10
-            // 
-            this.tableCell10.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
-                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell10.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.重量")});
-            this.tableCell10.Dpi = 254F;
-            this.tableCell10.Name = "tableCell10";
-            this.tableCell10.StylePriority.UseBorders = false;
-            this.tableCell10.Text = "tableCell10";
-            this.tableCell10.Weight = 0.552082574560261D;
+            this.label6.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
+            this.label6.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "编号")});
+            this.label6.Dpi = 254F;
+            this.label6.LocationFloat = new DevExpress.Utils.PointFloat(287.3375F, 25.40002F);
+            this.label6.Name = "label6";
+            this.label6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label6.SizeF = new System.Drawing.SizeF(296.3333F, 58.42001F);
+            this.label6.StylePriority.UseBorders = false;
+            this.label6.StylePriority.UseTextAlignment = false;
+            this.label6.Text = "label3";
+            this.label6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // label20
             // 
@@ -152,100 +160,6 @@ namespace XtraReportSerialization {
             this.label20.StylePriority.UseTextAlignment = false;
             this.label20.Text = "操作员:";
             this.label20.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            // 
-            // label1
-            // 
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Dpi = 254F;
-            this.label1.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Bold);
-            this.label1.LocationFloat = new DevExpress.Utils.PointFloat(603.25F, 63.5F);
-            this.label1.Name = "label1";
-            this.label1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label1.SizeF = new System.Drawing.SizeF(436.5625F, 138.7475F);
-            this.label1.StylePriority.UseBackColor = false;
-            this.label1.StylePriority.UseFont = false;
-            this.label1.StylePriority.UseTextAlignment = false;
-            this.label1.Text = "销售单";
-            this.label1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
-            // 
-            // tableCell3
-            // 
-            this.tableCell3.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
-                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell3.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.饰品类型.名称")});
-            this.tableCell3.Dpi = 254F;
-            this.tableCell3.Name = "tableCell3";
-            this.tableCell3.StylePriority.UseBorders = false;
-            this.tableCell3.Text = "tableCell3";
-            this.tableCell3.Weight = 0.87499979249088167D;
-            // 
-            // label5
-            // 
-            this.label5.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-            this.label5.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "分店.名称")});
-            this.label5.Dpi = 254F;
-            this.label5.LocationFloat = new DevExpress.Utils.PointFloat(1854.2F, 25.40002F);
-            this.label5.Name = "label5";
-            this.label5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label5.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
-            this.label5.StylePriority.UseBorders = false;
-            this.label5.StylePriority.UseTextAlignment = false;
-            this.label5.Text = "label5";
-            this.label5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // label3
-            // 
-            this.label3.Dpi = 254F;
-            this.label3.LocationFloat = new DevExpress.Utils.PointFloat(603.25F, 25.40002F);
-            this.label3.Name = "label3";
-            this.label3.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label3.SizeF = new System.Drawing.SizeF(148.1666F, 58.41999F);
-            this.label3.Text = "日期:";
-            // 
-            // objectDataSource1
-            // 
-            this.objectDataSource1.DataSourceType = typeof(ZtxFrameWork.Data.Model.销售单);
-            this.objectDataSource1.Name = "objectDataSource1";
-            // 
-            // tableCell1
-            // 
-            this.tableCell1.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
-                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.编号")});
-            this.tableCell1.Dpi = 254F;
-            this.tableCell1.Name = "tableCell1";
-            this.tableCell1.StylePriority.UseBorders = false;
-            this.tableCell1.Text = "tableCell1";
-            this.tableCell1.Weight = 1.4750009622975608D;
-            // 
-            // label21
-            // 
-            this.label21.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-            this.label21.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "操作员.DispalyName")});
-            this.label21.Dpi = 254F;
-            this.label21.LocationFloat = new DevExpress.Utils.PointFloat(517.525F, 35.98327F);
-            this.label21.Name = "label21";
-            this.label21.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label21.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
-            this.label21.StylePriority.UseBorders = false;
-            this.label21.StylePriority.UseTextAlignment = false;
-            this.label21.Text = "label3";
-            this.label21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // table1
-            // 
-            this.table1.Dpi = 254F;
-            this.table1.LocationFloat = new DevExpress.Utils.PointFloat(13.22916F, 0F);
-            this.table1.Name = "table1";
-            this.table1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
-                        this.tableRow1});
-            this.table1.SizeF = new System.Drawing.SizeF(2115.608F, 63.5F);
-            this.table1.StylePriority.UseTextAlignment = false;
-            this.table1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
             // tableCell8
             // 
@@ -282,44 +196,223 @@ namespace XtraReportSerialization {
             this.ReportHeader.StylePriority.UseTextAlignment = false;
             this.ReportHeader.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
-            // tableCell4
+            // label9
             // 
-            this.tableCell4.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+            this.label9.Dpi = 254F;
+            this.label9.LocationFloat = new DevExpress.Utils.PointFloat(59.79593F, 25.40002F);
+            this.label9.Name = "label9";
+            this.label9.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label9.SizeF = new System.Drawing.SizeF(227.5416F, 58.41999F);
+            this.label9.Text = "销售单号:";
+            // 
+            // tableCell7
+            // 
+            this.tableCell7.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
                         | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell4.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.电镀方式.名称")});
-            this.tableCell4.Dpi = 254F;
-            this.tableCell4.Name = "tableCell4";
-            this.tableCell4.StylePriority.UseBorders = false;
-            this.tableCell4.Text = "tableCell4";
-            this.tableCell4.Weight = 0.6875002620347912D;
+            this.tableCell7.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.金额")});
+            this.tableCell7.Dpi = 254F;
+            this.tableCell7.Name = "tableCell7";
+            this.tableCell7.StylePriority.UseBorders = false;
+            this.tableCell7.Text = "tableCell7";
+            this.tableCell7.Weight = 0.85416616890865793D;
             // 
-            // label4
+            // ReportFooter
             // 
-            this.label4.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-            this.label4.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "会员.姓名")});
-            this.label4.Dpi = 254F;
-            this.label4.LocationFloat = new DevExpress.Utils.PointFloat(1329.796F, 25.40002F);
-            this.label4.Name = "label4";
-            this.label4.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label4.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
-            this.label4.StylePriority.UseBorders = false;
-            this.label4.StylePriority.UseTextAlignment = false;
-            this.label4.Text = "label4";
-            this.label4.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            this.ReportFooter.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.label28,
+                        this.label27,
+                        this.label26,
+                        this.label25});
+            this.ReportFooter.Dpi = 254F;
+            this.ReportFooter.HeightF = 76.72916F;
+            this.ReportFooter.Name = "ReportFooter";
             // 
-            // tableCell2
+            // label13
             // 
-            this.tableCell2.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+            this.label13.Dpi = 254F;
+            this.label13.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label13.LocationFloat = new DevExpress.Utils.PointFloat(943.5045F, 56.80919F);
+            this.label13.Name = "label13";
+            this.label13.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label13.SizeF = new System.Drawing.SizeF(174.625F, 58.41999F);
+            this.label13.StylePriority.UseFont = false;
+            this.label13.Text = "电镀方式";
+            // 
+            // tableCell10
+            // 
+            this.tableCell10.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
                         | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell2.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.品名.名称")});
-            this.tableCell2.Dpi = 254F;
-            this.tableCell2.Name = "tableCell2";
-            this.tableCell2.StylePriority.UseBorders = false;
-            this.tableCell2.Text = "tableCell2";
-            this.tableCell2.Weight = 0.9374995016448896D;
+            this.tableCell10.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.重量")});
+            this.tableCell10.Dpi = 254F;
+            this.tableCell10.Name = "tableCell10";
+            this.tableCell10.StylePriority.UseBorders = false;
+            this.tableCell10.Text = "tableCell10";
+            this.tableCell10.Weight = 0.552082574560261D;
+            // 
+            // label7
+            // 
+            this.label7.Dpi = 254F;
+            this.label7.LocationFloat = new DevExpress.Utils.PointFloat(1706.033F, 25.40002F);
+            this.label7.Name = "label7";
+            this.label7.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label7.SizeF = new System.Drawing.SizeF(148.1666F, 58.41999F);
+            this.label7.Text = "分店:";
+            // 
+            // Detail
+            // 
+            this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.table1});
+            this.Detail.Dpi = 254F;
+            this.Detail.HeightF = 63.5F;
+            this.Detail.Name = "Detail";
+            // 
+            // label5
+            // 
+            this.label5.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
+            this.label5.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "分店.名称")});
+            this.label5.Dpi = 254F;
+            this.label5.LocationFloat = new DevExpress.Utils.PointFloat(1854.2F, 25.40002F);
+            this.label5.Name = "label5";
+            this.label5.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label5.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
+            this.label5.StylePriority.UseBorders = false;
+            this.label5.StylePriority.UseTextAlignment = false;
+            this.label5.Text = "label5";
+            this.label5.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            // 
+            // label22
+            // 
+            this.label22.Dpi = 254F;
+            this.label22.LocationFloat = new DevExpress.Utils.PointFloat(1197.505F, 35.98327F);
+            this.label22.Name = "label22";
+            this.label22.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label22.SizeF = new System.Drawing.SizeF(227.5416F, 58.41999F);
+            this.label22.StylePriority.UseTextAlignment = false;
+            this.label22.Text = "客户签收:";
+            this.label22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            // 
+            // GroupFooter1
+            // 
+            this.GroupFooter1.Dpi = 254F;
+            this.GroupFooter1.HeightF = 0F;
+            this.GroupFooter1.Name = "GroupFooter1";
+            // 
+            // label19
+            // 
+            this.label19.Dpi = 254F;
+            this.label19.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label19.LocationFloat = new DevExpress.Utils.PointFloat(1599.671F, 56.80919F);
+            this.label19.Name = "label19";
+            this.label19.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label19.SizeF = new System.Drawing.SizeF(140.2291F, 58.41998F);
+            this.label19.StylePriority.UseFont = false;
+            this.label19.Text = "重量";
+            // 
+            // label18
+            // 
+            this.label18.Dpi = 254F;
+            this.label18.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label18.LocationFloat = new DevExpress.Utils.PointFloat(1911.879F, 56.80919F);
+            this.label18.Name = "label18";
+            this.label18.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label18.SizeF = new System.Drawing.SizeF(216.9583F, 58.41998F);
+            this.label18.StylePriority.UseFont = false;
+            this.label18.Text = "金额";
+            // 
+            // tableCell5
+            // 
+            this.tableCell5.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.tableCell5.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.石头颜色.名称")});
+            this.tableCell5.Dpi = 254F;
+            this.tableCell5.Name = "tableCell5";
+            this.tableCell5.StylePriority.UseBorders = false;
+            this.tableCell5.Text = "tableCell5";
+            this.tableCell5.Weight = 0.83333344760200934D;
+            // 
+            // label26
+            // 
+            this.label26.Borders = ((DevExpress.XtraPrinting.BorderSide)((DevExpress.XtraPrinting.BorderSide.Right | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label26.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.重量")});
+            this.label26.Dpi = 254F;
+            this.label26.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label26.LocationFloat = new DevExpress.Utils.PointFloat(1599.671F, 0F);
+            this.label26.Name = "label26";
+            this.label26.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label26.SizeF = new System.Drawing.SizeF(312.2078F, 58.41998F);
+            this.label26.StylePriority.UseBorders = false;
+            this.label26.StylePriority.UseFont = false;
+            this.label26.StylePriority.UseTextAlignment = false;
+            summary3.FormatString = "{0:n1}";
+            summary3.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            this.label26.Summary = summary3;
+            this.label26.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            // 
+            // tableCell3
+            // 
+            this.tableCell3.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.tableCell3.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.饰品类型.名称")});
+            this.tableCell3.Dpi = 254F;
+            this.tableCell3.Name = "tableCell3";
+            this.tableCell3.StylePriority.UseBorders = false;
+            this.tableCell3.Text = "tableCell3";
+            this.tableCell3.Weight = 0.87499979249088167D;
+            // 
+            // label12
+            // 
+            this.label12.Dpi = 254F;
+            this.label12.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label12.LocationFloat = new DevExpress.Utils.PointFloat(721.2545F, 56.80919F);
+            this.label12.Name = "label12";
+            this.label12.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label12.SizeF = new System.Drawing.SizeF(222.25F, 58.41998F);
+            this.label12.StylePriority.UseFont = false;
+            this.label12.Text = "饰品类型";
+            // 
+            // label1
+            // 
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Dpi = 254F;
+            this.label1.Font = new System.Drawing.Font("微软雅黑", 24F, System.Drawing.FontStyle.Bold);
+            this.label1.LocationFloat = new DevExpress.Utils.PointFloat(603.25F, 63.5F);
+            this.label1.Name = "label1";
+            this.label1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label1.SizeF = new System.Drawing.SizeF(436.5625F, 138.7475F);
+            this.label1.StylePriority.UseBackColor = false;
+            this.label1.StylePriority.UseFont = false;
+            this.label1.StylePriority.UseTextAlignment = false;
+            this.label1.Text = "销售单";
+            this.label1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.TopCenter;
+            // 
+            // tableCell6
+            // 
+            this.tableCell6.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.tableCell6.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.单位.名称")});
+            this.tableCell6.Dpi = 254F;
+            this.tableCell6.Name = "tableCell6";
+            this.tableCell6.StylePriority.UseBorders = false;
+            this.tableCell6.Text = "tableCell6";
+            this.tableCell6.Weight = 0.60416337898243344D;
+            // 
+            // label24
+            // 
+            this.label24.Dpi = 254F;
+            this.label24.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label24.LocationFloat = new DevExpress.Utils.PointFloat(108.4792F, 56.80919F);
+            this.label24.Name = "label24";
+            this.label24.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label24.SizeF = new System.Drawing.SizeF(374.6503F, 58.41998F);
+            this.label24.StylePriority.UseFont = false;
+            this.label24.Text = "编号";
             // 
             // detailBand1
             // 
@@ -338,96 +431,10 @@ namespace XtraReportSerialization {
             this.detailBand1.StylePriority.UseTextAlignment = false;
             this.detailBand1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             // 
-            // label22
+            // objectDataSource1
             // 
-            this.label22.Dpi = 254F;
-            this.label22.LocationFloat = new DevExpress.Utils.PointFloat(1197.505F, 35.98327F);
-            this.label22.Name = "label22";
-            this.label22.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label22.SizeF = new System.Drawing.SizeF(227.5416F, 58.41999F);
-            this.label22.StylePriority.UseTextAlignment = false;
-            this.label22.Text = "客户签收:";
-            this.label22.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
-            // 
-            // label10
-            // 
-            this.label10.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
-                        | DevExpress.XtraPrinting.BorderSide.Right) 
-                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.label10.Dpi = 254F;
-            this.label10.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label10.LocationFloat = new DevExpress.Utils.PointFloat(13.22917F, 56.80919F);
-            this.label10.Name = "label10";
-            this.label10.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label10.SizeF = new System.Drawing.SizeF(95.25011F, 58.41999F);
-            this.label10.StylePriority.UseBorders = false;
-            this.label10.StylePriority.UseFont = false;
-            this.label10.Text = "序号";
-            // 
-            // label9
-            // 
-            this.label9.Dpi = 254F;
-            this.label9.LocationFloat = new DevExpress.Utils.PointFloat(59.79593F, 25.40002F);
-            this.label9.Name = "label9";
-            this.label9.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label9.SizeF = new System.Drawing.SizeF(227.5416F, 58.41999F);
-            this.label9.Text = "销售单号:";
-            // 
-            // label2
-            // 
-            this.label2.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-            this.label2.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "日期")});
-            this.label2.Dpi = 254F;
-            this.label2.LocationFloat = new DevExpress.Utils.PointFloat(751.4166F, 25.40002F);
-            this.label2.Name = "label2";
-            this.label2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label2.SizeF = new System.Drawing.SizeF(393.1712F, 58.42001F);
-            this.label2.StylePriority.UseBorders = false;
-            this.label2.StylePriority.UseTextAlignment = false;
-            this.label2.Text = "label2";
-            this.label2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // label13
-            // 
-            this.label13.Dpi = 254F;
-            this.label13.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label13.LocationFloat = new DevExpress.Utils.PointFloat(943.5045F, 56.80919F);
-            this.label13.Name = "label13";
-            this.label13.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label13.SizeF = new System.Drawing.SizeF(174.625F, 58.41999F);
-            this.label13.StylePriority.UseFont = false;
-            this.label13.Text = "电镀方式";
-            // 
-            // topMarginBand1
-            // 
-            this.topMarginBand1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-                        this.label1});
-            this.topMarginBand1.Dpi = 254F;
-            this.topMarginBand1.Font = new System.Drawing.Font("微软雅黑", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.topMarginBand1.HeightF = 254F;
-            this.topMarginBand1.Name = "topMarginBand1";
-            this.topMarginBand1.StylePriority.UseFont = false;
-            // 
-            // label19
-            // 
-            this.label19.Dpi = 254F;
-            this.label19.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label19.LocationFloat = new DevExpress.Utils.PointFloat(1599.671F, 56.80919F);
-            this.label19.Name = "label19";
-            this.label19.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label19.SizeF = new System.Drawing.SizeF(140.2291F, 58.41998F);
-            this.label19.StylePriority.UseFont = false;
-            this.label19.Text = "重量";
-            // 
-            // label7
-            // 
-            this.label7.Dpi = 254F;
-            this.label7.LocationFloat = new DevExpress.Utils.PointFloat(1706.033F, 25.40002F);
-            this.label7.Name = "label7";
-            this.label7.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label7.SizeF = new System.Drawing.SizeF(148.1666F, 58.41999F);
-            this.label7.Text = "分店:";
+            this.objectDataSource1.DataSourceType = typeof(ZtxFrameWork.Data.Model.销售单);
+            this.objectDataSource1.Name = "objectDataSource1";
             // 
             // tableRow1
             // 
@@ -447,6 +454,29 @@ namespace XtraReportSerialization {
             this.tableRow1.Name = "tableRow1";
             this.tableRow1.Weight = 1D;
             // 
+            // bottomMarginBand1
+            // 
+            this.bottomMarginBand1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.label22,
+                        this.label23,
+                        this.label21,
+                        this.label20});
+            this.bottomMarginBand1.Dpi = 254F;
+            this.bottomMarginBand1.HeightF = 137.5208F;
+            this.bottomMarginBand1.Name = "bottomMarginBand1";
+            // 
+            // tableCell1
+            // 
+            this.tableCell1.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.tableCell1.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.编号")});
+            this.tableCell1.Dpi = 254F;
+            this.tableCell1.Name = "tableCell1";
+            this.tableCell1.StylePriority.UseBorders = false;
+            this.tableCell1.Text = "tableCell1";
+            this.tableCell1.Weight = 1.4750009622975608D;
+            // 
             // label15
             // 
             this.label15.Dpi = 254F;
@@ -458,70 +488,153 @@ namespace XtraReportSerialization {
             this.label15.StylePriority.UseFont = false;
             this.label15.Text = "单位";
             // 
-            // tableCell9
+            // label21
             // 
-            this.tableCell9.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+            this.label21.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
+            this.label21.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "操作员.DispalyName")});
+            this.label21.Dpi = 254F;
+            this.label21.LocationFloat = new DevExpress.Utils.PointFloat(517.525F, 35.98327F);
+            this.label21.Name = "label21";
+            this.label21.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label21.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
+            this.label21.StylePriority.UseBorders = false;
+            this.label21.StylePriority.UseTextAlignment = false;
+            this.label21.Text = "label3";
+            this.label21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            // 
+            // label14
+            // 
+            this.label14.Dpi = 254F;
+            this.label14.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label14.LocationFloat = new DevExpress.Utils.PointFloat(1118.13F, 56.80919F);
+            this.label14.Name = "label14";
+            this.label14.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label14.SizeF = new System.Drawing.SizeF(211.6669F, 58.41999F);
+            this.label14.StylePriority.UseFont = false;
+            this.label14.Text = "石头颜色";
+            // 
+            // tableCell11
+            // 
+            this.tableCell11.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
                         | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell9.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.销售价")});
-            this.tableCell9.Dpi = 254F;
-            this.tableCell9.Name = "tableCell9";
-            this.tableCell9.StylePriority.UseBorders = false;
-            this.tableCell9.Text = "tableCell9";
-            this.tableCell9.Weight = 0.67708299389772053D;
+            this.tableCell11.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.序号")});
+            this.tableCell11.Dpi = 254F;
+            this.tableCell11.Name = "tableCell11";
+            this.tableCell11.StylePriority.UseBorders = false;
+            this.tableCell11.Text = "tableCell11";
+            this.tableCell11.Weight = 0.37500035457919667D;
             // 
-            // label11
+            // label10
             // 
-            this.label11.Dpi = 254F;
-            this.label11.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label11.LocationFloat = new DevExpress.Utils.PointFloat(483.1296F, 56.80919F);
-            this.label11.Name = "label11";
-            this.label11.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label11.SizeF = new System.Drawing.SizeF(238.125F, 58.41998F);
-            this.label11.StylePriority.UseFont = false;
-            this.label11.Text = "品名";
-            // 
-            // Detail
-            // 
-            this.Detail.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-                        this.table1});
-            this.Detail.Dpi = 254F;
-            this.Detail.HeightF = 63.5F;
-            this.Detail.Name = "Detail";
-            // 
-            // tableCell7
-            // 
-            this.tableCell7.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+            this.label10.Borders = ((DevExpress.XtraPrinting.BorderSide)((((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Top) 
+                        | DevExpress.XtraPrinting.BorderSide.Right) 
                         | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell7.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+            this.label10.Dpi = 254F;
+            this.label10.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label10.LocationFloat = new DevExpress.Utils.PointFloat(13.22917F, 56.80919F);
+            this.label10.Name = "label10";
+            this.label10.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label10.SizeF = new System.Drawing.SizeF(95.25011F, 58.41999F);
+            this.label10.StylePriority.UseBorders = false;
+            this.label10.StylePriority.UseFont = false;
+            this.label10.Text = "序号";
+            // 
+            // topMarginBand1
+            // 
+            this.topMarginBand1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+                        this.label1});
+            this.topMarginBand1.Dpi = 254F;
+            this.topMarginBand1.Font = new System.Drawing.Font("微软雅黑", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.topMarginBand1.HeightF = 254F;
+            this.topMarginBand1.Name = "topMarginBand1";
+            this.topMarginBand1.StylePriority.UseFont = false;
+            // 
+            // label25
+            // 
+            this.label25.Borders = ((DevExpress.XtraPrinting.BorderSide)((DevExpress.XtraPrinting.BorderSide.Right | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label25.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.数量")});
+            this.label25.Dpi = 254F;
+            this.label25.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label25.LocationFloat = new DevExpress.Utils.PointFloat(1483.254F, 0F);
+            this.label25.Name = "label25";
+            this.label25.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label25.SizeF = new System.Drawing.SizeF(116.417F, 58.41998F);
+            this.label25.StylePriority.UseBorders = false;
+            this.label25.StylePriority.UseFont = false;
+            this.label25.StylePriority.UseTextAlignment = false;
+            summary4.FormatString = "{0:#,#}";
+            summary4.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            this.label25.Summary = summary4;
+            this.label25.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            // 
+            // label27
+            // 
+            this.label27.Borders = ((DevExpress.XtraPrinting.BorderSide)((DevExpress.XtraPrinting.BorderSide.Right | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label27.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
                         new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.金额")});
-            this.tableCell7.Dpi = 254F;
-            this.tableCell7.Name = "tableCell7";
-            this.tableCell7.StylePriority.UseBorders = false;
-            this.tableCell7.Text = "tableCell7";
-            this.tableCell7.Weight = 0.85416616890865793D;
+            this.label27.Dpi = 254F;
+            this.label27.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label27.LocationFloat = new DevExpress.Utils.PointFloat(1911.879F, 0F);
+            this.label27.Name = "label27";
+            this.label27.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label27.SizeF = new System.Drawing.SizeF(216.9583F, 58.41998F);
+            this.label27.StylePriority.UseBorders = false;
+            this.label27.StylePriority.UseFont = false;
+            this.label27.StylePriority.UseTextAlignment = false;
+            summary2.FormatString = "{0:n1}";
+            summary2.Running = DevExpress.XtraReports.UI.SummaryRunning.Report;
+            this.label27.Summary = summary2;
+            this.label27.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
             // 
-            // DetailReport
+            // label2
             // 
-            this.DetailReport.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
-                        this.Detail,
-                        this.ReportHeader});
-            this.DetailReport.DataMember = "销售单明细s";
-            this.DetailReport.DataSource = this.objectDataSource1;
-            this.DetailReport.Dpi = 254F;
-            this.DetailReport.Level = 0;
-            this.DetailReport.Name = "DetailReport";
+            this.label2.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
+            this.label2.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "日期", "{0:yyyy-MM-dd}")});
+            this.label2.Dpi = 254F;
+            this.label2.LocationFloat = new DevExpress.Utils.PointFloat(751.4166F, 25.40002F);
+            this.label2.Name = "label2";
+            this.label2.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label2.SizeF = new System.Drawing.SizeF(393.1712F, 58.42001F);
+            this.label2.StylePriority.UseBorders = false;
+            this.label2.StylePriority.UseTextAlignment = false;
+            this.label2.Text = "label2";
+            this.label2.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
-            // bottomMarginBand1
+            // table1
             // 
-            this.bottomMarginBand1.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
-                        this.label22,
-                        this.label23,
-                        this.label21,
-                        this.label20});
-            this.bottomMarginBand1.Dpi = 254F;
-            this.bottomMarginBand1.HeightF = 137.5208F;
-            this.bottomMarginBand1.Name = "bottomMarginBand1";
+            this.table1.Dpi = 254F;
+            this.table1.LocationFloat = new DevExpress.Utils.PointFloat(13.22916F, 0F);
+            this.table1.Name = "table1";
+            this.table1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
+                        this.tableRow1});
+            this.table1.SizeF = new System.Drawing.SizeF(2115.608F, 63.5F);
+            this.table1.StylePriority.UseTextAlignment = false;
+            this.table1.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            // 
+            // label3
+            // 
+            this.label3.Dpi = 254F;
+            this.label3.LocationFloat = new DevExpress.Utils.PointFloat(603.25F, 25.40002F);
+            this.label3.Name = "label3";
+            this.label3.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label3.SizeF = new System.Drawing.SizeF(148.1666F, 58.41999F);
+            this.label3.Text = "日期:";
+            // 
+            // tableCell2
+            // 
+            this.tableCell2.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.tableCell2.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.品名.名称")});
+            this.tableCell2.Dpi = 254F;
+            this.tableCell2.Name = "tableCell2";
+            this.tableCell2.StylePriority.UseBorders = false;
+            this.tableCell2.Text = "tableCell2";
+            this.tableCell2.Weight = 0.9374995016448896D;
             // 
             // label23
             // 
@@ -536,6 +649,22 @@ namespace XtraReportSerialization {
             this.label23.Text = "       ";
             this.label23.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
+            // label28
+            // 
+            this.label28.Borders = ((DevExpress.XtraPrinting.BorderSide)((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Bottom)));
+            this.label28.Dpi = 254F;
+            this.label28.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label28.LocationFloat = new DevExpress.Utils.PointFloat(13.22917F, 0F);
+            this.label28.Name = "label28";
+            this.label28.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label28.SizeF = new System.Drawing.SizeF(1470.025F, 58.41998F);
+            this.label28.StylePriority.UseBorders = false;
+            this.label28.StylePriority.UseFont = false;
+            this.label28.StylePriority.UseTextAlignment = false;
+            summary1.FormatString = "{0:n}";
+            this.label28.Summary = summary1;
+            this.label28.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
+            // 
             // label16
             // 
             this.label16.Dpi = 254F;
@@ -547,28 +676,39 @@ namespace XtraReportSerialization {
             this.label16.StylePriority.UseFont = false;
             this.label16.Text = "数量";
             // 
-            // tableCell6
+            // DetailReport
             // 
-            this.tableCell6.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+            this.DetailReport.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
+                        this.Detail,
+                        this.ReportHeader,
+                        this.ReportFooter,
+                        this.GroupFooter1});
+            this.DetailReport.DataMember = "销售单明细s";
+            this.DetailReport.DataSource = this.objectDataSource1;
+            this.DetailReport.Dpi = 254F;
+            this.DetailReport.Level = 0;
+            this.DetailReport.Name = "DetailReport";
+            // 
+            // label8
+            // 
+            this.label8.Dpi = 254F;
+            this.label8.LocationFloat = new DevExpress.Utils.PointFloat(1181.629F, 25.40002F);
+            this.label8.Name = "label8";
+            this.label8.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label8.SizeF = new System.Drawing.SizeF(148.1665F, 58.41999F);
+            this.label8.Text = "会员:";
+            // 
+            // tableCell4
+            // 
+            this.tableCell4.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
                         | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell6.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.单位.名称")});
-            this.tableCell6.Dpi = 254F;
-            this.tableCell6.Name = "tableCell6";
-            this.tableCell6.StylePriority.UseBorders = false;
-            this.tableCell6.Text = "tableCell6";
-            this.tableCell6.Weight = 0.60416337898243344D;
-            // 
-            // label14
-            // 
-            this.label14.Dpi = 254F;
-            this.label14.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label14.LocationFloat = new DevExpress.Utils.PointFloat(1118.13F, 56.80919F);
-            this.label14.Name = "label14";
-            this.label14.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label14.SizeF = new System.Drawing.SizeF(211.6669F, 58.41999F);
-            this.label14.StylePriority.UseFont = false;
-            this.label14.Text = "石头颜色";
+            this.tableCell4.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.电镀方式.名称")});
+            this.tableCell4.Dpi = 254F;
+            this.tableCell4.Name = "tableCell4";
+            this.tableCell4.StylePriority.UseBorders = false;
+            this.tableCell4.Text = "tableCell4";
+            this.tableCell4.Weight = 0.6875002620347912D;
             // 
             // label17
             // 
@@ -581,75 +721,43 @@ namespace XtraReportSerialization {
             this.label17.StylePriority.UseFont = false;
             this.label17.Text = "销售价";
             // 
-            // tableCell5
+            // label4
             // 
-            this.tableCell5.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
+            this.label4.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
+            this.label4.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "会员.姓名")});
+            this.label4.Dpi = 254F;
+            this.label4.LocationFloat = new DevExpress.Utils.PointFloat(1329.796F, 25.40002F);
+            this.label4.Name = "label4";
+            this.label4.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label4.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
+            this.label4.StylePriority.UseBorders = false;
+            this.label4.StylePriority.UseTextAlignment = false;
+            this.label4.Text = "label4";
+            this.label4.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            // 
+            // label11
+            // 
+            this.label11.Dpi = 254F;
+            this.label11.Font = new System.Drawing.Font("Times New Roman", 9F);
+            this.label11.LocationFloat = new DevExpress.Utils.PointFloat(483.1296F, 56.80919F);
+            this.label11.Name = "label11";
+            this.label11.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
+            this.label11.SizeF = new System.Drawing.SizeF(238.125F, 58.41998F);
+            this.label11.StylePriority.UseFont = false;
+            this.label11.Text = "品名";
+            // 
+            // tableCell9
+            // 
+            this.tableCell9.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
                         | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell5.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.饰品.石头颜色.名称")});
-            this.tableCell5.Dpi = 254F;
-            this.tableCell5.Name = "tableCell5";
-            this.tableCell5.StylePriority.UseBorders = false;
-            this.tableCell5.Text = "tableCell5";
-            this.tableCell5.Weight = 0.83333344760200934D;
-            // 
-            // label6
-            // 
-            this.label6.Borders = DevExpress.XtraPrinting.BorderSide.Bottom;
-            this.label6.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "编号")});
-            this.label6.Dpi = 254F;
-            this.label6.LocationFloat = new DevExpress.Utils.PointFloat(287.3375F, 25.40002F);
-            this.label6.Name = "label6";
-            this.label6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label6.SizeF = new System.Drawing.SizeF(254F, 58.42001F);
-            this.label6.StylePriority.UseBorders = false;
-            this.label6.StylePriority.UseTextAlignment = false;
-            this.label6.Text = "label3";
-            this.label6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
-            // 
-            // label12
-            // 
-            this.label12.Dpi = 254F;
-            this.label12.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label12.LocationFloat = new DevExpress.Utils.PointFloat(721.2545F, 56.80919F);
-            this.label12.Name = "label12";
-            this.label12.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label12.SizeF = new System.Drawing.SizeF(222.25F, 58.41998F);
-            this.label12.StylePriority.UseFont = false;
-            this.label12.Text = "饰品类型";
-            // 
-            // label8
-            // 
-            this.label8.Dpi = 254F;
-            this.label8.LocationFloat = new DevExpress.Utils.PointFloat(1181.629F, 25.40002F);
-            this.label8.Name = "label8";
-            this.label8.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label8.SizeF = new System.Drawing.SizeF(148.1665F, 58.41999F);
-            this.label8.Text = "会员:";
-            // 
-            // tableCell11
-            // 
-            this.tableCell11.Borders = ((DevExpress.XtraPrinting.BorderSide)(((DevExpress.XtraPrinting.BorderSide.Left | DevExpress.XtraPrinting.BorderSide.Right) 
-                        | DevExpress.XtraPrinting.BorderSide.Bottom)));
-            this.tableCell11.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
-                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.序号")});
-            this.tableCell11.Dpi = 254F;
-            this.tableCell11.Name = "tableCell11";
-            this.tableCell11.StylePriority.UseBorders = false;
-            this.tableCell11.Text = "tableCell11";
-            this.tableCell11.Weight = 0.37500035457919667D;
-            // 
-            // label24
-            // 
-            this.label24.Dpi = 254F;
-            this.label24.Font = new System.Drawing.Font("Times New Roman", 9F);
-            this.label24.LocationFloat = new DevExpress.Utils.PointFloat(108.4792F, 56.80919F);
-            this.label24.Name = "label24";
-            this.label24.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
-            this.label24.SizeF = new System.Drawing.SizeF(374.6503F, 58.41998F);
-            this.label24.StylePriority.UseFont = false;
-            this.label24.Text = "编号";
+            this.tableCell9.DataBindings.AddRange(new DevExpress.XtraReports.UI.XRBinding[] {
+                        new DevExpress.XtraReports.UI.XRBinding("Text", null, "销售单明细s.销售价")});
+            this.tableCell9.Dpi = 254F;
+            this.tableCell9.Name = "tableCell9";
+            this.tableCell9.StylePriority.UseBorders = false;
+            this.tableCell9.Text = "tableCell9";
+            this.tableCell9.Weight = 0.67708299389772053D;
             // 
             // XtraReport
             // 

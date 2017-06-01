@@ -80,10 +80,16 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override IQueryable<销售单> DbInclude(ObjectSet<销售单> dbSet)
         {
             return dbSet.Include(t => t.销售单明细s.Select(p => p.饰品.材质))
+                       .Include(t => t.销售单明细s.Select(p => p.饰品.饰品类型))
                   .Include(t => t.销售单明细s.Select(p => p.饰品.品名))
                 .Include(t => t.销售单明细s.Select(p => p.饰品.材质))
                 .Include(t => t.销售单明细s.Select(p => p.饰品.电镀方式))
                 .Include(t => t.销售单明细s.Select(p => p.饰品.石头颜色))
+                     .Include(t => t.销售单明细s.Select(p => p.饰品.重量单位))
+                         .Include(t => t.销售单明细s.Select(p => p.饰品.单位))
+                        .Include(t => t.会员)
+                                .Include(t => t.分店)
+                                    .Include(t => t.操作员)
                 ;
         }
         public void UpdatePrice()
@@ -205,8 +211,12 @@ namespace ZtxFrameWork.UI.ViewModels
                     //SelectChildEntity.饰品 = this.DB.饰品s.AsNoTracking().Include(t => t.材质).Where(t => t.ID == newId).Single();
                     SelectChildEntity.饰品编号 = SelectChildEntity.饰品.编号;
                     //会员提成
-                    if (Entity.会员!=null)
+                    if (Entity.会员ID!=null)
                     {
+                        if (!this.DB.Entry(Entity).Reference(t => t.会员).IsLoaded)
+                        {
+                            this.DB.Entry(Entity).Reference(t => t.会员).Load();
+                        }
                         if (Entity.会员.折扣 != 0m)
                         {
                             SelectChildEntity.折扣 = Entity.会员.折扣;

@@ -48,7 +48,7 @@ namespace ZtxFrameWork.UI.ViewModels
                 UpdateTotal();
             });
         }
-        public  void Init()
+        public void Init()
         {
 
             操作员Source = Helpers.CacheHelper.操作员Source;
@@ -204,7 +204,8 @@ namespace ZtxFrameWork.UI.ViewModels
                     var item = SelectChildEntity;
                     item.计价方式 = item.饰品.工费计法;
                     //        item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.按件成本价  : item.饰品.按重成本价  ;
-                    item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.按件成本价+item.饰品.成本工费 : item.饰品.按重成本价 + item.饰品.成本工费;
+                    //   item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品.按件成本价+item.饰品.成本工费 : item.饰品.按重成本价 + item.饰品.成本工费;
+                    item.单价 = item.计价方式 == 费用计法.按件 ? item.饰品?.成本工费 ?? 0 : item.饰品?.材质?.当前价 ?? 0 + item.饰品?.成本工费 ?? 0;
                     item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                     UpdateTotal();
                     UpdateTotal();
