@@ -615,7 +615,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
 
         protected virtual bool NeedReset()
         {
-            return NeedSave() && !isEntityNewAndUnmodified;
+            //   return NeedSave() && !isEntityNewAndUnmodified;
+            //20170607  新建时也提示保存
+            return NeedSave();
         }
 
         protected virtual bool HasValidationErrors()

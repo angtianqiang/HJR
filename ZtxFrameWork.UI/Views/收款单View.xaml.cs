@@ -26,6 +26,7 @@ namespace ZtxFrameWork.UI.Views
             InitializeComponent();
             this.Details.CellValueChanging += Details_CellValueChanging;
             this.Details.ShownEditor += (s, e) => { Dispatcher.BeginInvoke(new Action(() => Details.ActiveEditor?.SelectAll())); };
+           
         }
 
         private void Details_CellValueChanging(object sender, DevExpress.Xpf.Grid.CellValueChangedEventArgs e)
@@ -51,7 +52,7 @@ namespace ZtxFrameWork.UI.Views
                     Messenger.Default.Send<string>("", "退库单号更改" + this.Tag.ToString());
                     break;
                 case "本次收入金额":
-                    Messenger.Default.Send<string>("", "本次支付金额更改" + this.Tag.ToString());
+                    Messenger.Default.Send<string>("", "本次收入金额更改" + this.Tag.ToString());
                     break;
                 default:
                     break;

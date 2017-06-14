@@ -212,6 +212,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\GridRowIndicatorConerter.cs" />
+    <Compile Include="QueryList\产品库存动态表View.xaml.cs">
+      <DependentUpon>产品库存动态表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\产品库存动态表ViewModel.cs" />
+    <Compile Include="QueryList\产品库存动态表_ExpressionView.xaml.cs">
+      <DependentUpon>产品库存动态表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\产品库存动态表_ExpressionViewModel.cs" />
     <Compile Include="QueryList\付款明细表View.xaml.cs">
       <DependentUpon>付款明细表View.xaml</DependentUpon>
     </Compile>
@@ -651,6 +659,14 @@
       <DependentUpon>MainWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="QueryList\产品库存动态表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\产品库存动态表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="QueryList\付款明细表View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

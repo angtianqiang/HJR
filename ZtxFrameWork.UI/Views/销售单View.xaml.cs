@@ -26,14 +26,57 @@ namespace ZtxFrameWork.UI.Views
             InitializeComponent();
             //this.Loaded += (s, e) => { Mouse.OverrideCursor = null; };
             this.Details.CellValueChanging += Details_CellValueChanging;
+            this.Details.CellValueChanged += Details_CellValueChanged;
             this.Details.ShownEditor += (s, e) => { Dispatcher.BeginInvoke(new Action(() => Details.ActiveEditor?.SelectAll())); };
+            this.Loaded += 销售单View_Loaded;
+          
+        }
+
+        private void 销售单View_Loaded(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Register<string>(this, "选中数据" + this.Tag.ToString(), m =>
+            {
+                //    this.Details.SelectCell(this.Details.FocusedRowHandle,this.DetailGrid.Columns["数量"]);
+
+
+                this.Details.MoveNextCell();
+                this.Details.MoveNextCell();
+                this.Details.MoveNextCell();
+                this.Details.MoveNextCell();
+                this.Details.MoveNextCell();
+                this.Details.ShowEditor();
+               Dispatcher.BeginInvoke(new Action(() => Details.ActiveEditor?.SelectAll()));
+                //this.DetailGrid.BeginSelection();
+                //this.DetailGrid.UnselectAll();
+                //this.Details.SelectCell(this.Details.FocusedRowHandle, this.DetailGrid.Columns["数量"]);
+                //this.DetailGrid.EndSelection();
+
+            });
+        }
+
+        private void Details_CellValueChanged(object sender, CellValueChangedEventArgs e)
+        {
+            switch (e.Column.FieldName)
+            {
+             
+                case "数量":
+                    if (e.Value.ToString() != e.OldValue.ToString())
+                    {
+
+                        Messenger.Default.Send<string>("", "数量更改后" + this.Tag.ToString());
+                    }
+                    break;
+             
+                default:
+                    break;
+            }
         }
 
         private void Details_CellValueChanging(object sender, DevExpress.Xpf.Grid.CellValueChangedEventArgs e)
         {
             TableView view = sender as TableView;
             //   Messenger.Default.Send<String>("", "TableView_CellValueChanging" + Token);
-            view.PostEditor();
+          view.PostEditor();
 
             //   if (e.Value == null) return;
 

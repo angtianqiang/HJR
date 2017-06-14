@@ -208,17 +208,43 @@
                                 <dxg:GridColumn FieldName="饰品.石头颜色.名称" Header="石头颜色" Visible="True" VisibleIndex="307"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.材质.名称" Header="材质" Visible="True" VisibleIndex="308"></dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="数量" VisibleIndex="309"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="重量" VisibleIndex="310" ></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="饰品.库存总金额" Header="库存成本额" VisibleIndex="311"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="数量" VisibleIndex="309">
+                                    
+                                </dxg:GridColumn>
+                                <dxg:GridColumn FieldName="重量" VisibleIndex="310" >
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n1"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.库存总金额" Header="库存成本额" VisibleIndex="311">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n1"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="饰品.QtyPrice"  Header="按件批发价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.QtyPrice"  Header="按件批发价" Visible="True" VisibleIndex="312">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n2"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.按件成本价"  Header="按件成本价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
-                                <dxg:GridColumn UnboundType="Decimal" FieldName="按件销售额" UnboundExpression="([饰品.QtyPrice] * [数量])" Header="按件销售额"  Visible="True" VisibleIndex="313"></dxg:GridColumn>
+                                <dxg:GridColumn UnboundType="Decimal" FieldName="按件销售额" UnboundExpression="([饰品.QtyPrice] * [数量])" Header="按件销售额"  Visible="True" VisibleIndex="313">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n1"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
 
-                                <dxg:GridColumn FieldName="饰品.WeightPrice"  Header="按重批发价" Visible="True" VisibleIndex="314"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="饰品.WeightPrice"  Header="按重批发价" Visible="True" VisibleIndex="314">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n2"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.按重成本价"  Header="按重成本价" Visible="True" VisibleIndex="312"></dxg:GridColumn>
-                                <dxg:GridColumn UnboundType="Decimal"  FieldName="按重销售额" UnboundExpression="饰品.WeightPrice * 重量"  Header="按重销售额"  Visible="True" VisibleIndex="315"></dxg:GridColumn>
+                                <dxg:GridColumn UnboundType="Decimal"  FieldName="按重销售额" UnboundExpression="饰品.WeightPrice * 重量"  Header="按重销售额"  Visible="True" VisibleIndex="315">
+                                    <dxg:GridColumn.EditSettings>
+                                        <dxe:TextEditSettings DisplayFormat="n1"></dxe:TextEditSettings>
+                                    </dxg:GridColumn.EditSettings>
+                                </dxg:GridColumn>
 
                             </dxg:GridControl>
 

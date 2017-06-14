@@ -20,7 +20,12 @@ namespace ZtxFrameWork.UI.QueryList
 
         public static 饰品销售明细ViewModel Create()
         {
+            string sql=$@" seleect *
+                            from table
+                              where name>={System.DateTime.Now}";
+
             return ViewModelSource.Create(() => new 饰品销售明细ViewModel());
+
         }
 
         protected 饰品销售明细ViewModel()
@@ -38,24 +43,28 @@ namespace ZtxFrameWork.UI.QueryList
 
                 //    Mouse.OverrideCursor = Cursors.Wait;
 
-                Entities = await DbFactory.Instance.CreateDbContext().销售单明细s.Where(t => t.饰品ID == id).Select(t => new {
+                Entities = await DbFactory.Instance.CreateDbContext().销售单明细s.Where(t => t.饰品ID == id).Select(t => new
+                {
 
-                    销售日期=   t.销售单.日期,
-                   销售单号 =t.销售单.编号,
-                    操作员=  t.销售单.操作员.DispalyName,
-                    会员=  t.销售单.会员.姓名,
-                    分店=t.销售单.分店.名称,
-                    数量= t.数量,
-                    重量= t.重量,
-                    金额= t.金额
+                    销售日期 = t.销售单.日期,
+                    销售单号 = t.销售单.编号,
+                    操作员 = t.销售单.操作员.DispalyName,
+                    会员 = t.销售单.会员.姓名,
+                    分店 = t.销售单.分店.名称,
+                    数量 = t.数量,
+                    重量 = t.重量,
+                    折扣 = t.折扣,
+                    折后销售价= System.Math.Round( t.销售价*t.折扣,2),
+                    当时金属价 =  t.当时金属价,
+                    金额 = t.金额
 
-                
+
                 }).ToListAsync<dynamic>();
 
 
-            
 
-             
+
+
 
                 //    Mouse.OverrideCursor = null;
 

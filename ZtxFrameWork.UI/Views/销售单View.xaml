@@ -25,6 +25,7 @@
         <behaviors:UserControlDefaultLoad  />
         <dx:WindowedDocumentUIService x:Name="QueryListDocumentManagerService"
                                       DocumentShowMode="Dialog"
+         
                                       WindowType="{x:Type dxr:DXRibbonWindow}">
             <dx:WindowedDocumentUIService.WindowStyle>
                 <Style TargetType="{x:Type dx:DXWindow}">
@@ -319,7 +320,7 @@
                                             FieldName="饰品.石头颜色.名称"
                                             Header="石头颜色"
                                             ReadOnly="True" />
-                            <dxg:GridColumn Width="50" FieldName="数量">
+                            <dxg:GridColumn Width="50" x:Name="数量" FieldName="数量">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings AllowNullInput="False"
                                                           Mask="d"
@@ -344,9 +345,9 @@
                             </dxg:GridColumn>
                             <dxg:GridColumn Width="80"
                                             FieldName="工费"
-                                            Header="工费"
+                                            Header="工费" ReadOnly="True"
                                             IsSmart="True" />
-                            <dxg:GridColumn Width="80"
+                            <dxg:GridColumn Width="80" ReadOnly="True"
                                             FieldName="销售价"
                                             Header="销售价"
                                             IsSmart="True" />
@@ -358,10 +359,12 @@
                                             FieldName="折前价" Visible="False"
                                             Header="折前价"
                                             IsSmart="True"  ReadOnly="True" />
-                            <dxg:GridColumn Width="80"
-                                            FieldName="金额"
-                                            Header="折后销售价"
-                                            IsSmart="True" ReadOnly="True" />
+                           
+                            <dxg:GridColumn Width="80" UnboundType="Decimal" FieldName="折后销售价" UnboundExpression="([销售价] * [折扣])" Header="折后销售价"  Visible="True">
+                                <dxg:GridColumn.EditSettings>
+                                    <dxe:TextEditSettings DisplayFormat="n2"></dxe:TextEditSettings>
+                                </dxg:GridColumn.EditSettings>
+                            </dxg:GridColumn>
                             <dxg:GridColumn Width="80"
                                             FieldName="金额"
                                             Header="金额"

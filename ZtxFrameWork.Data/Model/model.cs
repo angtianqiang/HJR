@@ -945,11 +945,24 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.折扣, ref _折扣, value); }
         }
         private decimal _折前价;
+        [Display(Name = "折前价", AutoGenerateField = false)]
         public decimal 折前价
         {
             get { return _折前价; }
             set { Set<decimal>(() => this.折前价, ref _折前价, value); }
         }
+        private decimal _当时金属价;
+        public decimal 当时金属价
+        {
+            get { return _当时金属价; }
+            set { Set<decimal>(() => this.当时金属价, ref _当时金属价, value); }
+        }
+        //用于报表调用
+        public decimal 折后单价
+        { get {
+                return System.Math.Round(this._折扣 * this._销售价, 2);
+
+            } }
         private decimal _金额;
         [Editable(false)]
         public decimal 金额

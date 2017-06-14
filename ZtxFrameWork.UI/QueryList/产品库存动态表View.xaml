@@ -1,5 +1,5 @@
-﻿<UserControl x:Class="ZtxFrameWork.UI.QueryList.销售单明细表View"
-               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="ZtxFrameWork.UI.QueryList.产品库存动态表View"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.QueryList"
              xmlns:Views="clr-namespace:ZtxFrameWork.UI.QueryList"
@@ -16,7 +16,7 @@
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:销售单明细表ViewModel}"
+             DataContext="{dxmvvm:ViewModelSource Type=ViewModels:产品库存动态表ViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
     <dxmvvm:Interaction.Behaviors>
         <behaviors:UserControlDefaultLoad />
@@ -24,14 +24,14 @@
         <dx:DialogService x:Name="FindDialogWindow" DialogWindowStartupLocation="CenterOwner">
             <dx:DialogService.ViewTemplate>
                 <DataTemplate>
-                    <Views:销售单明细表_ExpressionView />
+                    <Views:产品库存动态表_ExpressionView />
                 </DataTemplate>
             </dx:DialogService.ViewTemplate>
             <dx:DialogService.DialogStyle>
                 <Style TargetType="{x:Type dx:DXDialogWindow}">
                     <Setter Property="WindowStyle" Value="ToolWindow" />
-                    <Setter Property="Height" Value="410" />
-                    <Setter Property="Width" Value="400" />
+                    <Setter Property="Height" Value="200" />
+                    <Setter Property="Width" Value="300" />
                 </Style>
             </dx:DialogService.DialogStyle>
         </dx:DialogService>
@@ -45,26 +45,23 @@
                                       Caption="{Binding ReportTitle}">
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
                             <dxg:GridControl 
-                                             ItemsSource="{Binding Entities}"  AutoExpandAllGroups="True"
+                                             ItemsSource="{Binding Entities}"
                                              SelectedItem="{Binding SelectedEntity,
                                                                     Mode=TwoWay}"
                                           Style="{StaticResource ResourceKey=ReportGridControl}" >
                                 <dxg:GridControl.TotalSummary>
-                                    <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
-                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
-                                    <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="累计入库数量" SummaryType="Sum" DisplayFormat="{}{0:d}"/>
+                                    <dxg:GridSummaryItem FieldName="共入库存次数" SummaryType="Sum" DisplayFormat="{}{0:n0}"/>
+                                    <dxg:GridSummaryItem FieldName="累计销售数量" SummaryType="Sum" DisplayFormat="{}{0:n0}"/>
+                                    <dxg:GridSummaryItem FieldName="共销售次数" SummaryType="Sum" DisplayFormat="{}{0:n0}"/>
+                                    <dxg:GridSummaryItem FieldName="现有库存数量" SummaryType="Sum" DisplayFormat="{}{0:n0}"/>
+                                    <dxg:GridSummaryItem FieldName="现有库存重量" SummaryType="Sum" DisplayFormat="{}{0:n1}"/>
+                                    <dxg:GridSummaryItem FieldName="平均月销数量" SummaryType="Sum" DisplayFormat="{}{0:n0}"/>
                                 </dxg:GridControl.TotalSummary>
-                                <dxg:GridControl.GroupSummary>
-
-                                    <dxg:GridSummaryItem FieldName="数量" SummaryType="Sum" ShowInGroupColumnFooter="数量"  DisplayFormat="{}{0:d}"/>
-                                    <dxg:GridSummaryItem FieldName="重量" SummaryType="Sum" ShowInGroupColumnFooter="重量"  DisplayFormat="{}{0:n1}"/>
-                                    <dxg:GridSummaryItem FieldName="金额" SummaryType="Sum" ShowInGroupColumnFooter="金额"  DisplayFormat="{}{0:n1}"/>
-                                </dxg:GridControl.GroupSummary>
                                 <dxg:GridControl.View>
                                     <dxg:TableView Name="View"                                                 
                                                    Style="{StaticResource ResourceKey=ReportTableView}" />
                                 </dxg:GridControl.View>
-                                <dxg:GridColumn FieldName="编号" Header="编号"     GroupIndex="0"></dxg:GridColumn>
                             </dxg:GridControl>
                         </dxlc:LayoutGroup>
                     </dxdo:LayoutPanel>

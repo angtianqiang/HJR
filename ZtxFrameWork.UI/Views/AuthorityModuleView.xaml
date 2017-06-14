@@ -59,9 +59,12 @@
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="编辑">
                         <dxe:CheckEdit EditValue="{Binding Entity.Edit, Mode=TwoWay}" />
-                    </dxlc:LayoutItem>
+                    </dxlc:LayoutItem> 
                     <dxlc:LayoutItem Label="删除">
                         <dxe:CheckEdit EditValue="{Binding Entity.Delete, Mode=TwoWay}" />
+                    </dxlc:LayoutItem>
+                    <dxlc:LayoutItem Label="导出">
+                        <dxe:CheckEdit EditValue="{Binding Entity.Export, Mode=TwoWay}" />
                     </dxlc:LayoutItem>
                     <dxlc:LayoutItem Label="打印">
                         <dxe:CheckEdit EditValue="{Binding Entity.Print, Mode=TwoWay}" />
