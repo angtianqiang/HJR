@@ -482,6 +482,14 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.库存总金额, ref _库存总金额, value); }
         }
 
+
+        private string _备注;
+        public string 备注
+        {
+            get { return _备注; }
+            set { Set<string>(() => this.备注, ref _备注, value); }
+        }
+
         public virtual ICollection<饰品提成> 饰品提成s { get; set; }
 
 
@@ -952,17 +960,28 @@ namespace ZtxFrameWork.Data.Model
             set { Set<decimal>(() => this.折前价, ref _折前价, value); }
         }
         private decimal _当时金属价;
+        [Display(Name = "当时金属价", AutoGenerateField = false)]
         public decimal 当时金属价
         {
             get { return _当时金属价; }
             set { Set<decimal>(() => this.当时金属价, ref _当时金属价, value); }
         }
         //用于报表调用
+        private decimal _折后单价;
         public decimal 折后单价
-        { get {
-                return System.Math.Round(this._折扣 * this._销售价, 2);
+        {
+            get { return _折后单价; }
+            set { Set<decimal>(() => this.折后单价, ref _折后单价, value); }
+        }
 
-            } }
+        private decimal _成本;
+        [Display(Name = "成本", AutoGenerateField = false)]
+        public decimal 成本
+        {
+            get { return _成本; }
+            set { Set<decimal>(() => this.成本, ref _成本, value); }
+        }
+
         private decimal _金额;
         [Editable(false)]
         public decimal 金额

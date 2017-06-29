@@ -112,6 +112,8 @@
         <Setter Property="AllowBestFit" Value="True" />
         <!--<Setter Property="BestFitMode" Value="DistinctValues" />-->
         <Setter Property="BestFitMode" Value="VisibleRows" />
+        <Setter Property="PrintAutoWidth" Value="True" />
+       
     </Style>
     <!--  明细表细风格  -->
     <Style x:Key="DetailsTableView" TargetType="{x:Type dxg:TableView}">

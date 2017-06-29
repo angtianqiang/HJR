@@ -359,8 +359,8 @@
                                             FieldName="折前价" Visible="False"
                                             Header="折前价"
                                             IsSmart="True"  ReadOnly="True" />
-                           
-                            <dxg:GridColumn Width="80" UnboundType="Decimal" FieldName="折后销售价" UnboundExpression="([销售价] * [折扣])" Header="折后销售价"  Visible="True">
+
+                            <dxg:GridColumn Width="80" UnboundType="Decimal" FieldName="折后单价"  Header="折后销售价"  Visible="True">
                                 <dxg:GridColumn.EditSettings>
                                     <dxe:TextEditSettings DisplayFormat="n2"></dxe:TextEditSettings>
                                 </dxg:GridColumn.EditSettings>

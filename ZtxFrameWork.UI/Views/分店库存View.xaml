@@ -15,6 +15,8 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                         xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing"  
+               xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
            
              mc:Ignorable="d"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:分店库存ViewModel}"
@@ -90,23 +92,19 @@
                                         KeyGesture="CTRL+SHIFT+E"
                                         LargeGlyph="/ZtxFrameWork.UI;component/Images/export.png">
                                 <dxb:BarCheckItem Command="{Binding ExportToXlsxCommand}"
-                                              CommandParameter="{Binding Path=DataView,
-                                                                         RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              CommandParameter="{Binding  ElementName=View}"
                                               Content="xlsx"
                                               Glyph="/ZtxFrameWork.UI;component/Images/ExportToXLSX_16x16.png" />
                                 <dxb:BarCheckItem Command="{Binding ExportToXlsCommand}"
-                                              CommandParameter="{Binding Path=DataView,
-                                                                         RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              CommandParameter="{Binding  ElementName=View}"
                                               Content="xls"
                                               Glyph="/ZtxFrameWork.UI;component/Images/ExportToXLS_16x16.png" />
                                 <dxb:BarCheckItem Command="{Binding ExportToPdfCommand}"
-                                              CommandParameter="{Binding Path=DataView,
-                                                                         RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                              CommandParameter="{Binding  ElementName=View}"
                                               Content="pdf"
                                               Glyph="/ZtxFrameWork.UI;component/Images/ExportToPDF_16x16.png" />
                                 <dxb:BarCheckItem Command="{Binding ExportToImageCommand}"
-                                              CommandParameter="{Binding Path=DataView,
-                                                                         RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                             CommandParameter="{Binding  ElementName=View}"
                                               Content="image"
                                               Glyph="/ZtxFrameWork.UI;component/Images/ExportToIMG_16x16.png" />
                             </dxb:BarSubItem>
@@ -196,7 +194,20 @@
                                             </Image>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
-                              
+                                    <dxg:GridColumn.PrintCellStyle>
+                                        <Style TargetType="dxe:BaseEdit" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
+                                            <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
+
+                                            <Setter Property="DisplayTemplate">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Image   Source="{Binding Path=RowData.Row.饰品.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" ></Image>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                        </Style>
+                                    </dxg:GridColumn.PrintCellStyle>
                                 </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="302" Fixed="Left"></dxg:GridColumn>
@@ -245,7 +256,7 @@
                                         <dxe:TextEditSettings DisplayFormat="n1"></dxe:TextEditSettings>
                                     </dxg:GridColumn.EditSettings>
                                 </dxg:GridColumn>
-
+                                <dxg:GridColumn FieldName="饰品.备注" Header="备注"  Visible="True" VisibleIndex="316" ></dxg:GridColumn>
                             </dxg:GridControl>
 
                         </dxlc:LayoutGroup>

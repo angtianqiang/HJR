@@ -16,7 +16,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new DbOperatorLogCollectionViewModel());
         }
-        protected DbOperatorLogCollectionViewModel() : base(DbFactory.Instance, x => x.DbOperatorLogs, query => query.OrderByDescending(x=>x.OperatorOn).Take(App.ViewTopCount), x => x.ID,permissionTitle: "单据状态更改日志")
+        protected DbOperatorLogCollectionViewModel() : base(DbFactory.Instance, x => x.DbOperatorLogs, query => query.OrderByDescending(x=>x.OperatorOn).Take(App.ViewTopCount), x => x.ID,permissionTitle: "数据存储操作日志")
         {
 
         }

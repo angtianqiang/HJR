@@ -35,7 +35,7 @@
                                     PopupWidth="300" PopupHeight="200"
                                     TabIndex="0"
                                     ValueMember="ID" Width="151" Height="25" Canvas.Left="148" Canvas.Top="69" />
-                <dxe:TextEdit x:Name="txtUserName" Canvas.Left="148" Canvas.Top="99" Width="150" Height="25"  FontSize="16" FontWeight="Bold" Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" />
+                <dxe:TextEdit CharacterCasing="Upper" x:Name="txtUserName" Canvas.Left="148" Canvas.Top="99" Width="150" Height="25"  FontSize="16" FontWeight="Bold" Text="{Binding UserName,UpdateSourceTrigger=PropertyChanged}" />
                 <dxe:PasswordBoxEdit Canvas.Left="148" Canvas.Top="127" Width="150" Height="25" FontSize="16" FontWeight="Bold" Text="{Binding PassWord, UpdateSourceTrigger=PropertyChanged}" />
                 <Button Canvas.Left="148" Canvas.Top="160" Width="64" Height="27" Command="{Binding LoginCommand}" Content="登录" />
                 <TextBlock Canvas.Left="233" Canvas.Top="50" Width="76" Height="13" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe Script" FontSize="10" Foreground="#FF207E7E" RenderTransformOrigin="-0.327,1.192" Text="by:郑天祥" TextWrapping="Wrap" />

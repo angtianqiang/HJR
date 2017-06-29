@@ -55,6 +55,7 @@ namespace ZtxFrameWork.UI.QueryList
             public decimal 现有库存重量 { get; set; }
             [DisplayFormat( DataFormatString = "N0")]
             public decimal 平均月销数量 { get; set; }
+            public string 备注 { get; set; }
         }
 
     protected override System.Collections.Generic.List<dynamic> GetNewData(Expression<Func<入库单明细, bool>> AdvancedExpression)
@@ -115,8 +116,8 @@ namespace ZtxFrameWork.UI.QueryList
                                             sp.[按件成本价],
                                             kc.[数量] as 现有库存数量,
                                             kc.[重量] as 现有库存重量,
-                                            累计销售数量/(datediff(day,首次入库时间,getdate())/30.0 ) as 平均月销数量
- 
+                                            累计销售数量/(datediff(day,首次入库时间,getdate())/30.0 ) as 平均月销数量,
+                                            sp.[备注]
                                             FROM #B
                                             left join #C on #b.饰品ID=#c.饰品ID
                                             left join #D on #c.饰品ID=#d.饰品ID

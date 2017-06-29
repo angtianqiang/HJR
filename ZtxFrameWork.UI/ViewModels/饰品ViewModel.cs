@@ -55,6 +55,10 @@ namespace ZtxFrameWork.UI.ViewModels
 
         public async void Update饰品类型Source()
         {
+            if (this.Entity==null)
+            {
+                return;
+            }
             饰品类型Source = await DbFactory.Instance.CreateDbContext().饰品类型s.Where(t => t.类别ID == this.Entity.类别ID).ToListAsync();
         }
         public  void Init()
@@ -85,6 +89,12 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             base.OnBeforeEntityDeleted(dbContext, primaryKey, entity);
             dbContext.库存s.RemoveRange(dbContext.库存s.Where(t=>t.饰品ID==entity.ID).ToArray());
+            var pic = dbContext.饰品图片s.Where(t => t.ID == entity.饰品图片ID).SingleOrDefault();
+            if (pic!=null)
+            {
+                dbContext.饰品图片s.Remove(pic);
+            }
+
         }
         #endregion
     }

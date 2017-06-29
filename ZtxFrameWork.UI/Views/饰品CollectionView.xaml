@@ -15,6 +15,8 @@
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing"  
+               xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
              d:DesignHeight="300"
              d:DesignWidth="300"
              DataContext="{dxmvvm:ViewModelSource Type=ViewModels:饰品CollectionViewModel}"
@@ -44,7 +46,7 @@
                     <Setter Property="dx:ScrollBarExtensions.ScrollBarMode" Value="TouchOverlap" />
                     <Setter Property="Icon" Value="{Binding IcoPath, Source={StaticResource ResourceKey=AppSet}}" />
                     <Setter Property="Width" Value="800" />
-                    <Setter Property="Height" Value="570" />
+                    <Setter Property="Height" Value="670" />
                 </Style>
             </dx:WindowedDocumentUIService.WindowStyle>
         </dx:WindowedDocumentUIService>
@@ -74,12 +76,12 @@
                                     </dxmvvm:EventToCommand>
                                 </dxmvvm:Interaction.Behaviors>
                                 <dxg:GridControl.View>
-                                    <dxg:TableView Name="View" Style="{StaticResource CollectionsTableView}"  RowMinHeight="40"    />
+                                    <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"  RowMinHeight="40"    />
                                 </dxg:GridControl.View>
-                                <dxg:GridColumn   Header="图片" FieldName="饰品图片.图片" Visible="True" VisibleIndex="1" ReadOnly="True" Fixed="Left">
+                                <dxg:GridColumn     Header="图片" FieldName="饰品图片.图片" Visible="True" VisibleIndex="1" ReadOnly="True" Fixed="Left">
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
-                                            <Image  Name="PART_Editor" Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" >
+                                            <Image   Name="PART_Editor" Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" >
                                                 <Image.ContextMenu>
                                                     <ContextMenu>
                                                         <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
@@ -88,8 +90,22 @@
                                             </Image>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
+                                    <dxg:GridColumn.PrintCellStyle>
+                                        <Style TargetType="dxe:BaseEdit" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
+                                            <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
+                                           
+                                            <Setter Property="DisplayTemplate">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Image   Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" ></Image>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                           
+                                        </Style>
+                                    </dxg:GridColumn.PrintCellStyle>
                                 </dxg:GridColumn>
-                                <dxg:GridColumn FieldName="编号" Header="编号" Visible="True" VisibleIndex="2" Fixed="Left"></dxg:GridColumn>
+                                <dxg:GridColumn FieldName="编号"  Header="编号" Visible="True" VisibleIndex="2" Fixed="Left"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="品名.名称" Header="品名" Visible="True" VisibleIndex="3"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品类型.名称" Header="饰品类型" Visible="True" VisibleIndex="3"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="电镀方式.名称" Header="电镀方式" Visible="True" VisibleIndex="3"></dxg:GridColumn>

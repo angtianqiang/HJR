@@ -51,7 +51,8 @@ namespace ZtxFrameWork.UI.QueryList
                     按重批发价 = t.按重批发价,
                     按件成本价 = t.按件成本价,
                     按重成本价 = t.按重成本价,
-                    图片 = t.饰品图片.图片
+                    图片 = t.饰品图片.图片,
+                    备注=  t.备注
                 })
                 .ToList<dynamic>();
         }

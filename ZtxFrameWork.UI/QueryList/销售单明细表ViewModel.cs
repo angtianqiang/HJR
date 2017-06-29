@@ -51,9 +51,11 @@ namespace ZtxFrameWork.UI.QueryList
                     数量 = t.数量,
                     重量 = t.重量,
                     折扣 = t.折扣,
-                    折后销售价 = System.Math.Round(t.销售价 * t.折扣, 2),
+                    折后销售价 =t.折后单价,
                     当时金属价 = t.当时金属价,
                     金额 = t.金额,
+                    成本=t.成本,
+                   利润 =t.金额- t.成本,
                     状态 = t.销售单.状态,
                     备注 = t.销售单.备注
                 })

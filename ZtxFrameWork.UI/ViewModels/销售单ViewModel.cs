@@ -40,8 +40,26 @@ namespace ZtxFrameWork.UI.ViewModels
             Messenger.Default.Register<string>(this, "数量更改" + Token, m =>
             {
                 var item = SelectChildEntity;
-                item.重量 = item.饰品?.单重 ?? 0.0M * item.数量;
+                try
+                {
+                    item.重量 = item.饰品.单重 * item.数量;
+                }
+                catch { }
+           
                 UpdatePrice();
+            });
+            Messenger.Default.Register<string>(this, "更新折扣" + Token, m =>
+            {
+                var item = SelectChildEntity;
+                item.折后单价 = System.Math.Round(item.销售价* item.折扣, 2);   
+                UpdatePrice();
+            });
+            Messenger.Default.Register<string>(this, "更新折后单价" + Token, m =>
+            {
+                var item = SelectChildEntity;
+                item.折扣 = System.Math.Round(item.折后单价 / item.销售价, 2);
+                UpdatePrice();
+
             });
             Messenger.Default.Register<string>(this, "更新金额" + Token, m =>
             {
@@ -106,13 +124,21 @@ namespace ZtxFrameWork.UI.ViewModels
         public void UpdatePrice()
         {
             var item = SelectChildEntity;
-            item.销售价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.饰品?.QtyPrice ?? 0 : item.饰品?.WeightPrice ?? 0, 2);
-            item.工费 = item.工费计法 == 费用计法.按件 ? item.饰品?.批发工费 ?? 0 : item.饰品?.批发工费 ?? 0;
-            //   item.重量 = item.数量 * item.饰品.单重;
+            //item.销售价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.饰品?.QtyPrice ?? 0 : item.饰品?.WeightPrice ?? 0, 2);
+            //item.工费 = item.工费计法 == 费用计法.按件 ? item.饰品?.批发工费 ?? 0 : item.饰品?.批发工费 ?? 0;
+       //     item.重量 = item.数量 * item.饰品.单重;
+            if (item.工费计法 == 费用计法.按件)
+            {
+                item.重量 = item.数量 * item.饰品.单重;
+            }
+
             item.折前价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.数量 * item.销售价 : item.重量 * item.销售价, 2);
 
 
-            item.金额 = System.Math.Round(item.折前价 * item.折扣, 2);
+            //      item.金额 = System.Math.Round(item.折前价 * item.折扣, 2);
+            item.金额 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.数量 * item.折后单价 : item.重量 * item.折后单价, 2);
+            item.成本= item.工费计法 == 费用计法.按件 ? item.饰品.按件成本价 * item.数量 : item.饰品.按重成本价 * item.重量;
+
             UpdateTotal();
         }
         public virtual List<User> 操作员Source { get; set; }
@@ -252,7 +278,10 @@ namespace ZtxFrameWork.UI.ViewModels
                 }
             }
 
-        
+            var item = SelectChildEntity;
+            item.销售价 = System.Math.Round(item.工费计法 == 费用计法.按件 ? item.饰品?.QtyPrice ?? 0 : item.饰品?.WeightPrice ?? 0, 2);
+            item.工费 = item.工费计法 == 费用计法.按件 ? item.饰品?.批发工费 ?? 0 : item.饰品?.批发工费 ?? 0;
+            item.折后单价 = System.Math.Round(item.销售价 * item.折扣, 2);
             UpdatePrice();
 
         }
