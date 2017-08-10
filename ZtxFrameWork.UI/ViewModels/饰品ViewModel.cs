@@ -19,10 +19,10 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 饰品ViewModel());
         }
-        protected 饰品ViewModel() : base(DbFactory.Instance, x => x.饰品s, x=>x.ID, x => x.编号, "饰品")
+        protected 饰品ViewModel() : base(DbFactory1.Instance, x => x.饰品s, x=>x.ID, x => x.编号, "饰品")
         {
-            DB.Configuration.LazyLoadingEnabled = true;
-            DB.Configuration.ProxyCreationEnabled = true;
+          DB.Configuration.LazyLoadingEnabled = true;
+          DB.Configuration.ProxyCreationEnabled = true;
 
          Init();
             //Init1();

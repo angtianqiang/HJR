@@ -76,13 +76,13 @@
                                                    Style="{StaticResource ResourceKey=ReportTableView}" />
                                 </dxg:GridControl.View>
                                 <dxg:GridColumn FieldName="ID" Header="ID" Visible="False"></dxg:GridColumn>
-                                <dxg:GridColumn FieldName="图片" Header="图片" Visible="True"  Fixed="Left">
+                                <!--<dxg:GridColumn FieldName="图片" Header="图片" Visible="True"  Fixed="Left">
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
                                             <Image Source="{Binding Path=Value}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" />
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
-                                </dxg:GridColumn>
+                                </dxg:GridColumn>-->
                                 <dxg:GridColumn FieldName="编号" Header="编号" Visible="True"  Fixed="Left"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="库存重量" Header="库存重量"    >
                                     <dxg:GridColumn.EditSettings>

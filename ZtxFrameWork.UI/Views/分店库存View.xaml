@@ -182,7 +182,7 @@
                                     <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"   RowMinHeight="40"   ShowGroupFooters="True" GroupSummaryDisplayMode="Default" />
                                 </dxg:GridControl.View>
 
-                                <dxg:GridColumn FieldName="饰品.饰品图片.图片"   Header="图片" Visible="True" VisibleIndex="301" Fixed="Left" >
+                                <!--<dxg:GridColumn FieldName="饰品.饰品图片.图片"   Header="图片" Visible="True" VisibleIndex="301" Fixed="Left" >
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
                                             <Image  Name="PART_Editor" Source="{Binding Path=RowData.Row.饰品.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill">
@@ -208,7 +208,7 @@
 
                                         </Style>
                                     </dxg:GridColumn.PrintCellStyle>
-                                </dxg:GridColumn>
+                                </dxg:GridColumn>-->
 
                                 <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="302" Fixed="Left"></dxg:GridColumn>
 
