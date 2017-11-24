@@ -453,7 +453,7 @@ public virtual async void SK()
 
         skd.编号 = await CollectionViewModel<收款单, ZtxDB, long>.GetNewCode("SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
         skd.收款日期 = DateTime.Now;
-        skd.会员ID = Entity.操作员ID;
+        skd.会员ID = Entity.会员ID;
         skd.状态 = "N";
         //  skd.状态 = "Y";//直接生效
         skd.分店ID = Entity.分店ID;
