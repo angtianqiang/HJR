@@ -126,6 +126,7 @@ namespace ZtxFrameWork.UI.QueryList
                                             LEFT join [dbo].[饰品类型] AS LX ON SP.[类别ID]=LX.ID
                                             left join [dbo].[单位] as dw on SP.[单位ID]=dw.ID
                                             left join [dbo].[库存] as kc on sp.id=kc.饰品ID and kc.[分店ID]={0}
+                                            where sp.[编号] is not null
                                             DROP TABLE #A
                                             DROP TABLE #B
                                             DROP TABLE #C
