@@ -1,18 +1,19 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
-                    xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges"
-                     xmlns:converter="clr-namespace:ZtxFrameWork.UI.Converters"
-                    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:ZtxFrameWork.UI.Converters"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxga="http://schemas.devexpress.com/winfx/2008/xaml/gauges"
+    xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys">
 
-    <Style TargetType="{x:Type TextElement }">
-        <Setter Property="FontFamily" Value="微软雅黑"/>       
+    <Style TargetType="{x:Type TextElement}">
+        <Setter Property="FontFamily" Value="微软雅黑" />
     </Style>
-    <Style TargetType="{x:Type TextBlock }">
-        <Setter Property="FontFamily" Value="微软雅黑"/>       
+    <Style TargetType="{x:Type TextBlock}">
+        <Setter Property="FontFamily" Value="微软雅黑" />
     </Style>
-    
+
     <converter:GridRowIndicatorConerter x:Key="GridRowIndicatorConerter" />
     <converter:CommObjectConverter x:Key="CommObjectConverter" />
     <converter:BoolToVisbiltyConverter x:Key="BoolToVisbiltyConverter" />
@@ -35,15 +36,17 @@
     </Style>
     <!--  表格行号  -->
     <DataTemplate x:Key="GridRowIndicator">
-        <StackPanel x:Name="root"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Background="Transparent"
-                    Orientation="Horizontal">
+        <StackPanel
+            x:Name="root"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Background="Transparent"
+            Orientation="Horizontal">
             <TextBlock Margin="0,0,0,0" Text="{Binding Path=RowHandle.Value, Converter={StaticResource GridRowIndicatorConerter}}" />
-            <ContentPresenter x:Name="iconPresenter"
-                              Content="{x:Null}"
-                              IsHitTestVisible="False" />
+            <ContentPresenter
+                x:Name="iconPresenter"
+                Content="{x:Null}"
+                IsHitTestVisible="False" />
         </StackPanel>
         <DataTemplate.Triggers>
             <DataTrigger Binding="{Binding Path=IndicatorState}" Value="Focused">

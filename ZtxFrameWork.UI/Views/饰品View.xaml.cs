@@ -28,19 +28,32 @@ namespace ZtxFrameWork.UI.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (imageEdit.EditValue==null)
+            //if (imageEdit.EditValue == null)
+            //{
+            //    return;
+            //}
+            //byte[] temp = imageEdit.EditValue as byte[];
+
+            ////     BitmapSource image=
+            //var window = new Window() { Width = 600, Height = 500, WindowStyle = WindowStyle.SingleBorderWindow, WindowStartupLocation = WindowStartupLocation.CenterOwner, ShowActivated = true, Title = "浏览图片" };
+            //var ImageViewer = new Controls.ImageViewer() { Margin = new Thickness(0) };
+            //ImageViewer.ImageSource = ByteArrayToBitmapImage(temp);
+            //window.Content = ImageViewer;
+            //window.ShowDialog();
+
+
+            if (imageEdit.Source == null)
             {
                 return;
             }
-            byte[] temp = imageEdit.EditValue as byte[];
+        
 
-       //     BitmapSource image=
-            var window = new Window() { Width = 600, Height =500, WindowStyle = WindowStyle.SingleBorderWindow, WindowStartupLocation = WindowStartupLocation.CenterOwner, ShowActivated = true, Title = "浏览图片" };
+            //     BitmapSource image=
+            var window = new Window() { Width = 600, Height = 500, WindowStyle = WindowStyle.SingleBorderWindow, WindowStartupLocation = WindowStartupLocation.CenterOwner, ShowActivated = true, Title = "浏览图片" };
             var ImageViewer = new Controls.ImageViewer() { Margin = new Thickness(0) };
-            ImageViewer.ImageSource = ByteArrayToBitmapImage(temp);
+            ImageViewer.ImageSource = imageEdit.Source as BitmapSource;
             window.Content = ImageViewer;
             window.ShowDialog();
-         
         }
         public static BitmapImage ByteArrayToBitmapImage(byte[] byteArray)
         {

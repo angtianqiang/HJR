@@ -36,7 +36,9 @@ namespace ZtxFrameWork.UI.ViewModels
             get
             {
 
-                ICollectionView view = CollectionViewSource.GetDefaultView(Theme.Themes.Where(t => (t.Category == Theme.Office2010Category)).Select(t => new ThemeViewModel(t)).ToArray());
+                ICollectionView view = CollectionViewSource.GetDefaultView(Theme.Themes
+                    .Where(t => (t.Category == Theme.Office2010Category))
+                    .Select(t => new ThemeViewModel(t)).ToArray());
                 view.GroupDescriptions.Add(new PropertyGroupDescription("Theme.Category"));
                 return view;
               
@@ -65,9 +67,9 @@ namespace ZtxFrameWork.UI.ViewModels
 
          
             Modules = new ObservableCollection<Module>();
-            foreach (var item in _modules.Where(t => t.ParentID == null).OrderBy(x => x.SortNo).ToList())
+            foreach (var item in _modules.Where(t =>t.ParentID==null).OrderBy(x => x.SortNo).ToList())
             {
-              InitAndSort(item, _modules);
+             InitAndSort(item, _modules);
                 Modules.Add(item);
             }
             Modules.Where(t => t.ModuleTitle == "系统管理").First().ChildModules.Add(new Module() { ImageName = "Gear-02-WF.png", ModuleTitle = "清除字典缓存" });

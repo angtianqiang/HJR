@@ -1,11 +1,13 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:utils="clr-namespace:ZtxFrameWork.UI.Utils">
 
 
 
-    <utils:ApplicationSet x:Key="AppSet"
-                          Title="思溢饰品分销系统"
-                          IcoPath="Images/arpa.ico" />
+    <utils:ApplicationSet
+        x:Key="AppSet"
+        Title="思溢饰品分销系统"
+        IcoPath="Images/arpa.ico" />
 
 </ResourceDictionary>

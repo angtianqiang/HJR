@@ -535,7 +535,11 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             var list =await ETForStartsWith<TEntity>(dbSet, str, propertyInfo).ToListAsync();
             if (list != null && list.Count > 0)
             {
-                k = list.Select(t => Convert.ToInt32(fun(t).Substring(10, 3))).Max() + 1;
+                //20200408修正因20180115根据客户提出的要求，编号前加一个分店编号 编号位数取值不对
+                //的问题，改为取最后三数比较
+                var aa = list.Select(t => fun(t).ToString()).ToList<string>();
+                k = aa.Select(t => Convert.ToInt32(t.Substring(t.Length - 3, 3))).Max() + 1;
+              //  k = list.Select(t => Convert.ToInt32(fun(t).Substring(10, 3))).Max() + 1;
             }
             //}
             //catch (Exception ex)

@@ -47,14 +47,14 @@ namespace ZtxFrameWork.UI.QueryList
             public int 累计入库数量 { get; set; }
 
             public int 共入库存次数 { get; set; }
-            public int 累计销售数量 { get; set; }
-            public int 共销售次数 { get; set; }
+            public int? 累计销售数量 { get; set; }
+            public int? 共销售次数 { get; set; }
             public decimal 按重成本价 { get; set; }
             public decimal 按件成本价 { get; set; }
             public int 现有库存数量 { get; set; }
             public decimal 现有库存重量 { get; set; }
             [DisplayFormat( DataFormatString = "N0")]
-            public decimal 平均月销数量 { get; set; }
+            public decimal? 平均月销数量 { get; set; }
             public string 备注 { get; set; }
         }
 
@@ -121,9 +121,9 @@ namespace ZtxFrameWork.UI.QueryList
                                             FROM #B
                                             left join #C on #b.饰品ID=#c.饰品ID
                                             left join #D on #c.饰品ID=#d.饰品ID
-                                            left join [dbo].[饰品] as sp on sp.id=#d.饰品ID
+                                            left join [dbo].[饰品] as sp on sp.id=#b.饰品ID        /*20180115 客户要求显示所有产品的信息 将d.饰品ID改为b.饰品ID*/
                                             LEFT join [dbo].[饰品类别] AS LB ON SP.[类别ID]=LB.ID
-                                            LEFT join [dbo].[饰品类型] AS LX ON SP.[类别ID]=LX.ID
+                                            LEFT join [dbo].[饰品类型] AS LX ON SP.[类型ID]=LX.ID
                                             left join [dbo].[单位] as dw on SP.[单位ID]=dw.ID
                                             left join [dbo].[库存] as kc on sp.id=kc.饰品ID and kc.[分店ID]={0}
                                             where sp.[编号] is not null

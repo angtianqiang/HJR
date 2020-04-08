@@ -8,6 +8,8 @@ using System.Linq.Expressions;
 using ZtxFrameWork.UI.Comm.DataModel;
 using System.Linq;
 using System.Data.Entity;
+using System.Windows.Media.Imaging;
+
 namespace ZtxFrameWork.UI.QueryList
 {
     [POCOViewModel]
@@ -32,7 +34,9 @@ namespace ZtxFrameWork.UI.QueryList
 
         protected override System.Collections.Generic.List<dynamic> GetNewData(Expression<Func<饰品, bool>> AdvancedExpression)
         {
-            return DbFactory.Instance.CreateDbContext().饰品s.Include(t => t.饰品图片)
+        
+
+            return  DbFactory.Instance.CreateDbContext().饰品s
                 .Where(AdvancedExpression)
                 .Select(t => new
                 {
@@ -51,8 +55,8 @@ namespace ZtxFrameWork.UI.QueryList
                     按重批发价 = t.按重批发价,
                     按件成本价 = t.按件成本价,
                     按重成本价 = t.按重成本价,
-                //    图片 = t.饰品图片.图片,
-                    备注=  t.备注
+         //    图片 = new BitmapImage(new Uri($"http://124.232.147.213:88/{t.编号}.png")),
+            备注 =  t.备注
                 })
                 .ToList<dynamic>();
         }

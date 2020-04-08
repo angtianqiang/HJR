@@ -37,7 +37,12 @@ namespace ZtxFrameWork.UI.Behaviors
           if (((UserControl)sender).DataContext !=null)
             {
                 System.Windows.Input.Mouse.OverrideCursor = null;
-                string Token1 = ((dynamic)AssociatedObject.DataContext).Token;
+                //  string Token1 = ((dynamic)AssociatedObject.DataContext).Token;
+
+                //20180115  之前用的方法突然就报错了，不知道为啥
+                Type type = (AssociatedObject.DataContext).GetType();
+                System.Reflection.PropertyInfo propertyInfo = type.GetProperty("Token");
+                var Token1 = propertyInfo.GetValue(AssociatedObject.DataContext, null).ToString();
                 AssociatedObject.Tag = Token1;
                 return;
             }

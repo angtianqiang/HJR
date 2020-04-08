@@ -450,8 +450,8 @@ public virtual async void SK()
     {
         var skd = dbContext.收款单s.Create();
 
-
-        skd.编号 = await CollectionViewModel<收款单, ZtxDB, long>.GetNewCode("SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
+//20180115根据客户提出的要求，编号前加一个分店编号
+        skd.编号 = await CollectionViewModel<收款单, ZtxDB, long>.GetNewCode(App.Current分店.编号 + "SK", DbFactory.Instance, x => x.收款单s, t => t.编号);
         skd.收款日期 = DateTime.Now;
         skd.会员ID = Entity.会员ID;
         skd.状态 = "N";
