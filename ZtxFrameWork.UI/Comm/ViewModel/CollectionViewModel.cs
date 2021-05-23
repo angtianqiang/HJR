@@ -46,9 +46,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TEntity>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-   bool ignoreSelectEntityMessage = false, string permissionTitle = "")
+   bool ignoreSelectEntityMessage = false, string permissionTitle = "", bool allowPage = false)
         {
-            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle));
+            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle,allowPage));
         }
 
         /// <summary>
@@ -67,7 +67,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
    bool ignoreSelectEntityMessage = false,string permissionTitle=""
-            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle)
+            , bool allowPage = false
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle, allowPage)
         {
         }
     }
@@ -100,9 +101,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-            bool ignoreSelectEntityMessage = false, string permissionTitle = "")
+            bool ignoreSelectEntityMessage = false, string permissionTitle = "", bool allowPage = false)
         {
-            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle));
+            return ViewModelSource.Create(() => new CollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle,allowPage));
         }
 
         /// <summary>
@@ -120,8 +121,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer = null,
-            bool ignoreSelectEntityMessage = false, string permissionTitle = ""
-            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle)
+            bool ignoreSelectEntityMessage = false, string permissionTitle = "", bool allowPage = false
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, newEntityInitializer, ignoreSelectEntityMessage,permissionTitle, allowPage)
         {
         }
     }
@@ -158,8 +159,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
              Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression,
             Action<TEntity> newEntityInitializer,
-            bool ignoreSelectEntityMessage, string permissionTitle 
-            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression)
+            bool ignoreSelectEntityMessage, string permissionTitle, bool allowPage = false
+            ) : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, allowPage)
         {
             VerifyProjectionType();
             this.newEntityInitializer = newEntityInitializer;

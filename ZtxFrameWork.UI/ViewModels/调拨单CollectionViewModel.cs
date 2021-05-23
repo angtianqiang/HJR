@@ -18,7 +18,7 @@ namespace ZtxFrameWork.UI.ViewModels
         {
             return ViewModelSource.Create(() => new 调拨单CollectionViewModel());
         }
-        protected 调拨单CollectionViewModel() : base(DbFactory.Instance, x => x.调拨单s, query => query.Include(t => t.源分店).Include(t => t.目标分店).Include(t => t.调拨员).Include(t=>t.签收员).OrderByDescending(x => x.编号).Take(App.ViewTopCount), x =>x.ID,t=>InitEntity(t), permissionTitle: "调拨单")
+        protected 调拨单CollectionViewModel() : base(DbFactory.Instance, x => x.调拨单s, query => query.Include(t => t.源分店).Include(t => t.目标分店).Include(t => t.调拨员).Include(t=>t.签收员).OrderByDescending(x => x.编号).Take(App.ViewTopCount), x =>x.ID,t=>InitEntity(t), permissionTitle: "调拨单", allowPage: true)
         {
 
         }

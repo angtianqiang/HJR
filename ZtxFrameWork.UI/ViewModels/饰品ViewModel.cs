@@ -47,7 +47,7 @@ namespace ZtxFrameWork.UI.ViewModels
         protected override void OnEntityChanged()
         {
             base.OnEntityChanged();
-            image = new BitmapImage(new Uri($"http://124.232.147.213:88/{Entity.编号}.png"));
+          image = new BitmapImage(new Uri($"{App.HttpPath}/{Entity.编号}.png"));
         }
 
         public async void Init1() => 饰品类别Source = await DbFactory.Instance.CreateDbContext().饰品类别s.OrderBy(t => t.排序号).ToListAsync();
@@ -144,14 +144,14 @@ namespace ZtxFrameWork.UI.ViewModels
 
                 //P@ssw0rd  远程密码
 
-                FluentFTP.FtpClient client = new FluentFTP.FtpClient("124.232.147.213", 21,"ZTX", "@dm!N1818#");
-            
-            client.Connect();
+                //  FluentFTP.FtpClient client = new FluentFTP.FtpClient("124.232.147.213", 21,"ZTX", "@dm!N1818#");
+                FluentFTP.FtpClient client = new FluentFTP.FtpClient(App.FtpPath, 21, "ZTX", "@dm!N1818#");
+                client.Connect();
             client.UploadFile(ResultFileName, "/" + Entity.编号 + ".png");
             client.Disconnect();
             client.Dispose();
 
-            image = new BitmapImage(new Uri($"http://124.232.147.213:88/{Entity.编号}.png"));
+            image = new BitmapImage(new Uri($"{App.HttpPath}/{Entity.编号}.png"));
             }
             catch (Exception ee)
             {

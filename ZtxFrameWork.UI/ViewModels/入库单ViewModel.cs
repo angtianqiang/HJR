@@ -1,8 +1,10 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
@@ -12,6 +14,7 @@ using ZtxFrameWork.Data.Model;
 using ZtxFrameWork.UI.Comm.DataModel;
 using ZtxFrameWork.UI.Comm.UI;
 using ZtxFrameWork.UI.Comm.ViewModel;
+using Magicodes.ExporterAndImporter.Core;
 
 namespace ZtxFrameWork.UI.ViewModels
 {
@@ -208,17 +211,17 @@ namespace ZtxFrameWork.UI.ViewModels
                     //   item.单价 = item.计价方式 == 费用计法.按件 ? (item.饰品?.成本工费 ?? 0 : (item.饰品?.材质?.当前价 ?? 0 + item.饰品?.成本工费 ?? 0);
                     switch (item.计价方式)
                     {
-                        case 
+                        case
                             费用计法.按重:
                             item.单价 = (item.饰品?.材质?.当前价 ?? 0) + (item.饰品?.成本工费 ?? 0);
                             break;
                         case 费用计法.按件:
-                            item.单价=(( item.饰品?.成本工费 ?? 0) + (item.饰品?.单重?? 0 )* (item.饰品?.材质?.当前价 ?? 0));
+                            item.单价 = ((item.饰品?.成本工费 ?? 0) + (item.饰品?.单重 ?? 0) * (item.饰品?.材质?.当前价 ?? 0));
                             break;
                         default:
                             break;
                     }
-               
+
                     item.金额 = item.计价方式 == 费用计法.按件 ? item.单价 * item.数量 : item.单价 * item.重量;
                     try
                     {
@@ -378,5 +381,238 @@ namespace ZtxFrameWork.UI.ViewModels
             dbContext.入库单明细s.RemoveRange(entity.入库单明细s);
         }
         #endregion
+
+
+        #region 数据导入
+
+
+        public class Import入库单明细
+        {  
+
+
+            //[ImporterHeader(Name = "", IsIgnore = true)]
+            //[DisplayFormat(DataFormatString = "000")]
+            //    public Int32 序号 { get; set; }
+
+            [ImporterHeader(Name = "", IsIgnore = true)]
+            [Display(Name = "外键ID", AutoGenerateField = false)]
+                public long 饰品ID { get; set; }
+
+            //[ImporterHeader(Name = "", IsIgnore = true)]
+            //[Display(Name = "外键ID", AutoGenerateField = false)]
+            //    public virtual 饰品 饰品 { get; set; }
+
+
+            [ImporterHeader(Name = "饰品编号", IsIgnore = false)]
+            [Required(ErrorMessage = "饰品编号不能为空")]
+            public string 饰品编号 { get; set; }
+
+            [ImporterHeader(Name = "数量", IsIgnore = false)]
+            [Required(ErrorMessage = "数量不能为空")]
+            public Int32 数量 { get; set; }
+
+
+            [ImporterHeader(Name = "重量", IsIgnore = false)]
+            [Required(ErrorMessage = "重量不能为空")]
+            public decimal 重量 { get; set; }
+
+            //[ImporterHeader(Name = "", IsIgnore = true)]
+            //[DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+            //    public decimal 重量 { get; set; }
+
+
+
+            //[ImporterHeader(Name = "单价", IsIgnore = true)]
+            //[DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]
+            //    public decimal 单价 { get; set; }
+
+            //[ImporterHeader(Name = "计价方式", IsIgnore = true)]
+            //public 费用计法 计价方式 { get; set; }
+
+
+            //[ImporterHeader(Name = "金额", IsIgnore = true)]
+            //[DisplayFormat(DataFormatString = "N2", ApplyFormatInEditMode = true)]      
+            //    public decimal 金额 { get; set; }
+
+
+            [ImporterHeader(Name = "费用计法", IsIgnore = false)]
+            public 费用计法 费用计法 { get; set; }
+
+            [ImporterHeader(Name = "备注", IsIgnore = false)]
+            public String 备注 { get; set; }
+
+      
+
+
+    
+
+
+        }
+
+        public virtual async void Import()
+        {
+
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "选择导入的清单文件";
+            //   openFileDialog.Filter = "Excel Files|*.xls|Excel Files|*.xlsx";
+            openFileDialog.Filter = "Excel Files|*.xlsx";
+            openFileDialog.FilterIndex = 0;
+            openFileDialog.Multiselect = false;
+
+            bool DialogResult = openFileDialog.ShowDialog() == true && !string.IsNullOrEmpty(openFileDialog.FileName);
+            if (DialogResult == false) return;
+
+
+
+            Mouse.OverrideCursor = Cursors.Wait;
+            //20200917改用Magicodes.IE组件
+            IImporter Importer = new Magicodes.ExporterAndImporter.Excel.ExcelImporter();
+            var import = await Importer.Import<Import入库单明细>(openFileDialog.FileName);
+            //   import.ShouldNotBeNull();
+            if (import.Exception != null)
+            {
+                Mouse.OverrideCursor = null;
+                MessageBoxService.Show(import.Exception.ToString());
+                return;
+            }
+
+            if (import.RowErrors.Count > 0)
+            {
+                Mouse.OverrideCursor = null;
+                MessageBoxService.Show(Newtonsoft.Json.JsonConvert.SerializeObject(import.RowErrors));
+                return;
+            }
+
+
+
+            //   var products=    DB.饰品s.Select(t => new { t.ID, t.编号 }).ToList();
+            //  List<Import入库单明细> noProductBaseData = new List<Import入库单明细>();
+
+            List<string> noProduct = new List<string>();
+            foreach (var item in import.Data)
+            {
+                if (DB.饰品s.Count(s => s.编号 == item.饰品编号)<=0)
+                {
+                    noProduct.Add(item.饰品编号);
+                }    
+            }
+
+            //如果有没有饰品档案的
+            if (noProduct.Count>0)
+            {
+                Mouse.OverrideCursor = null;
+
+                MessageBoxService.ShowMessage("导入产品没有档案：" + System.Environment.NewLine + string.Join(System.Environment.NewLine, noProduct), "信息提示");
+                return;
+            }
+            //导入
+            foreach (var item in import.Data)
+            {
+
+
+
+
+        
+
+
+                var newRow = DB.入库单明细s.Create();
+                // item.PropertyChanged += Item_PropertyChanged;
+                newRow.DirtyState = DirtyState.Added;
+
+                newRow.饰品编号 = item.饰品编号;
+              //  newRow.饰品ID = item.饰品ID;
+  
+                newRow.数量 = item.数量;
+                newRow.重量 = item.重量;
+                newRow.备注 = item.备注;
+
+
+
+
+                newRow.计价方式 = item.费用计法;
+
+
+
+                newRow.饰品 = DB.饰品s.Include(t => t.单位).Include(t => t.品名).Include(t => t.重量单位).Include(t => t.石头颜色).Include(t => t.电镀方式).Include(t => t.材质)
+                  .First(T => T.编号 == newRow.饰品编号);
+                newRow.饰品ID = newRow.饰品.ID;
+                switch (newRow.计价方式)
+                {
+                    case
+                        费用计法.按重:
+                        newRow.单价 = (newRow.饰品?.材质?.当前价 ?? 0) + (newRow.饰品?.成本工费 ?? 0);
+                        break;
+                    case 费用计法.按件:
+                        newRow.单价 = ((newRow.饰品?.成本工费 ?? 0) + (newRow.饰品?.单重 ?? 0) * (newRow.饰品?.材质?.当前价 ?? 0));
+                        break;
+                    default:
+                        break;
+                }
+
+                newRow.金额 = newRow.计价方式 == 费用计法.按件 ? newRow.单价 * newRow.数量 : newRow.单价 * newRow.重量;
+
+
+
+                //  item.金额 = 12.0M;
+                if (Entity.入库单明细s.Count == 0)
+                {
+                    newRow.序号 = 1;
+                }
+                else
+                {
+                    newRow.序号 = Entity.入库单明细s.Select(t => t.序号).Max() + 1;
+                }
+                Entity.入库单明细s.Add(newRow);
+   
+          
+            }
+            UpdateTotal();
+
+
+            UpdateCommands();
+            Mouse.OverrideCursor = null;
+        }
+        public virtual bool CanImport()
+        {
+            if (this.IsInDesignMode())
+            {
+                return true;
+            }
+            return Entity != null && Entity.状态 == "N" && Entity.分店ID != 0;
+        }
+
+        public virtual async void BuildTemplate()
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Title = "导入导出模块";
+            dlg.ValidateNames = true;
+            dlg.FileName = "入库单导入模板.xlsx";
+            dlg.Filter = "Excel文件 | *.xlsx";
+
+            if (dlg.ShowDialog() == true && !string.IsNullOrEmpty(dlg.FileName))
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                IImporter Importer = new Magicodes.ExporterAndImporter.Excel.ExcelImporter();
+                await Importer.GenerateTemplate<Import入库单明细>(dlg.FileName);
+                Mouse.OverrideCursor = null;
+                if (MessageBoxService.ShowMessage("模板已生成,是否现在打开？", "系统提示", MessageButton.YesNo) != MessageResult.Yes)
+                    return;
+                //   DevExpress.XtraPrinting.Native.ProcessLaunchHelper.StartProcess(dlg.FileName, false);
+
+                //20201028升级DEV20.2.3不支持此方法了
+                DevExpress.XtraPrinting.Native.ProcessLaunchHelper.StartProcess(dlg.FileName);
+            }
+
+        }
+
+
+
+
+
+        #endregion
+
+
+
+
     }
 }

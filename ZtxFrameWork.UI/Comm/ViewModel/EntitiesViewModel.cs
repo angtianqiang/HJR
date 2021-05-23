@@ -47,8 +47,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             IDbFactory<TDbContext> dbFactory,
             Func<TDbContext, DbSet<TEntity>> getDbSetFunc,
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
-             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression)
-            : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression)
+             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression, bool allowPage = false)
+            : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, allowPage)
         {
         }
     }
@@ -186,8 +186,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
               IDbFactory<TDbContext> dbFactory,
             Func<TDbContext, DbSet<TEntity>> getDbSetFunc,
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
-             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression)
-           
+             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression, bool allowPage = false)
+
         {
             //this.unitOfWorkFactory = unitOfWorkFactory;
             //this.getRepositoryFunc = getRepositoryFunc;
@@ -199,6 +199,16 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             this.ChangeTracker = CreateEntitiesChangeTracker();
             if (!this.IsInDesignMode())
                 OnInitializeInRuntime();
+
+            //20180523 分页支持
+            this.AllowPage = allowPage;
+            PageInfo.EventPaging += delegate {
+
+                //         20180604
+                Mouse.OverrideCursor = Cursors.Wait;
+                LoadEntities(false);
+                Mouse.OverrideCursor = null;
+            };
         }
 
         /// <summary>
@@ -252,12 +262,84 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             IsLoading = false;
         }
 
+        #region 20180523 增加分页支持
+        #region 分页控件支持
+
+
+
+        // public virtual List<SumValueModel> SumValues { set; get; }
+        public virtual bool AllowPage { get; set; }
+
+        public virtual PageInfo PageInfo { get; set; } = new PageInfo();
+
+
+        public virtual void MoveFirstPage()
+        {
+            System.Windows.Input.Mouse.OverrideCursor = Cursors.Wait;
+            PageInfo.MoveFirstPage();
+            System.Windows.Input.Mouse.OverrideCursor = null;
+        }
+        public virtual void MoveNextPage()
+        {
+            System.Windows.Input.Mouse.OverrideCursor = Cursors.Wait;
+            PageInfo.MoveNextPage();
+            System.Windows.Input.Mouse.OverrideCursor = null;
+        }
+
+
+        public virtual void MovePrvPage()
+        {
+            System.Windows.Input.Mouse.OverrideCursor = Cursors.Wait;
+            PageInfo.MovePrvPage();
+            System.Windows.Input.Mouse.OverrideCursor = null;
+        }
+        public virtual void MoveLastPage()
+        {
+            System.Windows.Input.Mouse.OverrideCursor = Cursors.Wait;
+            PageInfo.MoveLastPage();
+            System.Windows.Input.Mouse.OverrideCursor = null;
+        }
+        public virtual void Go()
+        {
+            System.Windows.Input.Mouse.OverrideCursor = Cursors.Wait;
+            PageInfo.Go();
+            System.Windows.Input.Mouse.OverrideCursor = null;
+        }
+
+
+        public virtual bool CanMoveFirstPage()
+        {
+
+            return IsLoading != true && PageInfo.CanMoveFistPage;
+        }
+        public virtual bool CanMoveNextPage()
+        {
+            return IsLoading != true && PageInfo.CanMoveNextPage;
+        }
+
+        public virtual bool CanMovePrvPage()
+        {
+            return IsLoading != true && PageInfo.CanMovePrvPage;
+        }
+        public virtual bool CanMoveLastPage()
+        {
+            return IsLoading != true && PageInfo.CanMoveLastPage;
+        }
+        public virtual bool CanGo()
+        {
+            return IsLoading != true && PageInfo.CanGo;
+        }
+        #endregion
+        #endregion
+
         CancellationTokenSource LoadCore()
         {
-          //  Mouse.OverrideCursor = Cursors.Wait;
+            //  Mouse.OverrideCursor = Cursors.Wait;
             IsLoading = true;
             var cancellationTokenSource = new CancellationTokenSource();
             var selectedEntityCallback = GetSelectedEntityCallback();
+
+
             Task.Factory.StartNew(() =>
             {
                 //var repository = CreateReadOnlyRepository();
@@ -269,16 +351,28 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                 ObservableCollection<TProjection> entities = null;
                 if (this.IsInDesignMode())
                 {
-                     entities = new ObservableCollection<TProjection>(dbset.GetFilteredEntities(GetFilterExpression(), Projection).Take(2));
+                    entities = new ObservableCollection<TProjection>(dbset.GetFilteredEntities(GetFilterExpression(), Projection).Take(2));
 
                 }
                 else
                 {
-                    entities = new ObservableCollection<TProjection>(dbset.GetFilteredEntities(GetFilterExpression(), Projection));
+                    //20180523 分页支持
+                    //      entities = new ObservableCollection<TProjection>(dbset.GetFilteredEntities(GetFilterExpression(), Projection));
+                    if (AllowPage == true)
+                    {
+                        entities = new ObservableCollection<TProjection>(
+                     dbset.GetFilteredEntities(GetFilterExpression(), Projection).Skip(((PageInfo.PageIndex == 0 ? 1 : PageInfo.PageIndex) - 1) * PageInfo.PageSize).Take(PageInfo.PageSize));
+                        PageInfo.ItemCount = dbset.GetFilteredEntities(GetFilterExpression(), (t) => t).Count();
+                        PageInfo.Refresh();
+                    }
+                    else
+                    {
+                        entities = new ObservableCollection<TProjection>(dbset.GetFilteredEntities(GetFilterExpression(), Projection));
+                    }
 
                 }
                 OnEntitiesLoaded(this.DB, entities);
-                return new Tuple<TDbContext, DbSet<TEntity>, ObservableCollection<TProjection>>(db,dbset, entities);
+                return new Tuple<TDbContext, DbSet<TEntity>, ObservableCollection<TProjection>>(db, dbset, entities);
 
 
 
@@ -295,8 +389,13 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
                     OnEntitiesAssigned(selectedEntityCallback);
                 }
                 IsLoading = false;
-           //     Mouse.OverrideCursor = null;
+                //     Mouse.OverrideCursor = null;
             }, cancellationTokenSource.Token, TaskContinuationOptions.None, TaskScheduler.FromCurrentSynchronizationContext());
+
+
+
+
+
             return cancellationTokenSource;
         }
 

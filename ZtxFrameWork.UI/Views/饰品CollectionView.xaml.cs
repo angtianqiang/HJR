@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.Xpf.Grid;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -60,5 +61,12 @@ namespace ZtxFrameWork.UI.Views
             }
             return bmp;
         }
+
+
+
+       
+
+    
+
     }
 }

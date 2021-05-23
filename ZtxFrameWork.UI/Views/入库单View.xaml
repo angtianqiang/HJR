@@ -252,6 +252,22 @@
                                 Command="{Binding GridViewCommands.ShowPrintPreview, ElementName=Details}"
                                 Content="预览"
                                 Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/Preview.png" />
+
+
+
+                            <dxb:BarButtonItem
+                                            Alignment="Default"
+                                            Command="{Binding BuildTemplateCommand}"
+                                            Content="生成导入模板"
+                                                     Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/SaveAndNew.png" />
+                            <dxb:BarButtonItem
+                                            Alignment="Default"
+                                            Command="{Binding ImportCommand}"
+                                            Content="导入"
+                                                Glyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/AddNewDataSource_32x32.png" />
+                            
+                            
+
                             <dxb:BarButtonItem
                                 Command="{Binding AddProductCommand}"
                                 Content="添加饰品"

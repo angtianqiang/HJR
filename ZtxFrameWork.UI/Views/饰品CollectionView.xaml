@@ -56,6 +56,40 @@
     <Grid>
         <DockPanel>
             <controls:CollectionMenu DataView="{Binding ElementName=View}" DockPanel.Dock="Top" />
+
+            <dxr:RibbonControl    DockPanel.Dock="Top"  RibbonStyle="Office2010">
+
+
+
+                <dxr:RibbonDefaultPageCategory>
+                    <dxr:RibbonPage Caption="操作">
+                   
+                       
+
+
+
+                        <dxr:RibbonPageGroup Caption="">
+                            <dxb:BarButtonItem
+                                            Alignment="Default"
+                                            Command="{Binding BuildTemplateCommand}"
+                                            Content="生成导入模板"
+                                                     LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/SaveAndNew.png" />
+                            <dxb:BarButtonItem
+                                            Alignment="Default"
+                                            Command="{Binding ImportCommand}"
+                                            Content="导入"
+                                                LargeGlyph="pack://application:,,,/ZtxFrameWork.UI;component/Images/AddNewDataSource_32x32.png" />
+                        </dxr:RibbonPageGroup>
+
+
+
+
+
+
+                    </dxr:RibbonPage>
+                </dxr:RibbonDefaultPageCategory>
+            </dxr:RibbonControl>
+            <controls:PageControl DockPanel.Dock="Bottom" />
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 

@@ -79,9 +79,9 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
              IDbFactory<TDbContext> dbFactory,
             Func<TDbContext, DbSet<TEntity>> getDbSetFunc,
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
-             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression)
+             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression, bool allowPage = false)
         {
-            return ViewModelSource.Create(() => new ReadOnlyCollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression));
+            return ViewModelSource.Create(() => new ReadOnlyCollectionViewModel<TEntity, TProjection, TDbContext, TPrimaryKey>(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression,allowPage));
         }
 
         /// <summary>
@@ -95,8 +95,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
             IDbFactory<TDbContext> dbFactory,
             Func<TDbContext, DbSet<TEntity>> getDbSetFunc,
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
-             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression)
-         : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression)
+             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression, bool allowPage = false)
+         : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, allowPage)
         {
         }
     }
@@ -125,8 +125,8 @@ namespace ZtxFrameWork.UI.Comm.ViewModel
              IDbFactory<TDbContext> dbFactory,
             Func<TDbContext, DbSet<TEntity>> getDbSetFunc,
             Func<IQueryable<TEntity>, IQueryable<TProjection>> projection,
-             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression)
-         : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression)
+             Expression<Func<TEntity, TPrimaryKey>> getPrimaryKeyExpression, bool allowPage = false)
+         : base(dbFactory, getDbSetFunc, projection, getPrimaryKeyExpression, allowPage)
         {
         }
 

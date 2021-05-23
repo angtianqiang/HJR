@@ -114,6 +114,7 @@
 
                     <dxr:RibbonPageGroup Caption="">
                         <dxb:BarButtonItem
+                            MergeOrder="99"
                             Command="{Binding CloseCommand}"
                             Content="关闭"
                             KeyGesture="CTRL+W"

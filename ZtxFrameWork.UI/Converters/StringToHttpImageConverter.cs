@@ -12,7 +12,9 @@ namespace ZtxFrameWork.UI.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return  new BitmapImage(new Uri($"http://124.232.147.213:88/{value.ToString()}.png"));
+            //  return  new BitmapImage(new Uri($"http://124.232.147.213:88/{value.ToString()}.png"));
+            return null;    
+            return new BitmapImage(new Uri($"{App.HttpPath}/{value.ToString()}.png"));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="ZtxFrameWork.UI.Controls.PageControl"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:local="clr-namespace:ZtxFrameWork.UI.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <Grid>
+        <dxb:ToolBarControl HorizontalContentAlignment="Center"
+                            AllowQuickCustomization="False"
+                            BarItemsAlignment="Far"
+                            Caption="Edit"
+                            ShowBackground="True">
+            <dxb:BarStaticItem Content=" " />
+            <dxb:BarButtonItem Command="{Binding MoveFirstPageCommand}" Content="首页" />
+            <dxb:BarButtonItem Command="{Binding MovePrvPageCommand}" Content="上一页" />
+            <dxb:BarButtonItem Command="{Binding MoveNextPageCommand}" Content="下一页" />
+            <dxb:BarButtonItem Command="{Binding MoveLastPageCommand}" Content="末页" />
+            <dxb:BarStaticItem Content=" " />
+            <dxb:BarStaticItem Content="第" />
+            <dxb:BarEditItem EditValue="{Binding PageInfo.PageIndex, UpdateSourceTrigger=PropertyChanged}">
+                <dxb:BarEditItem.EditSettings>
+                    <dxe:TextEditSettings />
+                </dxb:BarEditItem.EditSettings>
+                <dxb:BarEditItem.EditTemplate>
+                    <DataTemplate>
+                        <TextBox Width="50"
+                                 Text="{Binding EditValue, UpdateSourceTrigger=PropertyChanged}"
+                                 TextAlignment="Center" />
+                    </DataTemplate>
+                </dxb:BarEditItem.EditTemplate>
+            </dxb:BarEditItem>
+
+            <dxb:BarStaticItem Content="页" />
+            <dxb:BarButtonItem Command="{Binding GoCommand}" Content="Go" />
+            <dxb:BarStaticItem Content=" " />
+            <dxb:BarStaticItem Content="共" ShowBorder="False" />
+            <dxb:BarStaticItem Content="{Binding PageInfo.PageCount, Mode=OneWay}" ShowBorder="False" />
+            <dxb:BarStaticItem Content="页" ShowBorder="True" />
+            <dxb:BarStaticItem Content="共" ShowBorder="False" />
+            <dxb:BarStaticItem Content="{Binding PageInfo.ItemCount, Mode=OneWay}"
+                               ContentAlignment="Stretch"
+                               ShowBorder="False" />
+            <dxb:BarStaticItem Content="条记录      " ShowBorder="False" />
+            <dxb:BarStaticItem Content="{Binding PageInfo.PageCountStr, Mode=OneWay}"
+                               ItemMinWidth="50"
+                               ShowBorder="True" />
+            <dxb:BarStaticItem Content="{Binding PageInfo.ItemCountStr, Mode=OneWay}"
+                               ItemMinWidth="50"
+                               ShowBorder="True" />
+            <dxb:BarStaticItem Content=" " ShowBorder="False" />
+        </dxb:ToolBarControl>
+    </Grid>
+</UserControl>

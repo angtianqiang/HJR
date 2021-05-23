@@ -51,6 +51,7 @@
     <Grid>
         <DockPanel>
            <controls:CollectionMenu DataView="{Binding ElementName=View}" DockPanel.Dock="Top" />
+            <controls:PageControl DockPanel.Dock="Bottom" />
             <dxdo:DockLayoutManager x:Name="dock">
                 <dxdo:LayoutGroup>
 
