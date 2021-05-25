@@ -1,7 +1,8 @@
-﻿<UserControl x:Class="ZtxFrameWork.UI.Views.AuthorityModuleView"
+﻿<UserControl
+    x:Class="ZtxFrameWork.UI.Views.AuthorityModuleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v17.2"
+    xmlns:Serialization="clr-namespace:DevExpress.Xpf.LayoutControl.Serialization;assembly=DevExpress.Xpf.LayoutControl.v16.2"
     xmlns:ViewModels="clr-namespace:ZtxFrameWork.UI.ViewModels"
     xmlns:behaviors="clr-namespace:ZtxFrameWork.UI.Behaviors"
     xmlns:controls="clr-namespace:ZtxFrameWork.UI.Controls"
@@ -48,7 +49,8 @@
 
 
 
-                <dxlc:LayoutGroup Header="可用权限集"
+                <dxlc:LayoutGroup
+                    Header="可用权限集"
                     Orientation="Horizontal"
                     View="GroupBox">
                     <dxlc:LayoutItem Label="导航">

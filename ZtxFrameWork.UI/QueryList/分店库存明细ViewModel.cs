@@ -71,7 +71,12 @@ namespace ZtxFrameWork.UI.QueryList
                          join a in aa
                          on new { 饰品ID = c.饰品ID, 分店id = c.分店id } equals new { 饰品ID = a.id, 分店id = a.分店id } into d3
                          where c.饰品ID == id
+
                          from d4 in d3.DefaultIfEmpty()
+                         
+
+                         
+                           
                          select new
                          {
                              分店 = c.分店,

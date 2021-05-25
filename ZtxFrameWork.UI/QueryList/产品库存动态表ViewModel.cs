@@ -108,15 +108,15 @@ namespace ZtxFrameWork.UI.QueryList
 												when 1 then '按重'
 												else '其它' end as [工费计法],                                           
                                             首次入库时间,
-                                            累计入库数量,
-                                            共入库存次数,
-                                            累计销售数量,
-                                            共销售次数,
+                                                ISNULL(累计入库数量,0),
+                                               ISNULL(共入库存次数,0),
+                                               ISNULL(累计销售数量,0),
+                                               ISNULL(共销售次数,0),
                                             sp.[按重成本价],
                                             sp.[按件成本价],
-                                            kc.[数量] as 现有库存数量,
-                                            kc.[重量] as 现有库存重量,
-                                            累计销售数量/(datediff(day,首次入库时间,getdate())/30.0 ) as 平均月销数量,
+                                                 ISNULL( kc.[数量],0) as 现有库存数量,
+                                           ISNULL( kc.[重量] ,0)as 现有库存重量,
+                                            ISNULL(累计销售数量,0)/(datediff(day,首次入库时间,getdate())/30.0 ) as 平均月销数量,
                                             sp.[备注]
                                             FROM #B
                                             left join #C on #b.饰品ID=#c.饰品ID

@@ -118,7 +118,7 @@
                                         RowMinHeight="40"
                                         Style="{StaticResource CollectionsTableView}" />
                                 </dxg:GridControl.View>
-                                <dxg:GridColumn
+                                <!--<dxg:GridColumn
                                     FieldName="饰品图片.图片"
                                     Fixed="Left"
                                     Header="图片"
@@ -134,15 +134,15 @@
                                                 HorizontalAlignment="Center"
                                                 Source="{Binding Path=RowData.Row.编号, Mode=OneWay, Converter={StaticResource StringToHttpImageConverter}}"
                                                 Stretch="UniformToFill">
-                                                <!--<Image.ContextMenu>
+                                                --><!--<Image.ContextMenu>
                                                     <ContextMenu>
                                                         <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
                                                     </ContextMenu>
-                                                </Image.ContextMenu>-->
+                                                </Image.ContextMenu>--><!--
                                             </Image>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
-                                    <!--<dxg:GridColumn.PrintCellStyle>
+                                    --><!--<dxg:GridColumn.PrintCellStyle>
                                         <Style TargetType="dxe:BaseEdit" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
                                             <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
 
@@ -155,8 +155,8 @@
                                             </Setter>
 
                                         </Style>
-                                    </dxg:GridColumn.PrintCellStyle>-->
-                                </dxg:GridColumn>
+                                    </dxg:GridColumn.PrintCellStyle>--><!--
+                                </dxg:GridColumn>-->
                                 <dxg:GridColumn
                                     FieldName="编号"
                                     Fixed="Left"

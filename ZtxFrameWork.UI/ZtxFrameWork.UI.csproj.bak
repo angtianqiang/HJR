@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -10,11 +10,27 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ZtxFrameWork.UI</RootNamespace>
     <AssemblyName>ZtxFrameWork.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>false</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <TargetCulture>zh-Hans</TargetCulture>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -25,6 +41,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,79 +51,194 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Images\arpa.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevExpress.Charts.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.DataAccess.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Images.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Charts.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.DataAccess.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>True</Private>
     </Reference>
-    <Reference Include="DevExpress.Office.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Pdf.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.PivotGrid.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.RichEdit.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Utils.v16.2.UI, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Core.v16.2" />
+    <Reference Include="DevExpress.Images.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Pdf.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.RichEdit.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Sparkline.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v16.2.UI, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Core.v16.2">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.Data.v16.2">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.Printing.v16.2.Core" />
-    <Reference Include="DevExpress.Mvvm.v16.2" />
-    <Reference Include="DevExpress.Xpf.Docking.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Printing.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Grid.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Grid.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Layout.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.LayoutControl.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.NavBar.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Ribbon.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.Xpf.Themes.Office2013.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v16.2" />
-    <Reference Include="DevExpress.XtraCharts.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraGauges.v16.2.Core, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="DevExpress.XtraReports.v16.2, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-    <Reference Include="DevExpress.XtraReports.v16.2.Extensions, Version=16.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
       <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v16.2.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v16.2">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Docking.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Printing.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Grid.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Layout.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.LayoutControl.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.NavBar.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Ribbon.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Blue.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2010Silver.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpf.Themes.Office2013.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2013DarkGray.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2013LightGray.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Xpf.Themes.Office2016White.v16.2" />
+    <Reference Include="DevExpress.XtraCharts.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v16.2.Core, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.CodeParser.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v16.2, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraReports.v16.2.Extensions, Version=16.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DynamicExpresso.Core, Version=2.3.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DynamicExpresso.Core.2.3.3\lib\net461\DynamicExpresso.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentFTP, Version=19.1.2.0, Culture=neutral, PublicKeyToken=f4af092b1d8df44f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentFTP.19.1.2\lib\net45\FluentFTP.dll</HintPath>
+    </Reference>
+    <Reference Include="Magicodes.EPPlus, Version=4.6.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magicodes.EPPlus.4.6.3\lib\net40\Magicodes.EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Magicodes.ExporterAndImporter.Core, Version=2.5.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magicodes.IE.Core.2.5.3.8\lib\net461\Magicodes.ExporterAndImporter.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Magicodes.ExporterAndImporter.Excel, Version=2.5.3.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Magicodes.IE.Excel.2.5.3.8\lib\net461\Magicodes.ExporterAndImporter.Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="runtime.osx.10.10-x64.CoreCompat.System.Drawing, Version=5.8.64.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\runtime.osx.10.10-x64.CoreCompat.System.Drawing.5.8.64\lib\netstandard2.0\runtime.osx.10.10-x64.CoreCompat.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.configuration" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.configuration">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Deployment">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.FileSystem">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Linq.Dynamic.Core, Version=1.2.6.0, Culture=neutral, PublicKeyToken=0f07ec44de6ac832, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.Core.1.2.6\lib\net46\System.Linq.Dynamic.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Loader, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.Loader.4.3.0\lib\netstandard1.5\System.Runtime.Loader.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Transactions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsBase">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -114,6 +246,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\EntityExpressionUserControlDefaultLoad.cs" />
+    <Compile Include="Behaviors\GridControlLayoutLoad.cs" />
     <Compile Include="Behaviors\RibbonControlMergeBehavior.cs" />
     <Compile Include="Behaviors\ShowCheckBoxSelectorColumn.cs" />
     <Compile Include="Behaviors\UserControlDefaultLoad.cs" />
@@ -126,11 +259,18 @@
     <Compile Include="Comm\ViewModel\DynamicQueryCollectionViewModel.cs" />
     <Compile Include="Comm\ViewModel\EntityExpressionBuilder.cs" />
     <Compile Include="Comm\ViewModel\Helpers.cs" />
+    <Compile Include="Comm\ViewModel\PageInfo.cs" />
     <Compile Include="Controls\BillState.xaml.cs">
       <DependentUpon>BillState.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DynamicQueryCollectionMenu.xaml.cs">
       <DependentUpon>DynamicQueryCollectionMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageViewer.xaml.cs">
+      <DependentUpon>ImageViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PageControl.xaml.cs">
+      <DependentUpon>PageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\SingleStatusBar.xaml.cs">
       <DependentUpon>SingleStatusBar.xaml</DependentUpon>
@@ -144,9 +284,13 @@
     <Compile Include="Controls\SingleMenu.xaml.cs">
       <DependentUpon>SingleMenu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\PathToImageConerter.cs" />
+    <Compile Include="Converters\StringToHttpImageConverter.cs" />
     <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Helpers\CacheHelper.cs" />
     <Compile Include="Helpers\ConfigurationHelper.cs" />
     <Compile Include="Helpers\DataDirectoryHelper.cs" />
+    <Compile Include="Helpers\DateTimeHelper.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Helpers\FileSystemHelper.cs" />
     <Compile Include="Helpers\SplashScreenHelper.cs" />
@@ -157,6 +301,98 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\GridRowIndicatorConerter.cs" />
+    <Compile Include="QueryList\产品库存动态表View.xaml.cs">
+      <DependentUpon>产品库存动态表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\产品库存动态表ViewModel.cs" />
+    <Compile Include="QueryList\产品库存动态表_ExpressionView.xaml.cs">
+      <DependentUpon>产品库存动态表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\产品库存动态表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\付款明细表View.xaml.cs">
+      <DependentUpon>付款明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\付款明细表ViewModel.cs" />
+    <Compile Include="QueryList\付款明细表_ExpressionView.xaml.cs">
+      <DependentUpon>付款明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\付款明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\供应商退货明细表View.xaml.cs">
+      <DependentUpon>供应商退货明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\供应商退货明细表ViewModel.cs" />
+    <Compile Include="QueryList\供应商退货明细表_ExpressionView.xaml.cs">
+      <DependentUpon>供应商退货明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\供应商退货明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\分店库存明细View.xaml.cs">
+      <DependentUpon>分店库存明细View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\分店库存明细ViewModel.cs" />
+    <Compile Include="QueryList\员工业绩排行表View.xaml.cs">
+      <DependentUpon>员工业绩排行表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\员工业绩排行表ViewModel.cs" />
+    <Compile Include="QueryList\员工业绩排行表_ExpressionView.xaml.cs">
+      <DependentUpon>员工业绩排行表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\员工业绩排行表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\库存明细表View.xaml.cs">
+      <DependentUpon>库存明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\库存明细表ViewModel.cs" />
+    <Compile Include="QueryList\库存明细表_ExpressionView.xaml.cs">
+      <DependentUpon>库存明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\库存明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\应付款明细表View.xaml.cs">
+      <DependentUpon>应付款明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\应付款明细表ViewModel.cs" />
+    <Compile Include="QueryList\应付款明细表_ExpressionView.xaml.cs">
+      <DependentUpon>应付款明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\应付款明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\应收款明细表View.xaml.cs">
+      <DependentUpon>应收款明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\应收款明细表ViewModel.cs" />
+    <Compile Include="QueryList\应收款明细表_ExpressionView.xaml.cs">
+      <DependentUpon>应收款明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\应收款明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\收款明细表View.xaml.cs">
+      <DependentUpon>收款明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\收款明细表ViewModel.cs" />
+    <Compile Include="QueryList\收款明细表_ExpressionView.xaml.cs">
+      <DependentUpon>收款明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\收款明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\每日经营情况分析View.xaml.cs">
+      <DependentUpon>每日经营情况分析View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\每日经营情况分析ViewModel.cs" />
+    <Compile Include="QueryList\每日经营情况分析_ExpressionView.xaml.cs">
+      <DependentUpon>每日经营情况分析_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\每日经营情况分析_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\盈亏单明细表View.xaml.cs">
+      <DependentUpon>盈亏单明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\盈亏单明细表ViewModel.cs" />
+    <Compile Include="QueryList\盈亏单明细表_ExpressionView.xaml.cs">
+      <DependentUpon>盈亏单明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\盈亏单明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\调拨明细表View.xaml.cs">
+      <DependentUpon>调拨明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\调拨明细表ViewModel.cs" />
+    <Compile Include="QueryList\调拨明细表_ExpressionView.xaml.cs">
+      <DependentUpon>调拨明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\调拨明细表_ExpressionViewModel.cs" />
     <Compile Include="QueryList\采购入库单明细表View.xaml.cs">
       <DependentUpon>采购入库单明细表View.xaml</DependentUpon>
     </Compile>
@@ -165,13 +401,51 @@
       <DependentUpon>采购入库单明细表_ExpressionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="QueryList\采购入库单明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\销售单明细表View.xaml.cs">
+      <DependentUpon>销售单明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\销售单明细表ViewModel.cs" />
+    <Compile Include="QueryList\销售单明细表_ExpressionView.xaml.cs">
+      <DependentUpon>销售单明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\销售单明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\销售退货单明细表View.xaml.cs">
+      <DependentUpon>销售退货单明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\销售退货单明细表ViewModel.cs" />
+    <Compile Include="QueryList\销售退货单明细表_ExpressionView.xaml.cs">
+      <DependentUpon>销售退货单明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\销售退货单明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\饰品出入明细表View.xaml.cs">
+      <DependentUpon>饰品出入明细表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品出入明细表ViewModel.cs" />
+    <Compile Include="QueryList\饰品出入明细表_ExpressionView.xaml.cs">
+      <DependentUpon>饰品出入明细表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品出入明细表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\饰品销售排行表View.xaml.cs">
+      <DependentUpon>饰品销售排行表View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品销售排行表ViewModel.cs" />
+    <Compile Include="QueryList\饰品销售排行表_ExpressionView.xaml.cs">
+      <DependentUpon>饰品销售排行表_ExpressionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品销售排行表_ExpressionViewModel.cs" />
+    <Compile Include="QueryList\饰品销售明细.xaml.cs">
+      <DependentUpon>饰品销售明细.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="QueryList\饰品销售明细ViewModel.cs" />
     <Compile Include="Utils\ApplicationSet.cs" />
     <Compile Include="Utils\CommandHelper.cs" />
     <Compile Include="Utils\TreeHelper.cs" />
     <Compile Include="Helpers\ViewExportHelper.cs" />
     <Compile Include="ViewModels\AuthorityModuleCollectionViewModel.cs" />
     <Compile Include="ViewModels\AuthorityModuleViewModel.cs" />
+    <Compile Include="ViewModels\BillStateChangeLogCollectionViewModel.cs" />
     <Compile Include="ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="ViewModels\DbOperatorLogCollectionViewModel.cs" />
     <Compile Include="ViewModels\LoginWindowViewModel.cs" />
     <Compile Include="ViewModels\ModuleCollectionViewModel.cs" />
     <Compile Include="ViewModels\ModuleViewModel.cs" />
@@ -181,16 +455,28 @@
     <Compile Include="ViewModels\UserAuthorityModuleMappingCollectionViewModel.cs" />
     <Compile Include="ViewModels\UserCollectionViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
+    <Compile Include="ViewModels\分店库存ViewModel.cs" />
+    <Compile Include="ViewModels\店面切换ViewModel.cs" />
     <Compile Include="ViewModels\收款单CollectionViewModel.cs" />
     <Compile Include="ViewModels\收款单ViewModel.cs" />
+    <Compile Include="ViewModels\电镀方式CollectionViewModel.cs" />
+    <Compile Include="ViewModels\电镀方式ViewModel.cs" />
+    <Compile Include="ViewModels\石头颜色CollectionViewModel.cs" />
+    <Compile Include="ViewModels\石头颜色ViewModel.cs" />
     <Compile Include="Views\AuthorityModuleCollectionView.xaml.cs">
       <DependentUpon>AuthorityModuleCollectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AuthorityModuleView.xaml.cs">
       <DependentUpon>AuthorityModuleView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BillStateChangeLogCollectionView.xaml.cs">
+      <DependentUpon>BillStateChangeLogCollectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ChangePasswordView.xaml.cs">
       <DependentUpon>ChangePasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DbOperatorLogCollectionView.xaml.cs">
+      <DependentUpon>DbOperatorLogCollectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SystemConfigurationCollectionView.xaml.cs">
       <DependentUpon>SystemConfigurationCollectionView.xaml</DependentUpon>
@@ -231,11 +517,29 @@
     <Compile Include="ViewModels\盈亏单ViewModel.cs" />
     <Compile Include="ViewModels\盘点表CollectionViewModel.cs" />
     <Compile Include="ViewModels\盘点表ViewModel.cs" />
+    <Compile Include="Views\分店库存View.xaml.cs">
+      <DependentUpon>分店库存View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\店面切换View.xaml.cs">
+      <DependentUpon>店面切换View.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\收款单CollectionView.xaml.cs">
       <DependentUpon>收款单CollectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\收款单View.xaml.cs">
       <DependentUpon>收款单View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\电镀方式CollectionView.xaml.cs">
+      <DependentUpon>电镀方式CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\电镀方式View.xaml.cs">
+      <DependentUpon>电镀方式View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\石头颜色CollectionView.xaml.cs">
+      <DependentUpon>石头颜色CollectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\石头颜色View.xaml.cs">
+      <DependentUpon>石头颜色View.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\调拨单CollectionView.xaml.cs">
       <DependentUpon>调拨单CollectionView.xaml</DependentUpon>
@@ -396,6 +700,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\ImageViewer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SingleMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -440,11 +752,139 @@
       <DependentUpon>MainWindow1.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="QueryList\产品库存动态表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\产品库存动态表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\付款明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\付款明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\供应商退货明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\供应商退货明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\分店库存明细View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\员工业绩排行表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\员工业绩排行表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\库存明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\库存明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\应付款明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\应付款明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\应收款明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\应收款明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\收款明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\收款明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\每日经营情况分析View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\每日经营情况分析_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\盈亏单明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\盈亏单明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\调拨明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\调拨明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="QueryList\采购入库单明细表View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="QueryList\采购入库单明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\销售单明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\销售单明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\销售退货单明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\销售退货单明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品出入明细表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品出入明细表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品销售排行表View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品销售排行表_ExpressionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="QueryList\饰品销售明细.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -456,11 +896,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Resource Include="Styles\SystemSet.xaml">
+    <Page Include="Styles\SystemSet.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </Page>
     <Page Include="Views\AuthorityModuleCollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -469,7 +908,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BillStateChangeLogCollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ChangePasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DbOperatorLogCollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -501,11 +948,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\分店库存View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\店面切换View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\收款单CollectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\收款单View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\电镀方式CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\电镀方式View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\石头颜色CollectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\石头颜色View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -706,6 +1177,9 @@
     <None Include="Reports\采购入库单明细表Report.repx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Reports\销售单Report.repx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ZtxFrameWork.Data\ZtxFrameWork.Data.csproj">
@@ -772,7 +1246,13 @@
   <ItemGroup>
     <Resource Include="Images\SaveAndNew.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Designer.png" />
   </ItemGroup>
@@ -785,6 +1265,150 @@
     <Resource Include="Images\BuidList.png" />
     <Resource Include="Images\sk.png" />
     <Resource Include="Images\th.png" />
+    <None Include="MoudleImages\confirm2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\DeleteRow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Designer.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\edit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\ExportToXLS_16x16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Checks - 01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Graph-03.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Team-02.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\User-Group.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Animation-03.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Bank.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Banker-01-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Basket-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Basket.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Bullet-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Cupboard.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Database Connection-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Database-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\DataFiles-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\DataHistogram-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Document Edit-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Document Find-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Document-Exchange.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Document-New.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\DocumentRemove-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Documents-02.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Finance-03-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Gear--03WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Gear-01-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Gear-02-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Graph-01.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Graph-02.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Login-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Login2-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Profit-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Sales Order-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Sales-Order.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Shopping Add-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Shopping Basket Add-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Shopping Basket Delete-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Shopping OK-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Shopping Remove-01-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Shopping Remove-02-WF.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\Tools.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MoudleImages\User.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Resource Include="Images\GeoPoint_16x16.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\AddNewDataSource_32x32.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="zh-Hans\DevExpress.Charts.Designer.v16.2.resources.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

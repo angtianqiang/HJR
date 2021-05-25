@@ -150,6 +150,7 @@
                         <dxlc:LayoutGroup Header="LayoutGroup" View="Group">
                             <dxg:GridControl AutoGenerateColumns="None"   x:Name="grid" AutoExpandAllGroups="True"
                                              EnableSmartColumnsGeneration="True" 
+                                   SelectionMode="Cell"
                                                  ColumnGeneratorStyle="{StaticResource ColorGridColumnStyle}"
                                              ItemsSource="{Binding Entities}" 
                                              SelectedItem="{Binding SelectedEntity,
@@ -179,7 +180,7 @@
                                     </dxmvvm:EventToCommand>
                                 </dxmvvm:Interaction.Behaviors>
                                 <dxg:GridControl.View>
-                                    <dxg:TableView  Name="View" Style="{StaticResource CollectionsTableView}"   RowMinHeight="40"   ShowGroupFooters="True" GroupSummaryDisplayMode="Default" />
+                                    <dxg:TableView  NavigationStyle="Cell" Name="View" Style="{StaticResource CollectionsTableView}"   RowMinHeight="40"   ShowGroupFooters="True" GroupSummaryDisplayMode="Default" />
                                 </dxg:GridControl.View>
 
                                 <!--<dxg:GridColumn FieldName="饰品.饰品图片.图片"   Header="图片" Visible="True" VisibleIndex="301" Fixed="Left" >
@@ -210,7 +211,73 @@
                                     </dxg:GridColumn.PrintCellStyle>
                                 </dxg:GridColumn>-->
 
-                                <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="302" Fixed="Left"></dxg:GridColumn>
+
+                                <!--<dxg:GridColumn
+                                    FieldName="饰品图片.图片"
+                                    Fixed="Left"
+                                    Header="图片"
+                                    ReadOnly="True"
+                                    Visible="True"
+                                    VisibleIndex="1">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image
+                                                Name="PART_Editor"
+                                                Width="32"
+                                                Height="32"
+                                                HorizontalAlignment="Center"
+                                                Source="{Binding Path=RowData.Row.编号, Mode=OneWay, Converter={StaticResource StringToHttpImageConverter}}"
+                                                Stretch="UniformToFill">
+                                                
+                                --><!--<Image.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </Image.ContextMenu>--><!--
+                                
+                                            </Image>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                    
+                                <dxg:GridColumn.PrintCellStyle>
+                                        <Style TargetType="dxe:BaseEdit" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
+                                            <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
+
+                                            <Setter Property="DisplayTemplate">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Image   Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" ></Image>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                        </Style>
+                                    </dxg:GridColumn.PrintCellStyle>
+                                
+                                </dxg:GridColumn>-->
+
+                                <dxg:GridColumn FieldName="饰品.编号"  Header="编号" Visible="True" VisibleIndex="302" Fixed="Left">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock
+                                                Name="PART_Editor"
+                                           VerticalAlignment="Center"
+                                          
+                                                Text="{Binding Path=RowData.Row.饰品.编号, Mode=OneWay}"
+                                        >
+
+
+                                                <TextBlock.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </TextBlock.ContextMenu>
+
+
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                </dxg:GridColumn>
 
                                 <dxg:GridColumn FieldName="饰品.条码" Header="条码"  Visible="True" VisibleIndex="303" Fixed="Left"></dxg:GridColumn>
                                 <dxg:GridColumn FieldName="饰品.品名.名称" Header="品名" GroupIndex="1"   Visible="True" Fixed="Left" VisibleIndex="304"></dxg:GridColumn>

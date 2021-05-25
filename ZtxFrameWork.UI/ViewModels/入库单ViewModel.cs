@@ -502,7 +502,8 @@ namespace ZtxFrameWork.UI.ViewModels
             {
                 Mouse.OverrideCursor = null;
 
-                MessageBoxService.ShowMessage("导入产品没有档案：" + System.Environment.NewLine + string.Join(System.Environment.NewLine, noProduct), "信息提示");
+                System.Windows.Clipboard.SetDataObject(string.Join(System.Environment.NewLine, noProduct));
+                MessageBoxService.ShowMessage("导入产品没有档案<已复制到剪切版>：" + System.Environment.NewLine + string.Join(System.Environment.NewLine, noProduct), "信息提示");
                 return;
             }
             //导入

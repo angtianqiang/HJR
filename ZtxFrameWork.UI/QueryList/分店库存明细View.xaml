@@ -15,18 +15,23 @@
     xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
     xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+        xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing"
+        xmlns:dxgt="http://schemas.devexpress.com/winfx/2008/xaml/grid/themekeys"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="300"
     d:DesignWidth="300"
     DataContext="{dxmvvm:ViewModelSource Type=ViewModels:分店库存明细ViewModel}"
     mc:Ignorable="d">
     <Grid>
-        <dxg:GridControl
+        <dxg:GridControl x:Name="grid"
             AutoGenerateColumns="AddNew"
             EnableSmartColumnsGeneration="True"
             ItemsSource="{Binding Entities}"
             SelectionMode="Cell">
 
+            
+            
+            
             <dxg:GridControl.View>
                 <dxg:TableView
                     Name="View"
@@ -37,6 +42,50 @@
                     Style="{StaticResource ResourceKey=ReportTableView}" />
             </dxg:GridControl.View>
 
+
+            <!--<dxg:GridColumn
+                                    FieldName="饰品图片.图片"
+                                    Fixed="Left"
+                                    Header="图片"
+                                    ReadOnly="True"
+                                    Visible="True"
+                                    VisibleIndex="1">
+                                    <dxg:GridColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Image
+                                                Name="PART_Editor"
+                                                Width="32"
+                                                Height="32"
+                                                HorizontalAlignment="Center"
+                                                Source="{Binding Path=RowData.Row.编号, Mode=OneWay, Converter={StaticResource StringToHttpImageConverter}}"
+                                                Stretch="UniformToFill">
+                                                
+            <Image.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </Image.ContextMenu>
+            
+                                            </Image>
+                                        </DataTemplate>
+                                    </dxg:GridColumn.CellTemplate>
+                                    
+            <dxg:GridColumn.PrintCellStyle>
+                                        <Style TargetType="dxe:BaseEdit" BasedOn="{StaticResource {dxgt:TableViewThemeKey ResourceKey=DefaultPrintCellStyle}}">
+                                            <Setter Property="dxp:ExportSettings.TargetType" Value="Image" />
+
+                                            <Setter Property="DisplayTemplate">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Image   Source="{Binding Path=RowData.Row.饰品图片.图片,Mode=OneWay}" Width="32" Height="32" HorizontalAlignment="Center" Stretch="UniformToFill" ></Image>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+
+                                        </Style>
+                                    </dxg:GridColumn.PrintCellStyle>
+            
+                                </dxg:GridColumn>-->
 
         </dxg:GridControl>
     </Grid>

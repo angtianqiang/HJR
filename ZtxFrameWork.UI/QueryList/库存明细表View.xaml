@@ -95,17 +95,24 @@
                                     Visible="False" />
                                 <dxg:GridColumn
                                     FieldName="图片"
+                                    Name="图片"
                                     Fixed="Left"
                                     Header="图片"
                                     Visible="True">
                                     <dxg:GridColumn.CellTemplate>
                                         <DataTemplate>
                                             <Image
-                                                Width="32"
+                                                Width="32" 
                                                 Height="32"
                                                 HorizontalAlignment="Center"
                                                 Source="{Binding Path=RowData.Row.编号, Converter={StaticResource ResourceKey=StringToHttpImageConverter}}"
-                                                Stretch="UniformToFill" />
+                                                Stretch="UniformToFill" >
+                                                <Image.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem  Header="浏览图片"  Click="MenuItem_Click"></MenuItem>
+                                                    </ContextMenu>
+                                                </Image.ContextMenu>
+                                            </Image>
                                         </DataTemplate>
                                     </dxg:GridColumn.CellTemplate>
                                 </dxg:GridColumn>

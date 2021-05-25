@@ -29,18 +29,15 @@ namespace ZtxFrameWork.UI.Views
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
 
-            byte[] temp = this.grid.GetFocusedRowCellValue("饰品.饰品图片.图片") as byte[];
-       //     var a = this.grid.GetFocusedRowCellValue("饰品.饰品图片.图片");
-            if (temp == null)
-            {
-                return;
-            }
-        //    byte[] temp = imageEdit.EditValue as byte[];
+            ZtxFrameWork.Data.Model.库存 AFA = this.grid.GetFocusedRow() as ZtxFrameWork.Data.Model.库存;
+            if (AFA == null) return;
 
-            //     BitmapSource image=
+            string ID = AFA.饰品.编号;
+
+            //       var temp = this.grid.GetFocusedRowCellValue("ID") as string;
             var window = new Window() { Width = 600, Height = 500, WindowStyle = WindowStyle.SingleBorderWindow, ShowActivated = true, Title = "浏览图片" };
             var ImageViewer = new Controls.ImageViewer() { Margin = new Thickness(0) };
-            ImageViewer.ImageSource = ByteArrayToBitmapImage(temp);
+            ImageViewer.ImageSource = new BitmapImage(new Uri($"{App.HttpPath}/{ID.ToString()}.png"));
             window.Content = ImageViewer;
             window.ShowDialog();
 
